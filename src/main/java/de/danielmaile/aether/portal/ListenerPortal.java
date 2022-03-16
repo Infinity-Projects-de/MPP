@@ -1,16 +1,12 @@
-/**
- * Daniel Maile - 2022
- */
 package de.danielmaile.aether.portal;
 
 import de.danielmaile.aether.worldgen.AetherWorld;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerPortalEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 public class ListenerPortal implements Listener
 {
@@ -18,27 +14,22 @@ public class ListenerPortal implements Listener
     public void onWaterBucketClick(PlayerBucketEmptyEvent event)
     {
         if (event.getBucket() != Material.WATER_BUCKET) return;
-        if (!AetherPortal.checkPortal(event.getBlock().getLocation(), true)) return;
+        if (!AetherPortal.checkPortal(event.getBlock().getLocation(), false)) return;
+
+        //Explode Portal in Nether or End
+        if (event.getPlayer().getWorld().getEnvironment() == World.Environment.NETHER || event.getPlayer().getWorld().getEnvironment() == World.Environment.THE_END)
+        {
+            event.getPlayer().getWorld().createExplosion(event.getBlockClicked().getLocation(), 20, true);
+            return;
+        }
         event.setCancelled(true);
     }
 
     @EventHandler
-    public void onAetherTeleport(PlayerPortalEvent event)
+    public void onAetherTeleport(PlayerMoveEvent event)
     {
-        if(AetherWorld.isLoaded())
-        {
-            World aether = AetherWorld.getWorld();
-            if(aether != null)
-            {
-                event.setTo(aether.getSpawnLocation());
-            }
-        }
-
-        /*
-        Location portalLocation = event.getPlayer().getLocation().clone();
-        System.out.println("Portal at? " + event.getPlayer().getLocation().getBlock().getLocation());
-        System.out.println(AetherPortal.checkPortal(event.getPlayer().getLocation(), false));
-        event.setCancelled(true);
-        System.out.println("Cancelled"); */
+        if (AetherWorld.getWorld() == null) return;
+        if (!AetherPortal.checkPortal(event.getTo(), true)) return;
+        event.getPlayer().teleport(AetherWorld.getWorld().getSpawnLocation());
     }
 }

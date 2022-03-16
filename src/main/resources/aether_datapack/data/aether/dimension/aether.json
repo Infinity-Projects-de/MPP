@@ -1,0 +1,40 @@
+{
+  "type": {
+    "ultrawarm": false,
+    "natural": true,
+    "piglin_safe": false,
+    "respawn_anchor_works": false,
+    "bed_works": true,
+    "has_raids": true,
+    "has_skylight": true,
+    "has_ceiling": false,
+    "coordinate_scale": 1,
+    "ambient_light": 0,
+    "logical_height": 256,
+    "infiniburn": "#minecraft:infiniburn_overworld",
+    "min_y": 0,
+    "height": 256
+  },
+  "generator": {
+    "type": "minecraft:noise",
+    "seed": -1714121810,
+    "settings": "minecraft:floating_islands",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "biome": "aether:plains",
+          "parameters": {
+            "temperature": 0,
+            "humidity": 0,
+            "continentalness": 0,
+            "erosion": 0.1,
+            "weirdness": 0,
+            "depth": 0,
+            "offset": 0
+          }
+        }
+      ]
+    }
+  }
+}

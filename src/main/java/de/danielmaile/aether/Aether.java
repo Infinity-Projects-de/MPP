@@ -1,6 +1,3 @@
-/**
- * Daniel Maile - 2022
- */
 package de.danielmaile.aether;
 
 import de.danielmaile.aether.commands.CommandAether;
@@ -18,29 +15,18 @@ public final class Aether extends JavaPlugin
 {
     public static final String PREFIX = ChatColor.LIGHT_PURPLE + "[Aether] " + ChatColor.GRAY;
     private static Logger logger;
-    private static Aether instance;
-
-    public static Aether getInstance()
-    {
-        return instance;
-    }
 
     @Override
     public void onEnable()
     {
-        instance = this;
         logger = Logger.getLogger("Minecraft");
-        saveDefaultConfig();
-
 
         //Register listener and commands
         getServer().getPluginManager().registerEvents(new ListenerAetherVoid(), this);
         getServer().getPluginManager().registerEvents(new ListenerPortal(), this);
         Objects.requireNonNull(Bukkit.getPluginCommand("aether")).setExecutor(new CommandAether());
 
-        //Load generation values from config and generate world
-        AetherWorld.loadConfig();
-        AetherWorld.generate();
+        AetherWorld.init();
     }
 
     public static void logError(String message)

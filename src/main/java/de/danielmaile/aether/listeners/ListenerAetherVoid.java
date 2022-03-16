@@ -1,6 +1,3 @@
-/***
- * Daniel Maile - 2022
- */
 package de.danielmaile.aether.listeners;
 
 import de.danielmaile.aether.worldgen.AetherWorld;
@@ -22,7 +19,7 @@ public class ListenerAetherVoid implements Listener
         if (!(event.getEntity() instanceof Player)) return;
         Player player = (Player) event.getEntity();
 
-        if (player.getWorld().equals(Bukkit.getWorld(AetherWorld.WORLD_KEY)))
+        if (player.getWorld().equals(AetherWorld.getWorld()))
         {
             Location destination = player.getLocation().clone();
             destination.setWorld(Bukkit.getWorld("world"));

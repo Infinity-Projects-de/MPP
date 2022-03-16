@@ -1,6 +1,3 @@
-/**
- * Daniel Maile - 2022
- */
 package de.danielmaile.aether.commands;
 
 import de.danielmaile.aether.Aether;
@@ -43,12 +40,6 @@ public class CommandAether implements CommandExecutor, TabExecutor
             case "teleport":
                 teleport(player);
                 return true;
-            case "regenerate":
-                regenerate(player);
-                return true;
-            case "reload":
-                reload(player);
-                return true;
             default:
                 sendHelp(player);
                 return true;
@@ -58,37 +49,20 @@ public class CommandAether implements CommandExecutor, TabExecutor
 
     private void teleport(@NotNull Player player)
     {
-        if (!AetherWorld.isLoaded())
-        {
-            player.sendMessage(Aether.PREFIX + ChatColor.RED + "Es wurde keine Aether-Welt gefunden! Erstelle eine mit /aether regenerate!");
-            return;
-        }
-
         World aetherWorld = AetherWorld.getWorld();
         if (aetherWorld != null)
         {
             player.teleport(AetherWorld.getWorld().getSpawnLocation());
         }
-    }
-
-    private void reload(@NotNull Player player)
-    {
-        AetherWorld.regenerate();
-        player.sendMessage(Aether.PREFIX + ChatColor.GREEN + "Die Config wurde neu geladen.");
-    }
-
-    private void regenerate(@NotNull Player player)
-    {
-        player.sendMessage(Aether.PREFIX + "Aether-Welt wird neu generiert...");
-        AetherWorld.regenerate();
-        player.sendMessage(Aether.PREFIX + "Aether-Welt wurde erfolgreich generiert.");
+        else
+        {
+            player.sendMessage(Aether.PREFIX + ChatColor.RED + "Die Aether-Welt wurde noch nicht erstellt. Starte den Server neu um sie zu erstellen!");
+        }
     }
 
     private void sendHelp(@NotNull Player player)
     {
-        player.sendMessage(Aether.PREFIX + "/ae reload - Läd die Config neu.");
         player.sendMessage(Aether.PREFIX + "/ae teleport - Teleportiert dich in die Aether-Welt.");
-        player.sendMessage(Aether.PREFIX + "/ae regenerate - Generiert die Aether-Welt neu.");
     }
 
     @Override
@@ -101,9 +75,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
 
         if (args.length == 1)
         {
-            tabComplete.add("regenerate");
             tabComplete.add("teleport");
-            tabComplete.add("reload");
             StringUtil.copyPartialMatches(args[0], tabComplete, completions);
         }
 
