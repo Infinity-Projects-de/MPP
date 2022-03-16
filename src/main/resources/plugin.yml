@@ -1,0 +1,12 @@
+name: Aether
+version: '${project.version}'
+main: de.danielmaile.aether.Aether
+api-version: 1.18
+authors: [ WoizaWerner ]
+website: maile.ws
+
+commands:
+  aether:
+    aliases: [ ae ]
+    permission: aether.ae
+

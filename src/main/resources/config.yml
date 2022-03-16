@@ -1,0 +1,11 @@
+#********************Generation values********************
+min_height: 60
+octaves: 7
+noise_scale: 0.0042
+noise_frequency: 1.4
+noise_amplitude: 0.95
+noise_terrain_height_scale: 10
+noise_terrain_threashold: 0.53
+terrain_bottom_pos: 17
+#Note: Always regenerate the aether using /ae regenerate after changing these values
+#**********************************************************
