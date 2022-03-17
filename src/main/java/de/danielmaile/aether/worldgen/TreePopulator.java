@@ -3,7 +3,6 @@ package de.danielmaile.aether.worldgen;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.generator.BlockPopulator;
 import org.jetbrains.annotations.NotNull;
@@ -22,15 +21,14 @@ public class TreePopulator extends BlockPopulator
     @Override
     public void populate(@NotNull World world, @NotNull Random random, @NotNull Chunk chunk)
     {
-        if(random.nextFloat() > 0.75)
+        if (random.nextFloat() > 0.75)
         {
-            int blockX = random.nextInt(15);
-            int blockZ = random.nextInt(15);
-            int blockY = world.getMaxHeight() - 1;
-            while (chunk.getBlock(blockX, blockY, blockZ).getType() == Material.AIR && blockY > 0) blockY--;
-            if(blockY == 0) return;
+            int x = random.nextInt(15) + chunk.getX() * 16;
+            int z = random.nextInt(15) + chunk.getZ() * 16;
+            int y = world.getHighestBlockYAt(x, z);
+            if (y == -1) return;
 
-            Location location = new Location(world, blockX + chunk.getX() * 16, blockY, blockZ + chunk.getZ() * 16);
+            Location location = new Location(world, x, y, z);
             AetherWorld.instantiatePrefab(location, tree);
         }
     }

@@ -1,18 +1,18 @@
 package de.danielmaile.aether.portal;
 
-import org.bukkit.Bukkit;
+import de.danielmaile.aether.worldgen.AetherWorld;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.MultipleFacing;
 
 public class AetherPortal
 {
     /**
      * Checks for Portal in all different directions and lights it if one is found
      *
-     * @param filled true: Checks for filled Portal, false: Checks for empty Portal and lights it if it found one
+     * @param location location to check (location of the block above the portal bottom
+     * @param filled   true: Checks for filled Portal, false: Checks for empty Portal and lights it if it found one
      * @return true if a portal was found
      */
     public static boolean checkPortal(Location location, boolean filled)
@@ -25,11 +25,11 @@ public class AetherPortal
             {
                 block = block.getRelative(BlockFace.DOWN);
 
-                if(filled && checkPortal(block, direction, true))
+                if (filled && checkPortal(block, direction, true))
                 {
                     return true;
                 }
-                else if(!filled && checkPortal(block, direction, false))
+                else if (!filled && checkPortal(block, direction, false))
                 {
                     lightPortal(block, direction);
                     return true;
@@ -48,20 +48,16 @@ public class AetherPortal
         for (BlockFace blockFace : directions)
         {
             block = block.getRelative(blockFace);
-            block.setType(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
-
-            MultipleFacing data = (MultipleFacing) Bukkit.createBlockData(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
-            data.setFace(direction, true);
-            data.setFace(direction.getOppositeFace(), true);
-            block.setBlockData(data);
+            block.setType(Material.END_GATEWAY);
         }
     }
 
     /**
      * Checks for a glowstone portal at given location
+     *
      * @param bottomBlock bottom inside block of the portal
-     * @param direction direction in with the portal is located
-     * @param filled true if the portal should be filled with stained glass, false if it should be air
+     * @param direction   direction in with the portal is located
+     * @param filled      true if the portal should be filled with stained glass, false if it should be air
      * @return true if portal was found
      */
     private static boolean checkPortal(Block bottomBlock, BlockFace direction, boolean filled)
@@ -83,7 +79,7 @@ public class AetherPortal
         }
 
         //Check for blocks inside portal
-        Material toCheck = filled ? Material.LIGHT_BLUE_STAINED_GLASS_PANE : Material.AIR;
+        Material toCheck = filled ? Material.END_GATEWAY : Material.AIR;
         BlockFace[] filledDirections = {BlockFace.UP, BlockFace.UP, BlockFace.UP,
                 direction, BlockFace.DOWN, BlockFace.DOWN};
 
@@ -96,5 +92,33 @@ public class AetherPortal
         }
 
         return true;
+    }
+
+    public static void createPortal(Location location)
+    {
+        AetherWorld.instantiatePrefab(location, "portal");
+    }
+
+    public static Location findPortalInRadius(Location location, int radius)
+    {
+        for (int y = location.getWorld().getMaxHeight() - 1; y >= 0; y--)
+        {
+            for (int x = location.getBlockX() - radius; x <= location.getBlockX() + radius; x++)
+            {
+
+                for (int z = location.getBlockZ() - radius; z <= location.getBlockZ() + radius; z++)
+                {
+                    Location portalLocation = new Location(location.getWorld(), x, y, z);
+                    if (location.getWorld().getBlockAt(portalLocation).getType() == Material.GLOWSTONE)
+                    {
+                        if (checkPortal(portalLocation.clone().add(0, -1, 0), true))
+                        {
+                            return portalLocation;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
     }
 }

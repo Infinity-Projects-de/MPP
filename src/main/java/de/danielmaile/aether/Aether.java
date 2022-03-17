@@ -16,13 +16,10 @@ public final class Aether extends JavaPlugin
     public static final String PREFIX = ChatColor.LIGHT_PURPLE + "[Aether] " + ChatColor.GRAY;
     private static Logger logger;
 
-    public static Aether instace;
-
     @Override
     public void onEnable()
     {
-        instace = this;
-        logger = Logger.getLogger("Minecraft");
+        logger = getLogger();
 
         //Register listener and commands
         getServer().getPluginManager().registerEvents(new ListenerAetherVoid(), this);
@@ -35,5 +32,10 @@ public final class Aether extends JavaPlugin
     public static void logError(String message)
     {
         logger.severe(message);
+    }
+
+    public static void logInfo(String message)
+    {
+        logger.info(message);
     }
 }

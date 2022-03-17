@@ -1,6 +1,9 @@
 package de.danielmaile.aether.portal;
 
+import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.worldgen.AetherWorld;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
@@ -30,6 +33,24 @@ public class ListenerPortal implements Listener
     {
         if (AetherWorld.getWorld() == null) return;
         if (!AetherPortal.checkPortal(event.getTo(), true)) return;
-        event.getPlayer().teleport(AetherWorld.getWorld().getSpawnLocation());
+
+        Location toLocation = event.getPlayer().getLocation().clone();
+        toLocation.setWorld(event.getPlayer().getWorld().equals(AetherWorld.getWorld()) ? Bukkit.getWorlds().get(0) : AetherWorld.getWorld());
+
+        Location portalLocation = AetherPortal.findPortalInRadius(toLocation, 32);
+        if (portalLocation != null)
+        {
+            Aether.logInfo("Portal found at: " + portalLocation);
+            event.getPlayer().teleport(portalLocation.add(0, 10, 0));
+        }
+        else
+        {
+            Aether.logInfo("No Portal found in radius at: " + toLocation);
+            toLocation.setY(toLocation.getWorld().getHighestBlockYAt(toLocation) + 2);
+            Aether.logInfo("Create new portal at: " + toLocation);
+            AetherPortal.createPortal(toLocation);
+            event.getPlayer().teleport(toLocation.add(0, 10, 0));
+        }
+
     }
 }
