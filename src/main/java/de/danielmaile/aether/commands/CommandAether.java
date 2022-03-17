@@ -1,5 +1,6 @@
 package de.danielmaile.aether.commands;
 
+import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import org.bukkit.ChatColor;
@@ -40,7 +41,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
                 teleport(player);
                 return true;
             case "prefab":
-                AetherWorld.loadPrefab(player.getLocation(), "tree");
+                AetherWorld.instantiatePrefab(player.getLocation(), "tree");
                 return true;
             default:
                 sendHelp(player);

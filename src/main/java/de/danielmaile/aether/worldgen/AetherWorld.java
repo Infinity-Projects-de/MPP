@@ -43,6 +43,11 @@ public class AetherWorld
             Aether.logError("Fehler beim kopieren des Datapacks. Starte deinen Server neu und versuche es erneut!");
         }
 
+        //Add populators to Aether world
+        if (getWorld() != null)
+        {
+            getWorld().getPopulators().add(new TreePopulator());
+        }
     }
 
     private static void copyDatapack() throws IOException, URISyntaxException
@@ -76,7 +81,7 @@ public class AetherWorld
         File outputDirectory = new File(outputPath.substring(0, outputPath.lastIndexOf('/')));
         if (!outputDirectory.exists())
         {
-            if(!outputDirectory.mkdirs())
+            if (!outputDirectory.mkdirs())
             {
                 Aether.logError("Output directories can't be created!");
                 return;
@@ -101,40 +106,47 @@ public class AetherWorld
         return AetherWorld.class.getClassLoader().getResourceAsStream(filename);
     }
 
-    public static void loadPrefab(Location location, String prefabName)
+    public static Clipboard loadPrefabToClipboard(String prefabName)
     {
+        Clipboard clipboard = null;
         try
         {
             InputStream inputStream = getResource("prefabs/" + prefabName + ".schem");
-
             ClipboardFormat format = ClipboardFormats.findByAlias("schem");
             if (format == null) throw new NullPointerException();
             ClipboardReader reader = format.getReader(inputStream);
-            Clipboard clipboard = reader.read();
-
-            com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(location.getWorld());
-            EditSession editSession = WorldEdit.getInstance().newEditSession(adaptedWorld);
-            Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
-                    .to(BlockVector3.at(location.getX(), location.getY(), location.getZ())).ignoreAirBlocks(true).build();
-
-            try
-            {
-                Operations.complete(operation);
-                editSession.close();
-            }
-            catch (WorldEditException exception)
-            {
-                exception.printStackTrace();
-            }
-            finally
-            {
-                inputStream.close();
-            }
+            clipboard = reader.read();
+            inputStream.close();
         }
-        catch (IOException exception)
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return clipboard;
+    }
+
+    public static void instantiatePrefab(Location location, String prefabName)
+    {
+        Clipboard clipboard = loadPrefabToClipboard(prefabName);
+        instantiatePrefab(location, clipboard);
+    }
+
+    public static void instantiatePrefab(Location location, Clipboard clipboard)
+    {
+        com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(location.getWorld());
+        EditSession editSession = WorldEdit.getInstance().newEditSession(adaptedWorld);
+        Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
+                .to(BlockVector3.at(location.getX(), location.getY(), location.getZ())).ignoreAirBlocks(true).build();
+
+        try
+        {
+            Operations.complete(operation);
+            editSession.close();
+        }
+        catch (WorldEditException exception)
         {
             exception.printStackTrace();
         }
-
     }
 }
