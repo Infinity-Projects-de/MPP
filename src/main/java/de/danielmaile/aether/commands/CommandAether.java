@@ -22,12 +22,11 @@ public class CommandAether implements CommandExecutor, TabExecutor
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args)
     {
-        if (!(sender instanceof Player))
+        if (!(sender instanceof Player player))
         {
             sender.sendMessage(Aether.PREFIX + ChatColor.RED + "Aether-Befehle können nur von Spielern ausgeführt werden!");
             return true;
         }
-        Player player = (Player) sender;
 
         if (args.length != 1)
         {
@@ -39,6 +38,9 @@ public class CommandAether implements CommandExecutor, TabExecutor
         {
             case "teleport":
                 teleport(player);
+                return true;
+            case "prefab":
+                AetherWorld.loadPrefab(player.getLocation(), "tree");
                 return true;
             default:
                 sendHelp(player);
@@ -76,6 +78,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
         if (args.length == 1)
         {
             tabComplete.add("teleport");
+            tabComplete.add("prefab");
             StringUtil.copyPartialMatches(args[0], tabComplete, completions);
         }
 

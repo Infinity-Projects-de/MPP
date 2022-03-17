@@ -16,9 +16,12 @@ public final class Aether extends JavaPlugin
     public static final String PREFIX = ChatColor.LIGHT_PURPLE + "[Aether] " + ChatColor.GRAY;
     private static Logger logger;
 
+    public static Aether instace;
+
     @Override
     public void onEnable()
     {
+        instace = this;
         logger = Logger.getLogger("Minecraft");
 
         //Register listener and commands

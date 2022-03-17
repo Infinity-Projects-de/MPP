@@ -1,15 +1,26 @@
 package de.danielmaile.aether.worldgen;
 
+import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.WorldEdit;
+import com.sk89q.worldedit.WorldEditException;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.extent.clipboard.Clipboard;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
+import com.sk89q.worldedit.function.operation.Operation;
+import com.sk89q.worldedit.function.operation.Operations;
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.session.ClipboardHolder;
 import de.danielmaile.aether.Aether;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.World;
 
 import javax.annotation.Nullable;
 import java.io.*;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLConnection;
 
 public class AetherWorld
 {
@@ -65,7 +76,11 @@ public class AetherWorld
         File outputDirectory = new File(outputPath.substring(0, outputPath.lastIndexOf('/')));
         if (!outputDirectory.exists())
         {
-            outputDirectory.mkdirs();
+            if(!outputDirectory.mkdirs())
+            {
+                Aether.logError("Output directories can't be created!");
+                return;
+            }
         }
 
         //Write file
@@ -83,15 +98,43 @@ public class AetherWorld
 
     private static InputStream getResource(String filename) throws IOException
     {
-        URL url = AetherWorld.class.getClassLoader().getResource(filename);
+        return AetherWorld.class.getClassLoader().getResourceAsStream(filename);
+    }
 
-        if (url == null)
+    public static void loadPrefab(Location location, String prefabName)
+    {
+        try
         {
-            return null;
+            InputStream inputStream = getResource("prefabs/" + prefabName + ".schem");
+
+            ClipboardFormat format = ClipboardFormats.findByAlias("schem");
+            if (format == null) throw new NullPointerException();
+            ClipboardReader reader = format.getReader(inputStream);
+            Clipboard clipboard = reader.read();
+
+            com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(location.getWorld());
+            EditSession editSession = WorldEdit.getInstance().newEditSession(adaptedWorld);
+            Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
+                    .to(BlockVector3.at(location.getX(), location.getY(), location.getZ())).ignoreAirBlocks(true).build();
+
+            try
+            {
+                Operations.complete(operation);
+                editSession.close();
+            }
+            catch (WorldEditException exception)
+            {
+                exception.printStackTrace();
+            }
+            finally
+            {
+                inputStream.close();
+            }
+        }
+        catch (IOException exception)
+        {
+            exception.printStackTrace();
         }
 
-        URLConnection connection = url.openConnection();
-        connection.setUseCaches(false);
-        return connection.getInputStream();
     }
 }
