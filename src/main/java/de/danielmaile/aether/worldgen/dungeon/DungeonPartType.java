@@ -1,5 +1,8 @@
 package de.danielmaile.aether.worldgen.dungeon;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum DungeonPartType
 {
     T("T_var1", true, false, false, false),
@@ -18,43 +21,40 @@ public enum DungeonPartType
     BLR("BLR_var1", false, true, true, true),
     TBLR("TBLR_var1", true, true, true, true);
 
-    public boolean canConnectTop()
-    {
-        return canConnectTop;
-    }
-
-    public boolean canConnectBottom()
-    {
-        return canConnectBottom;
-    }
-
-    public boolean canConnectLeft()
-    {
-        return canConnectLeft;
-    }
-
-    public boolean canConnectRight()
-    {
-        return canConnectRight;
-    }
-
     public String getPrefabName()
     {
         return prefabName;
     }
 
     private final String prefabName;
-    private final boolean canConnectTop;
-    private final boolean canConnectBottom;
-    private final boolean canConnectLeft;
-    private final boolean canConnectRight;
 
-    DungeonPartType(String prefabName, boolean canConnectTop, boolean canConnectBottom, boolean canConnectLeft, boolean canConnectRight)
+    public List<Direction> getCanConnectDirections()
+    {
+        return canConnectDirections;
+    }
+
+    private final List<Direction> canConnectDirections;
+
+    DungeonPartType(String prefabName, boolean canConnectTop, boolean canConnectBottom,
+                    boolean canConnectLeft, boolean canConnectRight)
     {
         this.prefabName = prefabName;
-        this.canConnectTop = canConnectTop;
-        this.canConnectBottom = canConnectBottom;
-        this.canConnectLeft = canConnectLeft;
-        this.canConnectRight = canConnectRight;
+
+        canConnectDirections = new ArrayList<>();
+        if (canConnectTop) canConnectDirections.add(Direction.TOP);
+        if (canConnectBottom) canConnectDirections.add(Direction.BOTTOM);
+        if (canConnectLeft) canConnectDirections.add(Direction.LEFT);
+        if (canConnectRight) canConnectDirections.add(Direction.RIGHT);
+    }
+
+    public static DungeonPartType getEndPart(Direction direction)
+    {
+        return switch (direction)
+        {
+            case TOP -> DungeonPartType.T;
+            case BOTTOM -> DungeonPartType.B;
+            case LEFT -> DungeonPartType.L;
+            case RIGHT -> DungeonPartType.R;
+        };
     }
 }

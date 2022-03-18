@@ -1,152 +1,88 @@
 package de.danielmaile.aether.worldgen.dungeon;
 
 import de.danielmaile.aether.Aether;
+import de.danielmaile.aether.worldgen.AetherWorld;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+import org.bukkit.Location;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class DungeonGenerator
 {
-    public enum Opening
+    public void generateDungeon(Location blockLocation, Random random, float endPartChance)
     {
-        TOP, BOTTOM, LEFT, RIGHT
+        Aether.logInfo("Start dungeon generation with end part chance: " + endPartChance + " at location: " + blockLocation);
+
+        //Generating parts
+        List<DungeonPart> parts = generateDungeonParts(random, endPartChance);
+        Aether.logInfo("Generated " + parts.size() + " dungeon parts");
+        Aether.logInfo("Loading schematics in the world...");
+
+        //Load schematics
+        for(DungeonPart part : parts)
+        {
+            Location prefabLocation = blockLocation.clone().add(part.getPosition().getX() * 16, 0, part.getPosition().getY() * 16);
+            AetherWorld.instantiatePrefab(prefabLocation, "dungeon/" + part.getType().getPrefabName());
+            Aether.logInfo("Placed Part(" + part.getType() + ", " + part.getPosition().getX() + ", " + part.getPosition().getY()
+                    + ") schematic at: " + prefabLocation);
+        }
+
+        Aether.logInfo("Finished dungeon generation successfully");
     }
 
-    private final List<DungeonPart> parts = new ArrayList<>();
-
-    public void generateDungeon(Random random)
+    public List<DungeonPart> generateDungeonParts(Random random, float endPartChance)
     {
-        Aether.logInfo("Start dungeon generation");
+        List<DungeonPart> parts = new ArrayList<>();
 
         //First part TBLR
-        parts.add(new DungeonPart(DungeonPartType.TBLR, new Vector2D(0, 0)));
+        List<DungeonPart> newParts = new ArrayList<>();
+        newParts.add(new DungeonPart(DungeonPartType.TBLR, new Vector2D(0, 0)));
 
-        //Add parts until no more can be added
-
-        boolean finished = false;
-        while (!finished)
+        //Add parts until no more paths lead to the outside of the dungeon
+        while (!newParts.isEmpty())
         {
-            finished = true;
-            List<DungeonPart> toAdd = new ArrayList<>();
+            parts.addAll(newParts);
+            newParts.clear();
 
             for (DungeonPart part : parts)
             {
-                //Add top part
-                if (part.getType().canConnectTop())
+                for(Direction connectDirection : part.getType().getCanConnectDirections())
                 {
-                    Vector2D newPartPos = part.getPosition().add(new Vector2D(0, 1));
-                    //Check if there is already a part
-                    if (getPartAt(newPartPos) == null)
-                    {
-                        toAdd.add(getRandomPartWithOpening(random, Opening.BOTTOM, newPartPos));
-                        finished = false;
-                    }
-                }
-
-                //Add bottom part
-                if (part.getType().canConnectBottom())
-                {
-                    Vector2D newPartPos = part.getPosition().add(new Vector2D(0, -1));
-                    //Check if there is already a part
-                    if (getPartAt(newPartPos) == null)
-                    {
-                        toAdd.add(getRandomPartWithOpening(random, Opening.TOP, newPartPos));
-                        finished = false;
-                    }
-                }
-
-                //Add left part
-                if (part.getType().canConnectLeft())
-                {
-                    Vector2D newPartPos = part.getPosition().add(new Vector2D(-1, 0));
-                    //Check if there is already a part
-                    if (getPartAt(newPartPos) == null)
-                    {
-                        toAdd.add(getRandomPartWithOpening(random, Opening.RIGHT, newPartPos));
-                        finished = false;
-                    }
-                }
-
-                //Add right part
-                if (part.getType().canConnectRight())
-                {
-                    Vector2D newPartPos = part.getPosition().add(new Vector2D(1, 0));
-                    //Check if there is already a part
-                    if (getPartAt(newPartPos) == null)
-                    {
-                        toAdd.add(getRandomPartWithOpening(random, Opening.LEFT, newPartPos));
-                        finished = false;
-                    }
+                    Vector2D newPartPos = part.getPosition().add(connectDirection.getRelativePos());
+                    if(getPartAt(parts, newPartPos) != null) continue;
+                    newParts.add(getRandomPart(random, endPartChance, connectDirection.getOpposite(), newPartPos));
                 }
             }
-
-            parts.addAll(toAdd);
         }
-
-        Aether.logInfo("Finished dungeon generation:");
-
-        for(DungeonPart part : parts)
-        {
-            Aether.logInfo("Part: " + part.getType().toString() + " at: " + part.getPosition().toString());
-        }
+        return parts;
     }
 
     @Nullable
-    private DungeonPart getPartAt(Vector2D position)
+    private DungeonPart getPartAt(List<DungeonPart> partList, Vector2D position)
     {
-        return parts.stream().filter(part -> position.equals(part.getPosition())).findFirst().orElse(null);
+        return partList.stream().filter(part -> position.equals(part.getPosition())).findFirst().orElse(null);
     }
 
-    private DungeonPart getRandomPartWithOpening(Random random, Opening opening, Vector2D position)
+    /**
+     * @param opening the direction of the opening the part should have
+     * @param position the position of the new part
+     * @param endPartChance chance for the new Part to be an end part
+     */
+    private DungeonPart getRandomPart(Random random, float endPartChance, Direction opening, Vector2D position)
     {
-        List<DungeonPartType> validTypes = new ArrayList<>();
-
-        for (DungeonPartType type : DungeonPartType.values())
+        if(random.nextFloat() <= endPartChance)
         {
-            if (type.canConnectTop() && opening == Opening.TOP)
-            {
-                //5% Chance for end part
-                if(random.nextFloat() > 0.95f)
-                {
-                    return new DungeonPart(DungeonPartType.T, position);
-                }
-                validTypes.add(type);
-            }
-
-            if (type.canConnectBottom() && opening == Opening.BOTTOM)
-            {
-                //5% Chance for end part
-                if(random.nextFloat() > 0.95f)
-                {
-                    return new DungeonPart(DungeonPartType.B, position);
-                }
-                validTypes.add(type);
-            }
-
-            if (type.canConnectLeft() && opening == Opening.LEFT)
-            {
-                //5% Chance for end part
-                if(random.nextFloat() > 0.95f)
-                {
-                    return new DungeonPart(DungeonPartType.L, position);
-                }
-                validTypes.add(type);
-            }
-
-            if (type.canConnectRight() && opening == Opening.RIGHT)
-            {
-                //5% Chance for end part
-                if(random.nextFloat() > 0.95f)
-                {
-                    return new DungeonPart(DungeonPartType.R, position);
-                }
-                validTypes.add(type);
-            }
+            return new DungeonPart(DungeonPartType.getEndPart(opening), position);
         }
 
+        List<DungeonPartType> validTypes = Arrays.stream(DungeonPartType.values())
+                .filter(type -> type.getCanConnectDirections().contains(opening))
+                .collect(Collectors.toList());
         return new DungeonPart(validTypes.get(random.nextInt(validTypes.size())), position);
     }
 }

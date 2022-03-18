@@ -47,9 +47,9 @@ public class CommandAether implements CommandExecutor, TabExecutor
                 return true;
             }
             case "dungeon" -> {
-                DungeonGenerator dungeonGenerator = new DungeonGenerator();
                 Random random = new Random();
-                dungeonGenerator.generateDungeon(random);
+                DungeonGenerator dungeonGenerator = new DungeonGenerator();
+                dungeonGenerator.generateDungeon(player.getLocation().getBlock().getLocation(), random, 0.2f);
                 return true;
             }
             default -> {
@@ -90,6 +90,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
         {
             tabComplete.add("teleport");
             tabComplete.add("prefab");
+            tabComplete.add("dungeon");
             StringUtil.copyPartialMatches(args[0], tabComplete, completions);
         }
 
