@@ -1,8 +1,8 @@
 package de.danielmaile.aether.commands;
 
-import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.worldgen.AetherWorld;
+import de.danielmaile.aether.worldgen.dungeon.DungeonGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -17,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class CommandAether implements CommandExecutor, TabExecutor
 {
@@ -37,15 +38,24 @@ public class CommandAether implements CommandExecutor, TabExecutor
 
         switch (args[0])
         {
-            case "teleport":
+            case "teleport" -> {
                 teleport(player);
                 return true;
-            case "prefab":
+            }
+            case "prefab" -> {
                 AetherWorld.instantiatePrefab(player.getLocation(), "tree");
                 return true;
-            default:
+            }
+            case "dungeon" -> {
+                DungeonGenerator dungeonGenerator = new DungeonGenerator();
+                Random random = new Random();
+                dungeonGenerator.generateDungeon(random);
+                return true;
+            }
+            default -> {
                 sendHelp(player);
                 return true;
+            }
         }
 
     }
@@ -71,7 +81,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args)
     {
-        if (!(sender instanceof Player)) {return null;}
+        if (!(sender instanceof Player)) { return null; }
 
         final List<String> tabComplete = new ArrayList<>();
         final List<String> completions = new ArrayList<>();
