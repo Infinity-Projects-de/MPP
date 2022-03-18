@@ -39,7 +39,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <outputFile>C:\Programmieren\Minecraft Plugins\Server\plugins\aether.jar</outputFile>
+                            <outputFile>D:\Minecraft Test Server\plugins\aether.jar</outputFile>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                         </configuration>
                     </execution>

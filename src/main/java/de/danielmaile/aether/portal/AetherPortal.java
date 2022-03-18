@@ -101,7 +101,7 @@ public class AetherPortal
 
     public static Location findPortalInRadius(Location location, int radius)
     {
-        for (int y = location.getWorld().getMaxHeight() - 1; y >= 0; y--)
+        for (int y = location.getWorld().getMaxHeight() - 1; y >= location.getWorld().getMinHeight() + 1; y--)
         {
             for (int x = location.getBlockX() - radius; x <= location.getBlockX() + radius; x++)
             {
