@@ -40,15 +40,4 @@ public enum DungeonPartType
         this.prefabName = prefabName;
         this.connection = connection;
     }
-
-    public static DungeonPartType getEndPart(Direction direction)
-    {
-        return switch (direction)
-                {
-                    case EAST -> DungeonPartType.E;
-                    case WEST -> DungeonPartType.W;
-                    case NORTH -> DungeonPartType.N;
-                    case SOUTH -> DungeonPartType.S;
-                };
-    }
 }

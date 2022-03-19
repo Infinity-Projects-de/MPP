@@ -30,34 +30,23 @@ public class CommandAether implements CommandExecutor, TabExecutor
             return true;
         }
 
-        if (args.length != 1)
+        if (args.length == 1 && args[0].equalsIgnoreCase("teleport"))
+        {
+            teleport(player);
+        }
+        else if(args.length == 2 && args[0].equalsIgnoreCase("dungeon"))
+        {
+            float endPartChance = Float.parseFloat(args[1]);
+            Random random = new Random();
+            DungeonGenerator generator = new DungeonGenerator();
+            generator.generateDungeon(player.getLocation().getBlock().getLocation(), random, endPartChance);
+        }
+        else
         {
             sendHelp(player);
-            return true;
         }
 
-        switch (args[0])
-        {
-            case "teleport" -> {
-                teleport(player);
-                return true;
-            }
-            case "prefab" -> {
-                AetherWorld.instantiatePrefab(player.getLocation(), "dungeon/W_var1");
-                return true;
-            }
-            case "dungeon" -> {
-                Random random = new Random();
-                DungeonGenerator dungeonGenerator = new DungeonGenerator();
-                dungeonGenerator.generateDungeon(player.getLocation().getBlock().getLocation(), random, 0.3f);
-                return true;
-            }
-            default -> {
-                sendHelp(player);
-                return true;
-            }
-        }
-
+        return true;
     }
 
     private void teleport(@NotNull Player player)
@@ -76,6 +65,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
     private void sendHelp(@NotNull Player player)
     {
         player.sendMessage(Aether.PREFIX + "/ae teleport - Teleportiert dich in die Aether-Welt.");
+        player.sendMessage(Aether.PREFIX + "/ae dungeon <end part chance> - Generiert einen Dungeon an deiner Position.");
     }
 
     @Override
@@ -89,7 +79,6 @@ public class CommandAether implements CommandExecutor, TabExecutor
         if (args.length == 1)
         {
             tabComplete.add("teleport");
-            tabComplete.add("prefab");
             tabComplete.add("dungeon");
             StringUtil.copyPartialMatches(args[0], tabComplete, completions);
         }
