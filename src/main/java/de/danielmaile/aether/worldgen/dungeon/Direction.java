@@ -4,10 +4,10 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 public enum Direction
 {
-    TOP(new Vector2D(0, 1)),
-    BOTTOM(new Vector2D(0, -1)),
-    LEFT(new Vector2D(-1, 0)),
-    RIGHT(new Vector2D(1, 0));
+    EAST(new Vector2D(1, 0)),
+    WEST(new Vector2D(-1, 0)),
+    SOUTH(new Vector2D(0, 1)),
+    NORTH(new Vector2D(0, -1));
 
     public Vector2D getRelativePos()
     {
@@ -25,10 +25,10 @@ public enum Direction
     {
         return switch (this)
                 {
-                    case TOP -> BOTTOM;
-                    case BOTTOM -> TOP;
-                    case LEFT -> RIGHT;
-                    case RIGHT -> LEFT;
+                    case EAST -> WEST;
+                    case WEST -> EAST;
+                    case NORTH -> SOUTH;
+                    case SOUTH -> NORTH;
                 };
     }
 }

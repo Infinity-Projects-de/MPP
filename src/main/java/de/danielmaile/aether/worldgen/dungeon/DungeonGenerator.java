@@ -41,7 +41,7 @@ public class DungeonGenerator
 
         //First part TBLR
         List<DungeonPart> newParts = new ArrayList<>();
-        newParts.add(new DungeonPart(DungeonPartType.TBLR, new Vector2D(0, 0)));
+        newParts.add(new DungeonPart(DungeonPartType.EWSN, new Vector2D(0, 0)));
 
         //Add parts until no more paths lead to the outside of the dungeon
         while (!newParts.isEmpty())
@@ -51,7 +51,7 @@ public class DungeonGenerator
 
             for (DungeonPart part : parts)
             {
-                for(Direction connectDirection : part.getType().getCanConnectDirections())
+                for(Direction connectDirection : part.getType().getConnection().getConnectDirections())
                 {
                     Vector2D newPartPos = part.getPosition().add(connectDirection.getRelativePos());
                     if(getPartAt(parts, newPartPos) != null) continue;
@@ -81,7 +81,7 @@ public class DungeonGenerator
         }
 
         List<DungeonPartType> validTypes = Arrays.stream(DungeonPartType.values())
-                .filter(type -> type.getCanConnectDirections().contains(opening))
+                .filter(type -> type.getConnection().getConnectDirections().contains(opening))
                 .collect(Collectors.toList());
         return new DungeonPart(validTypes.get(random.nextInt(validTypes.size())), position);
     }

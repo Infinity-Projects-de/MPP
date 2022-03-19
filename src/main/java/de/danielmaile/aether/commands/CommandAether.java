@@ -43,13 +43,13 @@ public class CommandAether implements CommandExecutor, TabExecutor
                 return true;
             }
             case "prefab" -> {
-                AetherWorld.instantiatePrefab(player.getLocation(), "tree");
+                AetherWorld.instantiatePrefab(player.getLocation(), "dungeon/W_var1");
                 return true;
             }
             case "dungeon" -> {
                 Random random = new Random();
                 DungeonGenerator dungeonGenerator = new DungeonGenerator();
-                dungeonGenerator.generateDungeon(player.getLocation().getBlock().getLocation(), random, 0.2f);
+                dungeonGenerator.generateDungeon(player.getLocation().getBlock().getLocation(), random, 0.3f);
                 return true;
             }
             default -> {

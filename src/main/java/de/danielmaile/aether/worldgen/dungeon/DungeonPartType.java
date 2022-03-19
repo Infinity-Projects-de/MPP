@@ -1,25 +1,25 @@
 package de.danielmaile.aether.worldgen.dungeon;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public enum DungeonPartType
 {
-    T("T_var1", true, false, false, false),
-    B("B_var1", false, true, false, false),
-    L("L_var1", false, false, true, false),
-    R("R_var1", false, false, false, true),
-    TB("TB_var1", true, true, false, false),
-    TL("TL_var1", true, false, true, false),
-    TR("TR_var1", true, false, false, true),
-    BL("BL_var1", false, true, true, false),
-    BR("BR_var1", true, false, false, true),
-    LR("LR_var1", false, false, true, true),
-    TLR("TLR_var1", true, false, true, true),
-    TBL("TBL_var1", true, true, true, false),
-    TBR("TBR_var1", true, true, false, true),
-    BLR("BLR_var1", false, true, true, true),
-    TBLR("TBLR_var1", true, true, true, true);
+    S("S_var1", Connection.fromDirections(Direction.SOUTH)),
+    N("N_var1", Connection.fromDirections(Direction.NORTH)),
+    W("W_var1", Connection.fromDirections(Direction.WEST)),
+    E("E_var1", Connection.fromDirections(Direction.EAST)),
+
+    SN("SN_var1", Connection.fromDirections(Direction.SOUTH, Direction.NORTH)),
+    WS("WS_var1", Connection.fromDirections(Direction.WEST, Direction.SOUTH)),
+    ES("ES_var1", Connection.fromDirections(Direction.EAST, Direction.SOUTH)),
+    WN("WN_var1", Connection.fromDirections(Direction.WEST, Direction.NORTH)),
+    EN("EN_var1", Connection.fromDirections(Direction.EAST, Direction.NORTH)),
+    EW("EW_var1", Connection.fromDirections(Direction.EAST, Direction.WEST)),
+
+    EWS("EWS_var1", Connection.fromDirections(Direction.EAST, Direction.WEST, Direction.SOUTH)),
+    WSN("WSN_var1", Connection.fromDirections(Direction.WEST, Direction.SOUTH, Direction.NORTH)),
+    ESN("ESN_var1", Connection.fromDirections(Direction.EAST, Direction.SOUTH, Direction.NORTH)),
+    EWN("EWN_var1", Connection.fromDirections(Direction.EAST, Direction.WEST, Direction.NORTH)),
+
+    EWSN("EWSN_var1", Connection.fromDirections(Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH));
 
     public String getPrefabName()
     {
@@ -28,33 +28,27 @@ public enum DungeonPartType
 
     private final String prefabName;
 
-    public List<Direction> getCanConnectDirections()
+    public Connection getConnection()
     {
-        return canConnectDirections;
+        return connection;
     }
 
-    private final List<Direction> canConnectDirections;
+    private final Connection connection;
 
-    DungeonPartType(String prefabName, boolean canConnectTop, boolean canConnectBottom,
-                    boolean canConnectLeft, boolean canConnectRight)
+    DungeonPartType(String prefabName, Connection connection)
     {
         this.prefabName = prefabName;
-
-        canConnectDirections = new ArrayList<>();
-        if (canConnectTop) canConnectDirections.add(Direction.TOP);
-        if (canConnectBottom) canConnectDirections.add(Direction.BOTTOM);
-        if (canConnectLeft) canConnectDirections.add(Direction.LEFT);
-        if (canConnectRight) canConnectDirections.add(Direction.RIGHT);
+        this.connection = connection;
     }
 
     public static DungeonPartType getEndPart(Direction direction)
     {
         return switch (direction)
-        {
-            case TOP -> DungeonPartType.T;
-            case BOTTOM -> DungeonPartType.B;
-            case LEFT -> DungeonPartType.L;
-            case RIGHT -> DungeonPartType.R;
-        };
+                {
+                    case EAST -> DungeonPartType.E;
+                    case WEST -> DungeonPartType.W;
+                    case NORTH -> DungeonPartType.N;
+                    case SOUTH -> DungeonPartType.S;
+                };
     }
 }
