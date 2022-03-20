@@ -47,6 +47,7 @@ public class AetherWorld
         if (getWorld() != null)
         {
             getWorld().getPopulators().add(new TreePopulator());
+            getWorld().getPopulators().add(new DungeonPopulator());
         }
     }
 
