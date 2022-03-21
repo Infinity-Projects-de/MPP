@@ -24,7 +24,7 @@ public class ListenerBlock implements Listener
         CustomItemType customItemType = CustomItemType.getFromBlockMaterial(block.getType());
         if(customItemType == null) return;
 
-        block.getWorld().dropItemNaturally(location, customItemType.getItemStack(1));
+        block.getWorld().dropItemNaturally(location, customItemType.getItemStack());
         event.setDropItems(false);
     }
 

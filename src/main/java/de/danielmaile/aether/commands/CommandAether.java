@@ -46,7 +46,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
             try
             {
                 CustomItemType item = CustomItemType.valueOf(args[1].toUpperCase());
-                player.getInventory().addItem(item.getItemStack(1));
+                player.getInventory().addItem(item.getItemStack());
             }
             catch (IllegalArgumentException exception)
             {
@@ -100,7 +100,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
         if(args.length == 2 && args[0].equalsIgnoreCase("give"))
         {
             //Get ItemNames from enum
-            List<String> itemNames = Stream.of(CustomItemType.values()).map(Enum::name).collect(Collectors.toList());
+            List<String> itemNames = Stream.of(CustomItemType.values()).map(Enum::name).toList();
             tabComplete.addAll(itemNames);
             StringUtil.copyPartialMatches(args[1], tabComplete, completions);
         }

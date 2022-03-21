@@ -1,7 +1,9 @@
 package de.danielmaile.aether;
 
 import de.danielmaile.aether.commands.CommandAether;
+import de.danielmaile.aether.item.CustomRecipe;
 import de.danielmaile.aether.item.ListenerBlock;
+import de.danielmaile.aether.item.ListenerCrafting;
 import de.danielmaile.aether.listeners.ListenerAetherVoid;
 import de.danielmaile.aether.portal.ListenerPortal;
 import de.danielmaile.aether.worldgen.AetherWorld;
@@ -16,20 +18,7 @@ public final class Aether extends JavaPlugin
 {
     public static final String PREFIX = ChatColor.LIGHT_PURPLE + "[Aether] " + ChatColor.GRAY;
     private static Logger logger;
-
-    @Override
-    public void onEnable()
-    {
-        logger = getLogger();
-
-        //Register listener and commands
-        getServer().getPluginManager().registerEvents(new ListenerAetherVoid(), this);
-        getServer().getPluginManager().registerEvents(new ListenerPortal(), this);
-        getServer().getPluginManager().registerEvents(new ListenerBlock(), this);
-        Objects.requireNonNull(Bukkit.getPluginCommand("aether")).setExecutor(new CommandAether());
-
-        AetherWorld.init();
-    }
+    private static Aether instance;
 
     public static void logError(String message)
     {
@@ -39,5 +28,35 @@ public final class Aether extends JavaPlugin
     public static void logInfo(String message)
     {
         logger.info(message);
+    }
+
+    public static Aether getInstance()
+    {
+        return instance;
+    }
+
+    @Override
+    public void onEnable()
+    {
+        logger = getLogger();
+        instance = this;
+
+        //Register listener and commands
+        getServer().getPluginManager().registerEvents(new ListenerAetherVoid(), this);
+        getServer().getPluginManager().registerEvents(new ListenerPortal(), this);
+        getServer().getPluginManager().registerEvents(new ListenerBlock(), this);
+        getServer().getPluginManager().registerEvents(new ListenerCrafting(), this);
+        Objects.requireNonNull(Bukkit.getPluginCommand("aether")).setExecutor(new CommandAether());
+
+        registerRecipes();
+        AetherWorld.init();
+    }
+
+    private void registerRecipes()
+    {
+        for(CustomRecipe customRecipe : CustomRecipe.values())
+        {
+            Bukkit.addRecipe(customRecipe.getRecipe());
+        }
     }
 }

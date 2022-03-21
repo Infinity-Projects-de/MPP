@@ -163,6 +163,11 @@ public enum CustomItemType
         return blockMaterial;
     }
 
+    public ItemStack getItemStack()
+    {
+        return getItemStack(1);
+    }
+
     public ItemStack getItemStack(int amount)
     {
         ItemStack itemStack = new ItemStack(itemMaterial);
