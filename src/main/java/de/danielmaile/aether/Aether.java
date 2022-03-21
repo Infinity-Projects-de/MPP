@@ -1,6 +1,7 @@
 package de.danielmaile.aether;
 
 import de.danielmaile.aether.commands.CommandAether;
+import de.danielmaile.aether.item.ListenerBlock;
 import de.danielmaile.aether.listeners.ListenerAetherVoid;
 import de.danielmaile.aether.portal.ListenerPortal;
 import de.danielmaile.aether.worldgen.AetherWorld;
@@ -24,6 +25,7 @@ public final class Aether extends JavaPlugin
         //Register listener and commands
         getServer().getPluginManager().registerEvents(new ListenerAetherVoid(), this);
         getServer().getPluginManager().registerEvents(new ListenerPortal(), this);
+        getServer().getPluginManager().registerEvents(new ListenerBlock(), this);
         Objects.requireNonNull(Bukkit.getPluginCommand("aether")).setExecutor(new CommandAether());
 
         AetherWorld.init();
