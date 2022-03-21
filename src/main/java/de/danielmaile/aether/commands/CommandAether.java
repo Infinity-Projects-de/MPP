@@ -1,6 +1,7 @@
 package de.danielmaile.aether.commands;
 
 import de.danielmaile.aether.Aether;
+import de.danielmaile.aether.item.CustomItemType;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import de.danielmaile.aether.worldgen.dungeon.DungeonGenerator;
 import org.bukkit.ChatColor;
@@ -14,10 +15,9 @@ import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CommandAether implements CommandExecutor, TabExecutor
 {
@@ -40,6 +40,18 @@ public class CommandAether implements CommandExecutor, TabExecutor
             Random random = new Random();
             DungeonGenerator generator = new DungeonGenerator();
             generator.generateDungeon(player.getLocation().getBlock().getLocation(), random, endPartChance);
+        }
+        else if(args.length == 2 && args[0].equalsIgnoreCase("give"))
+        {
+            try
+            {
+                CustomItemType item = CustomItemType.valueOf(args[1].toUpperCase());
+                player.getInventory().addItem(item.getItemStack(1));
+            }
+            catch (IllegalArgumentException exception)
+            {
+                player.sendMessage(Aether.PREFIX + " Das Item " + args[1] + " existiert nicht!");
+            }
         }
         else
         {
@@ -66,6 +78,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
     {
         player.sendMessage(Aether.PREFIX + "/ae teleport - Teleportiert dich in die Aether-Welt.");
         player.sendMessage(Aether.PREFIX + "/ae dungeon <end part chance> - Generiert einen Dungeon an deiner Position.");
+        player.sendMessage(Aether.PREFIX + "/ae give <name> - Gibt dir ein Aether Item.");
     }
 
     @Override
@@ -80,7 +93,16 @@ public class CommandAether implements CommandExecutor, TabExecutor
         {
             tabComplete.add("teleport");
             tabComplete.add("dungeon");
+            tabComplete.add("give");
             StringUtil.copyPartialMatches(args[0], tabComplete, completions);
+        }
+
+        if(args.length == 2 && args[0].equalsIgnoreCase("give"))
+        {
+            //Get ItemNames from enum
+            List<String> itemNames = Stream.of(CustomItemType.values()).map(Enum::name).collect(Collectors.toList());
+            tabComplete.addAll(itemNames);
+            StringUtil.copyPartialMatches(args[1], tabComplete, completions);
         }
 
         Collections.sort(completions);

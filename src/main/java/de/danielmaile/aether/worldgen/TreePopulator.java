@@ -15,6 +15,7 @@ public class TreePopulator extends BlockPopulator
 
     public TreePopulator()
     {
+        //TODO crashes server on reload. Needs to be loaded again
         tree = AetherWorld.loadPrefabToClipboard("tree");
     }
 
