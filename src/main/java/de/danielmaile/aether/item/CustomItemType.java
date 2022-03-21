@@ -2,6 +2,7 @@ package de.danielmaile.aether.item;
 
 import de.tr7zw.nbtapi.NBTItem;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -153,10 +154,10 @@ public enum CustomItemType
     {
         ItemStack itemStack = new ItemStack(baseMaterial);
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.displayName(Component.text(name));
+        itemMeta.displayName(Component.text(name).decoration(TextDecoration.ITALIC, false));
         if(description != null)
         {
-            itemMeta.lore(List.of(Component.text(description)));
+            itemMeta.lore(List.of(Component.text(description).decoration(TextDecoration.ITALIC, false)));
         }
         itemMeta.setCustomModelData(modelID);
         itemStack.setItemMeta(itemMeta);
