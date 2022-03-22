@@ -185,7 +185,7 @@ public enum CustomRecipe
                 }
             }
             String shapeString = new String(shape);
-            shapedRecipe.shape(shapeString.substring(0, 2), shapeString.substring(3, 5), shapeString.substring(6, 8));
+            shapedRecipe.shape(shapeString.substring(0, 3), shapeString.substring(3, 6), shapeString.substring(6, 9));
 
             //Set ingredients
             for (int i = 0; i < shape.length; i++)
