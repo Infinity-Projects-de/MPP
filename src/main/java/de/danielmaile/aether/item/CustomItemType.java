@@ -70,7 +70,7 @@ public enum CustomItemType
             2020, Material.NETHERITE_AXE, null),
     GRAVITIT_PICKAXE(ChatColor.LIGHT_PURPLE + "Gravititspitzhacke", null,
             2021, Material.NETHERITE_PICKAXE, null),
-    GRVITIT_SHOVEL(ChatColor.LIGHT_PURPLE + "Gravititschaufel", null,
+    GRAVITIT_SHOVEL(ChatColor.LIGHT_PURPLE + "Gravititschaufel", null,
             2022, Material.NETHERITE_SHOVEL, null),
     LIGHTNING_SWORD("Blitzschwert", "Beschwöre Blitze auf Jenen, der versucht dich zu verletzen.",
             2100, Material.DIAMOND_SWORD, null),
