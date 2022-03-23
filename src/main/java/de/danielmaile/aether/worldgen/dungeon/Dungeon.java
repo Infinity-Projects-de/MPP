@@ -2,10 +2,12 @@ package de.danielmaile.aether.worldgen.dungeon;
 
 import org.bukkit.Location;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
-public class Dungeon
+public class Dungeon implements Serializable
 {
     public List<DungeonPart> getParts()
     {
@@ -21,30 +23,39 @@ public class Dungeon
 
     private final Location monumentLocation;
 
-    Dungeon(List<DungeonPart> parts)
+    public Location getMonumentTargetLocation()
+    {
+        return monumentTargetLocation;
+    }
+
+    private final Location monumentTargetLocation;
+
+    Dungeon(List<DungeonPart> parts, Random random)
     {
         this.parts = parts;
 
         //Try to find valid monument location
         int radius = 20;
-        for(DungeonPart endPart : getEndParts())
+        for (DungeonPart endPart : getEndParts())
         {
-            for(int x = endPart.getWorldLocation().getBlockX() - radius; x <= endPart.getWorldLocation().getBlockX() + radius; x++)
+            for (int x = endPart.getWorldLocation().getBlockX() - radius; x <= endPart.getWorldLocation().getBlockX() + radius; x++)
             {
-                for(int z = endPart.getWorldLocation().getBlockZ() - radius; z <= endPart.getWorldLocation().getBlockZ() + radius; z++)
+                for (int z = endPart.getWorldLocation().getBlockZ() - radius; z <= endPart.getWorldLocation().getBlockZ() + radius; z++)
                 {
                     int y = endPart.getWorldLocation().getWorld().getHighestBlockYAt(endPart.getWorldLocation());
 
                     //Monument has to be at least 16 blocks above dungeon
-                    if(y >= endPart.getWorldLocation().getY() + 16)
+                    if (y >= endPart.getWorldLocation().getY() + 16)
                     {
                         this.monumentLocation = new Location(endPart.getWorldLocation().getWorld(), x, y, z);
+                        this.monumentTargetLocation = getEndParts().get(random.nextInt(getEndParts().size()))
+                                .getWorldLocation().clone().add(-8, 1, 8);
                         return;
                     }
                 }
             }
         }
-        this.monumentLocation = null;
+        this.monumentLocation = this.monumentTargetLocation = null;
     }
 
     public List<DungeonPart> getEndParts()

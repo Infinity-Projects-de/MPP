@@ -5,6 +5,7 @@ import de.danielmaile.aether.item.CustomRecipe;
 import de.danielmaile.aether.item.ListenerBlock;
 import de.danielmaile.aether.item.ListenerCrafting;
 import de.danielmaile.aether.listeners.ListenerAetherVoid;
+import de.danielmaile.aether.listeners.ListenerMonument;
 import de.danielmaile.aether.portal.ListenerPortal;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import org.bukkit.Bukkit;
@@ -46,15 +47,25 @@ public final class Aether extends JavaPlugin
         getServer().getPluginManager().registerEvents(new ListenerPortal(), this);
         getServer().getPluginManager().registerEvents(new ListenerBlock(), this);
         getServer().getPluginManager().registerEvents(new ListenerCrafting(), this);
+        getServer().getPluginManager().registerEvents(new ListenerMonument(), this);
         Objects.requireNonNull(Bukkit.getPluginCommand("aether")).setExecutor(new CommandAether());
 
+        //Create plugin data folder
+        if (!getDataFolder().exists())
+        {
+            boolean fileCreated = getDataFolder().mkdirs();
+            if (!fileCreated)
+            {
+                logError("Failed to create plugin data folder");
+            }
+        }
         registerRecipes();
         AetherWorld.init();
     }
 
     private void registerRecipes()
     {
-        for(CustomRecipe customRecipe : CustomRecipe.values())
+        for (CustomRecipe customRecipe : CustomRecipe.values())
         {
             Bukkit.addRecipe(customRecipe.getRecipe());
         }

@@ -17,12 +17,13 @@ public class DungeonGenerator
 {
     public void generateDungeon(Location origin, Random random, float endPartChance)
     {
-        Dungeon dungeon = new Dungeon(generateDungeonParts(origin, random, endPartChance));
+        Dungeon dungeon = new Dungeon(generateDungeonParts(origin, random, endPartChance), random);
 
         //If no valid monument location is found dungeon doesn't generate
         if (dungeon.getMonumentLocation() == null) return;
 
-        //TODO replace with monument location
+        AetherWorld.addMonument(dungeon.getMonumentLocation(), dungeon.getMonumentTargetLocation());
+        //TODO replace with monument schematic
         dungeon.getMonumentLocation().getBlock().setType(Material.REDSTONE_BLOCK);
 
         for (DungeonPart part : dungeon.getParts())

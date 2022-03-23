@@ -34,13 +34,6 @@ public class CommandAether implements CommandExecutor, TabExecutor
         {
             teleport(player);
         }
-        else if(args.length == 2 && args[0].equalsIgnoreCase("dungeon"))
-        {
-            float endPartChance = Float.parseFloat(args[1]);
-            Random random = new Random();
-            DungeonGenerator generator = new DungeonGenerator();
-            generator.generateDungeon(player.getLocation().getBlock().getLocation(), random, endPartChance);
-        }
         else if(args.length == 2 && args[0].equalsIgnoreCase("give"))
         {
             try
@@ -77,7 +70,6 @@ public class CommandAether implements CommandExecutor, TabExecutor
     private void sendHelp(@NotNull Player player)
     {
         player.sendMessage(Aether.PREFIX + "/ae teleport - Teleportiert dich in die Aether-Welt.");
-        player.sendMessage(Aether.PREFIX + "/ae dungeon <end part chance> - Generiert einen Dungeon an deiner Position.");
         player.sendMessage(Aether.PREFIX + "/ae give <name> - Gibt dir ein Aether Item.");
     }
 

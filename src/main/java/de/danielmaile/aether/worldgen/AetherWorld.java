@@ -13,6 +13,7 @@ import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import de.danielmaile.aether.Aether;
+import de.danielmaile.aether.util.SimpleLocation;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -21,10 +22,65 @@ import org.bukkit.World;
 import javax.annotation.Nullable;
 import java.io.*;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 
 public class AetherWorld
 {
     private static final String worldName = "world_aether_aether";
+
+    public static HashMap<SimpleLocation, SimpleLocation> getMonumentTargetList()
+    {
+        return monumentTargetList;
+    }
+
+    private static HashMap<SimpleLocation, SimpleLocation> monumentTargetList;
+    private static final String monumentSavePath = Aether.getInstance().getDataFolder().getAbsolutePath() + File.separator + "dungeons.aether";
+
+    public static void addMonument(Location monumentLocation, Location targetLocation)
+    {
+        monumentTargetList.put(SimpleLocation.fromLocation(monumentLocation), SimpleLocation.fromLocation(targetLocation));
+        saveMonuments();
+    }
+
+    public static void saveMonuments()
+    {
+        try
+        {
+            FileOutputStream fileOutputStream = new FileOutputStream(monumentSavePath);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(monumentTargetList);
+            objectOutputStream.close();
+            fileOutputStream.close();
+        }
+        catch (IOException e)
+        {
+            Aether.logError("Failed to save monument locations: " + e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void loadMonuments()
+    {
+        File file = new File(monumentSavePath);
+        if (!file.exists())
+        {
+            monumentTargetList = new HashMap<>();
+            return;
+        }
+
+        try
+        {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            monumentTargetList = (HashMap<SimpleLocation, SimpleLocation>) objectInputStream.readObject();
+            objectInputStream.close();
+            fileInputStream.close();
+        }
+        catch (IOException | ClassNotFoundException e)
+        {
+            Aether.logError("Failed to load monument locations: " + e);
+        }
+    }
 
     @Nullable
     public static World getWorld()
@@ -43,12 +99,15 @@ public class AetherWorld
             Aether.logError("Fehler beim kopieren des Datapacks. Starte deinen Server neu und versuche es erneut!");
         }
 
-        //Add populators to Aether world
+        //Add populators to aether world
         if (getWorld() != null)
         {
             getWorld().getPopulators().add(new TreePopulator());
             getWorld().getPopulators().add(new DungeonPopulator());
         }
+
+        //Load monuments
+        loadMonuments();
     }
 
     private static void copyDatapack() throws IOException, URISyntaxException
