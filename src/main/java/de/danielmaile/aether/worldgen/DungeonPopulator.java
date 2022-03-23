@@ -18,8 +18,9 @@ public class DungeonPopulator extends BlockPopulator
         {
             int x = chunk.getX() * 16;
             int z = chunk.getZ() * 16;
-            int y = world.getHighestBlockYAt(x, z);
-            if (y < world.getMinHeight()) return;
+            //Generate dungeon 20 blocks under highest block but not lower than y=150
+            int y = world.getHighestBlockYAt(x, z) - 20;
+            if (y < 150) return;
 
             Location location = new Location(world, x, y, z);
             DungeonGenerator generator = new DungeonGenerator();

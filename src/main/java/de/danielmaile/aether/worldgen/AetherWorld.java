@@ -127,18 +127,18 @@ public class AetherWorld
         return clipboard;
     }
 
-    public static void instantiatePrefab(Location location, String prefabName)
+    public static void instantiatePrefab(Location location, String prefabName, boolean ignoreAirBlocks)
     {
         Clipboard clipboard = loadPrefabToClipboard(prefabName);
-        instantiatePrefab(location, clipboard);
+        instantiatePrefab(location, clipboard, ignoreAirBlocks);
     }
 
-    public static void instantiatePrefab(Location location, Clipboard clipboard)
+    public static void instantiatePrefab(Location location, Clipboard clipboard, boolean ignoreAirBlocks)
     {
         com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(location.getWorld());
         EditSession editSession = WorldEdit.getInstance().newEditSession(adaptedWorld);
         Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
-                .to(BlockVector3.at(location.getX(), location.getY(), location.getZ())).ignoreAirBlocks(true).build();
+                .to(BlockVector3.at(location.getX(), location.getY(), location.getZ())).ignoreAirBlocks(ignoreAirBlocks).build();
 
         try
         {

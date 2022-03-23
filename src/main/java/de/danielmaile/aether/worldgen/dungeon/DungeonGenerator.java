@@ -24,7 +24,7 @@ public class DungeonGenerator
         for (DungeonPart part : parts)
         {
             Location prefabLocation = blockLocation.clone().add(part.getPosition().getX() * 16, 0, part.getPosition().getY() * 16);
-            AetherWorld.instantiatePrefab(prefabLocation, "dungeon/" + part.getType().getPrefabName());
+            AetherWorld.instantiatePrefab(prefabLocation, "dungeon/" + part.getType().getPrefabName(), false);
         }
 
         Aether.logInfo("Finished dungeon generation successfully");

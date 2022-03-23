@@ -96,7 +96,7 @@ public class AetherPortal
 
     public static void createPortal(Location location)
     {
-        AetherWorld.instantiatePrefab(location, "portal");
+        AetherWorld.instantiatePrefab(location, "portal", false);
     }
 
     public static Location findPortalInRadius(Location location, int radius)

@@ -30,7 +30,7 @@ public class TreePopulator extends BlockPopulator
             if (y == -1) return;
 
             Location location = new Location(world, x, y, z);
-            AetherWorld.instantiatePrefab(location, tree);
+            AetherWorld.instantiatePrefab(location, tree, true);
         }
     }
 }
