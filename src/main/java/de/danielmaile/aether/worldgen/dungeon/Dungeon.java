@@ -42,7 +42,7 @@ public class Dungeon implements Serializable
             {
                 for (int z = endPart.getWorldLocation().getBlockZ() - radius; z <= endPart.getWorldLocation().getBlockZ() + radius; z++)
                 {
-                    int y = endPart.getWorldLocation().getWorld().getHighestBlockYAt(endPart.getWorldLocation());
+                    int y = endPart.getWorldLocation().getWorld().getHighestBlockYAt(endPart.getWorldLocation()) + 8;
 
                     //Monument has to be at least 16 blocks above dungeon
                     if (y >= endPart.getWorldLocation().getY() + 16)

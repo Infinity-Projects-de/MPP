@@ -21,5 +21,6 @@ public class ListenerMonument implements Listener
         SimpleLocation targetLocation = AetherWorld.getMonumentTargetList().get(SimpleLocation.fromLocation(clickLocation));
         if (targetLocation == null) return;
         event.getPlayer().teleport(new Location(AetherWorld.getWorld(), targetLocation.getX(), targetLocation.getY(), targetLocation.getZ()));
+        event.setCancelled(true);
     }
 }

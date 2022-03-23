@@ -4,7 +4,6 @@ import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.bukkit.Location;
-import org.bukkit.Material;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -23,8 +22,7 @@ public class DungeonGenerator
         if (dungeon.getMonumentLocation() == null) return;
 
         AetherWorld.addMonument(dungeon.getMonumentLocation(), dungeon.getMonumentTargetLocation());
-        //TODO replace with monument schematic
-        dungeon.getMonumentLocation().getBlock().setType(Material.REDSTONE_BLOCK);
+        AetherWorld.instantiatePrefab(dungeon.getMonumentLocation(), "dungeon/monument", true);
 
         for (DungeonPart part : dungeon.getParts())
         {

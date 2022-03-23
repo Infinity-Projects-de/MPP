@@ -42,7 +42,7 @@ public class AetherWorld
         saveMonuments();
     }
 
-    public static void saveMonuments()
+    private static void saveMonuments()
     {
         try
         {
