@@ -4,39 +4,43 @@ import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.bukkit.Location;
+import org.bukkit.Material;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class DungeonGenerator
 {
-    public void generateDungeon(Location blockLocation, Random random, float endPartChance)
+    public void generateDungeon(Location origin, Random random, float endPartChance)
     {
-        Aether.logInfo("Start dungeon generation with end part chance: " + endPartChance + " at location: " + blockLocation);
+        Dungeon dungeon = new Dungeon(generateDungeonParts(origin, random, endPartChance));
 
-        //Generating parts
-        List<DungeonPart> parts = generateDungeonParts(random, endPartChance);
-        Aether.logInfo("Generated " + parts.size() + " dungeon parts");
-        Aether.logInfo("Loading schematics in the world...");
+        //If no valid monument location is found dungeon doesn't generate
+        if (dungeon.getMonumentLocation() == null) return;
 
-        //Load schematics
-        for (DungeonPart part : parts)
+        //TODO replace with monument location
+        dungeon.getMonumentLocation().getBlock().setType(Material.REDSTONE_BLOCK);
+
+        for (DungeonPart part : dungeon.getParts())
         {
-            Location prefabLocation = blockLocation.clone().add(part.getPosition().getX() * 16, 0, part.getPosition().getY() * 16);
-            AetherWorld.instantiatePrefab(prefabLocation, "dungeon/" + part.getType().getPrefabName(), false);
+            AetherWorld.instantiatePrefab(part.getWorldLocation(), "dungeon/" + part.getType().getPrefabName(), false);
         }
 
-        Aether.logInfo("Finished dungeon generation successfully");
+        Aether.logInfo("Generated new dungeon with " + dungeon.getParts().size() + " parts at "
+                + origin + " (Monument Location: " + dungeon.getMonumentLocation() + ")");
     }
 
-    public List<DungeonPart> generateDungeonParts(Random random, float endPartChance)
+    private List<DungeonPart> generateDungeonParts(Location origin, Random random, float endPartChance)
     {
         List<DungeonPart> parts = new ArrayList<>();
 
         //First part TBLR
         List<DungeonPart> newParts = new ArrayList<>();
-        newParts.add(new DungeonPart(DungeonPartType.EWSN, new Vector2D(0, 0)));
+        newParts.add(new DungeonPart(DungeonPartType.EWSN, new Vector2D(0, 0), origin.clone()));
 
         //Add parts until no more paths lead to the outside of the dungeon
         while (!newParts.isEmpty())
@@ -68,7 +72,7 @@ public class DungeonGenerator
                                     .getConnectionState(Direction.SOUTH) : Connection.ConnectionState.DONT_CARE
                     );
 
-                    newParts.add(getRandomPart(random, endPartChance, newPartCon, newPartPos));
+                    newParts.add(getRandomPart(random, endPartChance, newPartCon, newPartPos, origin));
                 }
             }
         }
@@ -86,7 +90,7 @@ public class DungeonGenerator
      * @param position      the position of the new part
      * @param endPartChance chance for the new Part to be an end part
      */
-    private DungeonPart getRandomPart(Random random, float endPartChance, Connection connection, Vector2D position)
+    private DungeonPart getRandomPart(Random random, float endPartChance, Connection connection, Vector2D position, Location origin)
     {
         if (random.nextFloat() <= endPartChance)
         {
@@ -99,6 +103,7 @@ public class DungeonGenerator
                 .filter(type -> con.isValid(type.getConnection()))
                 .collect(Collectors.toList());
 
-        return new DungeonPart(validTypes.get(random.nextInt(validTypes.size())), position);
+        return new DungeonPart(validTypes.get(random.nextInt(validTypes.size())), position,
+                origin.clone().add(position.getX() * 16, 0, position.getY() * 16));
     }
 }

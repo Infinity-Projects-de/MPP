@@ -1,5 +1,8 @@
 package de.danielmaile.aether.worldgen.dungeon;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum DungeonPartType
 {
     S("S_var1", Connection.fromDirections(Direction.SOUTH)),
@@ -20,6 +23,8 @@ public enum DungeonPartType
     EWN("EWN_var1", Connection.fromDirections(Direction.EAST, Direction.WEST, Direction.NORTH)),
 
     EWSN("EWSN_var1", Connection.fromDirections(Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH));
+
+    public static final List<DungeonPartType> END_PARTS = Arrays.asList(DungeonPartType.S, DungeonPartType.N, DungeonPartType.W, DungeonPartType.E);
 
     public String getPrefabName()
     {
