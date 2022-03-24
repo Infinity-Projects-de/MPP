@@ -2,6 +2,7 @@ package de.danielmaile.aether.worldgen.dungeon;
 
 import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.worldgen.AetherWorld;
+import de.danielmaile.aether.worldgen.Prefab;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.bukkit.Location;
 
@@ -22,11 +23,11 @@ public class DungeonGenerator
         if (dungeon.getMonumentLocation() == null) return;
 
         AetherWorld.addMonument(dungeon.getMonumentLocation(), dungeon.getMonumentTargetLocation());
-        AetherWorld.instantiatePrefab(dungeon.getMonumentLocation(), "dungeon/monument", true);
+        Prefab.DUNGEON_MONUMENT.instantiate(dungeon.getMonumentLocation(), true);
 
         for (DungeonPart part : dungeon.getParts())
         {
-            AetherWorld.instantiatePrefab(part.getWorldLocation(), "dungeon/" + part.getType().getPrefabName(), false);
+            part.getType().getPrefab().instantiate(part.getWorldLocation(), false);
         }
 
         Aether.logInfo("Generated new dungeon with " + dungeon.getParts().size() + " parts at "

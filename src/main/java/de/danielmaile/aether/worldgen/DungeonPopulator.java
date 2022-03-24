@@ -25,7 +25,6 @@ public class DungeonPopulator extends BlockPopulator
             Location location = new Location(world, x, y, z);
             DungeonGenerator generator = new DungeonGenerator();
             generator.generateDungeon(location, random, 0.35f);
-
         }
     }
 }

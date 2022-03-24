@@ -1,6 +1,5 @@
 package de.danielmaile.aether.worldgen;
 
-import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -11,14 +10,6 @@ import java.util.Random;
 
 public class TreePopulator extends BlockPopulator
 {
-    private final Clipboard tree;
-
-    public TreePopulator()
-    {
-        //TODO crashes server on reload. Needs to be loaded again
-        tree = AetherWorld.loadPrefabToClipboard("tree");
-    }
-
     @Override
     public void populate(@NotNull World world, @NotNull Random random, @NotNull Chunk chunk)
     {
@@ -30,7 +21,7 @@ public class TreePopulator extends BlockPopulator
             if (y == -1) return;
 
             Location location = new Location(world, x, y, z);
-            AetherWorld.instantiatePrefab(location, tree, true);
+            Prefab.TREE.instantiate(location, true);
         }
     }
 }

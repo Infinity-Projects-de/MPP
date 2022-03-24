@@ -1,19 +1,8 @@
 package de.danielmaile.aether.worldgen;
 
-import com.sk89q.worldedit.EditSession;
-import com.sk89q.worldedit.WorldEdit;
-import com.sk89q.worldedit.WorldEditException;
-import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldedit.extent.clipboard.Clipboard;
-import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
-import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
-import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
-import com.sk89q.worldedit.function.operation.Operation;
-import com.sk89q.worldedit.function.operation.Operations;
-import com.sk89q.worldedit.math.BlockVector3;
-import com.sk89q.worldedit.session.ClipboardHolder;
 import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.util.SimpleLocation;
+import de.danielmaile.aether.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -131,7 +120,7 @@ public class AetherWorld
     private static void saveResourceToWorldFolder(String resourcePath) throws IOException
     {
         String outputPath = Bukkit.getWorldContainer() + File.separator + "world" + File.separator + "datapacks" + File.separator + resourcePath;
-        InputStream inputStream = getResource(resourcePath);
+        InputStream inputStream = Utils.getResource(resourcePath);
         if (inputStream == null)
         {
             throw new IllegalArgumentException();
@@ -159,54 +148,5 @@ public class AetherWorld
         }
         outputStream.close();
         inputStream.close();
-    }
-
-    private static InputStream getResource(String filename) throws IOException
-    {
-        return AetherWorld.class.getClassLoader().getResourceAsStream(filename);
-    }
-
-    public static Clipboard loadPrefabToClipboard(String prefabName)
-    {
-        Clipboard clipboard = null;
-        try
-        {
-            InputStream inputStream = getResource("prefabs/" + prefabName + ".schem");
-            ClipboardFormat format = ClipboardFormats.findByAlias("schem");
-            if (format == null) throw new NullPointerException();
-            ClipboardReader reader = format.getReader(inputStream);
-            clipboard = reader.read();
-            inputStream.close();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
-        return clipboard;
-    }
-
-    public static void instantiatePrefab(Location location, String prefabName, boolean ignoreAirBlocks)
-    {
-        Clipboard clipboard = loadPrefabToClipboard(prefabName);
-        instantiatePrefab(location, clipboard, ignoreAirBlocks);
-    }
-
-    public static void instantiatePrefab(Location location, Clipboard clipboard, boolean ignoreAirBlocks)
-    {
-        com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(location.getWorld());
-        EditSession editSession = WorldEdit.getInstance().newEditSession(adaptedWorld);
-        Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
-                .to(BlockVector3.at(location.getX(), location.getY(), location.getZ())).ignoreAirBlocks(ignoreAirBlocks).build();
-
-        try
-        {
-            Operations.complete(operation);
-            editSession.close();
-        }
-        catch (WorldEditException exception)
-        {
-            exception.printStackTrace();
-        }
     }
 }

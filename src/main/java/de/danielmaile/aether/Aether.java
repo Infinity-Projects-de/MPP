@@ -8,6 +8,7 @@ import de.danielmaile.aether.listeners.ListenerAetherVoid;
 import de.danielmaile.aether.listeners.ListenerMonument;
 import de.danielmaile.aether.portal.ListenerPortal;
 import de.danielmaile.aether.worldgen.AetherWorld;
+import de.danielmaile.aether.worldgen.Prefab;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -59,7 +60,10 @@ public final class Aether extends JavaPlugin
                 logError("Failed to create plugin data folder");
             }
         }
+
         registerRecipes();
+
+        Prefab.loadPrefabs();
         AetherWorld.init();
     }
 

@@ -1,37 +1,39 @@
 package de.danielmaile.aether.worldgen.dungeon;
 
+import de.danielmaile.aether.worldgen.Prefab;
+
 import java.util.Arrays;
 import java.util.List;
 
 public enum DungeonPartType
 {
-    S("S_var1", Connection.fromDirections(Direction.SOUTH)),
-    N("N_var1", Connection.fromDirections(Direction.NORTH)),
-    W("W_var1", Connection.fromDirections(Direction.WEST)),
-    E("E_var1", Connection.fromDirections(Direction.EAST)),
+    S(Prefab.DUNGEON_S, Connection.fromDirections(Direction.SOUTH)),
+    N(Prefab.DUNGEON_N, Connection.fromDirections(Direction.NORTH)),
+    W(Prefab.DUNGEON_W, Connection.fromDirections(Direction.WEST)),
+    E(Prefab.DUNGEON_E, Connection.fromDirections(Direction.EAST)),
 
-    SN("SN_var1", Connection.fromDirections(Direction.SOUTH, Direction.NORTH)),
-    WS("WS_var1", Connection.fromDirections(Direction.WEST, Direction.SOUTH)),
-    ES("ES_var1", Connection.fromDirections(Direction.EAST, Direction.SOUTH)),
-    WN("WN_var1", Connection.fromDirections(Direction.WEST, Direction.NORTH)),
-    EN("EN_var1", Connection.fromDirections(Direction.EAST, Direction.NORTH)),
-    EW("EW_var1", Connection.fromDirections(Direction.EAST, Direction.WEST)),
+    SN(Prefab.DUNGEON_SN, Connection.fromDirections(Direction.SOUTH, Direction.NORTH)),
+    WS(Prefab.DUNGEON_WS, Connection.fromDirections(Direction.WEST, Direction.SOUTH)),
+    ES(Prefab.DUNGEON_ES, Connection.fromDirections(Direction.EAST, Direction.SOUTH)),
+    WN(Prefab.DUNGEON_WN, Connection.fromDirections(Direction.WEST, Direction.NORTH)),
+    EN(Prefab.DUNGEON_EN, Connection.fromDirections(Direction.EAST, Direction.NORTH)),
+    EW(Prefab.DUNGEON_EW, Connection.fromDirections(Direction.EAST, Direction.WEST)),
 
-    EWS("EWS_var1", Connection.fromDirections(Direction.EAST, Direction.WEST, Direction.SOUTH)),
-    WSN("WSN_var1", Connection.fromDirections(Direction.WEST, Direction.SOUTH, Direction.NORTH)),
-    ESN("ESN_var1", Connection.fromDirections(Direction.EAST, Direction.SOUTH, Direction.NORTH)),
-    EWN("EWN_var1", Connection.fromDirections(Direction.EAST, Direction.WEST, Direction.NORTH)),
+    EWS(Prefab.DUNGEON_EWS, Connection.fromDirections(Direction.EAST, Direction.WEST, Direction.SOUTH)),
+    WSN(Prefab.DUNGEON_WSN, Connection.fromDirections(Direction.WEST, Direction.SOUTH, Direction.NORTH)),
+    ESN(Prefab.DUNGEON_ESN, Connection.fromDirections(Direction.EAST, Direction.SOUTH, Direction.NORTH)),
+    EWN(Prefab.DUNGEON_EWN, Connection.fromDirections(Direction.EAST, Direction.WEST, Direction.NORTH)),
 
-    EWSN("EWSN_var1", Connection.fromDirections(Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH));
+    EWSN(Prefab.DUNGEON_EWSN, Connection.fromDirections(Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH));
 
     public static final List<DungeonPartType> END_PARTS = Arrays.asList(DungeonPartType.S, DungeonPartType.N, DungeonPartType.W, DungeonPartType.E);
 
-    public String getPrefabName()
+    public Prefab getPrefab()
     {
-        return prefabName;
+        return prefab;
     }
 
-    private final String prefabName;
+    private final Prefab prefab;
 
     public Connection getConnection()
     {
@@ -40,9 +42,9 @@ public enum DungeonPartType
 
     private final Connection connection;
 
-    DungeonPartType(String prefabName, Connection connection)
+    DungeonPartType(Prefab prefab, Connection connection)
     {
-        this.prefabName = prefabName;
+        this.prefab = prefab;
         this.connection = connection;
     }
 }
