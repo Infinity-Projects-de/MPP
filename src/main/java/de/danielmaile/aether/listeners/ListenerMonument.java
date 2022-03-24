@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
@@ -47,5 +48,12 @@ public class ListenerMonument implements Listener
         clickedLocations.add(clickLocation);
         monumentClickMap.put(event.getPlayer(), clickedLocations);
         event.getPlayer().sendMessage(Aether.PREFIX + "Klicke nochmals auf den Block um dich in den Dungeon zu teleportieren.");
+    }
+
+    @EventHandler
+    public void onMonumentBreak(BlockBreakEvent event)
+    {
+        SimpleLocation targetLocation = AetherWorld.getMonumentTargetList().get(SimpleLocation.fromLocation(event.getBlock().getLocation()));
+        event.setCancelled(targetLocation != null);
     }
 }
