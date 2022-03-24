@@ -14,7 +14,7 @@ public class DungeonPopulator extends BlockPopulator
     @Override
     public void populate(@NotNull World world, @NotNull Random random, @NotNull Chunk chunk)
     {
-        if (random.nextFloat() < 0.005)
+        if (random.nextFloat() < 0.00125)
         {
             int x = chunk.getX() * 16;
             int z = chunk.getZ() * 16;
@@ -24,7 +24,7 @@ public class DungeonPopulator extends BlockPopulator
 
             Location location = new Location(world, x, y, z);
             DungeonGenerator generator = new DungeonGenerator();
-            generator.generateDungeon(location, random, 0.35f);
+            generator.generateDungeon(location, random, 0.4f);
         }
     }
 }

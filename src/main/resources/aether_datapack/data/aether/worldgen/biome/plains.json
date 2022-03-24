@@ -11,7 +11,28 @@
     "grass_color": 4718524,
     "foliage_color": 11599657
   },
-  "spawners": {},
+  "spawners": {
+    "creature": [
+      {
+        "type": "minecraft:pig",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft:cow",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft:llama",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 3
+      }
+    ]
+  },
   "spawn_costs": {},
   "carvers": {},
   "features": []

@@ -17,6 +17,7 @@ public class ListenerAetherVoid implements Listener
     public void onVoidDamage(EntityDamageEvent event)
     {
         if (!(event.getEntity() instanceof Player player)) return;
+        if (event.getCause() != EntityDamageEvent.DamageCause.VOID) return;
 
         if (player.getWorld().equals(AetherWorld.getWorld()))
         {
