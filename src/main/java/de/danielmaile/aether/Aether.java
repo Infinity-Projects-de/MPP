@@ -63,8 +63,8 @@ public final class Aether extends JavaPlugin
 
         registerRecipes();
 
-        Prefab.loadPrefabs();
         AetherWorld.init();
+        Prefab.init();
     }
 
     private void registerRecipes()

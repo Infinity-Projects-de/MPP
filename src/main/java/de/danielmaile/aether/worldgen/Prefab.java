@@ -1,6 +1,5 @@
 package de.danielmaile.aether.worldgen;
 
-import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.WorldEditException;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
@@ -12,12 +11,21 @@ import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
+import com.sk89q.worldedit.world.World;
 import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.util.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.primesoft.asyncworldedit.api.IAsyncWorldEdit;
+import org.primesoft.asyncworldedit.api.blockPlacer.IBlockPlacer;
+import org.primesoft.asyncworldedit.api.playerManager.IPlayerEntry;
+import org.primesoft.asyncworldedit.api.playerManager.IPlayerManager;
+import org.primesoft.asyncworldedit.api.worldedit.IAsyncEditSessionFactory;
+import org.primesoft.asyncworldedit.api.worldedit.IThreadSafeEditSession;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.UUID;
 
 public enum Prefab
 {
@@ -50,23 +58,46 @@ public enum Prefab
 
     public void instantiate(Location location, boolean ignoreAirBlocks)
     {
-        com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(location.getWorld());
-        EditSession editSession = WorldEdit.getInstance().newEditSession(adaptedWorld);
-        Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
-                .to(BlockVector3.at(location.getX(), location.getY(), location.getZ())).ignoreAirBlocks(ignoreAirBlocks).build();
-
-        try
+        World adaptedWorld = BukkitAdapter.adapt(location.getWorld());
+        IThreadSafeEditSession editSession = sessionFactory.getThreadSafeEditSession(adaptedWorld, Integer.MAX_VALUE);
+        blockPlacer.performAsAsyncJob(editSession, awePlayer, "aether place prefab", iCancelabeEditSession ->
         {
-            Operations.complete(operation);
+            Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
+                    .to(BlockVector3.at(location.getX(), location.getY(), location.getZ())).ignoreAirBlocks(ignoreAirBlocks).build();
+            try
+            {
+                Operations.complete(operation);
+            }
+            catch (WorldEditException e)
+            {
+                e.printStackTrace();
+            }
             editSession.close();
-        }
-        catch (WorldEditException exception)
-        {
-            exception.printStackTrace();
-        }
+            return 0;
+        });
     }
 
-    public static void loadPrefabs()
+    private static IAsyncEditSessionFactory sessionFactory;
+    private static IBlockPlacer blockPlacer;
+    private static IPlayerEntry awePlayer;
+
+    public static void init()
+    {
+        IAsyncWorldEdit aweAPI = (IAsyncWorldEdit) Bukkit.getServer().getPluginManager().getPlugin("AsyncWorldEdit");
+        if (aweAPI == null)
+        {
+            Aether.logError("AsyncWorldEdit plugin was not found. Please check your plugin folder!");
+            return;
+        }
+
+        sessionFactory = (IAsyncEditSessionFactory) WorldEdit.getInstance().getEditSessionFactory();
+        blockPlacer = aweAPI.getBlockPlacer();
+        IPlayerManager playerManager = aweAPI.getPlayerManager();
+        awePlayer = playerManager.createFakePlayer("aether", UUID.randomUUID());
+        loadPrefabs();
+    }
+
+    private static void loadPrefabs()
     {
         for (Prefab prefab : Prefab.values())
         {

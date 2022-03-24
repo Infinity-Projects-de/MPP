@@ -71,6 +71,10 @@
             <id>codemc-repo</id>
             <url>https://repo.codemc.org/repository/maven-public/</url>
         </repository>
+        <repository>
+            <id>github-asyncworldedit-api</id>
+            <url>https://raw.githubusercontent.com/SBPrime/AsyncWorldEdit/maven-artifact/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -101,6 +105,13 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>
             <version>3.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primesoft.asyncworldedit</groupId>
+            <artifactId>AsyncWorldEdit-API</artifactId>
+            <version>[2.2.0-rc-01, 2.2.0)</version>
+            <scope>provided</scope>
+            <type>jar</type>
         </dependency>
     </dependencies>
 </project>

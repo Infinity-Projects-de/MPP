@@ -4,7 +4,7 @@ main: de.danielmaile.aether.Aether
 api-version: 1.18
 authors: [ WoizaWerner ]
 website: maile.ws
-depend: [ WorldEdit, NBTAPI]
+depend: [ WorldEdit, NBTAPI, AsyncWorldEdit]
 
 commands:
   aether:
