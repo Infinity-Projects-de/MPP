@@ -1,6 +1,6 @@
 package de.danielmaile.aether.item;
 
-import de.tr7zw.nbtapi.NBTItem;
+import de.danielmaile.aether.util.NBTEditor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,19 +14,17 @@ public class ListenerCrafting implements Listener
     public void onCraftPrepare(PrepareItemCraftEvent event)
     {
         ItemStack result = event.getInventory().getResult();
-        if(result == null) return;
+        if (result == null) return;
 
-        NBTItem nbtItem = new NBTItem(result);
-        if(nbtItem.hasKey(CustomItemType.AETHER_ITEM_TAG_KEY)) return;
+        if (NBTEditor.hasKey(result, CustomItemType.AETHER_ITEM_TAG_KEY)) return;
 
         ItemStack[] ingredients = event.getInventory().getContents();
 
-        for(ItemStack ingredient : ingredients)
+        for (ItemStack ingredient : ingredients)
         {
-            if(ingredient == null || ingredient.getType() == Material.AIR) continue;
+            if (ingredient == null || ingredient.getType() == Material.AIR) continue;
 
-            NBTItem nbtIngredient = new NBTItem(ingredient);
-            if(nbtIngredient.hasKey(CustomItemType.AETHER_ITEM_TAG_KEY))
+            if (NBTEditor.hasKey(ingredient, CustomItemType.AETHER_ITEM_TAG_KEY))
             {
                 event.getInventory().setResult(null);
                 return;

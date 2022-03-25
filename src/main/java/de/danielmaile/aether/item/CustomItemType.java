@@ -1,6 +1,6 @@
 package de.danielmaile.aether.item;
 
-import de.tr7zw.nbtapi.NBTItem;
+import de.danielmaile.aether.util.NBTEditor;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.ChatColor;
@@ -8,8 +8,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.List;
 
 public enum CustomItemType
@@ -175,9 +173,7 @@ public enum CustomItemType
         itemStack.setItemMeta(itemMeta);
         itemStack.setAmount(amount);
 
-        //Set nbt tags
-        NBTItem nbtItem = new NBTItem(itemStack);
-        nbtItem.setString(AETHER_ITEM_TAG_KEY, name());
-        return nbtItem.getItem();
+        //Set nbt tag
+        return NBTEditor.setString(itemStack, AETHER_ITEM_TAG_KEY, name());
     }
 }
