@@ -1,9 +1,9 @@
 package de.danielmaile.aether.worldgen.dungeon;
 
 import de.danielmaile.aether.Aether;
+import de.danielmaile.aether.util.Vector2I;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import de.danielmaile.aether.worldgen.Prefab;
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.bukkit.Location;
 
 import javax.annotation.Nullable;
@@ -40,7 +40,7 @@ public class DungeonGenerator
 
         //First part TBLR
         List<DungeonPart> newParts = new ArrayList<>();
-        newParts.add(new DungeonPart(DungeonPartType.EWSN, new Vector2D(0, 0), origin.clone()));
+        newParts.add(new DungeonPart(DungeonPartType.EWSN, new Vector2I(0, 0), origin.clone()));
 
         //Add parts until no more paths lead to the outside of the dungeon
         while (!newParts.isEmpty())
@@ -52,7 +52,7 @@ public class DungeonGenerator
             {
                 for (Direction connectDirection : part.getType().getConnection().getConnectDirections())
                 {
-                    Vector2D newPartPos = part.getPosition().add(connectDirection.getRelativePos());
+                    Vector2I newPartPos = part.getPosition().add(connectDirection.getRelativePos());
                     if (getPartAt(parts, newPartPos) != null || getPartAt(newParts, newPartPos) != null) continue;
 
                     //Get neighbours and check for ConnectionState
@@ -80,7 +80,7 @@ public class DungeonGenerator
     }
 
     @Nullable
-    private DungeonPart getPartAt(List<DungeonPart> partList, Vector2D position)
+    private DungeonPart getPartAt(List<DungeonPart> partList, Vector2I position)
     {
         return partList.stream().filter(part -> position.equals(part.getPosition())).findFirst().orElse(null);
     }
@@ -90,7 +90,7 @@ public class DungeonGenerator
      * @param position      the position of the new part
      * @param endPartChance chance for the new Part to be an end part
      */
-    private DungeonPart getRandomPart(Random random, float endPartChance, Connection connection, Vector2D position, Location origin)
+    private DungeonPart getRandomPart(Random random, float endPartChance, Connection connection, Vector2I position, Location origin)
     {
         if (random.nextFloat() <= endPartChance)
         {

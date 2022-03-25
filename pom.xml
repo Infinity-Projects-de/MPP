@@ -95,17 +95,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>de.tr7zw</groupId>
-            <artifactId>item-nbt-api-plugin</artifactId>
-            <version>2.9.2</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-math3</artifactId>
-            <version>3.6.1</version>
-        </dependency>
-        <dependency>
             <groupId>org.primesoft.asyncworldedit</groupId>
             <artifactId>AsyncWorldEdit-API</artifactId>
             <version>[2.2.0-rc-01, 2.2.0)</version>
@@ -116,6 +105,12 @@
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
             <version>4.8.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.tr7zw</groupId>
+            <artifactId>item-nbt-api-plugin</artifactId>
+            <version>2.9.2</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

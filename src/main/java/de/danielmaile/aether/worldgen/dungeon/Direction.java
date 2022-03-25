@@ -1,22 +1,22 @@
 package de.danielmaile.aether.worldgen.dungeon;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+import de.danielmaile.aether.util.Vector2I;
 
 public enum Direction
 {
-    EAST(new Vector2D(1, 0)),
-    WEST(new Vector2D(-1, 0)),
-    SOUTH(new Vector2D(0, 1)),
-    NORTH(new Vector2D(0, -1));
+    EAST(new Vector2I(1, 0)),
+    WEST(new Vector2I(-1, 0)),
+    SOUTH(new Vector2I(0, 1)),
+    NORTH(new Vector2I(0, -1));
 
-    public Vector2D getRelativePos()
+    public Vector2I getRelativePos()
     {
         return relativePos;
     }
 
-    private final Vector2D relativePos;
+    private final Vector2I relativePos;
 
-    Direction(Vector2D relativePos)
+    Direction(Vector2I relativePos)
     {
         this.relativePos = relativePos;
     }

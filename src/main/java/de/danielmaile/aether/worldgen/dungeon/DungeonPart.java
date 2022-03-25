@@ -1,16 +1,16 @@
 package de.danielmaile.aether.worldgen.dungeon;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+import de.danielmaile.aether.util.Vector2I;
 import org.bukkit.Location;
 
-public record DungeonPart(DungeonPartType type, Vector2D position, Location worldLocation)
+public record DungeonPart(DungeonPartType type, Vector2I position, Location worldLocation)
 {
     public DungeonPartType getType()
     {
         return type;
     }
 
-    public Vector2D getPosition()
+    public Vector2I getPosition()
     {
         return position;
     }
