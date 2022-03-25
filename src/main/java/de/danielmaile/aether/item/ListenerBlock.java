@@ -21,10 +21,10 @@ public class ListenerBlock implements Listener
         if(!block.getWorld().equals(AetherWorld.getWorld())) return;
 
         Location location = block.getLocation();
-        CustomItemType customItemType = CustomItemType.getFromBlockMaterial(block.getType());
-        if(customItemType == null) return;
+        CustomBlockType customBlockType = CustomBlockType.getFromMaterial(block.getType());
+        if(customBlockType == null) return;
 
-        block.getWorld().dropItemNaturally(location, customItemType.getItemStack());
+        block.getWorld().dropItemNaturally(location, customBlockType.getItemDrop().getItemStack());
         event.setDropItems(false);
     }
 
@@ -42,13 +42,13 @@ public class ListenerBlock implements Listener
             {
                 //Convert Item to correct material
                 CustomItemType customItemType = CustomItemType.valueOf(nbtItem.getString(CustomItemType.AETHER_ITEM_TAG_KEY));
-                event.getBlockPlaced().setType(customItemType.getBlockMaterial());
+                event.getBlockPlaced().setType(customItemType.getPlaceMaterial());
             }
             else
             {
                 //Check if block which a player tries to place is already used by aether block
-                CustomItemType customItemType = CustomItemType.getFromBlockMaterial(itemStack.getType());
-                if(customItemType != null)
+                CustomBlockType customBlockType = CustomBlockType.getFromMaterial(itemStack.getType());
+                if(customBlockType != null)
                 {
                     event.setCancelled(true);
                 }

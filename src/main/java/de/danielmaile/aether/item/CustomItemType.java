@@ -141,26 +141,20 @@ public enum CustomItemType
     private final String description;
     private final int modelID;
     private final Material itemMaterial;
-    private final Material blockMaterial;
+    private final Material placeMaterial;
 
-    CustomItemType(String name, String description, int modelID, Material itemMaterial, Material blockMaterial)
+    CustomItemType(String name, String description, int modelID, Material itemMaterial, Material placeMaterial)
     {
         this.name = name;
         this.description = description;
         this.modelID = modelID;
         this.itemMaterial = itemMaterial;
-        this.blockMaterial = blockMaterial;
+        this.placeMaterial = placeMaterial;
     }
 
-    @Nullable
-    public static CustomItemType getFromBlockMaterial(Material material)
+    public Material getPlaceMaterial()
     {
-        return Arrays.stream(CustomItemType.values()).filter(customItemType -> customItemType.blockMaterial == material).findFirst().orElse(null);
-    }
-
-    public Material getBlockMaterial()
-    {
-        return blockMaterial;
+        return placeMaterial;
     }
 
     public ItemStack getItemStack()
