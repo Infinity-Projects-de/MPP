@@ -1,12 +1,15 @@
 package de.danielmaile.aether;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import de.danielmaile.aether.commands.CommandAether;
 import de.danielmaile.aether.item.CustomRecipe;
 import de.danielmaile.aether.item.ListenerBlock;
 import de.danielmaile.aether.item.ListenerCrafting;
-import de.danielmaile.aether.listeners.ListenerAetherMobs;
 import de.danielmaile.aether.listeners.ListenerAetherVoid;
 import de.danielmaile.aether.listeners.ListenerMonument;
+import de.danielmaile.aether.mobs.ListenerAetherMobs;
+import de.danielmaile.aether.mobs.RideableLlama;
 import de.danielmaile.aether.portal.ListenerPortal;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import de.danielmaile.aether.worldgen.Prefab;
@@ -41,8 +44,8 @@ public final class Aether extends JavaPlugin
     @Override
     public void onEnable()
     {
-        logger = getLogger();
         instance = this;
+        logger = getLogger();
 
         //Register listener and commands
         getServer().getPluginManager().registerEvents(new ListenerAetherVoid(), this);
@@ -64,6 +67,9 @@ public final class Aether extends JavaPlugin
         }
 
         registerRecipes();
+
+        ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
+        new RideableLlama().init(protocolManager);
 
         AetherWorld.init();
         Prefab.init();

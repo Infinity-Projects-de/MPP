@@ -1,4 +1,4 @@
-package de.danielmaile.aether.listeners;
+package de.danielmaile.aether.mobs;
 
 import de.danielmaile.aether.worldgen.AetherWorld;
 import org.bukkit.entity.Entity;
@@ -19,13 +19,13 @@ public class ListenerAetherMobs implements Listener
         if (!event.getWorld().equals(AetherWorld.getWorld())) return;
         for (Entity entity : event.getEntities())
         {
-            if(!entity.isValid()) continue;
-            if(!(entity instanceof LivingEntity livingEntity)) continue;
-            if(livingEntity instanceof Player) continue;
+            if (!entity.isValid()) continue;
+            if (!(entity instanceof LivingEntity livingEntity)) continue;
+            if (livingEntity instanceof Player) continue;
 
             livingEntity.addPotionEffect(
                     new PotionEffect(PotionEffectType.SLOW_FALLING, Integer.MAX_VALUE, 1, false, false));
-            if(livingEntity instanceof Llama)
+            if (livingEntity instanceof Llama)
             {
                 livingEntity.addPotionEffect(
                         new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 2, false, false));
