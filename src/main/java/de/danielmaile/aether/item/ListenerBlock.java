@@ -40,8 +40,11 @@ public class ListenerBlock implements Listener
             if (NBTEditor.hasKey(itemStack, CustomItemType.AETHER_ITEM_TAG_KEY))
             {
                 //Convert Item to correct material
-                CustomItemType customItemType = CustomItemType.valueOf(NBTEditor.getString(itemStack, CustomItemType.AETHER_ITEM_TAG_KEY));
-                event.getBlockPlaced().setType(customItemType.getPlaceMaterial());
+                CustomItemType customItemType = CustomItemType.getFromTag(itemStack);
+                if(customItemType != null)
+                {
+                    event.getBlockPlaced().setType(customItemType.getPlaceMaterial());
+                }
             }
             else
             {
