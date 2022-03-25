@@ -6,9 +6,9 @@ import java.util.Arrays;
 
 public enum ArmorSet
 {
-    VALKYRE(CustomItemType.VALKYRE_RING, CustomItemType.VALKYRE_WINGS, CustomItemType.VALKYRE_LEGGINGS, CustomItemType.VALKYRE_BOOTS),
+    VALKYRIE(CustomItemType.VALKYRE_RING, CustomItemType.VALKYRE_WINGS, CustomItemType.VALKYRE_LEGGINGS, CustomItemType.VALKYRE_BOOTS),
     ZANITE(CustomItemType.ZANITE_HELMET, CustomItemType.ZANITE_CHESTPLATE, CustomItemType.ZANITE_LEGGINGS, CustomItemType.ZANITE_BOOTS),
-    GRAVITITE(CustomItemType.GRAVITIT_HELMET, CustomItemType.GRAVITIT_CHESTPLATE, CustomItemType.GRAVITIT_LEGGINGS, CustomItemType.GRAVITIT_BOOTS);
+    GRAVITITE(CustomItemType.GRAVITITE_HELMET, CustomItemType.GRAVITITE_CHESTPLATE, CustomItemType.GRAVITITE_LEGGINGS, CustomItemType.GRAVITITE_BOOTS);
 
     private final CustomItemType head;
     private final CustomItemType chest;
@@ -21,6 +21,12 @@ public enum ArmorSet
         this.chest = chest;
         this.legs = legs;
         this.feet = feet;
+    }
+
+    public boolean contains(CustomItemType customItemType)
+    {
+        return head == customItemType || chest == customItemType
+                || legs == customItemType || feet == customItemType;
     }
 
     public static ArmorSet getEquippedSet(Player player)

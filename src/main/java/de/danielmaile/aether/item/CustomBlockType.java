@@ -20,7 +20,7 @@ public enum CustomBlockType
     AETHER_ACACIA_PLANKS(Material.ACACIA_PLANKS, CustomItemType.AETHER_ACACIA_PLANKS),
     AETHER_DARK_OAK_PLANKS(Material.DARK_OAK_PLANKS, CustomItemType.AETHER_DARK_OAK_PLANKS),
     ZANITE_ORE(Material.DIAMOND_ORE, CustomItemType.ZANITE_STONE),
-    GRAVITIT_ORE(Material.ANCIENT_DEBRIS, CustomItemType.GRAVITIT_ORE),
+    GRAVITIT_ORE(Material.ANCIENT_DEBRIS, CustomItemType.GRAVITITE_ORE),
     AETHER_STONE(Material.STONE, CustomItemType.AETHER_STONE);
 
     private final Material blockMaterial;
