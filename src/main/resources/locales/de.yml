@@ -1,0 +1,181 @@
+items:
+  AETHER_ACACIA_LOG:
+    name: "Himmelsakazienstamm"
+    description: ~
+  AETHER_ACACIA_PLANKS:
+    name: "Himmelsakazienplanke"
+    description: ~
+  AETHER_BIRCH_LOG:
+    name: "Himmelsbirkenstamm"
+    description: ~
+  AETHER_BIRCH_PLANKS:
+    name: "Himmelsbirkenplanke"
+    description: ~
+  AETHER_DARK_OAK_LOG:
+    name: "Himmelsschwarzeichenstamm"
+    description: ~
+  AETHER_DARK_OAK_PLANKS:
+    name: "Himmelsschwarzeichenplanke"
+    description: ~
+  AETHER_JUNGLE_LOG:
+    name: "Himmelsjungelstamm"
+    description: ~
+  AETHER_JUNGLE_PLANKS:
+    name: "Himmelsjungelplanke"
+    description: ~
+  AETHER_OAK_LOG:
+    name: "Himmelseichenstamm"
+    description: ~
+  AETHER_OAK_PLANKS:
+    name: "Himmelseichenplanke"
+    description: ~
+  AETHER_SPRUCE_LOG:
+    name: "Himmelsakazienstamm"
+    description: ~
+  AETHER_SPRUCE_PLANKS:
+    name: "Himmelsfichtenplanke"
+    description: ~
+  AETHER_STICK:
+    name: "Himmelsstock"
+    description: "Stock aus dem Himmel"
+  AETHER_STONE:
+    name: "Himmelsstein"
+    description: ~
+  AETHER_STONE_AXE:
+    name: "Heiligsteinaxt"
+    description: ~
+  AETHER_STONE_HOE:
+    name: "Heiligsteinharke"
+    description: ~
+  AETHER_STONE_PICKAXE:
+    name: "Heiligsteinspitzhacke"
+    description: ~
+  AETHER_STONE_SHOVEL:
+    name: "Heiligsteinschaufel"
+    description: ~
+  AETHER_STONE_SWORD:
+    name: "Heiligsteinschwert"
+    description: ~
+  AETHER_WOODEN_AXE:
+    name: "Himmelsaxt"
+    description: ~
+  AETHER_WOODEN_HOE:
+    name: "Himmelsharke"
+    description: ~
+  AETHER_WOODEN_PICKAXE:
+    name: "Himmelsspitzhacke"
+    description: ~
+  AETHER_WOODEN_SHOVEL:
+    name: "Himmelschaufel"
+    description: ~
+  AETHER_WOODEN_SWORD:
+    name: "Himmelsholzschwert"
+    description: ~
+  FIRE_ESSENCE:
+    name: "&l&cFeueressenz"
+    description: "Eine Essenz vom Feuerteufel die zum verbessern von Waffen benutzt werden kann."
+  FLAME_SWORD:
+    name: "&l&cFeuerschwert"
+    description: "Verbrenne deine Feinde, falls sie dir zu nahe kommen."
+  GRAVITITE_AXE:
+    name: "&dGravititaxt"
+    description: ~
+  GRAVITITE_BOOTS:
+    name: "&dGravititschuhe"
+    description: ~
+  GRAVITITE_CHESTPLATE:
+    name: "&dGravititbrustplatte"
+    description: ~
+  GRAVITITE_HELMET:
+    name: "&dGravitithelm"
+    description: ~
+  GRAVITITE_HOE:
+    name: "&dGravititharke"
+    description: ~
+  GRAVITITE_LEGGINGS:
+    name: "&dGravitithose"
+    description: ~
+  GRAVITITE_ORE:
+    name: "&dGravititerz"
+    description: ~
+  GRAVITITE_PICKAXE:
+    name: "&dGravititspitzhacke"
+    description: ~
+  GRAVITITE_PLATE:
+    name: "&dGaravititplatte"
+    description: "Platten so fest, das fast alles Abgewehrt werden kann."
+  GRAVITITE_SHOVEL:
+    name: "&dGravititschaufel"
+    description: ~
+  GRAVITITE_SWORD:
+    name: "&dGavititschwert"
+    description: ~
+  ICE_ESSENCE:
+    name: "&d&9Eisessenz"
+    description: "Eine Essenz vom Eisgeist die zum verbessern von Waffen benutzt werden kann."
+  ICE_SWORD:
+    name: "&d&9Eisschwert"
+    description: "Lasse deine Gegner bei Berührung erstarren."
+  LIGHTNING_ESSENCE:
+    name: "&l&bBlitzessenz"
+    description: "Eine Essenz vom Himmelswal die zum verbessern von Waffen benutzt werden kann."
+  LIGHTNING_SWORD:
+    name: "&l&bBlitzschwert"
+    description: "Beschwöre Blitze auf Jenen, der versucht dich zu verletzen."
+  SUN_STONE:
+    name: "&l&6Stein der Sonne"
+    description: "Dieser besondere Stein besitzt die Kraft eine mächtige Waffe herzustellen."
+  SUN_SWORD:
+    name: "&l&6Sonnenschwert"
+    description: "Das Schwert des Sonnengottes ist eine mächtige Waffe die jeden erzittern lässt."
+  VALKYRE_AXE:
+    name: "&l&eKampfaxt der Walküren"
+    description: "Dies ist die Kampfaxt der Walküren. Sie zerteil alles was in den Weg kommt."
+  VALKYRE_BOOTS:
+    name: "&l&eStiefel der Walküre"
+    description: "Die Stiefel der Walküren erlauben es dir, langsamer auf den Boden zu fallen."
+  VALKYRE_LEGGINGS:
+    name: "&l&eBeinschutz der Walküre"
+    description: "Der Beinschutz der Walküren ist stabil und hält vieles aus."
+  VALKYRE_RING:
+    name: "&l&eHeiligenschein der Walküre"
+    description: "Der heilige Ring der Walküren. Er besitzt die Kraft dich zu verstärken."
+  VALKYRE_SWORD:
+    name: "&l&eRache der Walküren"
+    description: "Ein mächtiges Schwert welches Furcht und Angst hervorruft."
+  VALKYRE_WINGS:
+    name: "&l&eWalkürenflügel"
+    description: "Mit den Walkürenflügeln kannst du durch den Himmel gleiten wie ein Engel."
+  ZANITE_AXE:
+    name: "&5Zaniteaxt"
+    description: ~
+  ZANITE_BOOTS:
+    name: "&5Zaniteschuhe"
+    description: ~
+  ZANITE_CHESTPLATE:
+    name: "&5Zanitebrustplatte"
+    description: ~
+  ZANITE_HELMET:
+    name: "&5Zanitehelm"
+    description: ~
+  ZANITE_HOE:
+    name: "&5Zaniteharke"
+    description: ~
+  ZANITE_LEGGINGS:
+    name: "&5Zanitehose"
+    description: ~
+  ZANITE_ORE:
+    name: "&5Zaniteerz"
+    description: ~
+  ZANITE_PICKAXE:
+    name: "&5Zanitespitzhacke"
+    description: ~
+  ZANITE_SHOVEL:
+    name: "&5Zaniteschaufel"
+    description: ~
+  ZANITE_STONE:
+    name: "&5Zanitgestein"
+    description: "Ein Gestein zum Herstellen starker Waffen und Werkzeuge."
+  ZANITE_SWORD:
+    name: "&5Zaniteschwert"
+    description: ~

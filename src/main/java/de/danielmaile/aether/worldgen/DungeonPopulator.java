@@ -1,5 +1,6 @@
 package de.danielmaile.aether.worldgen;
 
+import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.worldgen.dungeon.DungeonGenerator;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -14,7 +15,7 @@ public class DungeonPopulator extends BlockPopulator
     @Override
     public void populate(@NotNull World world, @NotNull Random random, @NotNull Chunk chunk)
     {
-        if (random.nextFloat() < 0.00125)
+        if (random.nextFloat() < Aether.getConfigManager().getDungeonProbability())
         {
             int x = chunk.getX() * 16;
             int z = chunk.getZ() * 16;
@@ -24,7 +25,7 @@ public class DungeonPopulator extends BlockPopulator
 
             Location location = new Location(world, x, y, z);
             DungeonGenerator generator = new DungeonGenerator();
-            generator.generateDungeon(location, random, 0.4f);
+            generator.generateDungeon(location, random, Aether.getConfigManager().getDungeonEndPartChance());
         }
     }
 }

@@ -3,6 +3,7 @@ package de.danielmaile.aether;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import de.danielmaile.aether.commands.CommandAether;
+import de.danielmaile.aether.config.ConfigManager;
 import de.danielmaile.aether.item.*;
 import de.danielmaile.aether.listeners.ListenerAetherVoid;
 import de.danielmaile.aether.listeners.ListenerMonument;
@@ -15,6 +16,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -23,6 +25,13 @@ public final class Aether extends JavaPlugin
     public static final String PREFIX = ChatColor.LIGHT_PURPLE + "[Aether] " + ChatColor.GRAY;
     private static Logger logger;
     private static Aether instance;
+
+    public static ConfigManager getConfigManager()
+    {
+        return configManager;
+    }
+
+    private static ConfigManager configManager;
 
     public static void logError(String message)
     {
@@ -56,15 +65,15 @@ public final class Aether extends JavaPlugin
         getServer().getPluginManager().registerEvents(new ListenerCustomArmor(), this);
         Objects.requireNonNull(Bukkit.getPluginCommand("aether")).setExecutor(new CommandAether());
 
-        //Create plugin data folder
-        if (!getDataFolder().exists())
-        {
-            boolean fileCreated = getDataFolder().mkdirs();
-            if (!fileCreated)
-            {
-                logError("Failed to create plugin data folder");
-            }
-        }
+        //Create plugin, data and locales folder
+        File dataFolder = new File(getDataFolder().getAbsolutePath() + File.separator + "data");
+        File localesFolder = new File(getDataFolder().getAbsolutePath() + File.separator + "locales");
+        if (!dataFolder.exists()) { dataFolder.mkdirs(); }
+        if (!localesFolder.exists()) { localesFolder.mkdirs(); }
+
+        saveDefaultConfig();
+        saveResource("locales/de.yml", false);
+        configManager = new ConfigManager();
 
         registerRecipes();
 

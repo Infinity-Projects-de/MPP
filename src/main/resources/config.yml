@@ -1,0 +1,13 @@
+language_file: "de"
+
+entities:
+  llama:
+    speed: 0.25           # Requires restart
+    jump_height: 0.5      # Requires restart
+
+world_generation:
+  dungeons:
+    end_part_chance: 0.4
+    probability: 0.00125
+  trees:
+    probability: 0.1

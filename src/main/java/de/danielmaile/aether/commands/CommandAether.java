@@ -3,7 +3,6 @@ package de.danielmaile.aether.commands;
 import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.item.CustomItemType;
 import de.danielmaile.aether.worldgen.AetherWorld;
-import de.danielmaile.aether.worldgen.dungeon.DungeonGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -15,8 +14,9 @@ import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class CommandAether implements CommandExecutor, TabExecutor
@@ -30,11 +30,19 @@ public class CommandAether implements CommandExecutor, TabExecutor
             return true;
         }
 
-        if (args.length == 1 && args[0].equalsIgnoreCase("teleport"))
+        if (args.length == 1)
         {
-            teleport(player);
+            if (args[0].equalsIgnoreCase("teleport"))
+            {
+                teleport(player);
+            }
+            else if (args[0].equalsIgnoreCase("reload"))
+            {
+                Aether.getConfigManager().load();
+                player.sendMessage(Aether.PREFIX + " Die Config wurde neu geladen!");
+            }
         }
-        else if(args.length == 2 && args[0].equalsIgnoreCase("give"))
+        else if (args.length == 2 && args[0].equalsIgnoreCase("give"))
         {
             try
             {
@@ -69,6 +77,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
 
     private void sendHelp(@NotNull Player player)
     {
+        player.sendMessage(Aether.PREFIX + "/ae reload - Läd die Config neu.");
         player.sendMessage(Aether.PREFIX + "/ae teleport - Teleportiert dich in die Aether-Welt.");
         player.sendMessage(Aether.PREFIX + "/ae give <name> - Gibt dir ein Aether Item.");
     }
@@ -89,7 +98,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
             StringUtil.copyPartialMatches(args[0], tabComplete, completions);
         }
 
-        if(args.length == 2 && args[0].equalsIgnoreCase("give"))
+        if (args.length == 2 && args[0].equalsIgnoreCase("give"))
         {
             //Get ItemNames from enum
             List<String> itemNames = Stream.of(CustomItemType.values()).map(Enum::name).toList();

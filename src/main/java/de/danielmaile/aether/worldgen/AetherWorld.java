@@ -23,7 +23,8 @@ public class AetherWorld
     }
 
     private static HashMap<SimpleLocation, SimpleLocation> monumentTargetList;
-    private static final String monumentSavePath = Aether.getInstance().getDataFolder().getAbsolutePath() + File.separator + "dungeons.aether";
+    private static final String monumentSavePath = Aether.getInstance().getDataFolder().getAbsolutePath()
+            + File.separator + "data" + File.separator + "dungeons.aether";
 
     public static void addMonument(Location monumentLocation, Location targetLocation)
     {
