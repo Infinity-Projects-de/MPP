@@ -10,6 +10,7 @@ import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
 import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.math.transform.AffineTransform;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.World;
 import de.danielmaile.aether.Aether;
@@ -29,7 +30,9 @@ import java.util.UUID;
 
 public enum Prefab
 {
-    TREE("tree.schem"),
+    TREE1("tree_var1.schem"),
+    TREE2("tree_var2.schem"),
+    TREE3("tree_var3.schem"),
     PORTAL("portal.schem"),
     DUNGEON_MONUMENT("dungeon/monument.schem"),
     DUNGEON_S("dungeon/S_var1.schem"),
@@ -58,11 +61,18 @@ public enum Prefab
 
     public void instantiate(Location location, boolean ignoreAirBlocks)
     {
+        instantiate(location, 0, ignoreAirBlocks);
+    }
+
+    public void instantiate(Location location, double yRotation, boolean ignoreAirBlocks)
+    {
         World adaptedWorld = BukkitAdapter.adapt(location.getWorld());
         IThreadSafeEditSession editSession = sessionFactory.getThreadSafeEditSession(adaptedWorld, Integer.MAX_VALUE);
         blockPlacer.performAsAsyncJob(editSession, awePlayer, "aether place prefab", iCancelabeEditSession ->
         {
-            Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
+            ClipboardHolder clipboardHolder = new ClipboardHolder(clipboard);
+            clipboardHolder.setTransform(new AffineTransform().rotateY(yRotation));
+            Operation operation = clipboardHolder.createPaste(editSession)
                     .to(BlockVector3.at(location.getX(), location.getY(), location.getZ())).ignoreAirBlocks(ignoreAirBlocks).build();
             try
             {

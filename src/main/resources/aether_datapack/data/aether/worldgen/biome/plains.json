@@ -35,5 +35,100 @@
   },
   "spawn_costs": {},
   "carvers": {},
-  "features": []
+  "features": [
+    [],
+    [
+      {
+        "feature": {
+          "type": "minecraft:ore",
+          "config": {
+            "size": 9,
+            "discard_chance_on_air_exposure": 0,
+            "targets": [
+              {
+                "target": {
+                  "predicate_type": "minecraft:tag_match",
+                  "tag": "minecraft:stone_ore_replaceables"
+                },
+                "state": {
+                  "Name": "minecraft:ancient_debris"
+                }
+              }
+            ]
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:count",
+            "count": 90
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:height_range",
+            "height": {
+              "type": "minecraft:trapezoid",
+              "min_inclusive": {
+                "absolute": 80
+              },
+              "max_inclusive": {
+                "absolute": 384
+              }
+            }
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "minecraft:ore",
+          "config": {
+            "size": 9,
+            "discard_chance_on_air_exposure": 0,
+            "targets": [
+              {
+                "target": {
+                  "predicate_type": "minecraft:tag_match",
+                  "tag": "minecraft:stone_ore_replaceables"
+                },
+                "state": {
+                  "Name": "minecraft:diamond_ore"
+                }
+              }
+            ]
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:count",
+            "count": 90
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:height_range",
+            "height": {
+              "type": "minecraft:trapezoid",
+              "min_inclusive": {
+                "absolute": 80
+              },
+              "max_inclusive": {
+                "absolute": 384
+              }
+            }
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      }
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ]
 }
