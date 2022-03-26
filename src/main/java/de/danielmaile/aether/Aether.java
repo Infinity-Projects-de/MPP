@@ -5,9 +5,13 @@ import com.comphenix.protocol.ProtocolManager;
 import de.danielmaile.aether.commands.CommandAether;
 import de.danielmaile.aether.config.ConfigManager;
 import de.danielmaile.aether.config.LanguageManager;
-import de.danielmaile.aether.item.*;
+import de.danielmaile.aether.item.ListenerBlock;
+import de.danielmaile.aether.item.ListenerCrafting;
+import de.danielmaile.aether.item.Recipes;
 import de.danielmaile.aether.item.funtion.ListenerArmor;
 import de.danielmaile.aether.item.funtion.ListenerItem;
+import de.danielmaile.aether.item.funtion.particle.ListenerParticle;
+import de.danielmaile.aether.item.funtion.particle.ParticleManager;
 import de.danielmaile.aether.listeners.ListenerAetherVoid;
 import de.danielmaile.aether.listeners.ListenerMonument;
 import de.danielmaile.aether.mobs.ListenerAetherMobs;
@@ -26,6 +30,13 @@ public final class Aether extends JavaPlugin
 {
     private static Logger logger;
     private static Aether instance;
+
+    public static ParticleManager getParticleManager()
+    {
+        return particleManager;
+    }
+
+    private static ParticleManager particleManager;
 
     public static ConfigManager getConfigManager()
     {
@@ -69,6 +80,7 @@ public final class Aether extends JavaPlugin
         getServer().getPluginManager().registerEvents(new ListenerAetherMobs(), this);
         getServer().getPluginManager().registerEvents(new ListenerItem(), this);
         getServer().getPluginManager().registerEvents(new ListenerArmor(), this);
+        getServer().getPluginManager().registerEvents(new ListenerParticle(), this);
         Objects.requireNonNull(Bukkit.getPluginCommand("aether")).setExecutor(new CommandAether());
 
         //Create plugin, data and locales folder
@@ -99,6 +111,8 @@ public final class Aether extends JavaPlugin
 
         AetherWorld.init();
         Prefab.init();
+
+        particleManager = new ParticleManager();
     }
 
     private void registerRecipes()

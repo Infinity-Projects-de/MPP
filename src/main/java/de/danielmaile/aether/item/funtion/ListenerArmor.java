@@ -4,14 +4,12 @@ import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import de.danielmaile.aether.item.ArmorSet;
 import de.danielmaile.aether.item.ItemType;
 import de.danielmaile.aether.util.Utils;
-import org.bukkit.Particle;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffectType;
 
 public class ListenerArmor implements Listener
