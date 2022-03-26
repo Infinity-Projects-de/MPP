@@ -2,10 +2,7 @@ package de.danielmaile.aether.item;
 
 import de.danielmaile.aether.Aether;
 import org.bukkit.NamespacedKey;
-import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.RecipeChoice;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.*;
 
 public enum CustomRecipe
 {
@@ -158,10 +155,21 @@ public enum CustomRecipe
     AETHER_DARK_JUNGLE_PLANKS(false, CustomItemType.AETHER_JUNGLE_PLANKS, 1,
             CustomItemType.AETHER_JUNGLE_LOG),
     AETHER_DARK_OAK_PLANKS(false, CustomItemType.AETHER_DARK_OAK_PLANKS, 1,
-            CustomItemType.AETHER_DARK_OAK_LOG);
+            CustomItemType.AETHER_DARK_OAK_LOG),
+    GRAVITITE_SMELTING(CustomItemType.GRAVITITE_PLATE, CustomItemType.GRAVITITE_ORE, 50, 30),
+    ZANITE_SMELTING(CustomItemType.ZANITE_STONE, CustomItemType.ZANITE_ORE, 50, 20);
 
     private final Recipe recipe;
 
+    //Smelting
+    CustomRecipe(CustomItemType result, CustomItemType ingredient, float xp, int time)
+    {
+        NamespacedKey key = new NamespacedKey(Aether.getInstance(), name());
+        this.recipe = new FurnaceRecipe(key, result.getItemStack()
+                , new RecipeChoice.ExactChoice(ingredient.getItemStack()), xp, time);
+    }
+
+    //Crafting
     CustomRecipe(boolean shaped, CustomItemType result, int amount, CustomItemType... ingredients)
     {
         if (shaped && ingredients.length != 9)
