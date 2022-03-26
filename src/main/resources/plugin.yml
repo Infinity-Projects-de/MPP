@@ -1,5 +1,5 @@
 name: Aether
-version: '${project.version}'
+version: ${project.version}
 main: de.danielmaile.aether.Aether
 api-version: 1.18
 authors: [ WoizaWerner ]

@@ -4,6 +4,7 @@ import de.danielmaile.aether.util.NBTEditor;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -41,9 +42,12 @@ public class ListenerBlock implements Listener
             {
                 //Convert Item to correct material
                 CustomItemType customItemType = CustomItemType.getFromTag(itemStack);
-                if(customItemType != null)
+                if (customItemType != null)
                 {
-                    event.getBlockPlaced().setType(customItemType.getPlaceMaterial());
+                    //Change material but keep orientation
+                    BlockData data = block.getBlockData();
+                    block.setType(customItemType.getPlaceMaterial());
+                    block.setBlockData(data);
                 }
             }
             else

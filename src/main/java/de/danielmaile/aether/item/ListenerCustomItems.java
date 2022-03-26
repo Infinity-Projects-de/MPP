@@ -30,8 +30,8 @@ public class ListenerCustomItems implements Listener
             case LIGHTNING_SWORD -> victim.getWorld().strikeLightning(victim.getLocation());
             case FLAME_SWORD, SUN_SWORD -> victim.setFireTicks(300);
             case ICE_SWORD -> {
-                victim.setFreezeTicks(30);
-                victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 30, 4, false, false));
+                victim.setFreezeTicks(40);
+                victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 4, false, false));
             }
         }
     }
