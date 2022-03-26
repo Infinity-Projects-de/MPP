@@ -67,12 +67,23 @@ public final class Aether extends JavaPlugin
 
         //Create plugin, data and locales folder
         File dataFolder = new File(getDataFolder().getAbsolutePath() + File.separator + "data");
+        if (!dataFolder.exists() && !dataFolder.mkdirs())
+        {
+            Aether.logError("Folder at " + dataFolder.getAbsolutePath() + " could not be created!");
+        }
+
         File localesFolder = new File(getDataFolder().getAbsolutePath() + File.separator + "locales");
-        if (!dataFolder.exists()) { dataFolder.mkdirs(); }
-        if (!localesFolder.exists()) { localesFolder.mkdirs(); }
+        if (!localesFolder.exists() && !localesFolder.mkdirs())
+        {
+            Aether.logError("Folder at " + localesFolder.getAbsolutePath() + " could not be created!");
+        }
 
         saveDefaultConfig();
-        saveResource("locales/de.yml", false);
+        File deFile = new File(getDataFolder().getAbsolutePath() + File.separator + "locales" + File.separator + "de.yml");
+        if (!deFile.exists())
+        {
+            saveResource("locales/de.yml", false);
+        }
         configManager = new ConfigManager();
 
         registerRecipes();

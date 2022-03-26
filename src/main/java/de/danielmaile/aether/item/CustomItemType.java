@@ -4,9 +4,8 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.util.NBTEditor;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -65,7 +64,7 @@ public enum CustomItemType
     VALKYRE_AXE(2014, Material.IRON_AXE),
     VALKYRE_BOOTS(3004, Material.IRON_BOOTS, new ArmorAttribute(3, 1, EquipmentSlot.FEET)),
     VALKYRE_LEGGINGS(3003, Material.IRON_LEGGINGS, new ArmorAttribute(7.5, 1, EquipmentSlot.LEGS)),
-    VALKYRE_RING( 3001, Material.IRON_HELMET, new ArmorAttribute(3, 1, EquipmentSlot.HEAD)),
+    VALKYRE_RING(3001, Material.IRON_HELMET, new ArmorAttribute(3, 1, EquipmentSlot.HEAD)),
     VALKYRE_SWORD(2003, Material.IRON_SWORD, new ToolAttribute(8, 1.6)),
     VALKYRE_WINGS(3002, Material.ELYTRA, new ArmorAttribute(9, 1, EquipmentSlot.CHEST)),
     ZANITE_AXE(2016, Material.DIAMOND_AXE),
@@ -91,10 +90,8 @@ public enum CustomItemType
 
     CustomItemType(int modelID, Material itemMaterial, Multimap<Attribute, AttributeModifier> attributeModifiers, Material placeMaterial)
     {
-        String name = Aether.getConfigManager().getLanguageFile().getString("items." + name() + ".name");
-        this.name = name != null ? ChatColor.translateAlternateColorCodes('&', name) : null;
-        String description = Aether.getConfigManager().getLanguageFile().getString("items." + name() + ".description");
-        this.description = description != null ? ChatColor.translateAlternateColorCodes('&', description) : null;
+        this.name = Aether.getConfigManager().getLanguageFile().getString("items." + name() + ".name");
+        this.description = Aether.getConfigManager().getLanguageFile().getString("items." + name() + ".description");
         this.modelID = modelID;
         this.itemMaterial = itemMaterial;
         this.attributeModifiers = attributeModifiers;
@@ -128,17 +125,19 @@ public enum CustomItemType
 
     public ItemStack getItemStack(int amount)
     {
-        if(name == null)
+        if (name == null)
         {
             Aether.logError("Item display name of " + name() + " is null. Please check your language file!");
             return null;
         }
         ItemStack itemStack = new ItemStack(itemMaterial);
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.displayName(Component.text(name).decoration(TextDecoration.ITALIC, false));
+        itemMeta.displayName(LegacyComponentSerializer.legacy('&').deserialize(name)
+                .decoration(TextDecoration.ITALIC, false));
         if (description != null)
         {
-            itemMeta.lore(List.of(Component.text(description).decoration(TextDecoration.ITALIC, false)));
+            itemMeta.lore(List.of(LegacyComponentSerializer.legacy('&').deserialize(description)
+                    .decoration(TextDecoration.ITALIC, false)));
         }
         itemMeta.setCustomModelData(modelID);
         if (attributeModifiers != null)
