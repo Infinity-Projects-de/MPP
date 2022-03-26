@@ -1,7 +1,6 @@
 package de.danielmaile.aether.config;
 
 import de.danielmaile.aether.Aether;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -39,6 +38,13 @@ public class ConfigManager
     }
 
     private LanguageManager languageManager;
+
+    public boolean isItemConverterEnabled()
+    {
+        return itemConverterEnabled;
+    }
+
+    private boolean itemConverterEnabled;
     private float dungeonEndPartChance;
     private float dungeonProbability;
     private float treeProbability;
@@ -62,6 +68,7 @@ public class ConfigManager
         }
 
         languageManager = new LanguageManager(YamlConfiguration.loadConfiguration(file));
+        itemConverterEnabled = Aether.getInstance().getConfig().getBoolean("item_converter");
         dungeonEndPartChance = (float) Aether.getInstance().getConfig().getDouble("world_generation.dungeons.end_part_chance");
         dungeonProbability = (float) Aether.getInstance().getConfig().getDouble("world_generation.dungeons.probability");
         treeProbability = (float) Aether.getInstance().getConfig().getDouble("world_generation.trees.probability");

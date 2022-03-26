@@ -6,6 +6,7 @@ import de.danielmaile.aether.commands.CommandAether;
 import de.danielmaile.aether.config.ConfigManager;
 import de.danielmaile.aether.config.LanguageManager;
 import de.danielmaile.aether.item.ListenerBlock;
+import de.danielmaile.aether.item.ListenerConverter;
 import de.danielmaile.aether.item.ListenerCrafting;
 import de.danielmaile.aether.item.Recipes;
 import de.danielmaile.aether.item.funtion.ListenerArmor;
@@ -81,6 +82,7 @@ public final class Aether extends JavaPlugin
         getServer().getPluginManager().registerEvents(new ListenerItem(), this);
         getServer().getPluginManager().registerEvents(new ListenerArmor(), this);
         getServer().getPluginManager().registerEvents(new ListenerParticle(), this);
+        getServer().getPluginManager().registerEvents(new ListenerConverter(), this);
         Objects.requireNonNull(Bukkit.getPluginCommand("aether")).setExecutor(new CommandAether());
 
         //Create plugin, data and locales folder
