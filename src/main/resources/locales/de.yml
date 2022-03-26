@@ -1,20 +1,20 @@
 messages:
-  prefix: "<light_purple>[Aether] <gray>"
+  prefix: "<gradient:#7403FB:#FB03E4>[The Aether] </gradient>"
   cmd:
     info:
       reloaded_config: "<green>Die Config wurde neu geladen!"
       help_text:
-        - "/ae reload - Läd die Config neu."
-        - "/ae teleport - Teleportiert dich in die Aether-Welt."
-        - "/ae give <name> - Gibt dir ein Aether Item."
+        - "<gradient:#03FB5D:#03FBE1>/ae reload</gradient> <gradient:#D2FB03:#68FB03>- Läd die Config neu.</gradient>"
+        - "<gradient:#03FB5D:#03FBE1>/ae teleport</gradient> <gradient:#D2FB03:#68FB03>- Teleportiert dich in die Aether-Welt.</gradient>"
+        - "<gradient:#03FB5D:#03FBE1>/ae give <name></gradient> <gradient:#D2FB03:#68FB03>- Gibt dir ein Aether Item.</gradient>"
     errors:
       only_player_cmd: "<red>Aether-Befehle können nur von Spielern ausgeführt werden!"
       item_does_not_exist: "<red>Dieses Item existiert nicht!"
       aether_world_not_created: "<red>Die Aether-Welt wurde noch nicht erstellt. Starte den Server neu um sie zu erstellen!"
   chat:
-    click_to_dungeon_teleport: "Klicke nochmals auf den Block um dich in den Dungeon zu teleportieren."
+    click_to_dungeon_teleport: "<gradient:#03FB5D:#03FBE1>Klicke nochmals auf den Block um dich in den Dungeon zu teleportieren.</gradient>"
   console:
-    datapack_copied: "Alle Dateien wurden erfolgreich kopiert. Starte deinen Server neu um die Aether-Welt zu generieren."
+    datapack_copied: "<gradient:#D2FB03:#68FB03>Alle Dateien wurden erfolgreich kopiert. Starte deinen Server neu um die Aether-Welt zu generieren.</gradient>"
 items:
   AETHER_ACACIA_LOG:
     name: "Himmelsakazienstamm"
@@ -90,126 +90,126 @@ items:
     name: "Himmelsholzschwert"
     description: ~
   FIRE_ESSENCE:
-    name: "<bold><red>Feueressenz"
+    name: "<gradient:#FB2C03:#FB7F03>Feueressenz</gradient>"
     description:
-      - "Eine Essenz vom Feuerteufel die zum verbessern von Waffen benutzt werden kann."
+      - "Kann zum Verbessern des Zaniteschwertes benutzt werden."
   FLAME_SWORD:
-    name: "<bold><red>Feuerschwert"
+    name: "<gradient:#FB2C03:#FB7F03>Feuerschwert</gradient>"
     description:
       - "Verbrenne deine Feinde, falls sie dir zu nahe kommen."
   GRAVITITE_AXE:
-    name: "<light_purple>Gravititaxt"
+    name: "<gradient:#C303FB:#FB03DD>Gravititaxt</gradient>"
     description: ~
   GRAVITITE_BOOTS:
-    name: "<light_purple>Gravititschuhe"
+    name: "<gradient:#C303FB:#FB03DD>Gravititschuhe</gradient>"
     description: ~
   GRAVITITE_CHESTPLATE:
-    name: "<light_purple>Gravititbrustplatte"
+    name: "<gradient:#C303FB:#FB03DD>Gravititbrustplatte</gradient>"
     description: ~
   GRAVITITE_HELMET:
-    name: "<light_purple>Gravitithelm"
+    name: "<gradient:#C303FB:#FB03DD>Gravitithelm</gradient>"
     description: ~
   GRAVITITE_HOE:
-    name: "<light_purple>Gravititharke"
+    name: "<gradient:#C303FB:#FB03DD>Gravititharke</gradient>"
     description: ~
   GRAVITITE_LEGGINGS:
-    name: "<light_purple>Gravitithose"
+    name: "<gradient:#C303FB:#FB03DD>Gravitithose</gradient>"
     description: ~
   GRAVITITE_ORE:
-    name: "<light_purple>Gravititerz"
+    name: "<gradient:#C303FB:#FB03DD>Gravititerz</gradient>"
     description: ~
   GRAVITITE_PICKAXE:
-    name: "<light_purple>Gravititspitzhacke"
+    name: "<gradient:#C303FB:#FB03DD>Gravititspitzhacke</gradient>"
     description: ~
   GRAVITITE_PLATE:
-    name: "<light_purple>Garavititplatte"
+    name: "<gradient:#C303FB:#FB03DD>Gravititplatte</gradient>"
     description:
       - "Platten so fest, das fast alles Abgewehrt werden kann."
   GRAVITITE_SHOVEL:
-    name: "<light_purple>Gravititschaufel"
+    name: "<gradient:#C303FB:#FB03DD>Gravititschaufel</gradient>"
     description: ~
   GRAVITITE_SWORD:
-    name: "<light_purple>Gavititschwert"
+    name: "<gradient:#C303FB:#FB03DD>Gravititschwert</gradient>"
     description: ~
   ICE_ESSENCE:
-    name: "<light_purple><blue>Eisessenz"
+    name: "<gradient:#03FBD2:#03CEFB>Eisessenz</gradient>"
     description:
-      - "Eine Essenz vom Eisgeist die zum verbessern von Waffen benutzt werden kann."
+      - "Kann zum Verbessern des Zaniteschwertes benutzt werden."
   ICE_SWORD:
-    name: "<light_purple><blue>Eisschwert"
+    name: "<gradient:#03FBD2:#03CEFB>Eisschwert</gradient>"
     description:
       - "Lasse deine Gegner bei Berührung erstarren."
   LIGHTNING_ESSENCE:
-    name: "<bold><aqua>Blitzessenz"
+    name: "<gradient:#037FFB:#2103FB>Blitzessenz</gradient>"
     description:
-      - "Eine Essenz vom Himmelswal die zum verbessern von Waffen benutzt werden kann."
+      - "Kann zum Verbessern des Zaniteschwertes benutzt werden."
   LIGHTNING_SWORD:
-    name: "<bold><aqua>Blitzschwert"
+    name: "<gradient:#037FFB:#03FBD2>Blitzschwert</gradient>"
     description:
       - "Beschwöre Blitze auf Jenen, der versucht dich zu verletzen."
   SUN_STONE:
-    name: "<bold><gold>Stein der Sonne"
+    name: "<gradient:#FB2C03:#F0FB03>Stein der Sonne</gradient>"
     description:
-      - "Dieser besondere Stein besitzt die Kraft eine mächtige Waffe herzustellen."
+      - "Eine Element des Sonnenschwertes, jedoch fehlt noch etwas..."
   SUN_SWORD:
-    name: "<bold><gold>Sonnenschwert"
+    name: "<gradient:#FB2C03:#F0FB03>Sonnenschwert</gradient>"
     description:
       - "Das Schwert des Sonnengottes ist eine mächtige Waffe die jeden erzittern lässt."
   VALKYRE_AXE:
-    name: "<bold><yellow>Kampfaxt der Walküren"
+    name: "<gradient:#FBC603:#ECFB03>Kampfaxt der Walküren</gradient>"
     description:
       - "Dies ist die Kampfaxt der Walküren. Sie zerteil alles was in den Weg kommt."
   VALKYRE_BOOTS:
-    name: "<bold><yellow>Stiefel der Walküre"
+    name: "<gradient:#FBC603:#ECFB03>Stiefel der Walküre</gradient>"
     description:
       - "Die Stiefel der Walküren erlauben es dir, langsamer auf den Boden zu fallen."
   VALKYRE_LEGGINGS:
-    name: "<bold><yellow>Beinschutz der Walküre"
+    name: "<gradient:#FBC603:#ECFB03>Beinschutz der Walküre</gradient>"
     description:
       - "Der Beinschutz der Walküren ist stabil und hält vieles aus."
   VALKYRE_RING:
-    name: "<bold><yellow>Heiligenschein der Walküre"
+    name: "<gradient:#FBC603:#ECFB03>Heiligenschein der Walküre</gradient>"
     description:
       - "Der heilige Ring der Walküren. Er besitzt die Kraft dich zu verstärken."
   VALKYRE_SWORD:
-    name: "<bold><yellow>Rache der Walküren"
+    name: "<gradient:#FBC603:#ECFB03>Rache der Walküren</gradient>"
     description:
       - "Ein mächtiges Schwert welches Furcht und Angst hervorruft."
   VALKYRE_WINGS:
-    name: "<bold><yellow>Walkürenflügel"
+    name: "<gradient:#FBC603:#ECFB03>Walkürenflügel</gradient>"
     description:
       - "Mit den Walkürenflügeln kannst du durch den Himmel gleiten wie ein Engel."
   ZANITE_AXE:
-    name: "<dark_purple>Zaniteaxt"
+    name: "<gradient:#D012FF:#8000FF>Zaniteaxt</gradient>"
     description: ~
   ZANITE_BOOTS:
-    name: "<dark_purple>Zaniteschuhe"
+    name: "<gradient:#D012FF:#8000FF>Zaniteschuhe</gradient>"
     description: ~
   ZANITE_CHESTPLATE:
-    name: "<dark_purple>Zanitebrustplatte"
+    name: "<gradient:#D012FF:#8000FF>Zanitebrustplatte</gradient>"
     description: ~
   ZANITE_HELMET:
-    name: "<dark_purple>Zanitehelm"
+    name: "<gradient:#D012FF:#8000FF>Zanitehelm</gradient>"
     description: ~
   ZANITE_HOE:
-    name: "<dark_purple>Zaniteharke"
+    name: "<gradient:#D012FF:#8000FF>Zaniteharke</gradient>"
     description: ~
   ZANITE_LEGGINGS:
-    name: "<dark_purple>Zanitehose"
+    name: "<gradient:#D012FF:#8000FF>Zanitehose</gradient>"
     description: ~
   ZANITE_ORE:
-    name: "<dark_purple>Zaniteerz"
+    name: "<gradient:#D012FF:#8000FF>Zaniteerz</gradient>"
     description: ~
   ZANITE_PICKAXE:
-    name: "<dark_purple>Zanitespitzhacke"
+    name: "<gradient:#D012FF:#8000FF>Zanitespitzhacke</gradient>"
     description: ~
   ZANITE_SHOVEL:
-    name: "<dark_purple>Zaniteschaufel"
+    name: "<gradient:#D012FF:#8000FF>Zaniteschaufel</gradient>"
     description: ~
   ZANITE_STONE:
-    name: "<dark_purple>Zanitgestein"
+    name: "<gradient:#D012FF:#8000FF>Zanitgestein</gradient>"
     description:
       - "Ein Gestein zum Herstellen starker Waffen und Werkzeuge."
   ZANITE_SWORD:
-    name: "<dark_purple>Zaniteschwert"
+    name: "<gradient:#D012FF:#8000FF>Zaniteschwert</gradient>"
     description: ~

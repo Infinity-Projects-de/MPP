@@ -59,7 +59,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
             catch (IllegalArgumentException exception)
             {
                 player.sendMessage(cmdPrefix
-                        .append(Aether.getLanguageManager().getComponent("messages.cmd.error.item_does_not_exist")));
+                        .append(Aether.getLanguageManager().getComponent("messages.cmd.errors.item_does_not_exist")));
             }
         }
         else
