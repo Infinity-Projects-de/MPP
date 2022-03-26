@@ -1,9 +1,9 @@
 package de.danielmaile.aether.commands;
 
 import de.danielmaile.aether.Aether;
-import de.danielmaile.aether.item.CustomItemType;
+import de.danielmaile.aether.item.ItemType;
 import de.danielmaile.aether.worldgen.AetherWorld;
-import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.Component;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,7 +24,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args)
     {
-        TextComponent cmdPrefix = Aether.getLanguageManager().getComponent("messages.prefix");
+        Component cmdPrefix = Aether.getLanguageManager().getComponent("messages.prefix");
 
         if (!(sender instanceof Player player))
         {
@@ -53,7 +53,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
         {
             try
             {
-                CustomItemType item = CustomItemType.valueOf(args[1].toUpperCase());
+                ItemType item = ItemType.valueOf(args[1].toUpperCase());
                 player.getInventory().addItem(item.getItemStack());
             }
             catch (IllegalArgumentException exception)
@@ -64,7 +64,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
         }
         else
         {
-            for (TextComponent component : Aether.getLanguageManager().getComponentList("messages.cmd.info.help_text"))
+            for (Component component : Aether.getLanguageManager().getComponentList("messages.cmd.info.help_text"))
             {
                 player.sendMessage(cmdPrefix.append(component));
             }
@@ -91,7 +91,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
         if (args.length == 2 && args[0].equalsIgnoreCase("give"))
         {
             //Get ItemNames from enum
-            List<String> itemNames = Stream.of(CustomItemType.values()).map(Enum::name).toList();
+            List<String> itemNames = Stream.of(ItemType.values()).map(Enum::name).toList();
             tabComplete.addAll(itemNames);
             StringUtil.copyPartialMatches(args[1], tabComplete, completions);
         }

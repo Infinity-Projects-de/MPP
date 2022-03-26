@@ -6,16 +6,16 @@ import java.util.Arrays;
 
 public enum ArmorSet
 {
-    VALKYRIE(CustomItemType.VALKYRE_RING, CustomItemType.VALKYRE_WINGS, CustomItemType.VALKYRE_LEGGINGS, CustomItemType.VALKYRE_BOOTS),
-    ZANITE(CustomItemType.ZANITE_HELMET, CustomItemType.ZANITE_CHESTPLATE, CustomItemType.ZANITE_LEGGINGS, CustomItemType.ZANITE_BOOTS),
-    GRAVITITE(CustomItemType.GRAVITITE_HELMET, CustomItemType.GRAVITITE_CHESTPLATE, CustomItemType.GRAVITITE_LEGGINGS, CustomItemType.GRAVITITE_BOOTS);
+    VALKYRIE(ItemType.VALKYRE_RING, ItemType.VALKYRE_WINGS, ItemType.VALKYRE_LEGGINGS, ItemType.VALKYRE_BOOTS),
+    ZANITE(ItemType.ZANITE_HELMET, ItemType.ZANITE_CHESTPLATE, ItemType.ZANITE_LEGGINGS, ItemType.ZANITE_BOOTS),
+    GRAVITITE(ItemType.GRAVITITE_HELMET, ItemType.GRAVITITE_CHESTPLATE, ItemType.GRAVITITE_LEGGINGS, ItemType.GRAVITITE_BOOTS);
 
-    private final CustomItemType head;
-    private final CustomItemType chest;
-    private final CustomItemType legs;
-    private final CustomItemType feet;
+    private final ItemType head;
+    private final ItemType chest;
+    private final ItemType legs;
+    private final ItemType feet;
 
-    ArmorSet(CustomItemType head, CustomItemType chest, CustomItemType legs, CustomItemType feet)
+    ArmorSet(ItemType head, ItemType chest, ItemType legs, ItemType feet)
     {
         this.head = head;
         this.chest = chest;
@@ -23,18 +23,18 @@ public enum ArmorSet
         this.feet = feet;
     }
 
-    public boolean contains(CustomItemType customItemType)
+    public boolean contains(ItemType itemType)
     {
-        return head == customItemType || chest == customItemType
-                || legs == customItemType || feet == customItemType;
+        return head == itemType || chest == itemType
+                || legs == itemType || feet == itemType;
     }
 
     public static ArmorSet getEquippedSet(Player player)
     {
-        CustomItemType headType = CustomItemType.getFromTag(player.getEquipment().getHelmet());
-        CustomItemType chestType = CustomItemType.getFromTag(player.getEquipment().getChestplate());
-        CustomItemType legsType = CustomItemType.getFromTag(player.getEquipment().getLeggings());
-        CustomItemType feetType = CustomItemType.getFromTag(player.getEquipment().getBoots());
+        ItemType headType = ItemType.getFromTag(player.getEquipment().getHelmet());
+        ItemType chestType = ItemType.getFromTag(player.getEquipment().getChestplate());
+        ItemType legsType = ItemType.getFromTag(player.getEquipment().getLeggings());
+        ItemType feetType = ItemType.getFromTag(player.getEquipment().getBoots());
         return Arrays.stream(ArmorSet.values())
                 .filter(set -> set.head == headType && set.chest == chestType && set.legs == legsType && set.feet == feetType)
                 .findFirst().orElse(null);

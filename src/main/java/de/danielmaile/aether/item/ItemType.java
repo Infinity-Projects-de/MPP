@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public enum CustomItemType
+public enum ItemType
 {
     AETHER_ACACIA_LOG(4005, Material.ACACIA_LOG, Material.ACACIA_LOG),
     AETHER_ACACIA_PLANKS(4011, Material.ACACIA_PLANKS, Material.ACACIA_PLANKS),
@@ -84,14 +84,14 @@ public enum CustomItemType
 
     public static final String AETHER_ITEM_TAG_KEY = "aether_item";
 
-    private final TextComponent name;
-    private final List<TextComponent> description;
+    private final Component name;
+    private final List<Component> description;
     private final int modelID;
     private final Material itemMaterial;
     private final Material placeMaterial;
     private final Multimap<Attribute, AttributeModifier> attributeModifiers;
 
-    CustomItemType(int modelID, Material itemMaterial, Multimap<Attribute, AttributeModifier> attributeModifiers, Material placeMaterial)
+    ItemType(int modelID, Material itemMaterial, Multimap<Attribute, AttributeModifier> attributeModifiers, Material placeMaterial)
     {
         this.name = Aether.getLanguageManager().getComponent("items." + name() + ".name");
         this.description = Aether.getLanguageManager().getComponentList("items." + name() + ".description");
@@ -101,17 +101,17 @@ public enum CustomItemType
         this.placeMaterial = placeMaterial;
     }
 
-    CustomItemType(int modelID, Material itemMaterial)
+    ItemType(int modelID, Material itemMaterial)
     {
         this(modelID, itemMaterial, null, null);
     }
 
-    CustomItemType(int modelID, Material itemMaterial, Material placeMaterial)
+    ItemType(int modelID, Material itemMaterial, Material placeMaterial)
     {
         this(modelID, itemMaterial, null, placeMaterial);
     }
 
-    CustomItemType(int modelID, Material itemMaterial, CustomAttribute customAttribute)
+    ItemType(int modelID, Material itemMaterial, CustomAttribute customAttribute)
     {
         this(modelID, itemMaterial, customAttribute.toAttributeMap(), null);
     }
@@ -134,7 +134,7 @@ public enum CustomItemType
         itemMeta.displayName(name.decoration(TextDecoration.ITALIC, false));
 
         List<Component> descriptionList = new ArrayList<>();
-        for (TextComponent component : description)
+        for (Component component : description)
         {
             descriptionList.add(component.decoration(TextDecoration.ITALIC, false));
         }
@@ -152,11 +152,11 @@ public enum CustomItemType
         return NBTEditor.setString(itemStack, AETHER_ITEM_TAG_KEY, name());
     }
 
-    public static CustomItemType getFromTag(ItemStack itemStack)
+    public static ItemType getFromTag(ItemStack itemStack)
     {
         try
         {
-            return CustomItemType.valueOf(NBTEditor.getString(itemStack, CustomItemType.AETHER_ITEM_TAG_KEY));
+            return ItemType.valueOf(NBTEditor.getString(itemStack, ItemType.AETHER_ITEM_TAG_KEY));
         }
         catch (NullPointerException | IllegalArgumentException exception)
         {

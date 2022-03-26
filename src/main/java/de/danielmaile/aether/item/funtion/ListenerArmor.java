@@ -1,16 +1,20 @@
-package de.danielmaile.aether.item;
+package de.danielmaile.aether.item.funtion;
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
+import de.danielmaile.aether.item.ArmorSet;
+import de.danielmaile.aether.item.ItemType;
 import de.danielmaile.aether.util.Utils;
+import org.bukkit.Particle;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffectType;
 
-public class ListenerCustomArmor implements Listener
+public class ListenerArmor implements Listener
 {
     //When wearing zanite or gravitite or armor arrows bounce off
     @EventHandler
@@ -40,16 +44,16 @@ public class ListenerCustomArmor implements Listener
     public void onChangeArmor(PlayerArmorChangeEvent event)
     {
         Player player = event.getPlayer();
-        CustomItemType oldItemType = CustomItemType.getFromTag(event.getOldItem());
-        CustomItemType newItemType = CustomItemType.getFromTag(event.getNewItem());
+        ItemType oldItemType = ItemType.getFromTag(event.getOldItem());
+        ItemType newItemType = ItemType.getFromTag(event.getNewItem());
 
         //Player gets permanent slow fall when wearing valkyrie boots
-        if (oldItemType == CustomItemType.VALKYRE_BOOTS) { player.removePotionEffect(PotionEffectType.SLOW_FALLING); }
-        if (newItemType == CustomItemType.VALKYRE_BOOTS) { Utils.addPermEffect(player, PotionEffectType.SLOW_FALLING); }
+        if (oldItemType == ItemType.VALKYRE_BOOTS) { player.removePotionEffect(PotionEffectType.SLOW_FALLING); }
+        if (newItemType == ItemType.VALKYRE_BOOTS) { Utils.addPermEffect(player, PotionEffectType.SLOW_FALLING); }
 
         //Player gets +2 health when wearing valkyrie ring
-        if (oldItemType == CustomItemType.VALKYRE_RING) { Utils.addMaxHealth(player, -4d); }
-        if (newItemType == CustomItemType.VALKYRE_RING) { Utils.addMaxHealth(player, 4d); }
+        if (oldItemType == ItemType.VALKYRE_RING) { Utils.addMaxHealth(player, -4d); }
+        if (newItemType == ItemType.VALKYRE_RING) { Utils.addMaxHealth(player, 4d); }
 
         //Player gets permanent regeneration fall when wearing full valkyrie armor set
         if (ArmorSet.getEquippedSet(player) == ArmorSet.VALKYRIE)

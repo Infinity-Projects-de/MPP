@@ -1,16 +1,16 @@
 messages:
-  prefix: "&d[Aether] &7"
+  prefix: "<light_purple>[Aether] <gray>"
   cmd:
     info:
-      reloaded_config: "&aDie Config wurde neu geladen!"
+      reloaded_config: "<green>Die Config wurde neu geladen!"
       help_text:
         - "/ae reload - Läd die Config neu."
         - "/ae teleport - Teleportiert dich in die Aether-Welt."
         - "/ae give <name> - Gibt dir ein Aether Item."
     errors:
-      only_player_cmd: "&cAether-Befehle können nur von Spielern ausgeführt werden!"
-      item_does_not_exist: "&cDieses Item existiert nicht!"
-      aether_world_not_created: "&cDie Aether-Welt wurde noch nicht erstellt. Starte den Server neu um sie zu erstellen!"
+      only_player_cmd: "<red>Aether-Befehle können nur von Spielern ausgeführt werden!"
+      item_does_not_exist: "<red>Dieses Item existiert nicht!"
+      aether_world_not_created: "<red>Die Aether-Welt wurde noch nicht erstellt. Starte den Server neu um sie zu erstellen!"
   chat:
     click_to_dungeon_teleport: "Klicke nochmals auf den Block um dich in den Dungeon zu teleportieren."
   console:
@@ -90,126 +90,126 @@ items:
     name: "Himmelsholzschwert"
     description: ~
   FIRE_ESSENCE:
-    name: "&l&cFeueressenz"
+    name: "<bold><red>Feueressenz"
     description:
       - "Eine Essenz vom Feuerteufel die zum verbessern von Waffen benutzt werden kann."
   FLAME_SWORD:
-    name: "&l&cFeuerschwert"
+    name: "<bold><red>Feuerschwert"
     description:
       - "Verbrenne deine Feinde, falls sie dir zu nahe kommen."
   GRAVITITE_AXE:
-    name: "&dGravititaxt"
+    name: "<light_purple>Gravititaxt"
     description: ~
   GRAVITITE_BOOTS:
-    name: "&dGravititschuhe"
+    name: "<light_purple>Gravititschuhe"
     description: ~
   GRAVITITE_CHESTPLATE:
-    name: "&dGravititbrustplatte"
+    name: "<light_purple>Gravititbrustplatte"
     description: ~
   GRAVITITE_HELMET:
-    name: "&dGravitithelm"
+    name: "<light_purple>Gravitithelm"
     description: ~
   GRAVITITE_HOE:
-    name: "&dGravititharke"
+    name: "<light_purple>Gravititharke"
     description: ~
   GRAVITITE_LEGGINGS:
-    name: "&dGravitithose"
+    name: "<light_purple>Gravitithose"
     description: ~
   GRAVITITE_ORE:
-    name: "&dGravititerz"
+    name: "<light_purple>Gravititerz"
     description: ~
   GRAVITITE_PICKAXE:
-    name: "&dGravititspitzhacke"
+    name: "<light_purple>Gravititspitzhacke"
     description: ~
   GRAVITITE_PLATE:
-    name: "&dGaravititplatte"
+    name: "<light_purple>Garavititplatte"
     description:
       - "Platten so fest, das fast alles Abgewehrt werden kann."
   GRAVITITE_SHOVEL:
-    name: "&dGravititschaufel"
+    name: "<light_purple>Gravititschaufel"
     description: ~
   GRAVITITE_SWORD:
-    name: "&dGavititschwert"
+    name: "<light_purple>Gavititschwert"
     description: ~
   ICE_ESSENCE:
-    name: "&d&9Eisessenz"
+    name: "<light_purple><blue>Eisessenz"
     description:
       - "Eine Essenz vom Eisgeist die zum verbessern von Waffen benutzt werden kann."
   ICE_SWORD:
-    name: "&d&9Eisschwert"
+    name: "<light_purple><blue>Eisschwert"
     description:
       - "Lasse deine Gegner bei Berührung erstarren."
   LIGHTNING_ESSENCE:
-    name: "&l&bBlitzessenz"
+    name: "<bold><aqua>Blitzessenz"
     description:
       - "Eine Essenz vom Himmelswal die zum verbessern von Waffen benutzt werden kann."
   LIGHTNING_SWORD:
-    name: "&l&bBlitzschwert"
+    name: "<bold><aqua>Blitzschwert"
     description:
       - "Beschwöre Blitze auf Jenen, der versucht dich zu verletzen."
   SUN_STONE:
-    name: "&l&6Stein der Sonne"
+    name: "<bold><gold>Stein der Sonne"
     description:
       - "Dieser besondere Stein besitzt die Kraft eine mächtige Waffe herzustellen."
   SUN_SWORD:
-    name: "&l&6Sonnenschwert"
+    name: "<bold><gold>Sonnenschwert"
     description:
       - "Das Schwert des Sonnengottes ist eine mächtige Waffe die jeden erzittern lässt."
   VALKYRE_AXE:
-    name: "&l&eKampfaxt der Walküren"
+    name: "<bold><yellow>Kampfaxt der Walküren"
     description:
       - "Dies ist die Kampfaxt der Walküren. Sie zerteil alles was in den Weg kommt."
   VALKYRE_BOOTS:
-    name: "&l&eStiefel der Walküre"
+    name: "<bold><yellow>Stiefel der Walküre"
     description:
       - "Die Stiefel der Walküren erlauben es dir, langsamer auf den Boden zu fallen."
   VALKYRE_LEGGINGS:
-    name: "&l&eBeinschutz der Walküre"
+    name: "<bold><yellow>Beinschutz der Walküre"
     description:
       - "Der Beinschutz der Walküren ist stabil und hält vieles aus."
   VALKYRE_RING:
-    name: "&l&eHeiligenschein der Walküre"
+    name: "<bold><yellow>Heiligenschein der Walküre"
     description:
       - "Der heilige Ring der Walküren. Er besitzt die Kraft dich zu verstärken."
   VALKYRE_SWORD:
-    name: "&l&eRache der Walküren"
+    name: "<bold><yellow>Rache der Walküren"
     description:
       - "Ein mächtiges Schwert welches Furcht und Angst hervorruft."
   VALKYRE_WINGS:
-    name: "&l&eWalkürenflügel"
+    name: "<bold><yellow>Walkürenflügel"
     description:
       - "Mit den Walkürenflügeln kannst du durch den Himmel gleiten wie ein Engel."
   ZANITE_AXE:
-    name: "&5Zaniteaxt"
+    name: "<dark_purple>Zaniteaxt"
     description: ~
   ZANITE_BOOTS:
-    name: "&5Zaniteschuhe"
+    name: "<dark_purple>Zaniteschuhe"
     description: ~
   ZANITE_CHESTPLATE:
-    name: "&5Zanitebrustplatte"
+    name: "<dark_purple>Zanitebrustplatte"
     description: ~
   ZANITE_HELMET:
-    name: "&5Zanitehelm"
+    name: "<dark_purple>Zanitehelm"
     description: ~
   ZANITE_HOE:
-    name: "&5Zaniteharke"
+    name: "<dark_purple>Zaniteharke"
     description: ~
   ZANITE_LEGGINGS:
-    name: "&5Zanitehose"
+    name: "<dark_purple>Zanitehose"
     description: ~
   ZANITE_ORE:
-    name: "&5Zaniteerz"
+    name: "<dark_purple>Zaniteerz"
     description: ~
   ZANITE_PICKAXE:
-    name: "&5Zanitespitzhacke"
+    name: "<dark_purple>Zanitespitzhacke"
     description: ~
   ZANITE_SHOVEL:
-    name: "&5Zaniteschaufel"
+    name: "<dark_purple>Zaniteschaufel"
     description: ~
   ZANITE_STONE:
-    name: "&5Zanitgestein"
+    name: "<dark_purple>Zanitgestein"
     description:
       - "Ein Gestein zum Herstellen starker Waffen und Werkzeuge."
   ZANITE_SWORD:
-    name: "&5Zaniteschwert"
+    name: "<dark_purple>Zaniteschwert"
     description: ~

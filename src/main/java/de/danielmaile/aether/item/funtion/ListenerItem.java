@@ -1,5 +1,6 @@
-package de.danielmaile.aether.item;
+package de.danielmaile.aether.item.funtion;
 
+import de.danielmaile.aether.item.ItemType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class ListenerCustomItems implements Listener
+public class ListenerItem implements Listener
 {
     //When hit by lightning sword -> lightning strikes victim
     //When hit by flame or sun sword -> set victim on fire
@@ -22,10 +23,10 @@ public class ListenerCustomItems implements Listener
         if (!(event.getDamager() instanceof Player player)) return;
 
         ItemStack itemInUse = player.getInventory().getItemInMainHand();
-        CustomItemType customItemType = CustomItemType.getFromTag(itemInUse);
-        if (customItemType == null) return;
+        ItemType itemType = ItemType.getFromTag(itemInUse);
+        if (itemType == null) return;
 
-        switch (customItemType)
+        switch (itemType)
         {
             case LIGHTNING_SWORD -> victim.getWorld().strikeLightning(victim.getLocation());
             case FLAME_SWORD, SUN_SWORD -> victim.setFireTicks(300);

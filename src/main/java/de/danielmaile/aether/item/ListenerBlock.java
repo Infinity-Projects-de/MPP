@@ -22,10 +22,10 @@ public class ListenerBlock implements Listener
         if (!block.getWorld().equals(AetherWorld.getWorld())) return;
 
         Location location = block.getLocation();
-        CustomBlockType customBlockType = CustomBlockType.getFromMaterial(block.getType());
-        if (customBlockType == null) return;
+        BlockType blockType = BlockType.getFromMaterial(block.getType());
+        if (blockType == null) return;
 
-        block.getWorld().dropItemNaturally(location, customBlockType.getItemDrop().getItemStack());
+        block.getWorld().dropItemNaturally(location, blockType.getItemDrop().getItemStack());
         event.setDropItems(false);
     }
 
@@ -38,23 +38,23 @@ public class ListenerBlock implements Listener
         ItemStack itemStack = event.getItemInHand();
         if (block.getWorld().equals(AetherWorld.getWorld()))
         {
-            if (NBTEditor.hasKey(itemStack, CustomItemType.AETHER_ITEM_TAG_KEY))
+            if (NBTEditor.hasKey(itemStack, ItemType.AETHER_ITEM_TAG_KEY))
             {
                 //Convert Item to correct material
-                CustomItemType customItemType = CustomItemType.getFromTag(itemStack);
-                if (customItemType != null)
+                ItemType itemType = ItemType.getFromTag(itemStack);
+                if (itemType != null)
                 {
                     //Change material but keep orientation
                     BlockData data = block.getBlockData();
-                    block.setType(customItemType.getPlaceMaterial());
+                    block.setType(itemType.getPlaceMaterial());
                     block.setBlockData(data);
                 }
             }
             else
             {
                 //Check if block which a player tries to place is already used by aether block
-                CustomBlockType customBlockType = CustomBlockType.getFromMaterial(itemStack.getType());
-                if (customBlockType != null)
+                BlockType blockType = BlockType.getFromMaterial(itemStack.getType());
+                if (blockType != null)
                 {
                     event.setCancelled(true);
                 }
@@ -63,7 +63,7 @@ public class ListenerBlock implements Listener
         else
         {
             //Aether items can't be placed in other worlds
-            if (NBTEditor.hasKey(itemStack, CustomItemType.AETHER_ITEM_TAG_KEY))
+            if (NBTEditor.hasKey(itemStack, ItemType.AETHER_ITEM_TAG_KEY))
             {
                 event.setCancelled(true);
             }

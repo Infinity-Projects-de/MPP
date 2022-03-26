@@ -6,6 +6,8 @@ import de.danielmaile.aether.commands.CommandAether;
 import de.danielmaile.aether.config.ConfigManager;
 import de.danielmaile.aether.config.LanguageManager;
 import de.danielmaile.aether.item.*;
+import de.danielmaile.aether.item.funtion.ListenerArmor;
+import de.danielmaile.aether.item.funtion.ListenerItem;
 import de.danielmaile.aether.listeners.ListenerAetherVoid;
 import de.danielmaile.aether.listeners.ListenerMonument;
 import de.danielmaile.aether.mobs.ListenerAetherMobs;
@@ -65,8 +67,8 @@ public final class Aether extends JavaPlugin
         getServer().getPluginManager().registerEvents(new ListenerCrafting(), this);
         getServer().getPluginManager().registerEvents(new ListenerMonument(), this);
         getServer().getPluginManager().registerEvents(new ListenerAetherMobs(), this);
-        getServer().getPluginManager().registerEvents(new ListenerCustomItems(), this);
-        getServer().getPluginManager().registerEvents(new ListenerCustomArmor(), this);
+        getServer().getPluginManager().registerEvents(new ListenerItem(), this);
+        getServer().getPluginManager().registerEvents(new ListenerArmor(), this);
         Objects.requireNonNull(Bukkit.getPluginCommand("aether")).setExecutor(new CommandAether());
 
         //Create plugin, data and locales folder
@@ -101,9 +103,9 @@ public final class Aether extends JavaPlugin
 
     private void registerRecipes()
     {
-        for (CustomRecipe customRecipe : CustomRecipe.values())
+        for (Recipes recipe : Recipes.values())
         {
-            Bukkit.addRecipe(customRecipe.getRecipe());
+            Bukkit.addRecipe(recipe.getRecipe());
         }
     }
 }

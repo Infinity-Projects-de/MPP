@@ -1,38 +1,29 @@
 package de.danielmaile.aether.config;
 
-import de.danielmaile.aether.Aether;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LanguageManager
+public record LanguageManager(FileConfiguration languageFile)
 {
-    private final FileConfiguration languageFile;
-
-    public LanguageManager(FileConfiguration languageFile)
-    {
-        this.languageFile = languageFile;
-    }
 
     @Nonnull
-    public TextComponent getComponent(String path)
+    public Component getComponent(String path)
     {
         String string = languageFile.getString(path);
         if (string == null)
         {
             return Component.empty();
         }
-        return LegacyComponentSerializer.legacyAmpersand().deserialize(string);
+        return MiniMessage.miniMessage().deserialize(string);
     }
 
     @Nonnull
-    public List<TextComponent> getComponentList(String path)
+    public List<Component> getComponentList(String path)
     {
         List<String> stringList = languageFile.getStringList(path);
         if (stringList.isEmpty())
@@ -40,10 +31,10 @@ public class LanguageManager
             return List.of(Component.empty());
         }
 
-        List<TextComponent> componentList = new ArrayList<>();
+        List<Component> componentList = new ArrayList<>();
         for (String string : stringList)
         {
-            componentList.add(LegacyComponentSerializer.legacyAmpersand().deserialize(string));
+            componentList.add(MiniMessage.miniMessage().deserialize(string));
         }
         return componentList;
     }
