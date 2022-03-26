@@ -47,7 +47,9 @@ public class ListenerMonument implements Listener
 
         clickedLocations.add(clickLocation);
         monumentClickMap.put(event.getPlayer(), clickedLocations);
-        event.getPlayer().sendMessage(Aether.PREFIX + "Klicke nochmals auf den Block um dich in den Dungeon zu teleportieren.");
+        event.getPlayer().sendMessage(
+                Aether.getLanguageManager().getComponent("messages.prefix")
+                                .append(Aether.getLanguageManager().getComponent("messages.chat.click_to_dungeon_teleport")));
     }
 
     @EventHandler

@@ -4,6 +4,7 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import de.danielmaile.aether.commands.CommandAether;
 import de.danielmaile.aether.config.ConfigManager;
+import de.danielmaile.aether.config.LanguageManager;
 import de.danielmaile.aether.item.*;
 import de.danielmaile.aether.listeners.ListenerAetherVoid;
 import de.danielmaile.aether.listeners.ListenerMonument;
@@ -13,7 +14,6 @@ import de.danielmaile.aether.portal.ListenerPortal;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import de.danielmaile.aether.worldgen.Prefab;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -22,13 +22,17 @@ import java.util.logging.Logger;
 
 public final class Aether extends JavaPlugin
 {
-    public static final String PREFIX = ChatColor.LIGHT_PURPLE + "[Aether] " + ChatColor.GRAY;
     private static Logger logger;
     private static Aether instance;
 
     public static ConfigManager getConfigManager()
     {
         return configManager;
+    }
+
+    public static LanguageManager getLanguageManager()
+    {
+        return configManager.getLanguageManager();
     }
 
     private static ConfigManager configManager;
@@ -69,13 +73,13 @@ public final class Aether extends JavaPlugin
         File dataFolder = new File(getDataFolder().getAbsolutePath() + File.separator + "data");
         if (!dataFolder.exists() && !dataFolder.mkdirs())
         {
-            Aether.logError("Folder at " + dataFolder.getAbsolutePath() + " could not be created!");
+            Aether.logError("Creation of data folder (" + dataFolder.getAbsolutePath() + ") failed!");
         }
 
         File localesFolder = new File(getDataFolder().getAbsolutePath() + File.separator + "locales");
         if (!localesFolder.exists() && !localesFolder.mkdirs())
         {
-            Aether.logError("Folder at " + localesFolder.getAbsolutePath() + " could not be created!");
+            Aether.logError("Creation of locales folder (" + dataFolder.getAbsolutePath() + ") failed!");
         }
 
         saveDefaultConfig();

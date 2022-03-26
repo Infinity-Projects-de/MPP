@@ -4,7 +4,6 @@ import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.util.SimpleLocation;
 import de.danielmaile.aether.util.Utils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -86,7 +85,7 @@ public class AetherWorld
         }
         catch (IOException | URISyntaxException exception)
         {
-            Aether.logError("Fehler beim kopieren des Datapacks. Starte deinen Server neu und versuche es erneut!");
+            Aether.logError("Error while copying datapack. Please restart your server and try again!");
         }
 
         //Add populators to aether world
@@ -110,12 +109,13 @@ public class AetherWorld
         }
 
         //Copy Datapack
-        //TODO auto copy all files in resources directory
         saveResourceToWorldFolder("aether_datapack/data/aether/dimension/aether.json");
         saveResourceToWorldFolder("aether_datapack/data/aether/worldgen/biome/plains.json");
         saveResourceToWorldFolder("aether_datapack/pack.mcmeta");
 
-        Bukkit.getConsoleSender().sendMessage(Aether.PREFIX + ChatColor.RED + "Alle Dateien wurden erfolgreich kopiert. Starte deinen Server neu um die Aether-Welt zu generieren.");
+        Bukkit.getConsoleSender().sendMessage(
+                Aether.getLanguageManager().getComponent("messages.prefix")
+                        .append(Aether.getLanguageManager().getComponent("messages.console.datapack_copied")));
     }
 
     private static void saveResourceToWorldFolder(String resourcePath) throws IOException
@@ -133,7 +133,7 @@ public class AetherWorld
         {
             if (!outputDirectory.mkdirs())
             {
-                Aether.logError("Output directories can't be created!");
+                Aether.logError("Output directories for resource can't be created!");
                 return;
             }
         }

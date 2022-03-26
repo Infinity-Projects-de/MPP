@@ -3,7 +3,7 @@ package de.danielmaile.aether.commands;
 import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.item.CustomItemType;
 import de.danielmaile.aether.worldgen.AetherWorld;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,23 +24,30 @@ public class CommandAether implements CommandExecutor, TabExecutor
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args)
     {
+        TextComponent cmdPrefix = Aether.getLanguageManager().getComponent("messages.prefix");
+
         if (!(sender instanceof Player player))
         {
-            sender.sendMessage(Aether.PREFIX + ChatColor.RED + "Aether-Befehle können nur von Spielern ausgeführt werden!");
+            sender.sendMessage(cmdPrefix.append(Aether.getLanguageManager().getComponent("messages.cmd.errors.only_player_cmd")));
             return true;
         }
 
-        if (args.length == 1)
+        if (args.length == 1 && args[0].equalsIgnoreCase("teleport"))
         {
-            if (args[0].equalsIgnoreCase("teleport"))
+            World aetherWorld = AetherWorld.getWorld();
+            if (aetherWorld != null)
             {
-                teleport(player);
+                player.teleport(AetherWorld.getWorld().getSpawnLocation());
             }
-            else if (args[0].equalsIgnoreCase("reload"))
+            else
             {
-                Aether.getConfigManager().load();
-                player.sendMessage(Aether.PREFIX + " Die Config wurde neu geladen!");
+                player.sendMessage(cmdPrefix.append(Aether.getLanguageManager().getComponent("messages.cmd.errors.aether_world_not_created")));
             }
+        }
+        else if (args.length == 1 && args[0].equalsIgnoreCase("reload"))
+        {
+            Aether.getConfigManager().load();
+            player.sendMessage(cmdPrefix.append(Aether.getLanguageManager().getComponent("messages.cmd.info.reloaded_config")));
         }
         else if (args.length == 2 && args[0].equalsIgnoreCase("give"))
         {
@@ -51,35 +58,18 @@ public class CommandAether implements CommandExecutor, TabExecutor
             }
             catch (IllegalArgumentException exception)
             {
-                player.sendMessage(Aether.PREFIX + " Das Item " + args[1] + " existiert nicht!");
+                player.sendMessage(cmdPrefix
+                        .append(Aether.getLanguageManager().getComponent("messages.cmd.error.item_does_not_exist")));
             }
         }
         else
         {
-            sendHelp(player);
+            for (TextComponent component : Aether.getLanguageManager().getComponentList("messages.cmd.info.help_text"))
+            {
+                player.sendMessage(cmdPrefix.append(component));
+            }
         }
-
         return true;
-    }
-
-    private void teleport(@NotNull Player player)
-    {
-        World aetherWorld = AetherWorld.getWorld();
-        if (aetherWorld != null)
-        {
-            player.teleport(AetherWorld.getWorld().getSpawnLocation());
-        }
-        else
-        {
-            player.sendMessage(Aether.PREFIX + ChatColor.RED + "Die Aether-Welt wurde noch nicht erstellt. Starte den Server neu um sie zu erstellen!");
-        }
-    }
-
-    private void sendHelp(@NotNull Player player)
-    {
-        player.sendMessage(Aether.PREFIX + "/ae reload - Läd die Config neu.");
-        player.sendMessage(Aether.PREFIX + "/ae teleport - Teleportiert dich in die Aether-Welt.");
-        player.sendMessage(Aether.PREFIX + "/ae give <name> - Gibt dir ein Aether Item.");
     }
 
     @Override

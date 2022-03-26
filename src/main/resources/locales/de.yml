@@ -1,3 +1,20 @@
+messages:
+  prefix: "&d[Aether] &7"
+  cmd:
+    info:
+      reloaded_config: "&aDie Config wurde neu geladen!"
+      help_text:
+        - "/ae reload - Läd die Config neu."
+        - "/ae teleport - Teleportiert dich in die Aether-Welt."
+        - "/ae give <name> - Gibt dir ein Aether Item."
+    errors:
+      only_player_cmd: "&cAether-Befehle können nur von Spielern ausgeführt werden!"
+      item_does_not_exist: "&cDieses Item existiert nicht!"
+      aether_world_not_created: "&cDie Aether-Welt wurde noch nicht erstellt. Starte den Server neu um sie zu erstellen!"
+  chat:
+    click_to_dungeon_teleport: "Klicke nochmals auf den Block um dich in den Dungeon zu teleportieren."
+  console:
+    datapack_copied: "Alle Dateien wurden erfolgreich kopiert. Starte deinen Server neu um die Aether-Welt zu generieren."
 items:
   AETHER_ACACIA_LOG:
     name: "Himmelsakazienstamm"
@@ -37,7 +54,8 @@ items:
     description: ~
   AETHER_STICK:
     name: "Himmelsstock"
-    description: "Stock aus dem Himmel"
+    description:
+      - "Stock aus dem Himmel"
   AETHER_STONE:
     name: "Himmelsstein"
     description: ~
@@ -73,10 +91,12 @@ items:
     description: ~
   FIRE_ESSENCE:
     name: "&l&cFeueressenz"
-    description: "Eine Essenz vom Feuerteufel die zum verbessern von Waffen benutzt werden kann."
+    description:
+      - "Eine Essenz vom Feuerteufel die zum verbessern von Waffen benutzt werden kann."
   FLAME_SWORD:
     name: "&l&cFeuerschwert"
-    description: "Verbrenne deine Feinde, falls sie dir zu nahe kommen."
+    description:
+      - "Verbrenne deine Feinde, falls sie dir zu nahe kommen."
   GRAVITITE_AXE:
     name: "&dGravititaxt"
     description: ~
@@ -103,7 +123,8 @@ items:
     description: ~
   GRAVITITE_PLATE:
     name: "&dGaravititplatte"
-    description: "Platten so fest, das fast alles Abgewehrt werden kann."
+    description:
+      - "Platten so fest, das fast alles Abgewehrt werden kann."
   GRAVITITE_SHOVEL:
     name: "&dGravititschaufel"
     description: ~
@@ -112,40 +133,52 @@ items:
     description: ~
   ICE_ESSENCE:
     name: "&d&9Eisessenz"
-    description: "Eine Essenz vom Eisgeist die zum verbessern von Waffen benutzt werden kann."
+    description:
+      - "Eine Essenz vom Eisgeist die zum verbessern von Waffen benutzt werden kann."
   ICE_SWORD:
     name: "&d&9Eisschwert"
-    description: "Lasse deine Gegner bei Berührung erstarren."
+    description:
+      - "Lasse deine Gegner bei Berührung erstarren."
   LIGHTNING_ESSENCE:
     name: "&l&bBlitzessenz"
-    description: "Eine Essenz vom Himmelswal die zum verbessern von Waffen benutzt werden kann."
+    description:
+      - "Eine Essenz vom Himmelswal die zum verbessern von Waffen benutzt werden kann."
   LIGHTNING_SWORD:
     name: "&l&bBlitzschwert"
-    description: "Beschwöre Blitze auf Jenen, der versucht dich zu verletzen."
+    description:
+      - "Beschwöre Blitze auf Jenen, der versucht dich zu verletzen."
   SUN_STONE:
     name: "&l&6Stein der Sonne"
-    description: "Dieser besondere Stein besitzt die Kraft eine mächtige Waffe herzustellen."
+    description:
+      - "Dieser besondere Stein besitzt die Kraft eine mächtige Waffe herzustellen."
   SUN_SWORD:
     name: "&l&6Sonnenschwert"
-    description: "Das Schwert des Sonnengottes ist eine mächtige Waffe die jeden erzittern lässt."
+    description:
+      - "Das Schwert des Sonnengottes ist eine mächtige Waffe die jeden erzittern lässt."
   VALKYRE_AXE:
     name: "&l&eKampfaxt der Walküren"
-    description: "Dies ist die Kampfaxt der Walküren. Sie zerteil alles was in den Weg kommt."
+    description:
+      - "Dies ist die Kampfaxt der Walküren. Sie zerteil alles was in den Weg kommt."
   VALKYRE_BOOTS:
     name: "&l&eStiefel der Walküre"
-    description: "Die Stiefel der Walküren erlauben es dir, langsamer auf den Boden zu fallen."
+    description:
+      - "Die Stiefel der Walküren erlauben es dir, langsamer auf den Boden zu fallen."
   VALKYRE_LEGGINGS:
     name: "&l&eBeinschutz der Walküre"
-    description: "Der Beinschutz der Walküren ist stabil und hält vieles aus."
+    description:
+      - "Der Beinschutz der Walküren ist stabil und hält vieles aus."
   VALKYRE_RING:
     name: "&l&eHeiligenschein der Walküre"
-    description: "Der heilige Ring der Walküren. Er besitzt die Kraft dich zu verstärken."
+    description:
+      - "Der heilige Ring der Walküren. Er besitzt die Kraft dich zu verstärken."
   VALKYRE_SWORD:
     name: "&l&eRache der Walküren"
-    description: "Ein mächtiges Schwert welches Furcht und Angst hervorruft."
+    description:
+      - "Ein mächtiges Schwert welches Furcht und Angst hervorruft."
   VALKYRE_WINGS:
     name: "&l&eWalkürenflügel"
-    description: "Mit den Walkürenflügeln kannst du durch den Himmel gleiten wie ein Engel."
+    description:
+      - "Mit den Walkürenflügeln kannst du durch den Himmel gleiten wie ein Engel."
   ZANITE_AXE:
     name: "&5Zaniteaxt"
     description: ~
@@ -175,7 +208,8 @@ items:
     description: ~
   ZANITE_STONE:
     name: "&5Zanitgestein"
-    description: "Ein Gestein zum Herstellen starker Waffen und Werkzeuge."
+    description:
+      - "Ein Gestein zum Herstellen starker Waffen und Werkzeuge."
   ZANITE_SWORD:
     name: "&5Zaniteschwert"
     description: ~

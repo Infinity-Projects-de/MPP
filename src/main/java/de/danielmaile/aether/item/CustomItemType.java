@@ -4,8 +4,9 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.util.NBTEditor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -13,6 +14,8 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -81,8 +84,8 @@ public enum CustomItemType
 
     public static final String AETHER_ITEM_TAG_KEY = "aether_item";
 
-    private final String name;
-    private final String description;
+    private final TextComponent name;
+    private final List<TextComponent> description;
     private final int modelID;
     private final Material itemMaterial;
     private final Material placeMaterial;
@@ -90,8 +93,8 @@ public enum CustomItemType
 
     CustomItemType(int modelID, Material itemMaterial, Multimap<Attribute, AttributeModifier> attributeModifiers, Material placeMaterial)
     {
-        this.name = Aether.getConfigManager().getLanguageFile().getString("items." + name() + ".name");
-        this.description = Aether.getConfigManager().getLanguageFile().getString("items." + name() + ".description");
+        this.name = Aether.getLanguageManager().getComponent("items." + name() + ".name");
+        this.description = Aether.getLanguageManager().getComponentList("items." + name() + ".description");
         this.modelID = modelID;
         this.itemMaterial = itemMaterial;
         this.attributeModifiers = attributeModifiers;
@@ -123,22 +126,20 @@ public enum CustomItemType
         return getItemStack(1);
     }
 
-    public ItemStack getItemStack(int amount)
+    public @Nonnull
+    ItemStack getItemStack(int amount)
     {
-        if (name == null)
-        {
-            Aether.logError("Item display name of " + name() + " is null. Please check your language file!");
-            return null;
-        }
         ItemStack itemStack = new ItemStack(itemMaterial);
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.displayName(LegacyComponentSerializer.legacy('&').deserialize(name)
-                .decoration(TextDecoration.ITALIC, false));
-        if (description != null)
+        itemMeta.displayName(name.decoration(TextDecoration.ITALIC, false));
+
+        List<Component> descriptionList = new ArrayList<>();
+        for (TextComponent component : description)
         {
-            itemMeta.lore(List.of(LegacyComponentSerializer.legacy('&').deserialize(description)
-                    .decoration(TextDecoration.ITALIC, false)));
+            descriptionList.add(component.decoration(TextDecoration.ITALIC, false));
         }
+        itemMeta.lore(descriptionList);
+
         itemMeta.setCustomModelData(modelID);
         if (attributeModifiers != null)
         {

@@ -8,9 +8,9 @@ import java.io.File;
 
 public class ConfigManager
 {
-    public FileConfiguration getLanguageFile()
+    public LanguageManager getLanguageManager()
     {
-        return languageFile;
+        return languageManager;
     }
 
     public float getDungeonEndPartChance()
@@ -38,7 +38,7 @@ public class ConfigManager
         return llamaSpeed;
     }
 
-    private FileConfiguration languageFile;
+    private LanguageManager languageManager;
     private float dungeonEndPartChance;
     private float dungeonProbability;
     private float treeProbability;
@@ -53,15 +53,15 @@ public class ConfigManager
     public void load()
     {
         File file = new File(Aether.getInstance().getDataFolder().getAbsolutePath() + File.separator
-        + "locales" + File.separator + Aether.getInstance().getConfig().getString("language_file") + ".yml");
-        if(!file.exists())
+                + "locales" + File.separator + Aether.getInstance().getConfig().getString("language_file") + ".yml");
+        if (!file.exists())
         {
-            Aether.logError("Die Sprach-Datei " + file.getAbsolutePath() + " existiert nicht!");
+            Aether.logError("Language file " + Aether.getInstance().getConfig().getString("language_file") + ".yml was not found!");
             file = new File(Aether.getInstance().getDataFolder().getAbsolutePath() + File.separator
                     + "locales" + File.separator + "de.yml");
         }
 
-        languageFile = YamlConfiguration.loadConfiguration(file);
+        languageManager = new LanguageManager(YamlConfiguration.loadConfiguration(file));
         dungeonEndPartChance = (float) Aether.getInstance().getConfig().getDouble("world_generation.dungeons.end_part_chance");
         dungeonProbability = (float) Aether.getInstance().getConfig().getDouble("world_generation.dungeons.probability");
         treeProbability = (float) Aether.getInstance().getConfig().getDouble("world_generation.trees.probability");
