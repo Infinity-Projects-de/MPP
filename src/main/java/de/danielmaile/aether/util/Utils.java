@@ -1,7 +1,9 @@
 package de.danielmaile.aether.util;
 
+import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -21,12 +23,17 @@ public class Utils
         player.addPotionEffect(new PotionEffect(type, Integer.MAX_VALUE, 0, false, false));
     }
 
-    public static void addMaxHealth(Player player, double value)
+    public static void setMaxHealth(Player player, double value)
     {
         AttributeInstance maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (maxHealth != null)
         {
-            maxHealth.setBaseValue(maxHealth.getBaseValue() + value);
+            maxHealth.setBaseValue(value);
         }
+    }
+
+    public static boolean isGrounded(Player player)
+    {
+        return player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() != Material.AIR;
     }
 }

@@ -42,7 +42,7 @@
         "feature": {
           "type": "minecraft:ore",
           "config": {
-            "size": 9,
+            "size": 3,
             "discard_chance_on_air_exposure": 0,
             "targets": [
               {
@@ -60,7 +60,7 @@
         "placement": [
           {
             "type": "minecraft:count",
-            "count": 90
+            "count": 95
           },
           {
             "type": "minecraft:in_square"
@@ -70,10 +70,10 @@
             "height": {
               "type": "minecraft:trapezoid",
               "min_inclusive": {
-                "absolute": 80
+                "absolute": 90
               },
               "max_inclusive": {
-                "absolute": 384
+                "absolute": 165
               }
             }
           },
@@ -86,7 +86,7 @@
         "feature": {
           "type": "minecraft:ore",
           "config": {
-            "size": 9,
+            "size": 3,
             "discard_chance_on_air_exposure": 0,
             "targets": [
               {
@@ -104,7 +104,7 @@
         "placement": [
           {
             "type": "minecraft:count",
-            "count": 90
+            "count": 180
           },
           {
             "type": "minecraft:in_square"
@@ -114,7 +114,7 @@
             "height": {
               "type": "minecraft:trapezoid",
               "min_inclusive": {
-                "absolute": 80
+                "absolute": 140
               },
               "max_inclusive": {
                 "absolute": 384

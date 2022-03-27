@@ -179,6 +179,7 @@ items:
     name: "<gradient:#FBC603:#ECFB03>Walkürenflügel</gradient>"
     description:
       - "Mit den Walkürenflügeln kannst du durch den Himmel gleiten wie ein Engel."
+    boost_info: "<gray>Drücke <key:key.swapOffhand> um dich zu boosten!"
   ZANITE_AXE:
     name: "<gradient:#D012FF:#8000FF>Zaniteaxt</gradient>"
     description: ~

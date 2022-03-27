@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.potion.PotionEffectType;
@@ -76,8 +77,8 @@ public class ListenerArmor implements Listener
         if (newItemType == ItemType.VALKYRE_BOOTS) { Utils.addPermEffect(player, PotionEffectType.SLOW_FALLING); }
 
         //Player gets +2 health when wearing valkyrie ring
-        if (oldItemType == ItemType.VALKYRE_RING) { Utils.addMaxHealth(player, -4d); }
-        if (newItemType == ItemType.VALKYRE_RING) { Utils.addMaxHealth(player, 4d); }
+        if (oldItemType == ItemType.VALKYRE_RING) { Utils.setMaxHealth(player, 20d); }
+        if (newItemType == ItemType.VALKYRE_RING) { Utils.setMaxHealth(player, 24d); }
 
         //Player gets permanent regeneration fall when wearing full valkyrie armor set
         if (ArmorSet.getEquippedSet(player) == ArmorSet.VALKYRIE)
@@ -95,11 +96,21 @@ public class ListenerArmor implements Listener
     public void onSwapItem(PlayerSwapHandItemsEvent event)
     {
         Player player = event.getPlayer();
+        if (Utils.isGrounded(player)) return;
         if (boosted.contains(player)) return;
         if (ArmorSet.getEquippedSet(player) != ArmorSet.VALKYRIE) return;
         event.setCancelled(true);
 
         boosted.add(player);
         player.setVelocity(player.getLocation().getDirection().multiply(5));
+    }
+
+    @EventHandler
+    public void onFlightToggle(EntityToggleGlideEvent event)
+    {
+        if (!(event.getEntity() instanceof Player player)) return;
+        if (!event.isGliding()) return;
+        if (ArmorSet.getEquippedSet(player) != ArmorSet.VALKYRIE) return;
+        player.sendActionBar(Aether.getLanguageManager().getComponent("items.VALKYRE_WINGS.boost_info"));
     }
 }
