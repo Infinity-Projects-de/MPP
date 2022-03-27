@@ -31,10 +31,10 @@ public enum ArmorSet
 
     public static ArmorSet getEquippedSet(Player player)
     {
-        ItemType headType = ItemType.getFromTag(player.getEquipment().getHelmet());
-        ItemType chestType = ItemType.getFromTag(player.getEquipment().getChestplate());
-        ItemType legsType = ItemType.getFromTag(player.getEquipment().getLeggings());
-        ItemType feetType = ItemType.getFromTag(player.getEquipment().getBoots());
+        ItemType headType = ItemType.fromTag(player.getEquipment().getHelmet());
+        ItemType chestType = ItemType.fromTag(player.getEquipment().getChestplate());
+        ItemType legsType = ItemType.fromTag(player.getEquipment().getLeggings());
+        ItemType feetType = ItemType.fromTag(player.getEquipment().getBoots());
         return Arrays.stream(ArmorSet.values())
                 .filter(set -> set.head == headType && set.chest == chestType && set.legs == legsType && set.feet == feetType)
                 .findFirst().orElse(null);

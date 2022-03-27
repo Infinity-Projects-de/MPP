@@ -156,6 +156,8 @@ public enum Recipes
             ItemType.AETHER_JUNGLE_LOG),
     AETHER_DARK_OAK_PLANKS(false, ItemType.AETHER_DARK_OAK_PLANKS, 1,
             ItemType.AETHER_DARK_OAK_LOG),
+    MAGIC_WAND(true, ItemType.MAGIC_WAND, 1,
+            null, ItemType.GRAVITITE_PLATE, null, null, ItemType.GRAVITITE_PLATE, null, null, ItemType.GRAVITITE_PLATE, null),
     GRAVITITE_SMELTING(ItemType.GRAVITITE_PLATE, ItemType.GRAVITITE_ORE, 50, 30),
     ZANITE_SMELTING(ItemType.ZANITE_STONE, ItemType.ZANITE_ORE, 50, 20);
 

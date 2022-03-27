@@ -41,7 +41,7 @@ public class ListenerBlock implements Listener
             if (NBTEditor.hasKey(itemStack, ItemType.AETHER_ITEM_TAG_KEY))
             {
                 //Convert Item to correct material
-                ItemType itemType = ItemType.getFromTag(itemStack);
+                ItemType itemType = ItemType.fromTag(itemStack);
                 if (itemType != null)
                 {
                     //Change material but keep orientation

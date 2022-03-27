@@ -42,7 +42,7 @@ public class ParticleManager
                         }
                         case VALKYRE_WINGS -> {
                             Location location = player.getLocation().clone().add(0, 1, 0);
-                            spawnWings(location, Color.AQUA);
+                            spawnWings(location, Color.YELLOW);
                         }
                     }
                 }

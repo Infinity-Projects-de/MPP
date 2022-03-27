@@ -213,3 +213,11 @@ items:
   ZANITE_SWORD:
     name: "<gradient:#D012FF:#8000FF>Zaniteschwert</gradient>"
     description: ~
+  MAGIC_WAND:
+    name: "<rainbow>Zauberstab</rainbow>"
+    description: ~
+    current_spell: "<gray>Aktueller Zauber: "
+    spells:
+      LLAMA_SPELL: "<white>Lamazauber"
+      YEET_SPELL: "<aqua>YEET-Zauber"
+      SOUND_BEAM: "<red>Soundstrahl"

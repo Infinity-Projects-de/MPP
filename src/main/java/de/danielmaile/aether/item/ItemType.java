@@ -5,7 +5,6 @@ import com.google.common.collect.Multimap;
 import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.util.NBTEditor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -80,7 +79,8 @@ public enum ItemType
     ZANITE_PICKAXE(2017, Material.DIAMOND_PICKAXE),
     ZANITE_SHOVEL(2018, Material.DIAMOND_SHOVEL),
     ZANITE_STONE(1005, Material.DIAMOND),
-    ZANITE_SWORD(2004, Material.DIAMOND_SWORD, new ToolAttribute(7, 1.6));
+    ZANITE_SWORD(2004, Material.DIAMOND_SWORD, new ToolAttribute(7, 1.6)),
+    MAGIC_WAND(1008, Material.IRON_HORSE_ARMOR);
 
     public static final String AETHER_ITEM_TAG_KEY = "aether_item";
 
@@ -152,7 +152,7 @@ public enum ItemType
         return NBTEditor.setString(itemStack, AETHER_ITEM_TAG_KEY, name());
     }
 
-    public static ItemType getFromTag(ItemStack itemStack)
+    public static ItemType fromTag(ItemStack itemStack)
     {
         try
         {

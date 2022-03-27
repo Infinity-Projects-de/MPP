@@ -5,6 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class ListenerConverter implements Listener
@@ -13,19 +15,32 @@ public class ListenerConverter implements Listener
     public void onInventoryOpen(InventoryOpenEvent event)
     {
         if (!Aether.getConfigManager().isItemConverterEnabled()) return;
-        ItemStack[] content = event.getInventory().getContents();
+        checkAndReplace(event.getInventory());
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event)
+    {
+        if (!Aether.getConfigManager().isItemConverterEnabled()) return;
+        checkAndReplace(event.getPlayer().getInventory());
+        checkAndReplace(event.getPlayer().getEnderChest());
+    }
+
+    private void checkAndReplace(Inventory inventory)
+    {
+        ItemStack[] content = inventory.getContents();
         for (int i = 0; i < content.length; i++)
         {
             ItemStack itemStack = content[i];
             if (itemStack == null || itemStack.getType() == Material.AIR) continue;
 
-            ItemType type = ItemType.getFromTag(itemStack);
+            ItemType type = ItemType.fromTag(itemStack);
             if (type == null) continue;
 
             ItemStack typeStack = type.getItemStack(itemStack.getAmount());
             if (itemStack.equals(typeStack)) continue;
 
-            event.getInventory().setItem(i, typeStack);
+            inventory.setItem(i, typeStack);
         }
     }
 }

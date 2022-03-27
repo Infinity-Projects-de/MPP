@@ -42,8 +42,8 @@ public class ListenerArmor implements Listener
     public void onChangeArmor(PlayerArmorChangeEvent event)
     {
         Player player = event.getPlayer();
-        ItemType oldItemType = ItemType.getFromTag(event.getOldItem());
-        ItemType newItemType = ItemType.getFromTag(event.getNewItem());
+        ItemType oldItemType = ItemType.fromTag(event.getOldItem());
+        ItemType newItemType = ItemType.fromTag(event.getNewItem());
 
         //Player gets permanent slow fall when wearing valkyrie boots
         if (oldItemType == ItemType.VALKYRE_BOOTS) { player.removePotionEffect(PotionEffectType.SLOW_FALLING); }

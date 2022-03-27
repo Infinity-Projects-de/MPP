@@ -4,6 +4,8 @@ import net.minecraft.nbt.CompoundTag;
 import org.bukkit.craftbukkit.v1_18_R2.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nullable;
+
 public class NBTEditor
 {
     public static ItemStack setString(ItemStack itemStack, String key, String value)
@@ -22,8 +24,9 @@ public class NBTEditor
         return compoundTag.getString(key);
     }
 
-    public static boolean hasKey(ItemStack itemStack, String key)
+    public static boolean hasKey(@Nullable ItemStack itemStack, String key)
     {
+        if(itemStack == null) return false;
         net.minecraft.world.item.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemStack);
         CompoundTag compoundTag = nmsStack.getOrCreateTag();
         return compoundTag.contains(key);

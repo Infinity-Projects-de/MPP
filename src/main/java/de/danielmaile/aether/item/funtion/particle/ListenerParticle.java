@@ -14,8 +14,8 @@ public class ListenerParticle implements Listener
     public void onChangeArmor(PlayerArmorChangeEvent event)
     {
         Player player = event.getPlayer();
-        ItemType oldItemType = ItemType.getFromTag(event.getOldItem());
-        ItemType newItemType = ItemType.getFromTag(event.getNewItem());
+        ItemType oldItemType = ItemType.fromTag(event.getOldItem());
+        ItemType newItemType = ItemType.fromTag(event.getNewItem());
 
         //Player gets ring above head when wearing valkyrie ring
         if (oldItemType == ItemType.VALKYRE_RING)
