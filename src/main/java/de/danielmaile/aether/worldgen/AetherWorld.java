@@ -88,13 +88,6 @@ public class AetherWorld
             Aether.logError("Error while copying datapack. Please restart your server and try again!");
         }
 
-        //Add populators to aether world
-        if (getWorld() != null)
-        {
-            getWorld().getPopulators().add(new TreePopulator());
-            getWorld().getPopulators().add(new DungeonPopulator());
-        }
-
         //Load monuments
         loadMonuments();
     }

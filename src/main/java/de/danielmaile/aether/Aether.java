@@ -20,6 +20,7 @@ import de.danielmaile.aether.mobs.ListenerAetherMobs;
 import de.danielmaile.aether.mobs.RideableLlama;
 import de.danielmaile.aether.portal.ListenerPortal;
 import de.danielmaile.aether.worldgen.AetherWorld;
+import de.danielmaile.aether.worldgen.ListenerWorldGeneration;
 import de.danielmaile.aether.worldgen.Prefab;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -85,6 +86,7 @@ public final class Aether extends JavaPlugin
         getServer().getPluginManager().registerEvents(new ListenerParticle(), this);
         getServer().getPluginManager().registerEvents(new ListenerConverter(), this);
         getServer().getPluginManager().registerEvents(new ListenerMagicWand(), this);
+        getServer().getPluginManager().registerEvents(new ListenerWorldGeneration(), this);
         Objects.requireNonNull(Bukkit.getPluginCommand("aether")).setExecutor(new CommandAether());
 
         //Create plugin, data and locales folder
