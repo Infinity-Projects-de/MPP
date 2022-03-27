@@ -1275,10 +1275,10 @@ public class MagicWand
             {
                 if (llama.isOnGround() || counter >= 100)
                 {
-                    world.spawnParticle(Particle.EXPLOSION_LARGE, llama.getLocation(), 0);
+                    world.spawnParticle(Particle.EXPLOSION_HUGE, llama.getLocation(), 0);
                     world.playSound(llama.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST, 1, 1);
-                    llama.remove();
                     this.cancel();
+                    Bukkit.getScheduler().runTaskLater(Aether.getInstance(), llama::remove, 5L);
                     return;
                 }
 
