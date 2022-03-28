@@ -85,6 +85,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
             tabComplete.add("teleport");
             tabComplete.add("dungeon");
             tabComplete.add("give");
+            tabComplete.add("reload");
             StringUtil.copyPartialMatches(args[0], tabComplete, completions);
         }
 

@@ -1,7 +1,6 @@
 package de.danielmaile.aether.item.funtion.particle;
 
 import de.danielmaile.aether.Aether;
-import de.danielmaile.aether.util.VectorUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -58,7 +57,7 @@ public class ParticleManager
             double offset = (Math.pow(Math.E, Math.cos(i)) - 2 * Math.cos(i * 4) - Math.pow(Math.sin(i / 12), 5)) / 2;
             double x = Math.sin(i) * offset;
             double y = Math.cos(i) * offset;
-            Vector vector = VectorUtils.rotateAroundAxisY(new Vector(x, y, -0.3), -Math.toRadians(location.getYaw()));
+            Vector vector = new Vector(x, y, -0.3).rotateAroundY(-Math.toRadians(location.getYaw()));
             spawnParticle(location.clone().add(vector.getX(), vector.getY(), vector.getZ()), color);
         }
     }

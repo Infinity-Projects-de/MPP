@@ -1,8 +1,8 @@
 package de.danielmaile.aether.listeners;
 
 import de.danielmaile.aether.Aether;
-import de.danielmaile.aether.util.SimpleLocation;
 import de.danielmaile.aether.worldgen.AetherWorld;
+import de.danielmaile.aether.worldgen.dungeon.Dungeon;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,19 +28,24 @@ public class ListenerMonument implements Listener
         if (!event.getClickedBlock().getWorld().equals(AetherWorld.getWorld())) return;
 
         Location clickLocation = event.getClickedBlock().getLocation();
-        SimpleLocation targetLocation = AetherWorld.getMonumentTargetList().get(SimpleLocation.fromLocation(clickLocation));
-        if (targetLocation == null) return;
+        Dungeon targetDungeon = AetherWorld.getObjectManager().getDungeonList()
+                .stream()
+                .filter(dungeon -> dungeon.getMonumentLocation().equals(clickLocation))
+                .findFirst()
+                .orElse(null);
+        if (targetDungeon == null) return;
+        Location targetLocation = targetDungeon.getMonumentTargetLocation();
         event.setCancelled(true);
 
         ArrayList<Location> clickedLocations = monumentClickMap.get(event.getPlayer());
-        if(clickedLocations != null && clickedLocations.contains(clickLocation))
+        if (clickedLocations != null && clickedLocations.contains(clickLocation))
         {
             clickedLocations.remove(clickLocation);
             event.getPlayer().teleport(new Location(AetherWorld.getWorld(), targetLocation.getX(), targetLocation.getY(), targetLocation.getZ()));
             return;
         }
 
-        if(clickedLocations == null)
+        if (clickedLocations == null)
         {
             clickedLocations = new ArrayList<>();
         }
@@ -49,13 +54,17 @@ public class ListenerMonument implements Listener
         monumentClickMap.put(event.getPlayer(), clickedLocations);
         event.getPlayer().sendMessage(
                 Aether.getLanguageManager().getComponent("messages.prefix")
-                                .append(Aether.getLanguageManager().getComponent("messages.chat.click_to_dungeon_teleport")));
+                        .append(Aether.getLanguageManager().getComponent("messages.chat.click_to_dungeon_teleport")));
     }
 
     @EventHandler
     public void onMonumentBreak(BlockBreakEvent event)
     {
-        SimpleLocation targetLocation = AetherWorld.getMonumentTargetList().get(SimpleLocation.fromLocation(event.getBlock().getLocation()));
-        event.setCancelled(targetLocation != null);
+        Dungeon targetDungeon = AetherWorld.getObjectManager().getDungeonList()
+                .stream()
+                .filter(dungeon -> dungeon.getMonumentLocation().equals(event.getBlock().getLocation()))
+                .findFirst()
+                .orElse(null);
+        event.setCancelled(targetDungeon != null);
     }
 }

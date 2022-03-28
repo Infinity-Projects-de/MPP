@@ -16,6 +16,7 @@ import de.danielmaile.aether.item.funtion.particle.ListenerParticle;
 import de.danielmaile.aether.item.funtion.particle.ParticleManager;
 import de.danielmaile.aether.listeners.ListenerAetherVoid;
 import de.danielmaile.aether.listeners.ListenerMonument;
+import de.danielmaile.aether.listeners.ListenerWorldSave;
 import de.danielmaile.aether.mobs.ListenerAetherMobs;
 import de.danielmaile.aether.mobs.RideableLlama;
 import de.danielmaile.aether.portal.ListenerPortal;
@@ -87,6 +88,7 @@ public final class Aether extends JavaPlugin
         getServer().getPluginManager().registerEvents(new ListenerConverter(), this);
         getServer().getPluginManager().registerEvents(new ListenerMagicWand(), this);
         getServer().getPluginManager().registerEvents(new ListenerWorldGeneration(), this);
+        getServer().getPluginManager().registerEvents(new ListenerWorldSave(), this);
         Objects.requireNonNull(Bukkit.getPluginCommand("aether")).setExecutor(new CommandAether());
 
         //Create plugin, data and locales folder
@@ -119,6 +121,12 @@ public final class Aether extends JavaPlugin
         Prefab.init();
 
         particleManager = new ParticleManager();
+    }
+
+    @Override
+    public void onDisable()
+    {
+        AetherWorld.getObjectManager().save();
     }
 
     private void registerRecipes()

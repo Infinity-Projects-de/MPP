@@ -1,18 +1,30 @@
 package de.danielmaile.aether.worldgen.dungeon;
 
-import de.danielmaile.aether.util.Vector2I;
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
-public record DungeonPart(DungeonPartType type, Vector2I position, Location worldLocation)
+//Don't make class a record to avoid gson error!
+public class DungeonPart
 {
+    private final DungeonPartType type;
+    private final Vector relativePosition;
+    private final Location worldLocation;
+
+    public DungeonPart(DungeonPartType type, Vector relativePosition, Location worldLocation)
+    {
+        this.type = type;
+        this.relativePosition = relativePosition;
+        this.worldLocation = worldLocation;
+    }
+
     public DungeonPartType getType()
     {
         return type;
     }
 
-    public Vector2I getPosition()
+    public Vector getRelativePosition()
     {
-        return position;
+        return relativePosition;
     }
 
     public Location getWorldLocation()

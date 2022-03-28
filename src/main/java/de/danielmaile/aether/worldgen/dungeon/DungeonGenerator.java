@@ -1,10 +1,10 @@
 package de.danielmaile.aether.worldgen.dungeon;
 
 import de.danielmaile.aether.Aether;
-import de.danielmaile.aether.util.Vector2I;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import de.danielmaile.aether.worldgen.Prefab;
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -20,9 +20,12 @@ public class DungeonGenerator
         Dungeon dungeon = new Dungeon(generateDungeonParts(origin, random, endPartChance), random);
 
         //If no valid monument location is found dungeon doesn't generate
-        if (dungeon.getMonumentLocation() == null) return;
+        if (dungeon.getMonumentLocation() == null)
+        {
+            return;
+        }
 
-        AetherWorld.addMonument(dungeon.getMonumentLocation(), dungeon.getMonumentTargetLocation());
+        AetherWorld.getObjectManager().getDungeonList().add(dungeon);
         Prefab.DUNGEON_MONUMENT.instantiate(dungeon.getMonumentLocation(), true);
 
         for (DungeonPart part : dungeon.getParts())
@@ -40,7 +43,7 @@ public class DungeonGenerator
 
         //First part TBLR
         List<DungeonPart> newParts = new ArrayList<>();
-        newParts.add(new DungeonPart(DungeonPartType.EWSN, new Vector2I(0, 0), origin.clone()));
+        newParts.add(new DungeonPart(DungeonPartType.EWSN, new Vector(0, 0, 0), origin.clone()));
 
         //Add parts until no more paths lead to the outside of the dungeon
         while (!newParts.isEmpty())
@@ -52,14 +55,14 @@ public class DungeonGenerator
             {
                 for (Direction connectDirection : part.getType().getConnection().getConnectDirections())
                 {
-                    Vector2I newPartPos = part.getPosition().add(connectDirection.getRelativePos());
+                    Vector newPartPos = part.getRelativePosition().clone().add(connectDirection.getRelativePos());
                     if (getPartAt(parts, newPartPos) != null || getPartAt(newParts, newPartPos) != null) continue;
 
                     //Get neighbours and check for ConnectionState
-                    DungeonPart eastNeighbour = getPartAt(parts, newPartPos.add(Direction.EAST.getRelativePos()));
-                    DungeonPart westNeighbour = getPartAt(parts, newPartPos.add(Direction.WEST.getRelativePos()));
-                    DungeonPart southNeighbour = getPartAt(parts, newPartPos.add(Direction.SOUTH.getRelativePos()));
-                    DungeonPart northNeighbour = getPartAt(parts, newPartPos.add(Direction.NORTH.getRelativePos()));
+                    DungeonPart eastNeighbour = getPartAt(parts, newPartPos.clone().add(Direction.EAST.getRelativePos()));
+                    DungeonPart westNeighbour = getPartAt(parts, newPartPos.clone().add(Direction.WEST.getRelativePos()));
+                    DungeonPart southNeighbour = getPartAt(parts, newPartPos.clone().add(Direction.SOUTH.getRelativePos()));
+                    DungeonPart northNeighbour = getPartAt(parts, newPartPos.clone().add(Direction.NORTH.getRelativePos()));
 
                     Connection newPartCon = new Connection(
                             eastNeighbour != null ? eastNeighbour.getType().getConnection()
@@ -80,17 +83,17 @@ public class DungeonGenerator
     }
 
     @Nullable
-    private DungeonPart getPartAt(List<DungeonPart> partList, Vector2I position)
+    private DungeonPart getPartAt(List<DungeonPart> partList, Vector relativePosition)
     {
-        return partList.stream().filter(part -> position.equals(part.getPosition())).findFirst().orElse(null);
+        return partList.stream().filter(part -> relativePosition.equals(part.getRelativePosition())).findFirst().orElse(null);
     }
 
     /**
-     * @param connection    the connections the new part should have
-     * @param position      the position of the new part
-     * @param endPartChance chance for the new Part to be an end part
+     * @param connection       the connections the new part should have
+     * @param relativePosition the position of the new part
+     * @param endPartChance    chance for the new Part to be an end part
      */
-    private DungeonPart getRandomPart(Random random, float endPartChance, Connection connection, Vector2I position, Location origin)
+    private DungeonPart getRandomPart(Random random, float endPartChance, Connection connection, Vector relativePosition, Location origin)
     {
         if (random.nextFloat() <= endPartChance)
         {
@@ -103,7 +106,7 @@ public class DungeonGenerator
                 .filter(type -> con.isValid(type.getConnection()))
                 .collect(Collectors.toList());
 
-        return new DungeonPart(validTypes.get(random.nextInt(validTypes.size())), position,
-                origin.clone().add(position.getX() * 16, 0, position.getY() * 16));
+        return new DungeonPart(validTypes.get(random.nextInt(validTypes.size())), relativePosition,
+                origin.clone().add(relativePosition.getX() * 16, 0, relativePosition.getZ() * 16));
     }
 }

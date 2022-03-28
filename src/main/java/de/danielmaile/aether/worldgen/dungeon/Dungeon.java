@@ -2,12 +2,11 @@ package de.danielmaile.aether.worldgen.dungeon;
 
 import org.bukkit.Location;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class Dungeon implements Serializable
+public class Dungeon
 {
     public List<DungeonPart> getParts()
     {
