@@ -15,6 +15,10 @@ messages:
     click_to_dungeon_teleport: "<gradient:#03FB5D:#03FBE1>Klicke nochmals auf den Block um dich in den Dungeon zu teleportieren.</gradient>"
   console:
     datapack_copied: "<gradient:#D2FB03:#68FB03>Alle Dateien wurden erfolgreich kopiert. Starte deinen Server neu um die Aether-Welt zu generieren.</gradient>"
+dungeons:
+  entry:
+    title: "<bold><gold>DUNGEON"
+    subtitle: "<bold><green>Größe: %size% Segmente"
 items:
   AETHER_ACACIA_LOG:
     name: "Himmelsakazienstamm"

@@ -61,4 +61,9 @@ public class Dungeon
     {
         return parts.stream().filter(part -> DungeonPartType.END_PARTS.contains(part.getType())).collect(Collectors.toList());
     }
+
+    public int getSize()
+    {
+        return parts.size();
+    }
 }

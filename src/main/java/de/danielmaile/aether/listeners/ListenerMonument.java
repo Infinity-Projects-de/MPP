@@ -1,8 +1,11 @@
 package de.danielmaile.aether.listeners;
 
 import de.danielmaile.aether.Aether;
+import de.danielmaile.aether.util.Utils;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import de.danielmaile.aether.worldgen.dungeon.Dungeon;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.Title;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,8 +43,16 @@ public class ListenerMonument implements Listener
         ArrayList<Location> clickedLocations = monumentClickMap.get(event.getPlayer());
         if (clickedLocations != null && clickedLocations.contains(clickLocation))
         {
+            //Teleport player
             clickedLocations.remove(clickLocation);
             event.getPlayer().teleport(new Location(AetherWorld.getWorld(), targetLocation.getX(), targetLocation.getY(), targetLocation.getZ()));
+
+            //Send dungeon message
+            Component mainTitle = Aether.getLanguageManager().getComponent("dungeons.entry.title");
+            Component subTitle = Utils.replace(Aether.getLanguageManager().getComponent("dungeons.entry.subtitle"),
+                    "%size%", Component.text(targetDungeon.getSize()));
+            Title title = Title.title(mainTitle, subTitle);
+            event.getPlayer().showTitle(title);
             return;
         }
 

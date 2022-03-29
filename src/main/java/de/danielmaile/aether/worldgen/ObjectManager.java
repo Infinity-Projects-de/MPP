@@ -61,7 +61,7 @@ public class ObjectManager
         try
         {
             JsonReader reader = new JsonReader(new FileReader(dungeonSavePath));
-            dungeons = Arrays.asList(gson.fromJson(reader, Dungeon[].class));
+            dungeons = new ArrayList<>(Arrays.asList(gson.fromJson(reader, Dungeon[].class)));
         }
         catch (FileNotFoundException ignored) { }
 
