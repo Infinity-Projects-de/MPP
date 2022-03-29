@@ -37,6 +37,11 @@ public class AetherWorld
             Aether.logError("Error while copying datapack. Please restart your server and try again!");
         }
 
+        if (getWorld() != null)
+        {
+            getWorld().getPopulators().add(new BedrockPopulator());
+        }
+
         objectManager = new ObjectManager();
     }
 

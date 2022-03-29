@@ -12,13 +12,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ListenerMonument implements Listener
+public class ListenerDungeon implements Listener
 {
     private final HashMap<Player, ArrayList<Location>> monumentClickMap = new HashMap<>();
 
@@ -77,5 +79,36 @@ public class ListenerMonument implements Listener
                 .findFirst()
                 .orElse(null);
         event.setCancelled(targetDungeon != null);
+    }
+
+    /***
+     * Don't allow building or destruction of dungeon
+     */
+
+    @EventHandler
+    public void onDungeonBlockBreak(BlockBreakEvent event)
+    {
+        Player player = event.getPlayer();
+        if (!player.getWorld().equals(AetherWorld.getWorld())) return;
+        if (player.getLocation().getY() > -256) return;
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onDungeonBlockPlace(BlockPlaceEvent event)
+    {
+        Player player = event.getPlayer();
+        if (!player.getWorld().equals(AetherWorld.getWorld())) return;
+        if (player.getLocation().getY() > -256) return;
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onDungeonExplode(EntityExplodeEvent event)
+    {
+        if (!event.getLocation().getWorld().equals(AetherWorld.getWorld())) return;
+        if (event.getLocation().getY() > -256) return;
+        event.getEntity().remove();
+        event.setCancelled(true);
     }
 }

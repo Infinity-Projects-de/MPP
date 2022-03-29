@@ -43,8 +43,8 @@ public class Dungeon
                 {
                     int y = endPart.getWorldLocation().getWorld().getHighestBlockYAt(endPart.getWorldLocation()) + 8;
 
-                    //Monument has to be at least 16 blocks above dungeon
-                    if (y >= endPart.getWorldLocation().getY() + 16)
+                    //Monument has to be at or above y=0
+                    if (y >= 0)
                     {
                         this.monumentLocation = new Location(endPart.getWorldLocation().getWorld(), x, y, z);
                         this.monumentTargetLocation = getEndParts().get(random.nextInt(getEndParts().size()))

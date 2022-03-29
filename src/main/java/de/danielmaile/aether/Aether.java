@@ -15,7 +15,7 @@ import de.danielmaile.aether.item.funtion.magicwand.ListenerMagicWand;
 import de.danielmaile.aether.item.funtion.particle.ListenerParticle;
 import de.danielmaile.aether.item.funtion.particle.ParticleManager;
 import de.danielmaile.aether.listeners.ListenerAetherVoid;
-import de.danielmaile.aether.listeners.ListenerMonument;
+import de.danielmaile.aether.listeners.ListenerDungeon;
 import de.danielmaile.aether.listeners.ListenerWorldSave;
 import de.danielmaile.aether.mobs.ListenerAetherMobs;
 import de.danielmaile.aether.mobs.RideableLlama;
@@ -80,7 +80,7 @@ public final class Aether extends JavaPlugin
         getServer().getPluginManager().registerEvents(new ListenerPortal(), this);
         getServer().getPluginManager().registerEvents(new ListenerBlock(), this);
         getServer().getPluginManager().registerEvents(new ListenerCrafting(), this);
-        getServer().getPluginManager().registerEvents(new ListenerMonument(), this);
+        getServer().getPluginManager().registerEvents(new ListenerDungeon(), this);
         getServer().getPluginManager().registerEvents(new ListenerAetherMobs(), this);
         getServer().getPluginManager().registerEvents(new ListenerItem(), this);
         getServer().getPluginManager().registerEvents(new ListenerArmor(), this);
