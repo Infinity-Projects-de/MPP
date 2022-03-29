@@ -1,10 +1,11 @@
 package de.danielmaile.aether.listeners;
 
 import de.danielmaile.aether.Aether;
-import de.danielmaile.aether.util.Utils;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import de.danielmaile.aether.worldgen.dungeon.Dungeon;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -51,8 +52,8 @@ public class ListenerDungeon implements Listener
 
             //Send dungeon message
             Component mainTitle = Aether.getLanguageManager().getComponent("dungeons.entry.title");
-            Component subTitle = Utils.replace(Aether.getLanguageManager().getComponent("dungeons.entry.subtitle"),
-                    "%size%", Component.text(targetDungeon.getSize()));
+            TagResolver tagResolver = TagResolver.resolver(Placeholder.parsed("size", Integer.toString(targetDungeon.getSize())));
+            Component subTitle = Aether.getLanguageManager().getComponent("dungeons.entry.subtitle", tagResolver);
             Title title = Title.title(mainTitle, subTitle);
             event.getPlayer().showTitle(title);
             return;
