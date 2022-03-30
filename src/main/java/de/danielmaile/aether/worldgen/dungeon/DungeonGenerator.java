@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 
 public class DungeonGenerator
 {
-    public void generateDungeon(Location origin, Random random, float endPartChance)
+    public void generateDungeon(Location origin, Random random, float endPartChance, int partCap)
     {
-        Dungeon dungeon = new Dungeon(generateDungeonParts(origin, random, endPartChance), random);
+        Dungeon dungeon = new Dungeon(generateOuterParts(origin, random, endPartChance, partCap), random);
 
         //If no valid monument location is found dungeon doesn't generate
         if (dungeon.getMonumentLocation() == null)
@@ -28,64 +28,86 @@ public class DungeonGenerator
         AetherWorld.getObjectManager().getDungeonList().add(dungeon);
         Prefab.DUNGEON_MONUMENT.instantiate(dungeon.getMonumentLocation(), true);
 
-        for (DungeonPart part : dungeon.getParts())
+        for (OuterPart part : dungeon.getOuterParts())
         {
-            part.getType().getPrefab().instantiate(part.getWorldLocation(), false);
+            if (part.hasInnerParts())
+            {
+                for (InnerPart innerPart : part.getInnerParts())
+                {
+                    innerPart.getInnerType().getPrefab().instantiate(innerPart.getWorldLocation(), false);
+                }
+            }
+            else
+            {
+                part.getOuterType().getPrefab().instantiate(part.getWorldLocation(), false);
+            }
         }
 
-        Aether.logInfo("Generated new dungeon with " + dungeon.getParts().size() + " parts at "
+        Aether.logInfo("Generated new dungeon with " + dungeon.getSize() + " inner parts at "
                 + origin + " (Monument Location: " + dungeon.getMonumentLocation() + ")");
     }
 
-    private List<DungeonPart> generateDungeonParts(Location origin, Random random, float endPartChance)
+    private List<OuterPart> generateOuterParts(Location origin, Random random, float endPartChance, int partCap)
     {
-        List<DungeonPart> parts = new ArrayList<>();
+        List<OuterPart> outerParts = new ArrayList<>();
 
         //First part TBLR
-        List<DungeonPart> newParts = new ArrayList<>();
-        newParts.add(new DungeonPart(DungeonPartType.EWSN, new Vector(0, 0, 0), origin.clone()));
+        List<OuterPart> newParts = new ArrayList<>();
+        newParts.add(new OuterPart(OuterPartType.EWSN, new Vector(0, 0, 0), origin.clone(), random, endPartChance));
 
         //Add parts until no more paths lead to the outside of the dungeon
         while (!newParts.isEmpty())
         {
-            parts.addAll(newParts);
+            outerParts.addAll(newParts);
             newParts.clear();
 
-            for (DungeonPart part : parts)
+            for (OuterPart outerPart : outerParts)
             {
-                for (Direction connectDirection : part.getType().getConnection().getConnectDirections())
+                if (outerParts.size() + newParts.size() > partCap)
                 {
-                    Vector newPartPos = part.getRelativePosition().clone().add(connectDirection.getRelativePos());
-                    if (getPartAt(parts, newPartPos) != null || getPartAt(newParts, newPartPos) != null) continue;
+                    endPartChance = 0;
+                }
+
+                for (Direction connectDirection : outerPart.getOuterType().getConnection().getConnectDirections())
+                {
+                    Vector newPartPos = outerPart.getRelativePosition().clone().add(connectDirection.getRelativePos());
+                    if (getPartAt(outerParts, newPartPos) != null || getPartAt(newParts, newPartPos) != null) continue;
 
                     //Get neighbours and check for ConnectionState
-                    DungeonPart eastNeighbour = getPartAt(parts, newPartPos.clone().add(Direction.EAST.getRelativePos()));
-                    DungeonPart westNeighbour = getPartAt(parts, newPartPos.clone().add(Direction.WEST.getRelativePos()));
-                    DungeonPart southNeighbour = getPartAt(parts, newPartPos.clone().add(Direction.SOUTH.getRelativePos()));
-                    DungeonPart northNeighbour = getPartAt(parts, newPartPos.clone().add(Direction.NORTH.getRelativePos()));
+                    OuterPart eastNeighbour = getNeighbour(newPartPos, Direction.EAST, outerParts);
+                    OuterPart westNeighbour = getNeighbour(newPartPos, Direction.WEST, outerParts);
+                    OuterPart southNeighbour = getNeighbour(newPartPos, Direction.SOUTH, outerParts);
+                    OuterPart northNeighbour = getNeighbour(newPartPos, Direction.NORTH, outerParts);
 
                     Connection newPartCon = new Connection(
-                            eastNeighbour != null ? eastNeighbour.getType().getConnection()
+                            eastNeighbour != null ? eastNeighbour.getOuterType().getConnection()
                                     .getConnectionState(Direction.WEST) : Connection.ConnectionState.DONT_CARE,
-                            westNeighbour != null ? westNeighbour.getType().getConnection()
+                            westNeighbour != null ? westNeighbour.getOuterType().getConnection()
                                     .getConnectionState(Direction.EAST) : Connection.ConnectionState.DONT_CARE,
-                            southNeighbour != null ? southNeighbour.getType().getConnection()
+                            southNeighbour != null ? southNeighbour.getOuterType().getConnection()
                                     .getConnectionState(Direction.NORTH) : Connection.ConnectionState.DONT_CARE,
-                            northNeighbour != null ? northNeighbour.getType().getConnection()
+                            northNeighbour != null ? northNeighbour.getOuterType().getConnection()
                                     .getConnectionState(Direction.SOUTH) : Connection.ConnectionState.DONT_CARE
                     );
 
-                    newParts.add(getRandomPart(random, endPartChance, newPartCon, newPartPos, origin));
+                    newParts.add(getRandomOuterPart(random, endPartChance, newPartCon, newPartPos, origin));
                 }
             }
         }
-        return parts;
+        return outerParts;
+    }
+
+    //Try to find neighbour part in list. If none is found return null
+    private @Nullable
+    OuterPart getNeighbour(Vector location, Direction direction, List<OuterPart> partList1)
+    {
+        return getPartAt(partList1, location.clone().add(direction.getRelativePos()));
     }
 
     @Nullable
-    private DungeonPart getPartAt(List<DungeonPart> partList, Vector relativePosition)
+    private OuterPart getPartAt(List<OuterPart> partList, Vector relativePosition)
     {
-        return partList.stream().filter(part -> relativePosition.equals(part.getRelativePosition())).findFirst().orElse(null);
+        return partList.stream().filter(outerPart -> relativePosition.equals(outerPart.getRelativePosition())).findFirst().orElse(null);
     }
 
     /**
@@ -93,20 +115,20 @@ public class DungeonGenerator
      * @param relativePosition the position of the new part
      * @param endPartChance    chance for the new Part to be an end part
      */
-    private DungeonPart getRandomPart(Random random, float endPartChance, Connection connection, Vector relativePosition, Location origin)
+    private OuterPart getRandomOuterPart(Random random, float endPartChance, Connection connection, Vector relativePosition, Location origin)
     {
-        if (random.nextFloat() <= endPartChance)
+        if (random.nextFloat() < endPartChance)
         {
             //Set all don't care connections to closed to get end part
             connection = connection.setDontCareToClosed();
         }
 
         final Connection con = connection;
-        List<DungeonPartType> validTypes = Arrays.stream(DungeonPartType.values())
+        List<OuterPartType> validTypes = Arrays.stream(OuterPartType.values())
                 .filter(type -> con.isValid(type.getConnection()))
                 .collect(Collectors.toList());
 
-        return new DungeonPart(validTypes.get(random.nextInt(validTypes.size())), relativePosition,
-                origin.clone().add(relativePosition.getX() * 16, 0, relativePosition.getZ() * 16));
+        return new OuterPart(validTypes.get(random.nextInt(validTypes.size())), relativePosition,
+                origin.clone().add(relativePosition.getX() * 16 * 5, 0, relativePosition.getZ() * 16 * 5), random, endPartChance);
     }
 }

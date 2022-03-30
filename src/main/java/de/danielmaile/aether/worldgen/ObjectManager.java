@@ -34,6 +34,7 @@ public class ObjectManager
         gson = new GsonBuilder()
                 .registerTypeAdapter(Location.class, new LocationSerializer())
                 .registerTypeAdapter(Vector.class, new VectorSerializer())
+                .setPrettyPrinting()
                 .create();
         loadDungeons();
     }

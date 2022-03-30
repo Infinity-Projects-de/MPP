@@ -1,6 +1,6 @@
 language_file: "de"
 
-# If this is set to false and you rename items in the language file, old items will no longer work properly
+# If this is set to false, and you rename items in the language file, old items will no longer work properly
 item_converter: true
 
 entities:
@@ -10,6 +10,7 @@ entities:
 
 world_generation:
   dungeons:
+    part_cap: 16         # This cap is for outer parts. Dungeon has 25 times more inner parts than outer parts (special rooms are 25 inner parts large)
     end_part_chance: 0.4
     probability: 0.00125
   trees:

@@ -4,20 +4,20 @@ import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 //Don't make class a record to avoid gson error!
-public class DungeonPart
+public class InnerPart
 {
-    private final DungeonPartType type;
+    private final InnerPartType type;
     private final Vector relativePosition;
     private final Location worldLocation;
 
-    public DungeonPart(DungeonPartType type, Vector relativePosition, Location worldLocation)
+    public InnerPart(InnerPartType type, Vector relativePosition, OuterPart outerPart)
     {
         this.type = type;
         this.relativePosition = relativePosition;
-        this.worldLocation = worldLocation;
+        this.worldLocation = outerPart.getWorldLocation().clone().add(relativePosition.getX() * 16, 0, relativePosition.getZ() * 16);
     }
 
-    public DungeonPartType getType()
+    public InnerPartType getInnerType()
     {
         return type;
     }
@@ -31,4 +31,5 @@ public class DungeonPart
     {
         return worldLocation;
     }
+
 }

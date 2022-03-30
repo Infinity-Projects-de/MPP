@@ -55,6 +55,7 @@ public class ListenerWorldGeneration implements Listener
 
         Location location = new Location(chunk.getWorld(), x, chunk.getWorld().getMinHeight() + 1, z);
         DungeonGenerator generator = new DungeonGenerator();
-        generator.generateDungeon(location, random, Aether.getConfigManager().getDungeonEndPartChance());
+        generator.generateDungeon(location, random,
+                Aether.getConfigManager().getDungeonEndPartChance(), Aether.getConfigManager().getDungeonPartCap());
     }
 }

@@ -17,6 +17,11 @@ public class ConfigManager
         return dungeonEndPartChance;
     }
 
+    public int getDungeonPartCap()
+    {
+        return dungeonPartCap;
+    }
+
     public float getDungeonProbability()
     {
         return dungeonProbability;
@@ -46,6 +51,7 @@ public class ConfigManager
 
     private boolean itemConverterEnabled;
     private float dungeonEndPartChance;
+    private int dungeonPartCap;
     private float dungeonProbability;
     private float treeProbability;
     private float llamaJumpHeight;
@@ -71,6 +77,7 @@ public class ConfigManager
         itemConverterEnabled = Aether.getInstance().getConfig().getBoolean("item_converter");
         dungeonEndPartChance = (float) Aether.getInstance().getConfig().getDouble("world_generation.dungeons.end_part_chance");
         dungeonProbability = (float) Aether.getInstance().getConfig().getDouble("world_generation.dungeons.probability");
+        dungeonPartCap = Aether.getInstance().getConfig().getInt("world_generation.dungeons.part_cap");
         treeProbability = (float) Aether.getInstance().getConfig().getDouble("world_generation.trees.probability");
         llamaJumpHeight = (float) Aether.getInstance().getConfig().getDouble("entities.llama.jump_height");
         llamaSpeed = (float) Aether.getInstance().getConfig().getDouble("entities.llama.speed");

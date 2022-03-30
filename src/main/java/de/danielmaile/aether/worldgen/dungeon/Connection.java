@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public record Connection(de.danielmaile.aether.worldgen.dungeon.Connection.ConnectionState eastState,
-                         de.danielmaile.aether.worldgen.dungeon.Connection.ConnectionState westState,
-                         de.danielmaile.aether.worldgen.dungeon.Connection.ConnectionState southState,
-                         de.danielmaile.aether.worldgen.dungeon.Connection.ConnectionState northState)
+public record Connection(ConnectionState eastState, ConnectionState westState, ConnectionState southState,
+                         ConnectionState northState)
 {
     public enum ConnectionState
     {
@@ -43,19 +41,19 @@ public record Connection(de.danielmaile.aether.worldgen.dungeon.Connection.Conne
      */
     public boolean isValid(Connection other)
     {
-        if(this.eastState != ConnectionState.DONT_CARE && this.eastState != other.eastState) return false;
-        if(this.westState != ConnectionState.DONT_CARE && this.westState != other.westState) return false;
-        if(this.southState != ConnectionState.DONT_CARE && this.southState != other.southState) return false;
+        if (this.eastState != ConnectionState.DONT_CARE && this.eastState != other.eastState) return false;
+        if (this.westState != ConnectionState.DONT_CARE && this.westState != other.westState) return false;
+        if (this.southState != ConnectionState.DONT_CARE && this.southState != other.southState) return false;
         return this.northState == ConnectionState.DONT_CARE || this.northState == other.northState;
     }
 
     public List<Direction> getConnectDirections()
     {
         List<Direction> connectDirections = new ArrayList<>();
-        if(eastState == ConnectionState.CONNECTED) connectDirections.add(Direction.EAST);
-        if(westState == ConnectionState.CONNECTED) connectDirections.add(Direction.WEST);
-        if(southState == ConnectionState.CONNECTED) connectDirections.add(Direction.SOUTH);
-        if(northState == ConnectionState.CONNECTED) connectDirections.add(Direction.NORTH);
+        if (eastState == ConnectionState.CONNECTED) connectDirections.add(Direction.EAST);
+        if (westState == ConnectionState.CONNECTED) connectDirections.add(Direction.WEST);
+        if (southState == ConnectionState.CONNECTED) connectDirections.add(Direction.SOUTH);
+        if (northState == ConnectionState.CONNECTED) connectDirections.add(Direction.NORTH);
         return connectDirections;
     }
 
