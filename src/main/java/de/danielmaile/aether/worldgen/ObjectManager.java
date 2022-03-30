@@ -46,6 +46,8 @@ public class ObjectManager
 
     private void saveDungeons()
     {
+        if(dungeons.isEmpty()) return;
+
         try (FileWriter fileWriter = new FileWriter(dungeonSavePath, false))
         {
             gson.toJson(dungeons, fileWriter);
