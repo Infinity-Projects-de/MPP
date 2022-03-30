@@ -17,6 +17,7 @@ public class DungeonGenerator
 {
     public void generateDungeon(Location origin, Random random, float endPartChance, int partCap)
     {
+        origin = toDungeonGridLocation(origin);
         Dungeon dungeon = new Dungeon(generateOuterParts(origin, random, endPartChance, partCap), random);
 
         //If no valid monument location is found dungeon doesn't generate
@@ -25,9 +26,23 @@ public class DungeonGenerator
             return;
         }
 
-        AetherWorld.getObjectManager().getDungeonList().add(dungeon);
-        Prefab.DUNGEON_MONUMENT.instantiate(dungeon.getMonumentLocation(), true);
+        //Check for other dungeons to avoid overlapping
+        for(OuterPart part : dungeon.getOuterParts())
+        {
+            for(Dungeon otherDungeon : AetherWorld.getObjectManager().getDungeonList())
+            {
+                for(OuterPart otherOuterPart : otherDungeon.getOuterParts())
+                {
+                    if(part.getWorldLocation().equals(otherOuterPart.getWorldLocation())) return;
+                }
+            }
+        }
 
+        //Add dungeon to object list
+        AetherWorld.getObjectManager().getDungeonList().add(dungeon);
+
+        //Instantiate Prefabs
+        Prefab.DUNGEON_MONUMENT.instantiate(dungeon.getMonumentLocation(), true);
         for (OuterPart part : dungeon.getOuterParts())
         {
             if (part.hasInnerParts())
@@ -45,6 +60,14 @@ public class DungeonGenerator
 
         Aether.logInfo("Generated new dungeon with " + dungeon.getSize() + " inner parts at "
                 + origin + " (Monument Location: " + dungeon.getMonumentLocation() + ")");
+    }
+
+    private Location toDungeonGridLocation(Location location)
+    {
+        Location dungeonLocation = location.clone();
+        dungeonLocation.setX(Math.floor(dungeonLocation.getX() / 64) * 64);
+        dungeonLocation.setZ(Math.floor(dungeonLocation.getZ() / 64) * 64);
+        return dungeonLocation;
     }
 
     private List<OuterPart> generateOuterParts(Location origin, Random random, float endPartChance, int partCap)
@@ -65,7 +88,7 @@ public class DungeonGenerator
             {
                 if (outerParts.size() + newParts.size() > partCap)
                 {
-                    endPartChance = 0;
+                    endPartChance = 1;
                 }
 
                 for (Direction connectDirection : outerPart.getOuterType().getConnection().getConnectDirections())
