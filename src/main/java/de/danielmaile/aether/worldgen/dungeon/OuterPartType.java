@@ -1,6 +1,6 @@
 package de.danielmaile.aether.worldgen.dungeon;
 
-import de.danielmaile.aether.worldgen.Prefab;
+import de.danielmaile.aether.worldgen.PrefabType;
 
 public enum OuterPartType
 {
@@ -30,22 +30,22 @@ public enum OuterPartType
 
     private final PartType type;
 
-    public Prefab getPrefab()
+    public PrefabType getPrefabType()
     {
-        return prefab;
+        return prefabType;
     }
 
-    private final Prefab prefab;
+    private final PrefabType prefabType;
 
     OuterPartType(PartType type)
     {
         this(type, null);
     }
 
-    OuterPartType(PartType type, Prefab prefab)
+    OuterPartType(PartType type, PrefabType prefabType)
     {
         this.type = type;
-        this.prefab = prefab;
+        this.prefabType = prefabType;
     }
 
     public Connection getConnection()

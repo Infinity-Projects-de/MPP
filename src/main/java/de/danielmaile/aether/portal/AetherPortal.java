@@ -1,6 +1,7 @@
 package de.danielmaile.aether.portal;
 
 import de.danielmaile.aether.worldgen.Prefab;
+import de.danielmaile.aether.worldgen.PrefabType;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -96,7 +97,7 @@ public class AetherPortal
 
     public static void createPortal(Location location)
     {
-        Prefab.PORTAL.instantiate(location, false);
+        new Prefab(PrefabType.PORTAL, location, false).instantiate();
     }
 
     public static Location findPortalInRadius(Location location, int radius)

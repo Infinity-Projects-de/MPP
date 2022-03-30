@@ -3,7 +3,6 @@ package de.danielmaile.aether.worldgen.dungeon;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +32,7 @@ public class OuterPart
     private @Nullable
     List<InnerPart> generateInnerParts(Random random, double endPartChance)
     {
-        if (type.getPrefab() != null) return null;
+        if (type.getPrefabType() != null) return null;
 
         //Generate middle cross depending on outer connections
         List<InnerPart> parts = new ArrayList<>();

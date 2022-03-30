@@ -4,7 +4,7 @@ main: de.danielmaile.aether.Aether
 api-version: 1.18
 authors: [ WoizaWerner ]
 website: maile.ws
-depend: [ ProtocolLib, WorldEdit, AsyncWorldEdit ]
+depend: [ ProtocolLib, FastAsyncWorldEdit ]
 
 commands:
   aether:

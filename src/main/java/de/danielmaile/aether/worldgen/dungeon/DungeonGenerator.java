@@ -3,6 +3,7 @@ package de.danielmaile.aether.worldgen.dungeon;
 import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import de.danielmaile.aether.worldgen.Prefab;
+import de.danielmaile.aether.worldgen.PrefabType;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
@@ -27,13 +28,13 @@ public class DungeonGenerator
         }
 
         //Check for other dungeons to avoid overlapping
-        for(OuterPart part : dungeon.getOuterParts())
+        for (OuterPart part : dungeon.getOuterParts())
         {
-            for(Dungeon otherDungeon : AetherWorld.getObjectManager().getDungeonList())
+            for (Dungeon otherDungeon : AetherWorld.getObjectManager().getDungeonList())
             {
-                for(OuterPart otherOuterPart : otherDungeon.getOuterParts())
+                for (OuterPart otherOuterPart : otherDungeon.getOuterParts())
                 {
-                    if(part.getWorldLocation().equals(otherOuterPart.getWorldLocation())) return;
+                    if (part.getWorldLocation().equals(otherOuterPart.getWorldLocation())) return;
                 }
             }
         }
@@ -42,19 +43,19 @@ public class DungeonGenerator
         AetherWorld.getObjectManager().getDungeonList().add(dungeon);
 
         //Instantiate Prefabs
-        Prefab.DUNGEON_MONUMENT.instantiate(dungeon.getMonumentLocation(), true);
+        new Prefab(PrefabType.DUNGEON_MONUMENT, dungeon.getMonumentLocation(), true).instantiate();
         for (OuterPart part : dungeon.getOuterParts())
         {
             if (part.hasInnerParts())
             {
                 for (InnerPart innerPart : part.getInnerParts())
                 {
-                    innerPart.getInnerType().getPrefab().instantiate(innerPart.getWorldLocation(), false);
+                    new Prefab(innerPart.getInnerType().getPrefabType(), innerPart.getWorldLocation(), false).instantiate();
                 }
             }
             else
             {
-                part.getOuterType().getPrefab().instantiate(part.getWorldLocation(), false);
+                new Prefab(part.getOuterType().getPrefabType(), part.getWorldLocation(), false).instantiate();
             }
         }
 

@@ -23,6 +23,7 @@ import de.danielmaile.aether.portal.ListenerPortal;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import de.danielmaile.aether.worldgen.ListenerWorldGeneration;
 import de.danielmaile.aether.worldgen.Prefab;
+import de.danielmaile.aether.worldgen.PrefabType;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -118,7 +119,7 @@ public final class Aether extends JavaPlugin
         new RideableLlama().init(protocolManager);
 
         AetherWorld.init();
-        Prefab.init();
+        PrefabType.loadPrefabs();
 
         particleManager = new ParticleManager();
     }

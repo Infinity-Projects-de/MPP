@@ -72,24 +72,24 @@ public class ListenerDungeon implements Listener
     }
 
     @EventHandler
-    public void onMonumentBreak(BlockBreakEvent event)
+    public void onDungeonBreak(BlockBreakEvent event)
     {
+        if (event.isCancelled()) return;
+        Player player = event.getPlayer();
+
+        //Check for monument break
         Dungeon targetDungeon = AetherWorld.getObjectManager().getDungeonList()
                 .stream()
                 .filter(dungeon -> dungeon.getMonumentLocation().equals(event.getBlock().getLocation()))
                 .findFirst()
                 .orElse(null);
-        event.setCancelled(targetDungeon != null);
-    }
+        if (targetDungeon != null)
+        {
+            event.setCancelled(true);
+            return;
+        }
 
-    /***
-     * Don't allow building or destruction of dungeon
-     */
-
-    @EventHandler
-    public void onDungeonBlockBreak(BlockBreakEvent event)
-    {
-        Player player = event.getPlayer();
+        //Check for dungeon break
         if (!player.getWorld().equals(AetherWorld.getWorld())) return;
         if (player.getLocation().getY() > -256) return;
         event.setCancelled(true);

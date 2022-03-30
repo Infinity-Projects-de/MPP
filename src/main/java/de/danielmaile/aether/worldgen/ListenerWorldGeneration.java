@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class ListenerWorldGeneration implements Listener
 {
-    private static final List<Prefab> treeList = Arrays.asList(Prefab.TREE1, Prefab.TREE2, Prefab.TREE3);
+    private static final List<PrefabType> treeList = Arrays.asList(PrefabType.TREE1, PrefabType.TREE2, PrefabType.TREE3);
 
     @EventHandler
     public void onChunkLoad(ChunkLoadEvent event)
@@ -44,7 +44,7 @@ public class ListenerWorldGeneration implements Listener
 
         Location location = new Location(chunk.getWorld(), x, y, z);
         double yRotation = random.nextInt(4) * 90;
-        treeList.get(random.nextInt(treeList.size())).instantiate(location, yRotation, true);
+        new Prefab(treeList.get(random.nextInt(treeList.size())), location, yRotation, true).instantiate();
     }
 
     private void generateDungeons(Chunk chunk, Random random)
