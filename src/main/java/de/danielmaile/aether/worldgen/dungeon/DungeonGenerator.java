@@ -4,6 +4,7 @@ import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import de.danielmaile.aether.worldgen.Prefab;
 import de.danielmaile.aether.worldgen.PrefabType;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
@@ -16,58 +17,60 @@ import java.util.stream.Collectors;
 
 public class DungeonGenerator
 {
-    public void generateDungeon(Location origin, Random random, float endPartChance, int partCap)
+    public void generateDungeon(Location location, Random random, float endPartChance, int partCap)
     {
-        origin = toDungeonGridLocation(origin);
-        Dungeon dungeon = new Dungeon(generateOuterParts(origin, random, endPartChance, partCap), random);
-
-        //If no valid monument location is found dungeon doesn't generate
-        if (dungeon.getMonumentLocation() == null)
+        Bukkit.getScheduler().runTaskAsynchronously(Aether.getInstance(), () ->
         {
-            return;
-        }
+            Dungeon dungeon = new Dungeon(generateOuterParts(toDungeonGridLocation(location), random, endPartChance, partCap), random);
 
-        //Check for other dungeons to avoid overlapping
-        for (OuterPart part : dungeon.getOuterParts())
-        {
-            for (Dungeon otherDungeon : AetherWorld.getObjectManager().getDungeonList())
+            //If no valid monument location is found dungeon doesn't generate
+            if (dungeon.getMonumentLocation() == null)
             {
-                for (OuterPart otherOuterPart : otherDungeon.getOuterParts())
+                return;
+            }
+
+            //Check for other dungeons to avoid overlapping
+            for (OuterPart part : dungeon.getOuterParts())
+            {
+                for (Dungeon otherDungeon : AetherWorld.getObjectManager().getDungeonList())
                 {
-                    if (part.getWorldLocation().equals(otherOuterPart.getWorldLocation())) return;
+                    for (OuterPart otherOuterPart : otherDungeon.getOuterParts())
+                    {
+                        if (part.getWorldLocation().equals(otherOuterPart.getWorldLocation())) return;
+                    }
                 }
             }
-        }
 
-        //Add dungeon to object list
-        AetherWorld.getObjectManager().getDungeonList().add(dungeon);
+            //Add dungeon to object list
+            Bukkit.getScheduler().runTask(Aether.getInstance(), () -> AetherWorld.getObjectManager().getDungeonList().add(dungeon));
 
-        //Instantiate Prefabs
-        new Prefab(PrefabType.DUNGEON_MONUMENT, dungeon.getMonumentLocation(), true).instantiate();
-        for (OuterPart part : dungeon.getOuterParts())
-        {
-            if (part.hasInnerParts())
+            //Instantiate Prefabs
+            new Prefab(PrefabType.DUNGEON_MONUMENT, dungeon.getMonumentLocation(), true).instantiate();
+            for (OuterPart part : dungeon.getOuterParts())
             {
-                for (InnerPart innerPart : part.getInnerParts())
+                if (part.hasInnerParts())
                 {
-                    new Prefab(innerPart.getInnerType().getPrefabType(), innerPart.getWorldLocation(), false).instantiate();
+                    for (InnerPart innerPart : part.getInnerParts())
+                    {
+                        new Prefab(innerPart.getInnerType().getPrefabType(), innerPart.getWorldLocation(), false).instantiate();
+                    }
+                }
+                else
+                {
+                    new Prefab(part.getOuterType().getPrefabType(), part.getWorldLocation(), false).instantiate();
                 }
             }
-            else
-            {
-                new Prefab(part.getOuterType().getPrefabType(), part.getWorldLocation(), false).instantiate();
-            }
-        }
 
-        Aether.logInfo("Generated new dungeon with " + dungeon.getSize() + " inner parts at "
-                + origin + " (Monument Location: " + dungeon.getMonumentLocation() + ")");
+            //Print log to console
+            Aether.logInfo("Generated new dungeon with " + dungeon.getSize() + " inner parts at monument location: " + dungeon.getMonumentLocation() + ")");
+        });
     }
 
     private Location toDungeonGridLocation(Location location)
     {
         Location dungeonLocation = location.clone();
-        dungeonLocation.setX(Math.floor(dungeonLocation.getX() / 64) * 64);
-        dungeonLocation.setZ(Math.floor(dungeonLocation.getZ() / 64) * 64);
+        dungeonLocation.setX(Math.floor(dungeonLocation.getX() / 80) * 80);
+        dungeonLocation.setZ(Math.floor(dungeonLocation.getZ() / 80) * 80);
         return dungeonLocation;
     }
 
