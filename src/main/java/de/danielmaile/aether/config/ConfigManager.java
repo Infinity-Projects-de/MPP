@@ -56,6 +56,8 @@ public class ConfigManager
     private float treeProbability;
     private float llamaJumpHeight;
     private float llamaSpeed;
+    private int minDungeonChestChecks;
+    private int maxDungeonChestChecks;
 
     public ConfigManager()
     {
@@ -81,5 +83,17 @@ public class ConfigManager
         treeProbability = (float) Aether.getInstance().getConfig().getDouble("world_generation.trees.probability");
         llamaJumpHeight = (float) Aether.getInstance().getConfig().getDouble("entities.llama.jump_height");
         llamaSpeed = (float) Aether.getInstance().getConfig().getDouble("entities.llama.speed");
+        minDungeonChestChecks = Aether.getInstance().getConfig().getInt("world_generation.dungeons.chests.min_checks");
+        maxDungeonChestChecks = Aether.getInstance().getConfig().getInt("world_generation.dungeons.chests.max_checks");
+    }
+
+    public int getMinDungeonChestChecks()
+    {
+        return minDungeonChestChecks;
+    }
+
+    public int getMaxDungeonChestChecks()
+    {
+        return maxDungeonChestChecks;
     }
 }

@@ -4,10 +4,11 @@ messages:
     info:
       reloaded_config: "<green>Die Config wurde neu geladen!"
       help_text:
-        - "<gradient:#03FB5D:#03FBE1>/ae reload</gradient> <gradient:#D2FB03:#68FB03>- Läd die Config neu.</gradient>"
-        - "<gradient:#03FB5D:#03FBE1>/ae teleport</gradient> <gradient:#D2FB03:#68FB03>- Teleportiert dich in die Aether-Welt.</gradient>"
+        - "<gradient:#03FB5D:#03FBE1>/ae chest</gradient> <gradient:#D2FB03:#68FB03>- Spawnt eine Dungeon-Kiste an deiner Position.</gradient>"
         - "<gradient:#03FB5D:#03FBE1>/ae give <name></gradient> <gradient:#D2FB03:#68FB03>- Gibt dir ein Aether Item.</gradient>"
         - "<gradient:#03FB5D:#03FBE1>/ae locate</gradient> <gradient:#D2FB03:#68FB03>- Zeigt dir die Koordinaten des nächsten Dungeon an.</gradient>"
+        - "<gradient:#03FB5D:#03FBE1>/ae reload</gradient> <gradient:#D2FB03:#68FB03>- Läd die Config neu.</gradient>"
+        - "<gradient:#03FB5D:#03FBE1>/ae teleport</gradient> <gradient:#D2FB03:#68FB03>- Teleportiert dich in die Aether-Welt.</gradient>"
       next_dungeon: "<green>Der nächste Dungeon Monument ist <distance> Blöcke entfernt. (<aqua><hover:show_text:'<green>Klicke um dich zum Monument zu teleportieren.</green>'><click:run_command:/tp @s <location>><location></click></aqua>)"
     errors:
       only_player_cmd: "<red>Aether-Befehle können nur von Spielern ausgeführt werden!"

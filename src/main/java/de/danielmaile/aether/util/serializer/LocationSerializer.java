@@ -1,6 +1,7 @@
 package de.danielmaile.aether.util.serializer;
 
 import com.google.gson.*;
+import de.danielmaile.aether.Aether;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -25,7 +26,13 @@ public class LocationSerializer implements JsonSerializer<Location>, JsonDeseria
     public Location deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException
     {
         JsonObject jsonObject = jsonElement.getAsJsonObject();
-        World world = Bukkit.getWorld(UUID.fromString(jsonObject.get("world_uuid").getAsString()));
+        UUID uuid = UUID.fromString(jsonObject.get("world_uuid").getAsString());
+        World world = Bukkit.getWorld(uuid);
+        if(world == null)
+        {
+            Aether.logError("Error while reading location from file: No world found with UUID " + uuid + "!" +
+                    " Please delete the aether data folder and the aether world and restart the server to avoid errors");
+        }
         double x = jsonObject.get("x").getAsDouble();
         double y = jsonObject.get("y").getAsDouble();
         double z = jsonObject.get("z").getAsDouble();

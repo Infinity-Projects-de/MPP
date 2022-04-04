@@ -5,6 +5,7 @@ import de.danielmaile.aether.config.LanguageManager;
 import de.danielmaile.aether.item.ItemType;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import de.danielmaile.aether.worldgen.dungeon.Dungeon;
+import de.danielmaile.aether.worldgen.dungeon.loot.DungeonChest;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
@@ -22,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Stream;
 
 public class CommandAether implements CommandExecutor, TabExecutor
@@ -42,10 +44,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
         {
             switch (args[0].toLowerCase())
             {
-                case "reload" -> {
-                    Aether.getConfigManager().load();
-                    player.sendMessage(cmdPrefix.append(languageManager.getComponent("messages.cmd.info.reloaded_config")));
-                }
+                case "chest" -> new DungeonChest(new Random()).instantiate(player.getLocation());
                 case "locate" -> {
                     List<Dungeon> dungeons = AetherWorld.getObjectManager().getDungeonList();
                     double smallestDistance = Double.MAX_VALUE;
@@ -73,6 +72,10 @@ public class CommandAether implements CommandExecutor, TabExecutor
                     {
                         player.sendMessage(cmdPrefix.append(languageManager.getComponent("messages.cmd.errors.no_dungeon_found")));
                     }
+                }
+                case "reload" -> {
+                    Aether.getConfigManager().load();
+                    player.sendMessage(cmdPrefix.append(languageManager.getComponent("messages.cmd.info.reloaded_config")));
                 }
                 case "teleport" -> {
                     World aetherWorld = AetherWorld.getWorld();
@@ -127,10 +130,11 @@ public class CommandAether implements CommandExecutor, TabExecutor
 
         if (args.length == 1)
         {
-            tabComplete.add("teleport");
-            tabComplete.add("locate");
+            tabComplete.add("chest");
             tabComplete.add("give");
+            tabComplete.add("locate");
             tabComplete.add("reload");
+            tabComplete.add("teleport");
             StringUtil.copyPartialMatches(args[0], tabComplete, completions);
         }
 

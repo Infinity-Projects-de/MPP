@@ -10,6 +10,9 @@ entities:
 
 world_generation:
   dungeons:
+    chests:
+      min_checks: 5      # Min checks for valid chest location per outer part. If valid location is found a loot chest is placed
+      max_checks: 20
     part_cap: 16         # After this amount of outer parts, only outer parts with no openings are generated. Effectively limiting the dungeon size. Note that one outer part consists of up to 25 inner parts.
     end_part_chance: 0.4
     probability: 0.00125

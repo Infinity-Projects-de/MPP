@@ -4,8 +4,13 @@ import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import de.danielmaile.aether.worldgen.Prefab;
 import de.danielmaile.aether.worldgen.PrefabType;
+import de.danielmaile.aether.worldgen.dungeon.loot.DungeonChest;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.util.Vector;
 
 import javax.annotation.Nullable;
@@ -61,9 +66,32 @@ public class DungeonGenerator
                 }
             }
 
+            //Generate chests
+            generateChests(dungeon, random);
+
             //Print log to console
             Aether.logInfo("Generated new dungeon with " + dungeon.getSize() + " inner parts at monument location: " + dungeon.getMonumentLocation() + ")");
         });
+    }
+
+    private void generateChests(Dungeon dungeon, Random random)
+    {
+        for (OuterPart outerPart : dungeon.getOuterParts())
+        {
+            World world = outerPart.getWorldLocation().getWorld();
+            int chestChecks = random.nextInt(Aether.getConfigManager().getMinDungeonChestChecks(), Aether.getConfigManager().getMaxDungeonChestChecks() + 1);
+            for (int i = 0; i < chestChecks; i++)
+            {
+                Location chestLocation = outerPart.getWorldLocation().clone().add(random.nextInt(80), 0, random.nextInt(80));
+                Block chest = world.getBlockAt(chestLocation);
+
+                //Check for air at chest location and floor below
+                if (chest.getType() != Material.AIR) continue;
+                if (chest.getRelative(BlockFace.DOWN).getType() == Material.AIR) continue;
+
+                Bukkit.getScheduler().runTask(Aether.getInstance(), () -> new DungeonChest(random).instantiate(chestLocation));
+            }
+        }
     }
 
     private Location toDungeonGridLocation(Location location)

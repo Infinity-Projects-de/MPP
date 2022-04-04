@@ -37,8 +37,8 @@ public class ListenerWorldGeneration implements Listener
 
     private void generateTrees(Chunk chunk, Random random)
     {
-        int x = random.nextInt(15) + chunk.getX() * 16;
-        int z = random.nextInt(15) + chunk.getZ() * 16;
+        int x = random.nextInt(16) + chunk.getX() * 16;
+        int z = random.nextInt(16) + chunk.getZ() * 16;
         int y = chunk.getWorld().getHighestBlockYAt(x, z);
         if (y <= 0) return;
 
