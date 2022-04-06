@@ -46,7 +46,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
             {
                 case "chest" -> new DungeonChest(new Random()).instantiate(player.getLocation());
                 case "locate" -> {
-                    List<Dungeon> dungeons = AetherWorld.getObjectManager().getDungeonList();
+                    List<Dungeon> dungeons = AetherWorld.getObjectManager().getDungeons();
                     double smallestDistance = Double.MAX_VALUE;
                     Dungeon nearestDungeon = null;
                     for (Dungeon dungeon : dungeons)

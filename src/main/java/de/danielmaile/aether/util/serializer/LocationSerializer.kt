@@ -1,41 +1,46 @@
-package de.danielmaile.aether.util.serializer;
+package de.danielmaile.aether.util.serializer
 
-import com.google.gson.*;
-import de.danielmaile.aether.util.UtilKt;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
+import com.google.gson.*
+import de.danielmaile.aether.util.logError
+import org.bukkit.Bukkit
+import org.bukkit.Location
+import java.lang.reflect.Type
+import java.util.*
 
-import java.lang.reflect.Type;
-import java.util.UUID;
+class LocationSerializer : JsonSerializer<Location>, JsonDeserializer<Location> {
 
-public class LocationSerializer implements JsonSerializer<Location>, JsonDeserializer<Location>
-{
-    @Override
-    public JsonElement serialize(Location location, Type type, JsonSerializationContext jsonSerializationContext)
-    {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("world_uuid", location.getWorld().getUID().toString());
-        jsonObject.addProperty("x", location.getX());
-        jsonObject.addProperty("y", location.getY());
-        jsonObject.addProperty("z", location.getZ());
-        return jsonObject;
+    override fun serialize(
+        location: Location,
+        type: Type,
+        jsonSerializationContext: JsonSerializationContext
+    ): JsonElement {
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("world_uuid", location.world.uid.toString())
+        jsonObject.addProperty("x", location.x)
+        jsonObject.addProperty("y", location.y)
+        jsonObject.addProperty("z", location.z)
+        return jsonObject
     }
 
-    @Override
-    public Location deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException
-    {
-        JsonObject jsonObject = jsonElement.getAsJsonObject();
-        UUID uuid = UUID.fromString(jsonObject.get("world_uuid").getAsString());
-        World world = Bukkit.getWorld(uuid);
-        if(world == null)
-        {
-            UtilKt.logError("Error while reading location from file: No world found with UUID " + uuid + "!" +
-                    " Please delete the aether data folder and the aether world and restart the server to avoid errors");
+    @Throws(JsonParseException::class)
+    override fun deserialize(
+        jsonElement: JsonElement,
+        type: Type,
+        jsonDeserializationContext: JsonDeserializationContext
+    ): Location {
+        val jsonObject = jsonElement.asJsonObject
+        val uuid = UUID.fromString(jsonObject["world_uuid"].asString)
+        val world = Bukkit.getWorld(uuid)
+        if (world == null) {
+            logError(
+                "Error while reading location from file: No world found with UUID " + uuid + "!" +
+                        " Please delete the aether data folder and the aether world and restart the server to avoid errors"
+            )
         }
-        double x = jsonObject.get("x").getAsDouble();
-        double y = jsonObject.get("y").getAsDouble();
-        double z = jsonObject.get("z").getAsDouble();
-        return new Location(world, x, y, z);
+
+        val x = jsonObject["x"].asDouble
+        val y = jsonObject["y"].asDouble
+        val z = jsonObject["z"].asDouble
+        return Location(world, x, y, z)
     }
 }

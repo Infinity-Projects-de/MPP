@@ -34,7 +34,7 @@ public class ListenerDungeon implements Listener
         if (!event.getClickedBlock().getWorld().equals(AetherWorld.getWorld())) return;
 
         Location clickLocation = event.getClickedBlock().getLocation();
-        Dungeon targetDungeon = AetherWorld.getObjectManager().getDungeonList()
+        Dungeon targetDungeon = AetherWorld.getObjectManager().getDungeons()
                 .stream()
                 .filter(dungeon -> dungeon.getMonumentLocation().equals(clickLocation))
                 .findFirst()
@@ -78,7 +78,7 @@ public class ListenerDungeon implements Listener
         Player player = event.getPlayer();
 
         //Check for monument break
-        Dungeon targetDungeon = AetherWorld.getObjectManager().getDungeonList()
+        Dungeon targetDungeon = AetherWorld.getObjectManager().getDungeons()
                 .stream()
                 .filter(dungeon -> dungeon.getMonumentLocation().equals(event.getBlock().getLocation()))
                 .findFirst()

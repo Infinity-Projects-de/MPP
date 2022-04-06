@@ -37,7 +37,7 @@ public class DungeonGenerator
             //Check for other dungeons to avoid overlapping
             for (OuterPart part : dungeon.getOuterParts())
             {
-                for (Dungeon otherDungeon : AetherWorld.getObjectManager().getDungeonList())
+                for (Dungeon otherDungeon : AetherWorld.getObjectManager().getDungeons())
                 {
                     for (OuterPart otherOuterPart : otherDungeon.getOuterParts())
                     {
@@ -47,7 +47,7 @@ public class DungeonGenerator
             }
 
             //Add dungeon to object list
-            Bukkit.getScheduler().runTask(Aether.getInstance(), () -> AetherWorld.getObjectManager().getDungeonList().add(dungeon));
+            Bukkit.getScheduler().runTask(Aether.getInstance(), () -> AetherWorld.getObjectManager().getDungeons().add(dungeon));
 
             //Instantiate Prefabs
             new Prefab(PrefabType.DUNGEON_MONUMENT, dungeon.getMonumentLocation(), true).instantiate();
