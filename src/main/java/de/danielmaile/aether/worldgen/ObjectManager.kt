@@ -3,7 +3,7 @@ package de.danielmaile.aether.worldgen
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.stream.JsonReader
-import de.danielmaile.aether.Aether.Companion.instance
+import de.danielmaile.aether.inst
 import de.danielmaile.aether.util.serializer.LocationSerializer
 import de.danielmaile.aether.util.serializer.VectorSerializer
 import de.danielmaile.aether.worldgen.dungeon.Dungeon
@@ -21,7 +21,7 @@ class ObjectManager {
 
     var dungeons = ArrayList<Dungeon>()
 
-    private val dungeonSavePath = (instance.dataFolder.absolutePath
+    private val dungeonSavePath = (inst().dataFolder.absolutePath
             + File.separator + "data" + File.separator + "dungeons.aether")
     private var gson: Gson = GsonBuilder()
         .registerTypeAdapter(Location::class.java, LocationSerializer())

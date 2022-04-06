@@ -83,7 +83,7 @@ class Aether : JavaPlugin() {
         if (!deFile.exists()) {
             saveResource("locales/de.yml", false)
         }
-        configManager = ConfigManager()
+       reloadConfig()
 
         //Recipes
         registerRecipes()
@@ -109,4 +109,13 @@ class Aether : JavaPlugin() {
             Bukkit.addRecipe(recipe.recipe)
         }
     }
+
+    override fun reloadConfig() {
+        super.reloadConfig()
+        configManager = ConfigManager()
+    }
+}
+
+fun inst(): Aether {
+    return Aether.instance
 }

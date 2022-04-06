@@ -1,6 +1,7 @@
 package de.danielmaile.aether.commands;
 
 import de.danielmaile.aether.Aether;
+import de.danielmaile.aether.AetherKt;
 import de.danielmaile.aether.config.LanguageManager;
 import de.danielmaile.aether.item.ItemType;
 import de.danielmaile.aether.worldgen.AetherWorld;
@@ -74,7 +75,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
                     }
                 }
                 case "reload" -> {
-                    Aether.getInstance().getConfigManager().load();
+                    AetherKt.inst().reloadConfig();
                     player.sendMessage(cmdPrefix.append(languageManager.getComponent("messages.cmd.info.reloaded_config")));
                 }
                 case "teleport" -> {
