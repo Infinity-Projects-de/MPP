@@ -22,7 +22,7 @@ public class ListenerMagicWand implements Listener
         {
             //Change spell
             wand.nextSpell();
-            Component component = Aether.getLanguageManager().getComponent("items.MAGIC_WAND.current_spell")
+            Component component = Aether.getInstance().getLanguageManager().getComponent("items.MAGIC_WAND.current_spell")
                     .append(wand.getCurrentSpell().getName());
             event.getPlayer().sendActionBar(component);
             event.getPlayer().getInventory().setItemInMainHand(wand.getItemStack());

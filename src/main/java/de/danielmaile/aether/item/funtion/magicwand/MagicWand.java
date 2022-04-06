@@ -1,7 +1,7 @@
 package de.danielmaile.aether.item.funtion.magicwand;
 
 import de.danielmaile.aether.Aether;
-import de.danielmaile.aether.util.NBTEditor;
+import de.danielmaile.aether.util.UtilKt;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
@@ -1209,7 +1209,7 @@ public class MagicWand
 
     private void writeSpellNBT()
     {
-        itemStack = NBTEditor.setString(itemStack, SELECTED_SPELL_TAG, currentSpell.name());
+        itemStack = UtilKt.setNBTString(itemStack, SELECTED_SPELL_TAG, currentSpell.name());
     }
 
     public void fire(Player player)

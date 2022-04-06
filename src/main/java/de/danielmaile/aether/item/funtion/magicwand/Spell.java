@@ -1,7 +1,7 @@
 package de.danielmaile.aether.item.funtion.magicwand;
 
 import de.danielmaile.aether.Aether;
-import de.danielmaile.aether.util.NBTEditor;
+import de.danielmaile.aether.util.UtilKt;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Color;
 import org.bukkit.inventory.ItemStack;
@@ -35,7 +35,7 @@ public enum Spell
 
     Spell(int range, Color color)
     {
-        this.name = Aether.getLanguageManager().getComponent("items.MAGIC_WAND.spells." + name());
+        this.name = Aether.getInstance().getLanguageManager().getComponent("items.MAGIC_WAND.spells." + name());
         this.range = range;
         this.color = color;
     }
@@ -50,7 +50,7 @@ public enum Spell
     {
         try
         {
-            return Spell.valueOf(NBTEditor.getString(itemStack, MagicWand.SELECTED_SPELL_TAG));
+            return Spell.valueOf(UtilKt.getNBTString(itemStack, MagicWand.SELECTED_SPELL_TAG));
         }
         catch (NullPointerException | IllegalArgumentException exception)
         {

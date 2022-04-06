@@ -1,6 +1,6 @@
 package de.danielmaile.aether.item;
 
-import de.danielmaile.aether.util.NBTEditor;
+import de.danielmaile.aether.util.UtilKt;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -38,7 +38,7 @@ public class ListenerBlock implements Listener
         ItemStack itemStack = event.getItemInHand();
         if (block.getWorld().equals(AetherWorld.getWorld()))
         {
-            if (NBTEditor.hasKey(itemStack, ItemType.AETHER_ITEM_TAG_KEY))
+            if (UtilKt.hasKey(itemStack, ItemType.AETHER_ITEM_TAG_KEY))
             {
                 //Convert Item to correct material
                 ItemType itemType = ItemType.fromTag(itemStack);
@@ -63,7 +63,7 @@ public class ListenerBlock implements Listener
         else
         {
             //Aether items can't be placed in other worlds
-            if (NBTEditor.hasKey(itemStack, ItemType.AETHER_ITEM_TAG_KEY))
+            if (UtilKt.hasKey(itemStack, ItemType.AETHER_ITEM_TAG_KEY))
             {
                 event.setCancelled(true);
             }

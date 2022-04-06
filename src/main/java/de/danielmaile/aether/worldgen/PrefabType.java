@@ -4,8 +4,7 @@ import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
-import de.danielmaile.aether.Aether;
-import de.danielmaile.aether.util.Utils;
+import de.danielmaile.aether.util.UtilKt;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,7 +52,8 @@ public enum PrefabType
         {
             try
             {
-                InputStream inputStream = Utils.getResource("prefabs/" + prefabType.fileName);
+                InputStream inputStream = UtilKt.getResource("prefabs/" + prefabType.fileName);
+                if(inputStream == null) continue;
                 ClipboardFormat format = ClipboardFormats.findByAlias("schem");
                 if (format == null) throw new NullPointerException();
                 ClipboardReader reader = format.getReader(inputStream);
@@ -62,7 +62,7 @@ public enum PrefabType
             }
             catch (NullPointerException | ArrayIndexOutOfBoundsException | IOException e)
             {
-                Aether.logError("Failed to load prefab " + prefabType.fileName);
+                UtilKt.logError("Failed to load prefab " + prefabType.fileName);
             }
         }
     }

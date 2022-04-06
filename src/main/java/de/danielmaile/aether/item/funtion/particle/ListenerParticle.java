@@ -20,29 +20,29 @@ public class ListenerParticle implements Listener
         //Player gets ring above head when wearing valkyrie ring
         if (oldItemType == ItemType.VALKYRE_RING)
         {
-            Aether.getParticleManager().removeParticleType(player, ParticleManager.ParticleType.VALKYRE_RING);
+            Aether.getInstance().getParticleManager().removeParticleType(player, ParticleManager.ParticleType.VALKYRE_RING);
         }
 
         if (newItemType == ItemType.VALKYRE_RING)
         {
-            Aether.getParticleManager().addParticleType(player, ParticleManager.ParticleType.VALKYRE_RING);
+            Aether.getInstance().getParticleManager().addParticleType(player, ParticleManager.ParticleType.VALKYRE_RING);
         }
 
         //Player gets wings when wearing valkyrie wings
         if (oldItemType == ItemType.VALKYRE_WINGS)
         {
-            Aether.getParticleManager().removeParticleType(player, ParticleManager.ParticleType.VALKYRE_WINGS);
+            Aether.getInstance().getParticleManager().removeParticleType(player, ParticleManager.ParticleType.VALKYRE_WINGS);
         }
 
         if (newItemType == ItemType.VALKYRE_WINGS)
         {
-            Aether.getParticleManager().addParticleType(player, ParticleManager.ParticleType.VALKYRE_WINGS);
+            Aether.getInstance().getParticleManager().addParticleType(player, ParticleManager.ParticleType.VALKYRE_WINGS);
         }
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event)
     {
-        Aether.getParticleManager().removePlayer(event.getPlayer());
+        Aether.getInstance().getParticleManager().removePlayer(event.getPlayer());
     }
 }

@@ -1,7 +1,7 @@
 package de.danielmaile.aether.worldgen;
 
 import de.danielmaile.aether.Aether;
-import de.danielmaile.aether.util.Utils;
+import de.danielmaile.aether.util.UtilKt;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
@@ -34,7 +34,7 @@ public class AetherWorld
         }
         catch (IOException | URISyntaxException exception)
         {
-            Aether.logError("Error while copying datapack. Please restart your server and try again!");
+            UtilKt.logError("Error while copying datapack. Please restart your server and try again!");
         }
 
         if (getWorld() != null)
@@ -60,14 +60,14 @@ public class AetherWorld
         saveResourceToWorldFolder("aether_datapack/pack.mcmeta");
 
         Bukkit.getConsoleSender().sendMessage(
-                Aether.getLanguageManager().getComponent("messages.prefix")
-                        .append(Aether.getLanguageManager().getComponent("messages.console.datapack_copied")));
+                Aether.getInstance().getLanguageManager().getComponent("messages.prefix")
+                        .append(Aether.getInstance().getLanguageManager().getComponent("messages.console.datapack_copied")));
     }
 
     private static void saveResourceToWorldFolder(String resourcePath) throws IOException
     {
         String outputPath = Bukkit.getWorldContainer() + File.separator + "world" + File.separator + "datapacks" + File.separator + resourcePath;
-        InputStream inputStream = Utils.getResource(resourcePath);
+        InputStream inputStream = UtilKt.getResource(resourcePath);
         if (inputStream == null)
         {
             throw new IllegalArgumentException();
@@ -79,7 +79,7 @@ public class AetherWorld
         {
             if (!outputDirectory.mkdirs())
             {
-                Aether.logError("Output directories for resource can't be created!");
+                UtilKt.logError("Output directories for resource can't be created!");
                 return;
             }
         }

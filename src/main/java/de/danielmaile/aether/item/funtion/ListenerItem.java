@@ -1,7 +1,7 @@
 package de.danielmaile.aether.item.funtion;
 
 import de.danielmaile.aether.item.ItemType;
-import de.danielmaile.aether.util.NBTEditor;
+import de.danielmaile.aether.util.UtilKt;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,7 +45,8 @@ public class ListenerItem implements Listener
     public void onSaddleEquip(InventoryClickEvent event)
     {
         if(!(event.getInventory() instanceof HorseInventory)) return;
-        if(!NBTEditor.hasKey(event.getCurrentItem(), ItemType.AETHER_ITEM_TAG_KEY)) return;
+        if(event.getCurrentItem() == null) return;
+        if(!UtilKt.hasKey(event.getCurrentItem(), ItemType.AETHER_ITEM_TAG_KEY)) return;
         event.setCancelled(true);
     }
 }

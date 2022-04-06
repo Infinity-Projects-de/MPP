@@ -35,7 +35,7 @@ public class RideableLlama
                 boolean jump = packetContainer.getBooleans().read(0);
                 if(jump && llama.isOnGround())
                 {
-                    llama.setVelocity(llama.getVelocity().add(new Vector(0.0, Aether.getConfigManager().getLlamaJumpHeight(), 0.0)));
+                    llama.setVelocity(llama.getVelocity().add(new Vector(0.0, Aether.getInstance().getConfigManager().getLlamaJumpHeight(), 0.0)));
                 }
 
                 //Calculate velocity
@@ -49,7 +49,7 @@ public class RideableLlama
                     horizontal.rotateAroundY(Math.toRadians(-player.getLocation().getYaw() + 90f));
 
                     //Scale vector
-                    horizontal.normalize().multiply(Aether.getConfigManager().getLlamaSpeed());
+                    horizontal.normalize().multiply(Aether.getInstance().getConfigManager().getLlamaSpeed());
                 }
 
                 Vector vertical = llama.getVelocity();

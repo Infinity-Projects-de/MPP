@@ -51,9 +51,9 @@ public class ListenerDungeon implements Listener
             event.getPlayer().teleport(new Location(AetherWorld.getWorld(), targetLocation.getX(), targetLocation.getY(), targetLocation.getZ()));
 
             //Send dungeon message
-            Component mainTitle = Aether.getLanguageManager().getComponent("dungeons.entry.title");
+            Component mainTitle = Aether.getInstance().getLanguageManager().getComponent("dungeons.entry.title");
             TagResolver tagResolver = TagResolver.resolver(Placeholder.parsed("size", Integer.toString(targetDungeon.getSize())));
-            Component subTitle = Aether.getLanguageManager().getComponent("dungeons.entry.subtitle", tagResolver);
+            Component subTitle = Aether.getInstance().getLanguageManager().getComponent("dungeons.entry.subtitle", tagResolver);
             Title title = Title.title(mainTitle, subTitle);
             event.getPlayer().showTitle(title);
             return;
@@ -67,8 +67,8 @@ public class ListenerDungeon implements Listener
         clickedLocations.add(clickLocation);
         monumentClickMap.put(event.getPlayer(), clickedLocations);
         event.getPlayer().sendMessage(
-                Aether.getLanguageManager().getComponent("messages.prefix")
-                        .append(Aether.getLanguageManager().getComponent("messages.chat.click_to_dungeon_teleport")));
+                Aether.getInstance().getLanguageManager().getComponent("messages.prefix")
+                        .append(Aether.getInstance().getLanguageManager().getComponent("messages.chat.click_to_dungeon_teleport")));
     }
 
     @EventHandler

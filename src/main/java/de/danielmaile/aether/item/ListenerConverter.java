@@ -14,14 +14,14 @@ public class ListenerConverter implements Listener
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent event)
     {
-        if (!Aether.getConfigManager().isItemConverterEnabled()) return;
+        if (!Aether.getInstance().getConfigManager().isItemConverterEnabled()) return;
         checkAndReplace(event.getInventory());
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event)
     {
-        if (!Aether.getConfigManager().isItemConverterEnabled()) return;
+        if (!Aether.getInstance().getConfigManager().isItemConverterEnabled()) return;
         checkAndReplace(event.getPlayer().getInventory());
         checkAndReplace(event.getPlayer().getEnderChest());
     }

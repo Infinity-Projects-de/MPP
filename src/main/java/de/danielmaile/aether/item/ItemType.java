@@ -3,7 +3,7 @@ package de.danielmaile.aether.item;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import de.danielmaile.aether.Aether;
-import de.danielmaile.aether.util.NBTEditor;
+import de.danielmaile.aether.util.UtilKt;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
@@ -93,8 +93,8 @@ public enum ItemType
 
     ItemType(int modelID, Material itemMaterial, Multimap<Attribute, AttributeModifier> attributeModifiers, Material placeMaterial)
     {
-        this.name = Aether.getLanguageManager().getComponent("items." + name() + ".name");
-        this.description = Aether.getLanguageManager().getComponentList("items." + name() + ".description");
+        this.name = Aether.getInstance().getLanguageManager().getComponent("items." + name() + ".name");
+        this.description = Aether.getInstance().getLanguageManager().getComponentList("items." + name() + ".description");
         this.modelID = modelID;
         this.itemMaterial = itemMaterial;
         this.attributeModifiers = attributeModifiers;
@@ -149,14 +149,14 @@ public enum ItemType
         itemStack.setAmount(amount);
 
         //Set nbt tag
-        return NBTEditor.setString(itemStack, AETHER_ITEM_TAG_KEY, name());
+        return UtilKt.setNBTString(itemStack, AETHER_ITEM_TAG_KEY, name());
     }
 
     public static ItemType fromTag(ItemStack itemStack)
     {
         try
         {
-            return ItemType.valueOf(NBTEditor.getString(itemStack, ItemType.AETHER_ITEM_TAG_KEY));
+            return ItemType.valueOf(UtilKt.getNBTString(itemStack, ItemType.AETHER_ITEM_TAG_KEY));
         }
         catch (NullPointerException | IllegalArgumentException exception)
         {

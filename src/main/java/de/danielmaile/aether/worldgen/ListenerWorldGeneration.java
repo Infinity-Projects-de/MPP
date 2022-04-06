@@ -24,12 +24,12 @@ public class ListenerWorldGeneration implements Listener
         Chunk chunk = event.getChunk();
 
         Random random = new Random();
-        if (random.nextFloat() < Aether.getConfigManager().getTreeProbability())
+        if (random.nextFloat() < Aether.getInstance().getConfigManager().getTreeProbability())
         {
             generateTrees(chunk, random);
         }
 
-        if (random.nextFloat() < Aether.getConfigManager().getDungeonProbability())
+        if (random.nextFloat() < Aether.getInstance().getConfigManager().getDungeonProbability())
         {
             generateDungeons(chunk, random);
         }
@@ -56,6 +56,6 @@ public class ListenerWorldGeneration implements Listener
         Location location = new Location(chunk.getWorld(), x, chunk.getWorld().getMinHeight() + 1, z);
         DungeonGenerator generator = new DungeonGenerator();
         generator.generateDungeon(location, random,
-                Aether.getConfigManager().getDungeonEndPartChance(), Aether.getConfigManager().getDungeonPartCap());
+                Aether.getInstance().getConfigManager().getDungeonEndPartChance(), Aether.getInstance().getConfigManager().getDungeonPartCap());
     }
 }

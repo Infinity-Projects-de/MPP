@@ -4,7 +4,7 @@ import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import de.danielmaile.aether.Aether;
 import de.danielmaile.aether.item.ArmorSet;
 import de.danielmaile.aether.item.ItemType;
-import de.danielmaile.aether.util.Utils;
+import de.danielmaile.aether.util.UtilKt;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -74,16 +74,16 @@ public class ListenerArmor implements Listener
 
         //Player gets permanent slow fall when wearing valkyrie boots
         if (oldItemType == ItemType.VALKYRE_BOOTS) { player.removePotionEffect(PotionEffectType.SLOW_FALLING); }
-        if (newItemType == ItemType.VALKYRE_BOOTS) { Utils.addPermEffect(player, PotionEffectType.SLOW_FALLING); }
+        if (newItemType == ItemType.VALKYRE_BOOTS) { UtilKt.addPermEffect(player, PotionEffectType.SLOW_FALLING); }
 
         //Player gets +2 health when wearing valkyrie ring
-        if (oldItemType == ItemType.VALKYRE_RING) { Utils.setMaxHealth(player, 20d); }
-        if (newItemType == ItemType.VALKYRE_RING) { Utils.setMaxHealth(player, 24d); }
+        if (oldItemType == ItemType.VALKYRE_RING) { UtilKt.setMaximumHealth(player, 20d); }
+        if (newItemType == ItemType.VALKYRE_RING) { UtilKt.setMaximumHealth(player, 24d); }
 
         //Player gets permanent regeneration fall when wearing full valkyrie armor set
         if (ArmorSet.getEquippedSet(player) == ArmorSet.VALKYRIE)
         {
-            Utils.addPermEffect(player, PotionEffectType.REGENERATION);
+            UtilKt.addPermEffect(player, PotionEffectType.REGENERATION);
         }
         else if (ArmorSet.VALKYRIE.contains(oldItemType))
         {
@@ -96,7 +96,7 @@ public class ListenerArmor implements Listener
     public void onSwapItem(PlayerSwapHandItemsEvent event)
     {
         Player player = event.getPlayer();
-        if (Utils.isGrounded(player)) return;
+        if (UtilKt.isGrounded(player)) return;
         if (boosted.contains(player)) return;
         if (ArmorSet.getEquippedSet(player) != ArmorSet.VALKYRIE) return;
         event.setCancelled(true);
@@ -111,6 +111,6 @@ public class ListenerArmor implements Listener
         if (!(event.getEntity() instanceof Player player)) return;
         if (!event.isGliding()) return;
         if (ArmorSet.getEquippedSet(player) != ArmorSet.VALKYRIE) return;
-        player.sendActionBar(Aether.getLanguageManager().getComponent("items.VALKYRE_WINGS.boost_info"));
+        player.sendActionBar(Aether.getInstance().getLanguageManager().getComponent("items.VALKYRE_WINGS.boost_info"));
     }
 }

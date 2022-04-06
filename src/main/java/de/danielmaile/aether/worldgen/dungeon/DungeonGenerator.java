@@ -1,6 +1,7 @@
 package de.danielmaile.aether.worldgen.dungeon;
 
 import de.danielmaile.aether.Aether;
+import de.danielmaile.aether.util.UtilKt;
 import de.danielmaile.aether.worldgen.AetherWorld;
 import de.danielmaile.aether.worldgen.Prefab;
 import de.danielmaile.aether.worldgen.PrefabType;
@@ -18,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class DungeonGenerator
 {
@@ -70,7 +70,7 @@ public class DungeonGenerator
             generateChests(dungeon, random);
 
             //Print log to console
-            Aether.logInfo("Generated new dungeon with " + dungeon.getSize() + " inner parts at monument location: " + dungeon.getMonumentLocation() + ")");
+            UtilKt.logInfo("Generated new dungeon with " + dungeon.getSize() + " inner parts at monument location: " + dungeon.getMonumentLocation() + ")");
         });
     }
 
@@ -79,7 +79,7 @@ public class DungeonGenerator
         for (OuterPart outerPart : dungeon.getOuterParts())
         {
             World world = outerPart.getWorldLocation().getWorld();
-            int chestChecks = random.nextInt(Aether.getConfigManager().getMinDungeonChestChecks(), Aether.getConfigManager().getMaxDungeonChestChecks() + 1);
+            int chestChecks = random.nextInt(Aether.getInstance().getConfigManager().getMinDungeonChestChecks(), Aether.getInstance().getConfigManager().getMaxDungeonChestChecks() + 1);
             for (int i = 0; i < chestChecks; i++)
             {
                 Location chestLocation = outerPart.getWorldLocation().clone().add(random.nextInt(80), 0, random.nextInt(80));
@@ -180,8 +180,7 @@ public class DungeonGenerator
 
         final Connection con = connection;
         List<OuterPartType> validTypes = Arrays.stream(OuterPartType.values())
-                .filter(type -> con.isValid(type.getConnection()))
-                .collect(Collectors.toList());
+                .filter(type -> con.isValid(type.getConnection())).toList();
 
         return new OuterPart(validTypes.get(random.nextInt(validTypes.size())), relativePosition,
                 origin.clone().add(relativePosition.getX() * 16 * 5, 0, relativePosition.getZ() * 16 * 5), random, endPartChance);

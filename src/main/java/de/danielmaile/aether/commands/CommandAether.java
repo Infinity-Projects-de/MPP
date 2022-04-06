@@ -31,7 +31,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args)
     {
-        LanguageManager languageManager = Aether.getLanguageManager();
+        LanguageManager languageManager = Aether.getInstance().getLanguageManager();
         Component cmdPrefix = languageManager.getComponent("messages.prefix");
 
         if (!(sender instanceof Player player))
@@ -74,7 +74,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
                     }
                 }
                 case "reload" -> {
-                    Aether.getConfigManager().load();
+                    Aether.getInstance().getConfigManager().load();
                     player.sendMessage(cmdPrefix.append(languageManager.getComponent("messages.cmd.info.reloaded_config")));
                 }
                 case "teleport" -> {
@@ -114,7 +114,7 @@ public class CommandAether implements CommandExecutor, TabExecutor
 
     private void sendHelp(Component cmdPrefix, Player player)
     {
-        for (Component component : Aether.getLanguageManager().getComponentList("messages.cmd.info.help_text"))
+        for (Component component : Aether.getInstance().getLanguageManager().getComponentList("messages.cmd.info.help_text"))
         {
             player.sendMessage(cmdPrefix.append(component));
         }

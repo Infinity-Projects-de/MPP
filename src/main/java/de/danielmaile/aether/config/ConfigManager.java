@@ -1,6 +1,7 @@
 package de.danielmaile.aether.config;
 
 import de.danielmaile.aether.Aether;
+import de.danielmaile.aether.util.UtilKt;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -70,7 +71,7 @@ public class ConfigManager
                 + "locales" + File.separator + Aether.getInstance().getConfig().getString("language_file") + ".yml");
         if (!file.exists())
         {
-            Aether.logError("Language file " + Aether.getInstance().getConfig().getString("language_file") + ".yml was not found!");
+            UtilKt.logError("Language file " + Aether.getInstance().getConfig().getString("language_file") + ".yml was not found!");
             file = new File(Aether.getInstance().getDataFolder().getAbsolutePath() + File.separator
                     + "locales" + File.separator + "de.yml");
         }
