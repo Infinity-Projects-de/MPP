@@ -5,8 +5,9 @@ import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats
 import de.danielmaile.aether.util.getResource
 import de.danielmaile.aether.util.logError
 
-enum class PrefabType(private val fileName: String) {
+enum class PrefabType(private val fileName: String?) {
 
+    NONE(null),
     TREE1("tree_var1.schem"),
     TREE2("tree_var2.schem"),
     TREE3("tree_var3.schem"),
@@ -36,6 +37,7 @@ enum class PrefabType(private val fileName: String) {
         @JvmStatic
         fun loadPrefabs() {
             for (type in values()) {
+                if(type.fileName == null) continue
                 try {
                     val inputStream = getResource("prefabs/" + type.fileName) ?: throw java.lang.NullPointerException()
                     val format = ClipboardFormats.findByAlias("schem") ?: throw java.lang.NullPointerException()

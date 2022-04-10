@@ -1,6 +1,8 @@
 package de.danielmaile.aether.util
 
 import de.danielmaile.aether.inst
+import de.danielmaile.aether.item.ArmorSet
+import de.danielmaile.aether.item.ItemType
 import org.bukkit.FluidCollisionMode
 import org.bukkit.Material
 import org.bukkit.attribute.Attribute
@@ -26,6 +28,7 @@ fun getResource(fileName: String): InputStream? {
     return inst().javaClass.classLoader.getResourceAsStream(fileName)
 }
 
+@Suppress("BooleanMethodIsAlwaysInverted")
 fun ItemStack.hasKey(key: String): Boolean {
     return CraftItemStack.asNMSCopy(this).orCreateTag.contains(key)
 }
@@ -65,4 +68,15 @@ fun Player.getNearestObjectInSight(range: Int): Any? {
     val entityRange = if (entity != null) location.distance(entity.location) else Double.MAX_VALUE
 
     return if (entity == null && block == null) null else (if (blockRange < entityRange) block else entity)
+}
+
+fun Player.getEquippedArmorSet(): ArmorSet? {
+    val headType = ItemType.fromTag(this.equipment.helmet)
+    val chestType = ItemType.fromTag(this.equipment.chestplate)
+    val legsType = ItemType.fromTag(this.equipment.leggings)
+    val feetType = ItemType.fromTag(this.equipment.boots)
+
+    return ArmorSet.values().firstOrNull {
+        headType == it.head && chestType == it.chest && legsType == it.legs && feetType == it.feet
+    }
 }

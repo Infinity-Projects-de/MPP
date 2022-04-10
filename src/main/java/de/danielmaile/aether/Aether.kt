@@ -22,6 +22,7 @@ import de.danielmaile.aether.portal.ListenerPortal
 import de.danielmaile.aether.util.logError
 import de.danielmaile.aether.worldgen.AetherWorld
 import de.danielmaile.aether.worldgen.ListenerWorldGeneration
+import de.danielmaile.aether.worldgen.ObjectManager
 import de.danielmaile.aether.worldgen.PrefabType
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
@@ -42,8 +43,15 @@ class Aether : JavaPlugin() {
     lateinit var particleManager: ParticleManager
         private set
 
+    lateinit var aetherWorld: AetherWorld
+        private set
+
     fun getLanguageManager(): LanguageManager {
         return configManager.languageManager
+    }
+
+    fun getObjectManager(): ObjectManager {
+        return aetherWorld.objectManager
     }
 
     override fun onEnable() {
@@ -83,17 +91,17 @@ class Aether : JavaPlugin() {
         if (!deFile.exists()) {
             saveResource("locales/de.yml", false)
         }
-       reloadConfig()
+        reloadConfig()
 
         //Recipes
         registerRecipes()
 
         //Protocol lib
         val protocolManager = ProtocolLibrary.getProtocolManager()
-        RideableLlama().init(protocolManager)
+        RideableLlama(protocolManager)
 
         //Init world and prefabs
-        AetherWorld.init()
+        aetherWorld = AetherWorld()
         PrefabType.loadPrefabs()
 
         //Particle manager
@@ -101,7 +109,7 @@ class Aether : JavaPlugin() {
     }
 
     override fun onDisable() {
-        AetherWorld.getObjectManager().save()
+        getObjectManager().save()
     }
 
     private fun registerRecipes() {

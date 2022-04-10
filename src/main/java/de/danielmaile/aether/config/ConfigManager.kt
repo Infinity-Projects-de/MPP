@@ -13,7 +13,7 @@ class ConfigManager {
     val dungeonPartCap: Int
     val dungeonProbability: Float
     val treeProbability: Float
-    val llamaJumpHeight: Float
+    val llamaJumpHeight: Double
     val llamaSpeed: Float
     val minDungeonChestChecks: Int
     val maxDungeonChestChecks: Int
@@ -37,7 +37,7 @@ class ConfigManager {
         dungeonProbability = inst().config.getDouble("world_generation.dungeons.probability").toFloat()
         dungeonPartCap = inst().config.getInt("world_generation.dungeons.part_cap")
         treeProbability = inst().config.getDouble("world_generation.trees.probability").toFloat()
-        llamaJumpHeight = inst().config.getDouble("entities.llama.jump_height").toFloat()
+        llamaJumpHeight = inst().config.getDouble("entities.llama.jump_height")
         llamaSpeed = inst().config.getDouble("entities.llama.speed").toFloat()
         minDungeonChestChecks = inst().config.getInt("world_generation.dungeons.chests.min_checks")
         maxDungeonChestChecks = inst().config.getInt("world_generation.dungeons.chests.max_checks")
