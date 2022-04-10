@@ -68,8 +68,20 @@ class DungeonGenerator(private val random: Random) {
                 //Check for air at chest location and floor below
                 if (chest.type != Material.AIR) continue
                 if (chest.getRelative(BlockFace.DOWN).type == Material.AIR) continue
+
+                //Check for block to place against
+                val facing: BlockFace = if(chest.getRelative(BlockFace.EAST).type != Material.AIR) {
+                    BlockFace.WEST
+                } else if(chest.getRelative(BlockFace.WEST).type != Material.AIR) {
+                    BlockFace.EAST
+                } else if(chest.getRelative(BlockFace.SOUTH).type != Material.AIR) {
+                    BlockFace.NORTH
+                } else if(chest.getRelative(BlockFace.NORTH).type != Material.AIR) {
+                    BlockFace.SOUTH
+                } else continue
+
                 Bukkit.getScheduler().runTask(inst(), Runnable {
-                    DungeonChest(random).instantiate(chestLocation)
+                    DungeonChest(random).instantiate(chestLocation, facing)
                 })
             }
         }

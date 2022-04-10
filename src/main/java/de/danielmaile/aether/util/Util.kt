@@ -80,3 +80,9 @@ fun Player.getEquippedArmorSet(): ArmorSet? {
         headType == it.head && chestType == it.chest && legsType == it.legs && feetType == it.feet
     }
 }
+
+//Returns the block face of the direction the player is facing (only yaw)
+fun Player.getDirection(): BlockFace {
+    val yaw = this.location.yaw
+    return if (yaw > 135 || yaw <= -135) BlockFace.NORTH else if (yaw > -135 && yaw <= -45) BlockFace.EAST else if (yaw > -45 && yaw <= 45) BlockFace.SOUTH else BlockFace.WEST
+}

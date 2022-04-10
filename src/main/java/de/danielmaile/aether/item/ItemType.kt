@@ -19,7 +19,7 @@ const val AETHER_ITEM_TAG_KEY = "aether_item"
 
 enum class ItemType(
     private val modelID: Int,
-    private val material: Material,
+    val material: Material,
     private val attributeModifiers: Multimap<Attribute, AttributeModifier>?,
     val placeMaterial: Material?
 ) {

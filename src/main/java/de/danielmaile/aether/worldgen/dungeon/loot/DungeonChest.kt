@@ -5,19 +5,27 @@ import de.danielmaile.aether.worldgen.dungeon.loot.LootTable.Companion.getTotalW
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
+import org.bukkit.block.BlockFace
 import org.bukkit.block.Chest
+import org.bukkit.block.data.Directional
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
+import java.lang.Integer.min
 import java.util.Random
 
 class DungeonChest(private val random: Random) {
 
-    fun instantiate(location: Location) {
+    fun instantiate(location: Location, facing: BlockFace) {
         val world = location.world ?: return
         val block = world.getBlockAt(location)
         block.type = Material.CHEST
-        val chest = block.state as Chest
 
+        //Set facing
+        val data = block.blockData as Directional
+        data.facing = facing
+        block.blockData = data
+
+        val chest = block.state as Chest
         Bukkit.getScheduler().runTaskAsynchronously(
             inst(),
             Runnable { addItems(random, chest.blockInventory, generateItemStacks()) })
@@ -52,13 +60,19 @@ class DungeonChest(private val random: Random) {
 
         for (i in 0 until stackAmount) {
             val loot = table.getRandomLoot(random)
-            val amount = random.nextInt(loot.minAmount, loot.maxAmount + 1)
-            if (amount < 1) continue
+            var amountLeft = random.nextInt(loot.minAmount, loot.maxAmount + 1)
+            if (amountLeft < 1) continue
 
-            if (loot.isCustomItem()) {
-                stacks.add(loot.itemType!!.getItemStack(amount))
-            } else {
-                stacks.add(ItemStack(loot.material!!, amount))
+            while(amountLeft > 0) {
+                val addedAmount: Int
+                if (loot.isCustomItem()) {
+                    addedAmount = min(amountLeft, loot.itemType!!.material.maxStackSize)
+                    stacks.add(loot.itemType.getItemStack(addedAmount))
+                } else {
+                    addedAmount = min(amountLeft, loot.material!!.maxStackSize)
+                    stacks.add(ItemStack(loot.material, addedAmount))
+                }
+                amountLeft -= addedAmount
             }
         }
         return stacks

@@ -3,6 +3,7 @@ package de.danielmaile.aether.commands
 import de.danielmaile.aether.config.LanguageManager
 import de.danielmaile.aether.inst
 import de.danielmaile.aether.item.ItemType
+import de.danielmaile.aether.util.getDirection
 import de.danielmaile.aether.worldgen.dungeon.Dungeon
 import de.danielmaile.aether.worldgen.dungeon.loot.DungeonChest
 import net.kyori.adventure.text.Component
@@ -33,7 +34,8 @@ class CommandAether : CommandExecutor, TabCompleter {
             1 -> {
                 when (args[0].lowercase()) {
                     "chest" -> {
-                        DungeonChest(Random()).instantiate(sender.location)
+                        val facing = sender.getDirection()
+                        DungeonChest(Random()).instantiate(sender.location.block.getRelative(facing).location, sender.getDirection().oppositeFace)
                     }
                     "locate" -> {
                         locateCMD(sender, languageManager, cmdPrefix)
