@@ -4,8 +4,8 @@ import de.danielmaile.aether.config.LanguageManager
 import de.danielmaile.aether.inst
 import de.danielmaile.aether.item.ItemType
 import de.danielmaile.aether.util.getDirection
-import de.danielmaile.aether.worldgen.dungeon.Dungeon
-import de.danielmaile.aether.worldgen.dungeon.loot.DungeonChest
+import de.danielmaile.aether.world.dungeon.Dungeon
+import de.danielmaile.aether.world.dungeon.loot.DungeonChest
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver

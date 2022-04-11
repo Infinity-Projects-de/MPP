@@ -1,6 +1,6 @@
-package de.danielmaile.aether.worldgen.dungeon
+package de.danielmaile.aether.world.dungeon
 
-import de.danielmaile.aether.worldgen.PrefabType
+import de.danielmaile.aether.world.PrefabType
 
 enum class OuterPartType(val type: PartType, val prefabType: PrefabType?) {
     S(PartType.S, null),

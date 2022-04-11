@@ -1,10 +1,10 @@
-package de.danielmaile.aether.worldgen.dungeon
+package de.danielmaile.aether.world.dungeon
 
 import de.danielmaile.aether.inst
 import de.danielmaile.aether.util.logInfo
-import de.danielmaile.aether.worldgen.Prefab
-import de.danielmaile.aether.worldgen.PrefabType
-import de.danielmaile.aether.worldgen.dungeon.loot.DungeonChest
+import de.danielmaile.aether.world.Prefab
+import de.danielmaile.aether.world.PrefabType
+import de.danielmaile.aether.world.dungeon.loot.DungeonChest
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material

@@ -2,7 +2,7 @@ package de.danielmaile.aether.item
 
 import org.bukkit.Material
 
-enum class BlockType(private val blockMaterial: Material, val itemDrop: ItemType) {
+enum class BlockType(val blockMaterial: Material, val itemDrop: ItemType) {
     AETHER_OAK_LOG(Material.OAK_LOG, ItemType.AETHER_OAK_LOG),
     AETHER_SPRUCE_LOG(Material.SPRUCE_LOG, ItemType.AETHER_SPRUCE_LOG),
     AETHER_BIRCH_LOG(Material.BIRCH_LOG, ItemType.AETHER_BIRCH_LOG),
@@ -17,7 +17,14 @@ enum class BlockType(private val blockMaterial: Material, val itemDrop: ItemType
     AETHER_DARK_OAK_PLANKS(Material.DARK_OAK_PLANKS, ItemType.AETHER_DARK_OAK_PLANKS),
     ZANITE_ORE(Material.DIAMOND_ORE, ItemType.ZANITE_STONE),
     GRAVITITE_ORE(Material.ANCIENT_DEBRIS, ItemType.GRAVITITE_ORE),
-    AETHER_STONE(Material.STONE, ItemType.AETHER_STONE);
+    AETHER_STONE(Material.STONE, ItemType.AETHER_STONE),
+    CLOUD_HEAL(Material.PINK_STAINED_GLASS, ItemType.CLOUD_HEAL),
+    CLOUD_SLOW_FALLING(Material.WHITE_STAINED_GLASS, ItemType.CLOUD_SLOW_FALLING),
+    CLOUD_SPEED(Material.YELLOW_STAINED_GLASS, ItemType.CLOUD_SPEED),
+    CLOUD_JUMP(Material.LIME_STAINED_GLASS, ItemType.CLOUD_JUMP),
+    CLOUD_HEAL2(Material.RED_STAINED_GLASS, ItemType.CLOUD_HEAL2),
+    CLOUD_SPEED2(Material.ORANGE_STAINED_GLASS, ItemType.CLOUD_SPEED2),
+    CLOUD_JUMP2(Material.GREEN_STAINED_GLASS, ItemType.CLOUD_JUMP2);
 
     companion object {
 

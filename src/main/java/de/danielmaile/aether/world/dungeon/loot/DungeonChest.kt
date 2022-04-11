@@ -1,7 +1,7 @@
-package de.danielmaile.aether.worldgen.dungeon.loot
+package de.danielmaile.aether.world.dungeon.loot
 
 import de.danielmaile.aether.inst
-import de.danielmaile.aether.worldgen.dungeon.loot.LootTable.Companion.getTotalWeight
+import de.danielmaile.aether.world.dungeon.loot.LootTable.Companion.getTotalWeight
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material

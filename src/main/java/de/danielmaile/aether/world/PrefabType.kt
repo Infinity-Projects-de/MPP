@@ -1,4 +1,4 @@
-package de.danielmaile.aether.worldgen
+package de.danielmaile.aether.world
 
 import com.sk89q.worldedit.extent.clipboard.Clipboard
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats

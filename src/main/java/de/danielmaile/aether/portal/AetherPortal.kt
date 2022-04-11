@@ -1,7 +1,7 @@
 package de.danielmaile.aether.portal
 
-import de.danielmaile.aether.worldgen.Prefab
-import de.danielmaile.aether.worldgen.PrefabType
+import de.danielmaile.aether.world.Prefab
+import de.danielmaile.aether.world.PrefabType
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Block

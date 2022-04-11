@@ -1,4 +1,4 @@
-package de.danielmaile.aether.worldgen
+package de.danielmaile.aether.world
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -6,7 +6,7 @@ import com.google.gson.stream.JsonReader
 import de.danielmaile.aether.inst
 import de.danielmaile.aether.util.serializer.LocationSerializer
 import de.danielmaile.aether.util.serializer.VectorSerializer
-import de.danielmaile.aether.worldgen.dungeon.Dungeon
+import de.danielmaile.aether.world.dungeon.Dungeon
 import org.bukkit.Location
 import org.bukkit.util.Vector
 import java.io.File

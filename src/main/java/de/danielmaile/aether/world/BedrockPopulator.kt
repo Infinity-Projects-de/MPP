@@ -1,4 +1,4 @@
-package de.danielmaile.aether.worldgen
+package de.danielmaile.aether.world
 
 import org.bukkit.Material
 import org.bukkit.generator.BlockPopulator

@@ -1,4 +1,4 @@
-package de.danielmaile.aether.worldgen.dungeon
+package de.danielmaile.aether.world.dungeon
 
 val END_PART_TYPES = listOf(PartType.S, PartType.N, PartType.E, PartType.W)
 

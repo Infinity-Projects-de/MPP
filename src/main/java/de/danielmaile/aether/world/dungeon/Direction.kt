@@ -1,4 +1,4 @@
-package de.danielmaile.aether.worldgen.dungeon
+package de.danielmaile.aether.world.dungeon
 
 import org.bukkit.util.Vector
 

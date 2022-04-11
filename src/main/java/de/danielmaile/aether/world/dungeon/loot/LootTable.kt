@@ -1,4 +1,4 @@
-package de.danielmaile.aether.worldgen.dungeon.loot
+package de.danielmaile.aether.world.dungeon.loot
 
 import de.danielmaile.aether.item.ItemType
 import org.bukkit.Material

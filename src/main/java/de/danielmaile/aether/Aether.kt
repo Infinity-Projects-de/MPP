@@ -13,17 +13,13 @@ import de.danielmaile.aether.item.funtion.ListenerItem
 import de.danielmaile.aether.item.funtion.magicwand.ListenerMagicWand
 import de.danielmaile.aether.item.funtion.particle.ListenerParticle
 import de.danielmaile.aether.item.funtion.particle.ParticleManager
-import de.danielmaile.aether.listeners.ListenerAetherVoid
-import de.danielmaile.aether.listeners.ListenerDungeon
-import de.danielmaile.aether.listeners.ListenerWorldSave
+import de.danielmaile.aether.world.dungeon.ListenerDungeon
 import de.danielmaile.aether.mobs.ListenerAetherMobs
 import de.danielmaile.aether.mobs.RideableLlama
 import de.danielmaile.aether.portal.ListenerPortal
 import de.danielmaile.aether.util.logError
-import de.danielmaile.aether.worldgen.AetherWorld
-import de.danielmaile.aether.worldgen.ListenerWorldGeneration
-import de.danielmaile.aether.worldgen.ObjectManager
-import de.danielmaile.aether.worldgen.PrefabType
+import de.danielmaile.aether.world.*
+import de.danielmaile.aether.world.cloud.CloudEffects
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
@@ -58,7 +54,6 @@ class Aether : JavaPlugin() {
         instance = this
 
         //Register listener and commands
-        server.pluginManager.registerEvents(ListenerAetherVoid(), this)
         server.pluginManager.registerEvents(ListenerPortal(), this)
         server.pluginManager.registerEvents(ListenerBlock(), this)
         server.pluginManager.registerEvents(ListenerCrafting(), this)
@@ -69,8 +64,7 @@ class Aether : JavaPlugin() {
         server.pluginManager.registerEvents(ListenerParticle(), this)
         server.pluginManager.registerEvents(ListenerConverter(), this)
         server.pluginManager.registerEvents(ListenerMagicWand(), this)
-        server.pluginManager.registerEvents(ListenerWorldGeneration(), this)
-        server.pluginManager.registerEvents(ListenerWorldSave(), this)
+        server.pluginManager.registerEvents(ListenerAetherWorld(), this)
         Bukkit.getPluginCommand("aether")?.setExecutor(CommandAether())
 
         //Create data folder
@@ -106,6 +100,9 @@ class Aether : JavaPlugin() {
 
         //Particle manager
         particleManager = ParticleManager()
+
+        //Cloud effects
+        CloudEffects()
     }
 
     override fun onDisable() {

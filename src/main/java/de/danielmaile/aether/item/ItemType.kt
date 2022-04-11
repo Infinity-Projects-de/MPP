@@ -84,7 +84,14 @@ enum class ItemType(
     ZANITE_SHOVEL(2018, Material.DIAMOND_SHOVEL, null, null),
     ZANITE_STONE(1005, Material.DIAMOND, null, null),
     ZANITE_SWORD(2004, Material.DIAMOND_SWORD, ToolAttribute(7.0, 1.6).toAttributeMap(), null),
-    MAGIC_WAND(1008, Material.IRON_HORSE_ARMOR, null, null);
+    MAGIC_WAND(1008, Material.IRON_HORSE_ARMOR, null, null),
+    CLOUD_HEAL(4016, Material.PINK_STAINED_GLASS, null, Material.PINK_STAINED_GLASS),
+    CLOUD_SLOW_FALLING(4017, Material.WHITE_STAINED_GLASS, null, Material.WHITE_STAINED_GLASS),
+    CLOUD_SPEED(4018, Material.YELLOW_STAINED_GLASS, null, Material.YELLOW_STAINED_GLASS),
+    CLOUD_JUMP(4019, Material.LIME_STAINED_GLASS, null, Material.LIME_STAINED_GLASS),
+    CLOUD_HEAL2(4020, Material.RED_STAINED_GLASS, null, Material.RED_STAINED_GLASS),
+    CLOUD_SPEED2(4021, Material.ORANGE_STAINED_GLASS, null, Material.ORANGE_STAINED_GLASS),
+    CLOUD_JUMP2(4022, Material.GREEN_STAINED_GLASS, null, Material.GREEN_STAINED_GLASS);
 
     private val displayName = inst().getLanguageManager().getComponent("items.$name.name")
     private val description = inst().getLanguageManager().getComponentList("items.$name.description")

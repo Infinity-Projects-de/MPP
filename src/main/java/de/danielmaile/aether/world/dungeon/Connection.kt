@@ -1,4 +1,4 @@
-package de.danielmaile.aether.worldgen.dungeon
+package de.danielmaile.aether.world.dungeon
 
 data class Connection(
     val eastState: ConnectionState,

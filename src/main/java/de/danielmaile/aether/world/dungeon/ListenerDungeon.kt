@@ -1,4 +1,4 @@
-package de.danielmaile.aether.listeners
+package de.danielmaile.aether.world.dungeon
 
 import de.danielmaile.aether.Aether.Companion.instance
 import de.danielmaile.aether.inst

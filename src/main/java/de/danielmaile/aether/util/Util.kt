@@ -6,6 +6,7 @@ import de.danielmaile.aether.item.ItemType
 import org.bukkit.FluidCollisionMode
 import org.bukkit.Material
 import org.bukkit.attribute.Attribute
+import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.craftbukkit.v1_18_R2.inventory.CraftItemStack
 import org.bukkit.entity.Player
@@ -46,7 +47,11 @@ fun ItemStack.setNBTString(key: String, value: String): ItemStack {
 }
 
 fun Player.isGrounded(): Boolean {
-    return location.block.getRelative(BlockFace.DOWN).type != Material.AIR
+    return this.getBlockBelow().type != Material.AIR
+}
+
+fun Player.getBlockBelow(): Block {
+    return location.block.getRelative(BlockFace.DOWN)
 }
 
 fun Player.setMaximumHealth(value: Double) {
@@ -85,4 +90,12 @@ fun Player.getEquippedArmorSet(): ArmorSet? {
 fun Player.getDirection(): BlockFace {
     val yaw = this.location.yaw
     return if (yaw > 135 || yaw <= -135) BlockFace.NORTH else if (yaw > -135 && yaw <= -45) BlockFace.EAST else if (yaw > -45 && yaw <= 45) BlockFace.SOUTH else BlockFace.WEST
+}
+
+fun Block.isSurroundedByAirOrMaterial(allowedMaterials: Set<Material>): Boolean {
+    for (blockFace in BlockFace.values().filter { it.isCartesian }) {
+        val relativeMaterial = this.getRelative(blockFace).type
+        if (relativeMaterial != Material.AIR && !allowedMaterials.contains(relativeMaterial)) return false
+    }
+    return true
 }

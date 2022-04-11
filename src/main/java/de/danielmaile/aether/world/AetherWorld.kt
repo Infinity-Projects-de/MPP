@@ -1,4 +1,4 @@
-package de.danielmaile.aether.worldgen
+package de.danielmaile.aether.world
 
 import de.danielmaile.aether.Aether.Companion.instance
 import de.danielmaile.aether.util.getResource

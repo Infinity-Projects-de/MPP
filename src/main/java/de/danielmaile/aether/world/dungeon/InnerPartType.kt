@@ -1,6 +1,6 @@
-package de.danielmaile.aether.worldgen.dungeon
+package de.danielmaile.aether.world.dungeon
 
-import de.danielmaile.aether.worldgen.PrefabType
+import de.danielmaile.aether.world.PrefabType
 
 enum class InnerPartType(val prefabType: PrefabType, val type: PartType) {
 

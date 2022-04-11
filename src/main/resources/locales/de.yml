@@ -230,3 +230,24 @@ items:
       LLAMA_SPELL: "<white>Lamazauber"
       YEET_SPELL: "<aqua>YEET-Zauber"
       SOUND_BEAM: "<red>Soundstrahl"
+  CLOUD_HEAL:
+    name: "<light_purple>Wolke der Heilung"
+    description: ~
+  CLOUD_SLOW_FALLING:
+    name: "<white>Wolke des langsamen Fallens"
+    description: ~
+  CLOUD_SPEED:
+    name: "<yellow>Wolke der Geschwindigkeit"
+    description: ~
+  CLOUD_JUMP:
+    name: "<green>Wolke der Sprungkraft"
+    description: ~
+  CLOUD_HEAL2:
+    name: "<red>Wolke der starken Heilung"
+    description: ~
+  CLOUD_SPEED2:
+    name: "<orange>Wolke der starken Geschwindigkeit"
+    description: ~
+  CLOUD_JUMP2:
+    name: "<dark_green>Wolke der starken Sprungkraft"
+    description: ~
