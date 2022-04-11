@@ -1,26 +1,28 @@
 package de.danielmaile.aether.world.dungeon
 
+import org.bukkit.block.BlockFace
+
 val END_PART_TYPES = listOf(PartType.S, PartType.N, PartType.E, PartType.W)
 
 enum class PartType(val connection: Connection) {
     CLOSED(Connection.fromDirections()),
 
-    S(Connection.fromDirections(Direction.SOUTH)),
-    N(Connection.fromDirections(Direction.NORTH)),
-    W(Connection.fromDirections(Direction.WEST)),
-    E(Connection.fromDirections(Direction.EAST)),
+    S(Connection.fromDirections(BlockFace.SOUTH)),
+    N(Connection.fromDirections(BlockFace.NORTH)),
+    W(Connection.fromDirections(BlockFace.WEST)),
+    E(Connection.fromDirections(BlockFace.EAST)),
 
-    SN(Connection.fromDirections(Direction.SOUTH, Direction.NORTH)),
-    WS(Connection.fromDirections(Direction.WEST, Direction.SOUTH)),
-    ES(Connection.fromDirections(Direction.EAST, Direction.SOUTH)),
-    WN(Connection.fromDirections(Direction.WEST, Direction.NORTH)),
-    EN(Connection.fromDirections(Direction.EAST, Direction.NORTH)),
-    EW(Connection.fromDirections(Direction.EAST, Direction.WEST)),
+    SN(Connection.fromDirections(BlockFace.SOUTH, BlockFace.NORTH)),
+    WS(Connection.fromDirections(BlockFace.WEST, BlockFace.SOUTH)),
+    ES(Connection.fromDirections(BlockFace.EAST, BlockFace.SOUTH)),
+    WN(Connection.fromDirections(BlockFace.WEST, BlockFace.NORTH)),
+    EN(Connection.fromDirections(BlockFace.EAST, BlockFace.NORTH)),
+    EW(Connection.fromDirections(BlockFace.EAST, BlockFace.WEST)),
 
-    EWS(Connection.fromDirections(Direction.EAST, Direction.WEST, Direction.SOUTH)),
-    WSN(Connection.fromDirections(Direction.WEST, Direction.SOUTH, Direction.NORTH)),
-    ESN(Connection.fromDirections(Direction.EAST, Direction.SOUTH, Direction.NORTH)),
-    EWN(Connection.fromDirections(Direction.EAST, Direction.WEST, Direction.NORTH)),
+    EWS(Connection.fromDirections(BlockFace.EAST, BlockFace.WEST, BlockFace.SOUTH)),
+    WSN(Connection.fromDirections(BlockFace.WEST, BlockFace.SOUTH, BlockFace.NORTH)),
+    ESN(Connection.fromDirections(BlockFace.EAST, BlockFace.SOUTH, BlockFace.NORTH)),
+    EWN(Connection.fromDirections(BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH)),
 
-    EWSN(Connection.fromDirections(Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH));
+    EWSN(Connection.fromDirections(BlockFace.EAST, BlockFace.WEST, BlockFace.SOUTH, BlockFace.NORTH));
 }

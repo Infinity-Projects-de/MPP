@@ -1,5 +1,7 @@
 package de.danielmaile.aether.world.dungeon
 
+import org.bukkit.block.BlockFace
+
 data class Connection(
     val eastState: ConnectionState,
     val westState: ConnectionState,
@@ -13,12 +15,13 @@ data class Connection(
         DONT_CARE //Don't care if it's connected or not
     }
 
-    fun getConnectionState(direction: Direction): ConnectionState {
-        return when (direction) {
-            Direction.EAST -> eastState
-            Direction.WEST -> westState
-            Direction.SOUTH -> southState
-            Direction.NORTH -> northState
+    fun getConnectionState(blockFace: BlockFace): ConnectionState {
+        return when (blockFace) {
+            BlockFace.EAST -> eastState
+            BlockFace.WEST -> westState
+            BlockFace.SOUTH -> southState
+            BlockFace.NORTH -> northState
+            else -> throw IllegalArgumentException()
         }
     }
 
@@ -43,24 +46,24 @@ data class Connection(
         return true
     }
 
-    fun getConnectDirections(): ArrayList<Direction> {
-        val connectDirections = ArrayList<Direction>()
-        if (eastState == ConnectionState.CONNECTED) connectDirections.add(Direction.EAST)
-        if (westState == ConnectionState.CONNECTED) connectDirections.add(Direction.WEST)
-        if (southState == ConnectionState.CONNECTED) connectDirections.add(Direction.SOUTH)
-        if (northState == ConnectionState.CONNECTED) connectDirections.add(Direction.NORTH)
+    fun getConnectDirections(): ArrayList<BlockFace> {
+        val connectDirections = ArrayList<BlockFace>()
+        if (eastState == ConnectionState.CONNECTED) connectDirections.add(BlockFace.EAST)
+        if (westState == ConnectionState.CONNECTED) connectDirections.add(BlockFace.WEST)
+        if (southState == ConnectionState.CONNECTED) connectDirections.add(BlockFace.SOUTH)
+        if (northState == ConnectionState.CONNECTED) connectDirections.add(BlockFace.NORTH)
         return connectDirections
     }
 
     companion object {
 
         @JvmStatic
-        fun fromDirections(vararg directions: Direction): Connection {
+        fun fromDirections(vararg blockFaces: BlockFace): Connection {
             return Connection(
-                if (directions.contains(Direction.EAST)) ConnectionState.CONNECTED else ConnectionState.CLOSED,
-                if (directions.contains(Direction.WEST)) ConnectionState.CONNECTED else ConnectionState.CLOSED,
-                if (directions.contains(Direction.SOUTH)) ConnectionState.CONNECTED else ConnectionState.CLOSED,
-                if (directions.contains(Direction.NORTH)) ConnectionState.CONNECTED else ConnectionState.CLOSED
+                if (blockFaces.contains(BlockFace.EAST)) ConnectionState.CONNECTED else ConnectionState.CLOSED,
+                if (blockFaces.contains(BlockFace.WEST)) ConnectionState.CONNECTED else ConnectionState.CLOSED,
+                if (blockFaces.contains(BlockFace.SOUTH)) ConnectionState.CONNECTED else ConnectionState.CLOSED,
+                if (blockFaces.contains(BlockFace.NORTH)) ConnectionState.CONNECTED else ConnectionState.CLOSED
             )
         }
     }

@@ -1,6 +1,7 @@
 package de.danielmaile.aether.world.dungeon
 
 import org.bukkit.Location
+import org.bukkit.block.BlockFace
 import org.bukkit.util.Vector
 import java.util.Random
 
@@ -27,22 +28,22 @@ class OuterPart(val outerType: OuterPartType, val relativePosition: Vector, val 
             newParts.clear()
             for (innerPart in parts) {
                 for (connectDirection in innerPart.innerType.getConnection().getConnectDirections()) {
-                    val newPartPos = innerPart.relativePosition.clone().add(connectDirection.relativePos)
+                    val newPartPos = innerPart.relativePosition.clone().add(connectDirection.direction)
                     if (getPartAt(parts, newPartPos) != null || getPartAt(newParts, newPartPos) != null) continue
 
                     //Get neighbours and check for ConnectionState
-                    val eastNeighbour = getNeighbour(newPartPos, Direction.EAST, parts, newParts)
-                    val westNeighbour = getNeighbour(newPartPos, Direction.WEST, parts, newParts)
-                    val southNeighbour = getNeighbour(newPartPos, Direction.SOUTH, parts, newParts)
-                    val northNeighbour = getNeighbour(newPartPos, Direction.NORTH, parts, newParts)
+                    val eastNeighbour = getNeighbour(newPartPos, BlockFace.EAST, parts, newParts)
+                    val westNeighbour = getNeighbour(newPartPos, BlockFace.WEST, parts, newParts)
+                    val southNeighbour = getNeighbour(newPartPos, BlockFace.SOUTH, parts, newParts)
+                    val northNeighbour = getNeighbour(newPartPos, BlockFace.NORTH, parts, newParts)
                     val newPartCon = Connection(
-                        eastNeighbour?.innerType?.getConnection()?.getConnectionState(Direction.WEST)
+                        eastNeighbour?.innerType?.getConnection()?.getConnectionState(BlockFace.WEST)
                             ?: Connection.ConnectionState.DONT_CARE,
-                        westNeighbour?.innerType?.getConnection()?.getConnectionState(Direction.EAST)
+                        westNeighbour?.innerType?.getConnection()?.getConnectionState(BlockFace.EAST)
                             ?: Connection.ConnectionState.DONT_CARE,
-                        southNeighbour?.innerType?.getConnection()?.getConnectionState(Direction.NORTH)
+                        southNeighbour?.innerType?.getConnection()?.getConnectionState(BlockFace.NORTH)
                             ?: Connection.ConnectionState.DONT_CARE,
-                        northNeighbour?.innerType?.getConnection()?.getConnectionState(Direction.SOUTH)
+                        northNeighbour?.innerType?.getConnection()?.getConnectionState(BlockFace.SOUTH)
                             ?: Connection.ConnectionState.DONT_CARE
                     )
                     newParts.add(getRandomInnerPart(random, endPartChance, newPartCon, newPartPos))
@@ -54,9 +55,9 @@ class OuterPart(val outerType: OuterPartType, val relativePosition: Vector, val 
     }
 
     //Try to find neighbour part in two lists. If none is found return null
-    private fun getNeighbour(location: Vector, direction: Direction, partList1: ArrayList<InnerPart>, partList2: ArrayList<InnerPart>): InnerPart? {
-        val neighbour = getPartAt(partList1, location.clone().add(direction.relativePos))
-        return neighbour ?: getPartAt(partList2, location.clone().add(direction.relativePos))
+    private fun getNeighbour(location: Vector, blockFace: BlockFace, partList1: ArrayList<InnerPart>, partList2: ArrayList<InnerPart>): InnerPart? {
+        val neighbour = getPartAt(partList1, location.clone().add(blockFace.direction))
+        return neighbour ?: getPartAt(partList2, location.clone().add(blockFace.direction))
     }
 
     private fun getPartAt(partList: ArrayList<InnerPart>, relativePosition: Vector): InnerPart? {
@@ -69,7 +70,7 @@ class OuterPart(val outerType: OuterPartType, val relativePosition: Vector, val 
         return partList.firstOrNull { relativePosition == it.relativePosition }
     }
 
-    private fun getCross(random: Random, endPartChance: Double, outerConnectDirections: ArrayList<Direction>): ArrayList<InnerPart> {
+    private fun getCross(random: Random, endPartChance: Double, outerConnectDirections: ArrayList<BlockFace>): ArrayList<InnerPart> {
         val parts = ArrayList<InnerPart>()
 
         //Center part (2,2)
@@ -78,7 +79,7 @@ class OuterPart(val outerType: OuterPartType, val relativePosition: Vector, val 
         parts.add(
             getRandomInnerPart(random, endPartChance,
                 Connection(
-                    if (outerConnectDirections.contains(Direction.EAST)) Connection.ConnectionState.CONNECTED else Connection.ConnectionState.CLOSED,
+                    if (outerConnectDirections.contains(BlockFace.EAST)) Connection.ConnectionState.CONNECTED else Connection.ConnectionState.CLOSED,
                     Connection.ConnectionState.CONNECTED,
                     Connection.ConnectionState.DONT_CARE,
                     Connection.ConnectionState.DONT_CARE),
@@ -90,7 +91,7 @@ class OuterPart(val outerType: OuterPartType, val relativePosition: Vector, val 
             getRandomInnerPart(random, endPartChance,
                 Connection(
                     Connection.ConnectionState.CONNECTED,
-                    if (outerConnectDirections.contains(Direction.WEST)) Connection.ConnectionState.CONNECTED else Connection.ConnectionState.CLOSED,
+                    if (outerConnectDirections.contains(BlockFace.WEST)) Connection.ConnectionState.CONNECTED else Connection.ConnectionState.CLOSED,
                     Connection.ConnectionState.DONT_CARE, Connection.ConnectionState.DONT_CARE),
                 Vector(0, 0, 2)
             )
@@ -100,7 +101,7 @@ class OuterPart(val outerType: OuterPartType, val relativePosition: Vector, val 
             getRandomInnerPart(random, endPartChance,
                 Connection(
                     Connection.ConnectionState.DONT_CARE, Connection.ConnectionState.DONT_CARE,
-                    if (outerConnectDirections.contains(Direction.SOUTH)) Connection.ConnectionState.CONNECTED else Connection.ConnectionState.CLOSED,
+                    if (outerConnectDirections.contains(BlockFace.SOUTH)) Connection.ConnectionState.CONNECTED else Connection.ConnectionState.CLOSED,
                     Connection.ConnectionState.CONNECTED),
                 Vector(2, 0, 4)
             )
@@ -112,7 +113,7 @@ class OuterPart(val outerType: OuterPartType, val relativePosition: Vector, val 
                     Connection.ConnectionState.DONT_CARE,
                     Connection.ConnectionState.DONT_CARE,
                     Connection.ConnectionState.CONNECTED,
-                    if (outerConnectDirections.contains(Direction.NORTH)) Connection.ConnectionState.CONNECTED else Connection.ConnectionState.CLOSED),
+                    if (outerConnectDirections.contains(BlockFace.NORTH)) Connection.ConnectionState.CONNECTED else Connection.ConnectionState.CLOSED),
                 Vector(2, 0, 0)
             )
         )

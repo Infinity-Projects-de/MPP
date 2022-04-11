@@ -116,22 +116,22 @@ class DungeonGenerator(private val random: Random) {
                 }
 
                 for (connectDirection in outerPart.outerType.getConnection().getConnectDirections()) {
-                    val newPartPos = outerPart.relativePosition.clone().add(connectDirection.relativePos)
+                    val newPartPos = outerPart.relativePosition.clone().add(connectDirection.direction)
                     if (getPartAt(outerParts, newPartPos) != null || getPartAt(newParts, newPartPos) != null) continue
 
                     //Get neighbours and check for ConnectionState
-                    val eastNeighbour = getNeighbour(newPartPos, Direction.EAST, outerParts)
-                    val westNeighbour = getNeighbour(newPartPos, Direction.WEST, outerParts)
-                    val southNeighbour = getNeighbour(newPartPos, Direction.SOUTH, outerParts)
-                    val northNeighbour = getNeighbour(newPartPos, Direction.NORTH, outerParts)
+                    val eastNeighbour = getNeighbour(newPartPos, BlockFace.EAST, outerParts)
+                    val westNeighbour = getNeighbour(newPartPos, BlockFace.WEST, outerParts)
+                    val southNeighbour = getNeighbour(newPartPos, BlockFace.SOUTH, outerParts)
+                    val northNeighbour = getNeighbour(newPartPos, BlockFace.NORTH, outerParts)
                     val newPartCon = Connection(
-                        eastNeighbour?.outerType?.getConnection()?.getConnectionState(Direction.WEST)
+                        eastNeighbour?.outerType?.getConnection()?.getConnectionState(BlockFace.WEST)
                             ?: Connection.ConnectionState.DONT_CARE,
-                        westNeighbour?.outerType?.getConnection()?.getConnectionState(Direction.EAST)
+                        westNeighbour?.outerType?.getConnection()?.getConnectionState(BlockFace.EAST)
                             ?: Connection.ConnectionState.DONT_CARE,
-                        southNeighbour?.outerType?.getConnection()?.getConnectionState(Direction.NORTH)
+                        southNeighbour?.outerType?.getConnection()?.getConnectionState(BlockFace.NORTH)
                             ?: Connection.ConnectionState.DONT_CARE,
-                        northNeighbour?.outerType?.getConnection()?.getConnectionState(Direction.SOUTH)
+                        northNeighbour?.outerType?.getConnection()?.getConnectionState(BlockFace.SOUTH)
                             ?: Connection.ConnectionState.DONT_CARE
                     )
                     newParts.add(getRandomOuterPart(newEndPartChance, newPartCon, newPartPos, origin))
@@ -142,8 +142,8 @@ class DungeonGenerator(private val random: Random) {
     }
 
     //Try to find neighbour part in list. If none is found return null
-    private fun getNeighbour(location: Vector, direction: Direction, partList: ArrayList<OuterPart>): OuterPart? {
-        return getPartAt(partList, location.clone().add(direction.relativePos))
+    private fun getNeighbour(location: Vector, blockFace: BlockFace, partList: ArrayList<OuterPart>): OuterPart? {
+        return getPartAt(partList, location.clone().add(blockFace.direction))
     }
 
     private fun getPartAt(partList: ArrayList<OuterPart>, relativePosition: Vector): OuterPart? {
