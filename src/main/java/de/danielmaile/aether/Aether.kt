@@ -13,16 +13,21 @@ import de.danielmaile.aether.item.funtion.ListenerItem
 import de.danielmaile.aether.item.funtion.magicwand.ListenerMagicWand
 import de.danielmaile.aether.item.funtion.particle.ListenerParticle
 import de.danielmaile.aether.item.funtion.particle.ParticleManager
-import de.danielmaile.aether.world.dungeon.ListenerDungeon
 import de.danielmaile.aether.mobs.ListenerAetherMobs
 import de.danielmaile.aether.mobs.RideableLlama
 import de.danielmaile.aether.portal.ListenerPortal
 import de.danielmaile.aether.util.logError
-import de.danielmaile.aether.world.*
+import de.danielmaile.aether.world.AetherWorld
+import de.danielmaile.aether.world.ListenerAetherWorld
+import de.danielmaile.aether.world.ObjectManager
+import de.danielmaile.aether.world.PrefabType
 import de.danielmaile.aether.world.cloud.CloudEffects
+import de.danielmaile.aether.world.dungeon.ListenerDungeon
+import de.danielmaile.license.LicenseManager
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
+
 
 class Aether : JavaPlugin() {
 
@@ -103,6 +108,9 @@ class Aether : JavaPlugin() {
 
         //Cloud effects
         CloudEffects()
+
+        //Validate license
+        LicenseManager(this, "LamasNewAether")
     }
 
     override fun onDisable() {
