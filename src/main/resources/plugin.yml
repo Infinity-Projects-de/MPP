@@ -1,6 +1,6 @@
 name: LamasNewAether
 version: 'BETA 1.2.3 (MC - 1.18.2+)'
-main: de.danielmaile.aether.Aether
+main: de.danielmaile.lama.aether.Aether
 api-version: 1.18
 authors: [ WoizaWerner ]
 website: maile.ws
