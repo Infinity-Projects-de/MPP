@@ -23,6 +23,7 @@ import de.danielmaile.lama.aether.world.ObjectManager
 import de.danielmaile.lama.aether.world.PrefabType
 import de.danielmaile.lama.aether.world.cloud.CloudEffects
 import de.danielmaile.lama.aether.world.dungeon.ListenerDungeon
+import de.danielmaile.lama.lamaapi.LamaAPI
 import de.danielmaile.lama.license.LicenseManager
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
@@ -41,6 +42,9 @@ class Aether : JavaPlugin() {
     lateinit var configManager: ConfigManager
         private set
 
+    lateinit var lamaAPI: LamaAPI
+        private set
+
     lateinit var particleManager: ParticleManager
         private set
 
@@ -57,6 +61,7 @@ class Aether : JavaPlugin() {
 
     override fun onEnable() {
         instance = this
+        lamaAPI = Bukkit.getServer().pluginManager.getPlugin("LamaAPI") as LamaAPI
 
         //Register listener and commands
         server.pluginManager.registerEvents(ListenerPortal(), this)

@@ -8,7 +8,6 @@ import org.bukkit.Material
 import org.bukkit.attribute.Attribute
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
-import org.bukkit.craftbukkit.v1_18_R2.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffect
@@ -31,19 +30,15 @@ fun getResource(fileName: String): InputStream? {
 
 @Suppress("BooleanMethodIsAlwaysInverted")
 fun ItemStack.hasKey(key: String): Boolean {
-    return CraftItemStack.asNMSCopy(this).orCreateTag.contains(key)
+    return inst().lamaAPI.nbtEditor.hasKey(this, key)
 }
 
 fun ItemStack.getNBTString(key: String): String {
-    return CraftItemStack.asNMSCopy(this).orCreateTag.getString(key)
+    return inst().lamaAPI.nbtEditor.getNBTString(this, key)
 }
 
 fun ItemStack.setNBTString(key: String, value: String): ItemStack {
-    val nmsStack = CraftItemStack.asNMSCopy(this)
-    val compoundTag = nmsStack.orCreateTag
-    compoundTag.putString(key, value)
-    nmsStack.tag = compoundTag
-    return CraftItemStack.asBukkitCopy(nmsStack)
+    return inst().lamaAPI.nbtEditor.setNBT(this, key, value)
 }
 
 fun Player.isGrounded(): Boolean {
