@@ -24,7 +24,6 @@ import de.danielmaile.lama.aether.world.PrefabType
 import de.danielmaile.lama.aether.world.cloud.CloudEffects
 import de.danielmaile.lama.aether.world.dungeon.ListenerDungeon
 import de.danielmaile.lama.lamaapi.LamaAPI
-import de.danielmaile.lama.license.LicenseManager
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
@@ -115,7 +114,7 @@ class Aether : JavaPlugin() {
         CloudEffects()
 
         //Validate license
-        LicenseManager(this, "LamasNewAether")
+        lamaAPI.registerPluginLicenseChecker(this, "LamasNewAether")
     }
 
     override fun onDisable() {
