@@ -30,15 +30,15 @@ fun getResource(fileName: String): InputStream? {
 
 @Suppress("BooleanMethodIsAlwaysInverted")
 fun ItemStack.hasKey(key: String): Boolean {
-    return inst().lamaAPI.nbtEditor.hasKey(this, key)
+    return inst().lamaAPI.nbtEditor.hasKey( this, "lamasnewaether_$key")
 }
 
 fun ItemStack.getNBTString(key: String): String {
-    return inst().lamaAPI.nbtEditor.getNBTString(this, key)
+    return inst().lamaAPI.nbtEditor.getNBTString(this, "lamasnewaether_$key")
 }
 
 fun ItemStack.setNBTString(key: String, value: String): ItemStack {
-    return inst().lamaAPI.nbtEditor.setNBT(this, key, value)
+    return inst().lamaAPI.nbtEditor.setNBT(this, "lamasnewaether_$key", value)
 }
 
 fun Player.isGrounded(): Boolean {
