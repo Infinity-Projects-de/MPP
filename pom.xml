@@ -6,7 +6,7 @@
 
     <groupId>de.danielmaile.lama</groupId>
     <artifactId>aether</artifactId>
-    <version>1.2.5-BETA</version>
+    <version>1.2.5-BETA-1.18.2</version>
     <packaging>jar</packaging>
 
     <name>LamasNewAether</name>
