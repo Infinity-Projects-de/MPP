@@ -1,5 +1,5 @@
 name: LamasNewAether
-version: 'BETA 1.2.4 (MC - 1.18.2+)'
+version: 'BETA 1.2.5 (MC - 1.18.2)'
 main: de.danielmaile.lama.aether.Aether
 api-version: 1.18
 authors: [ WoizaWerner ]
