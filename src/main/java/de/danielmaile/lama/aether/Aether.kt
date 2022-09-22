@@ -17,7 +17,6 @@ import de.danielmaile.lama.aether.mobs.ListenerAetherMobs
 import de.danielmaile.lama.aether.mobs.RideableLlama
 import de.danielmaile.lama.aether.portal.ListenerPortal
 import de.danielmaile.lama.aether.util.logError
-import de.danielmaile.lama.aether.world.AetherWorld
 import de.danielmaile.lama.aether.world.ListenerAetherWorld
 import de.danielmaile.lama.aether.world.ObjectManager
 import de.danielmaile.lama.aether.world.PrefabType
@@ -25,14 +24,17 @@ import de.danielmaile.lama.aether.world.cloud.CloudEffects
 import de.danielmaile.lama.aether.world.dungeon.ListenerDungeon
 import de.danielmaile.lama.lamaapi.LamaAPI
 import org.bukkit.Bukkit
+import org.bukkit.World
+import org.bukkit.WorldCreator
+import org.bukkit.WorldType
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 
+const val aetherWorldName = "world_aether"
 
 class Aether : JavaPlugin() {
 
     companion object {
-
         @JvmStatic
         lateinit var instance: Aether
             private set
@@ -41,26 +43,18 @@ class Aether : JavaPlugin() {
     lateinit var configManager: ConfigManager
         private set
 
-    lateinit var lamaAPI: LamaAPI
-        private set
-
     lateinit var particleManager: ParticleManager
         private set
 
-    lateinit var aetherWorld: AetherWorld
+    lateinit var objectManager: ObjectManager
         private set
 
     fun getLanguageManager(): LanguageManager {
         return configManager.languageManager
     }
 
-    fun getObjectManager(): ObjectManager {
-        return aetherWorld.objectManager
-    }
-
     override fun onEnable() {
         instance = this
-        lamaAPI = Bukkit.getServer().pluginManager.getPlugin("LamaAPI") as LamaAPI
 
         //Register listener and commands
         server.pluginManager.registerEvents(ListenerPortal(), this)
@@ -103,8 +97,10 @@ class Aether : JavaPlugin() {
         val protocolManager = ProtocolLibrary.getProtocolManager()
         RideableLlama(protocolManager)
 
-        //Init world and prefabs
-        aetherWorld = AetherWorld()
+        //Create aether world
+        createAetherWorld()
+        //Init object manager and prefabs
+        objectManager = ObjectManager()
         PrefabType.loadPrefabs()
 
         //Particle manager
@@ -114,17 +110,24 @@ class Aether : JavaPlugin() {
         CloudEffects()
 
         //Validate license
-        lamaAPI.registerPluginLicenseChecker(this, "LamasNewAether")
+        LamaAPI.License.registerPluginLicenseChecker(this, "LamasNewAether")
     }
 
     override fun onDisable() {
-        getObjectManager().save()
+        objectManager.save()
     }
 
     private fun registerRecipes() {
         for (recipe in Recipes.values()) {
             Bukkit.addRecipe(recipe.recipe)
         }
+    }
+
+    private fun createAetherWorld() {
+        val worldCreator = WorldCreator(aetherWorldName)
+        worldCreator.environment(World.Environment.NORMAL)
+        worldCreator.type(WorldType.NORMAL)
+        worldCreator.createWorld()
     }
 
     override fun reloadConfig() {
@@ -135,4 +138,8 @@ class Aether : JavaPlugin() {
 
 fun inst(): Aether {
     return Aether.instance
+}
+
+fun aetherWorld(): World {
+    return Bukkit.getWorld(aetherWorldName)!!
 }

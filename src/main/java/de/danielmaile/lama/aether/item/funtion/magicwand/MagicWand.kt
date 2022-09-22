@@ -2,7 +2,7 @@ package de.danielmaile.lama.aether.item.funtion.magicwand
 
 import de.danielmaile.lama.aether.inst
 import de.danielmaile.lama.aether.util.getNearestObjectInSight
-import de.danielmaile.lama.aether.util.setNBTString
+import de.danielmaile.lama.aether.util.setDataString
 import org.bukkit.*
 import org.bukkit.block.Block
 import org.bukkit.entity.EntityType
@@ -41,7 +41,7 @@ class MagicWand(itemStack: ItemStack) {
     }
 
     private fun writeSpellNBT() {
-        itemStack = itemStack.setNBTString(SELECTED_SPELL_TAG, currentSpell.name)
+        itemStack.setDataString(SELECTED_SPELL_TAG, currentSpell.name)
     }
 
     fun fire(player: Player) {

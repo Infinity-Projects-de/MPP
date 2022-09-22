@@ -1,5 +1,6 @@
 package de.danielmaile.lama.aether.world
 
+import de.danielmaile.lama.aether.aetherWorld
 import de.danielmaile.lama.aether.inst
 import de.danielmaile.lama.aether.world.dungeon.DungeonGenerator
 import io.papermc.paper.event.entity.EntityMoveEvent
@@ -22,8 +23,8 @@ class ListenerAetherWorld : Listener {
     //Save objects during vanilla world save
     @EventHandler
     fun onSave(event: WorldSaveEvent) {
-        if (event.world != inst().aetherWorld.getWorld()) return
-        inst().getObjectManager().save()
+        if (event.world != aetherWorld()) return
+        inst().objectManager.save()
     }
 
     //Teleport players back to the overworld when they fall out of the aether
@@ -31,7 +32,7 @@ class ListenerAetherWorld : Listener {
     fun onPlayerMove(event: PlayerMoveEvent) {
         val player = event.player
         val playerLoc = player.location
-        if (player.world != inst().aetherWorld.getWorld()) return
+        if (player.world != aetherWorld()) return
         if (playerLoc.y > 64 || playerLoc.y < -256) return
 
         val destination = Location(Bukkit.getWorlds()[0], playerLoc.x, 400.0, playerLoc.z)
@@ -43,7 +44,7 @@ class ListenerAetherWorld : Listener {
     @EventHandler
     fun onEntityMove(event: EntityMoveEvent) {
         val entity: Entity = event.entity
-        if (entity.world != inst().aetherWorld.getWorld()) return
+        if (entity.world != aetherWorld()) return
         if (entity.location.y > 64 || entity.location.y < -256) return
 
         entity.remove()
@@ -53,16 +54,17 @@ class ListenerAetherWorld : Listener {
     //Stop water and lava from flowing out of aether
     @EventHandler
     fun onBlockFlow(event: BlockFromToEvent) {
-        if (event.block.world != inst().aetherWorld.getWorld()) return
+        if (event.block.world != aetherWorld()) return
         if (event.toBlock.y > 64 || event.toBlock.y < -256) return
         event.isCancelled = true
     }
 
+    //TODO readd terrain generation with dungeons and trees
     //Add objects to world when new chunk is loaded
-    @EventHandler
+  /*  @EventHandler
     fun onChunkLoad(event: ChunkLoadEvent) {
         if (!event.isNewChunk) return
-        if (event.world != inst().aetherWorld.getWorld()) return
+        if (event.world != aetherWorld()) return
         val chunk = event.chunk
         val random = Random()
 
@@ -73,7 +75,7 @@ class ListenerAetherWorld : Listener {
         if (random.nextFloat() < inst().configManager.dungeonProbability) {
             generateDungeons(chunk, random)
         }
-    }
+    }*/
 
     private fun generateTrees(chunk: Chunk, random: Random) {
         val x = random.nextInt(16) + chunk.x * 16

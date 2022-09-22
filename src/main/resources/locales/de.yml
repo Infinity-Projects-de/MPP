@@ -13,12 +13,9 @@ messages:
     errors:
       only_player_cmd: "<red>Aether-Befehle können nur von Spielern ausgeführt werden!"
       item_does_not_exist: "<red>Dieses Item existiert nicht!"
-      aether_world_not_created: "<red>Die Aether-Welt wurde noch nicht erstellt. Starte den Server neu um sie zu erstellen!"
       no_dungeon_found: "<red>Es wurde kein Dungeon gefunden!"
   chat:
     click_to_dungeon_teleport: "<gradient:#03FB5D:#03FBE1>Klicke nochmals auf den Block um dich in den Dungeon zu teleportieren.</gradient>"
-  console:
-    datapack_copied: "<gradient:#D2FB03:#68FB03>Alle Dateien wurden erfolgreich kopiert. Starte deinen Server neu um die Aether-Welt zu generieren.</gradient>"
 dungeons:
   entry:
     title: "<bold><gold>DUNGEON"

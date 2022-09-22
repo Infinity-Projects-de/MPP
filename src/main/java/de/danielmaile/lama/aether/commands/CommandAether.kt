@@ -1,5 +1,6 @@
 package de.danielmaile.lama.aether.commands
 
+import de.danielmaile.lama.aether.aetherWorld
 import de.danielmaile.lama.aether.config.LanguageManager
 import de.danielmaile.lama.aether.inst
 import de.danielmaile.lama.aether.item.ItemType
@@ -35,40 +36,50 @@ class CommandAether : CommandExecutor, TabCompleter {
                 when (args[0].lowercase()) {
                     "chest" -> {
                         val facing = sender.getDirection()
-                        DungeonChest(Random()).instantiate(sender.location.block.getRelative(facing).location, sender.getDirection().oppositeFace)
+                        DungeonChest(Random()).instantiate(
+                            sender.location.block.getRelative(facing).location,
+                            sender.getDirection().oppositeFace
+                        )
                     }
+
                     "locate" -> {
                         locateCMD(sender, languageManager, cmdPrefix)
                     }
+
                     "reload" -> {
                         inst().reloadConfig()
                         sender.sendMessage(cmdPrefix.append(languageManager.getComponent("messages.cmd.info.reloaded_config")))
                     }
+
                     "teleport" -> {
-                        teleportCMD(sender, languageManager, cmdPrefix)
+                        teleportCMD(sender)
                     }
+
                     else -> {
                         sendHelp(sender, languageManager, cmdPrefix)
                     }
                 }
             }
+
             2 -> {
                 when (args[0].lowercase()) {
                     "give" -> {
                         giveCMD(sender, args, languageManager, cmdPrefix)
                     }
+
                     else -> {
                         sendHelp(sender, languageManager, cmdPrefix)
                     }
                 }
             }
+
             else -> sendHelp(sender, languageManager, cmdPrefix)
         }
         return true
     }
 
     private fun locateCMD(player: Player, languageManager: LanguageManager, cmdPrefix: Component) {
-        val dungeons: List<Dungeon> = inst().getObjectManager().dungeons
+        val dungeons: List<Dungeon> = inst().objectManager.dungeons
         var smallestDistance = Double.MAX_VALUE
         var nearestDungeon: Dungeon? = null
         for (dungeon in dungeons) {
@@ -79,7 +90,7 @@ class CommandAether : CommandExecutor, TabCompleter {
             }
         }
 
-        if (player.world == inst().aetherWorld.getWorld() && nearestDungeon != null) {
+        if (player.world == aetherWorld() && nearestDungeon != null) {
             val targetLocation = nearestDungeon.monumentLocation!!.clone().add(0.0, 5.0, 0.0)
             val locationString =
                 targetLocation.blockX.toString() + " " + targetLocation.blockY + " " + targetLocation.blockZ
@@ -99,13 +110,8 @@ class CommandAether : CommandExecutor, TabCompleter {
         }
     }
 
-    private fun teleportCMD(player: Player, languageManager: LanguageManager, cmdPrefix: Component) {
-        val aetherWorld = inst().aetherWorld.getWorld()
-        if (aetherWorld != null) {
-            player.teleport(aetherWorld.spawnLocation)
-        } else {
-            player.sendMessage(cmdPrefix.append(languageManager.getComponent("messages.cmd.errors.aether_world_not_created")))
-        }
+    private fun teleportCMD(player: Player) {
+        player.teleport(aetherWorld().spawnLocation)
     }
 
     private fun giveCMD(

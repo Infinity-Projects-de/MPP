@@ -1,6 +1,7 @@
 package de.danielmaile.lama.aether.world.dungeon
 
 import de.danielmaile.lama.aether.Aether.Companion.instance
+import de.danielmaile.lama.aether.aetherWorld
 import de.danielmaile.lama.aether.inst
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
@@ -25,11 +26,11 @@ class ListenerDungeon : Listener {
         if (event.action != Action.RIGHT_CLICK_BLOCK) return
         if (event.hand != EquipmentSlot.HAND) return
         val clickedBlock = event.clickedBlock ?: return
-        if (clickedBlock.world != inst().aetherWorld.getWorld()) return
+        if (clickedBlock.world != aetherWorld()) return
 
         val clickLocation = clickedBlock.location
         val targetDungeon =
-            inst().getObjectManager().dungeons.firstOrNull { it.monumentLocation == clickLocation } ?: return
+            inst().objectManager.dungeons.firstOrNull { it.monumentLocation == clickLocation } ?: return
         val targetLocation = targetDungeon.monumentTargetLocation
         event.isCancelled = true
 
@@ -67,14 +68,14 @@ class ListenerDungeon : Listener {
 
         //Check for monument break
         val targetDungeon =
-            inst().getObjectManager().dungeons.firstOrNull { it.monumentLocation == event.block.location }
+            inst().objectManager.dungeons.firstOrNull { it.monumentLocation == event.block.location }
         if (targetDungeon != null) {
             event.isCancelled = true
             return
         }
 
         //Check for dungeon break
-        if (player.world != inst().aetherWorld.getWorld()) return
+        if (player.world != aetherWorld()) return
         if (player.location.y > -256) return
         event.isCancelled = true
     }
@@ -82,14 +83,14 @@ class ListenerDungeon : Listener {
     @EventHandler
     fun onDungeonBlockPlace(event: BlockPlaceEvent) {
         val player = event.player
-        if (player.world != inst().aetherWorld.getWorld()) return
+        if (player.world != aetherWorld()) return
         if (player.location.y > -256) return
         event.isCancelled = true
     }
 
     @EventHandler
     fun onDungeonExplode(event: EntityExplodeEvent) {
-        if (event.location.world != inst().aetherWorld.getWorld()) return
+        if (event.location.world != aetherWorld()) return
         if (event.location.y > -256) return
         event.entity.remove()
         event.isCancelled = true

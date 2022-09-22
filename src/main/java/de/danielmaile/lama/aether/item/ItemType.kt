@@ -3,8 +3,8 @@ package de.danielmaile.lama.aether.item
 import com.google.common.collect.ArrayListMultimap
 import com.google.common.collect.Multimap
 import de.danielmaile.lama.aether.inst
-import de.danielmaile.lama.aether.util.getNBTString
-import de.danielmaile.lama.aether.util.setNBTString
+import de.danielmaile.lama.aether.util.getDataString
+import de.danielmaile.lama.aether.util.setDataString
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Material
@@ -119,7 +119,8 @@ enum class ItemType(
         itemStack.itemMeta = itemMeta
         itemStack.amount = amount
 
-        return itemStack.setNBTString(AETHER_ITEM_TAG_KEY, name)
+        itemStack.setDataString(AETHER_ITEM_TAG_KEY, name)
+        return itemStack
     }
 
     companion object {
@@ -128,7 +129,8 @@ enum class ItemType(
         fun fromTag(itemStack: ItemStack?): ItemType? {
             if(itemStack == null) return null
             return try {
-                valueOf(itemStack.getNBTString(AETHER_ITEM_TAG_KEY))
+                val itemTag = itemStack.getDataString(AETHER_ITEM_TAG_KEY)?: return null
+                valueOf(itemTag)
             } catch (e: IllegalArgumentException) {
                 null
             }

@@ -3,13 +3,17 @@ package de.danielmaile.lama.aether.util
 import de.danielmaile.lama.aether.inst
 import de.danielmaile.lama.aether.item.ArmorSet
 import de.danielmaile.lama.aether.item.ItemType
+import de.danielmaile.lama.lamaapi.LamaAPI
 import org.bukkit.FluidCollisionMode
 import org.bukkit.Material
+import org.bukkit.NamespacedKey
 import org.bukkit.attribute.Attribute
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import org.bukkit.persistence.PersistentDataContainer
+import org.bukkit.persistence.PersistentDataType
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import java.io.IOException
@@ -28,17 +32,19 @@ fun getResource(fileName: String): InputStream? {
     return inst().javaClass.classLoader.getResourceAsStream(fileName)
 }
 
-@Suppress("BooleanMethodIsAlwaysInverted")
-fun ItemStack.hasKey(key: String): Boolean {
-    return inst().lamaAPI.nbtEditor.hasKey( this, "lamasnewaether_$key")
+fun ItemStack.doesKeyExist(key: String): Boolean {
+    val namespacedKey = NamespacedKey(inst(), key)
+    return LamaAPI.ItemData.doesKeyExist(this, namespacedKey)
 }
 
-fun ItemStack.getNBTString(key: String): String {
-    return inst().lamaAPI.nbtEditor.getNBTString(this, "lamasnewaether_$key")
+fun ItemStack.getDataString(key: String): String? {
+    val namespacedKey = NamespacedKey(inst(), key)
+    return LamaAPI.ItemData.getData(this, namespacedKey, PersistentDataType.STRING)
 }
 
-fun ItemStack.setNBTString(key: String, value: String): ItemStack {
-    return inst().lamaAPI.nbtEditor.setNBT(this, "lamasnewaether_$key", value)
+fun ItemStack.setDataString(key: String, value: String) {
+    val namespacedKey = NamespacedKey(inst(), key)
+    LamaAPI.ItemData.setData(this, namespacedKey, PersistentDataType.STRING, value)
 }
 
 fun Player.isGrounded(): Boolean {

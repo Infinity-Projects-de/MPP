@@ -2,7 +2,7 @@ package de.danielmaile.lama.aether.item.funtion
 
 import de.danielmaile.lama.aether.item.AETHER_ITEM_TAG_KEY
 import de.danielmaile.lama.aether.item.ItemType
-import de.danielmaile.lama.aether.util.hasKey
+import de.danielmaile.lama.aether.util.doesKeyExist
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -50,7 +50,7 @@ class ListenerItem : Listener {
     fun onSaddleEquip(event: InventoryClickEvent) {
         if (event.inventory !is HorseInventory) return
         val currentItem = event.currentItem ?: return
-        if (!currentItem.hasKey(AETHER_ITEM_TAG_KEY)) return
+        if (!currentItem.doesKeyExist(AETHER_ITEM_TAG_KEY)) return
         event.isCancelled = true
     }
 }

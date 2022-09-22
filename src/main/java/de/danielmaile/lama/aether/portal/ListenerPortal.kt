@@ -1,5 +1,6 @@
 package de.danielmaile.lama.aether.portal
 
+import de.danielmaile.lama.aether.aetherWorld
 import de.danielmaile.lama.aether.inst
 import de.danielmaile.lama.aether.portal.AetherPortal.checkPortal
 import de.danielmaile.lama.aether.portal.AetherPortal.createPortal
@@ -29,12 +30,10 @@ class ListenerPortal : Listener {
 
     @EventHandler
     fun onAetherTeleport(event: PlayerMoveEvent) {
-        if (inst().aetherWorld.getWorld() == null) return
         if (!checkPortal(event.to, true)) return
 
         val toLocation = event.player.location.clone()
-        toLocation.world =
-            if (event.player.world == inst().aetherWorld.getWorld()) Bukkit.getWorlds()[0] else inst().aetherWorld.getWorld()
+        toLocation.world = if (event.player.world == aetherWorld()) Bukkit.getWorlds()[0] else aetherWorld()
         val portalLocation = findPortalInRadius(toLocation, 32)
 
         if (portalLocation != null) {

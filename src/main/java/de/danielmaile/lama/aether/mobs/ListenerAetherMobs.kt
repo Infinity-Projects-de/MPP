@@ -1,5 +1,6 @@
 package de.danielmaile.lama.aether.mobs
 
+import de.danielmaile.lama.aether.aetherWorld
 import de.danielmaile.lama.aether.inst
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
@@ -13,7 +14,7 @@ class ListenerAetherMobs : Listener {
 
     @EventHandler
     fun onEntitiesLoad(event: EntitiesLoadEvent) {
-        if (event.world != inst().aetherWorld.getWorld()) return
+        if (event.world != aetherWorld()) return
         for (entity in event.entities) {
             if (!entity.isValid) continue
             if (entity !is LivingEntity) continue

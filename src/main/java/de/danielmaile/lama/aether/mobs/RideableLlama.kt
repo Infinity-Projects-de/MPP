@@ -5,6 +5,7 @@ import com.comphenix.protocol.ProtocolManager
 import com.comphenix.protocol.events.ListenerPriority
 import com.comphenix.protocol.events.PacketAdapter
 import com.comphenix.protocol.events.PacketEvent
+import de.danielmaile.lama.aether.aetherWorld
 import de.danielmaile.lama.aether.inst
 import org.bukkit.entity.Llama
 import org.bukkit.util.Vector
@@ -19,7 +20,7 @@ class RideableLlama(protocolManager: ProtocolManager) {
                 val llama = player.vehicle ?: return
 
                 if (llama !is Llama) return
-                if (llama.location.world != inst().aetherWorld.getWorld()) return
+                if (llama.location.world != aetherWorld()) return
                 if (llama.inventory.decor == null) return
 
                 //Jumping

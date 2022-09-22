@@ -1,5 +1,6 @@
 package de.danielmaile.lama.aether.world.cloud
 
+import de.danielmaile.lama.aether.aetherWorld
 import de.danielmaile.lama.aether.inst
 import de.danielmaile.lama.aether.item.BlockType
 import de.danielmaile.lama.aether.util.getBlockBelow
@@ -23,7 +24,7 @@ class CloudEffects {
     init {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(inst(), {
             for (player in Bukkit.getOnlinePlayers()) {
-                if (player.world != inst().aetherWorld.getWorld()) continue
+                if (player.world != aetherWorld()) continue
 
                 val block = player.getBlockBelow()
                 if (!block.isSurroundedByAirOrMaterial(effects.keys)) continue

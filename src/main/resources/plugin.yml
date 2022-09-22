@@ -1,7 +1,7 @@
 name: LamasNewAether
 version: ${project.version}
 main: de.danielmaile.lama.aether.Aether
-api-version: 1.18
+api-version: 1.19
 authors: [ WoizaWerner ]
 website: maile.ws
 depend: [ ProtocolLib, FastAsyncWorldEdit, LamaAPI ]

@@ -1,7 +1,7 @@
 package de.danielmaile.lama.aether.item
 
-import de.danielmaile.lama.aether.inst
-import de.danielmaile.lama.aether.util.hasKey
+import de.danielmaile.lama.aether.aetherWorld
+import de.danielmaile.lama.aether.util.doesKeyExist
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
@@ -14,7 +14,7 @@ class ListenerBlock : Listener {
         if (event.isCancelled) return
 
         val block = event.block
-        if (block.world != inst().aetherWorld.getWorld()) return
+        if (block.world != aetherWorld()) return
 
         val location = block.location
         val blockType = BlockType.fromMaterial(block.type) ?: return
@@ -30,8 +30,8 @@ class ListenerBlock : Listener {
         val block = event.block
         val itemStack = event.itemInHand
 
-        if (block.world == inst().aetherWorld.getWorld()) {
-            if (itemStack.hasKey(AETHER_ITEM_TAG_KEY)) {
+        if (block.world == aetherWorld()) {
+            if (itemStack.doesKeyExist(AETHER_ITEM_TAG_KEY)) {
                 //Convert Item to correct material
                 val itemType = ItemType.fromTag(itemStack)
                 if (itemType != null) {
@@ -49,7 +49,7 @@ class ListenerBlock : Listener {
             }
         } else {
             //Aether items can't be placed in other worlds
-            if (itemStack.hasKey(AETHER_ITEM_TAG_KEY)) {
+            if (itemStack.doesKeyExist(AETHER_ITEM_TAG_KEY)) {
                 event.isCancelled = true
             }
         }
