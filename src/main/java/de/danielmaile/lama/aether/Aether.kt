@@ -18,19 +18,16 @@ import de.danielmaile.lama.aether.mobs.RideableLlama
 import de.danielmaile.lama.aether.portal.ListenerPortal
 import de.danielmaile.lama.aether.util.logError
 import de.danielmaile.lama.aether.world.ListenerAetherWorld
-import de.danielmaile.lama.aether.world.ObjectManager
 import de.danielmaile.lama.aether.world.PrefabType
+import de.danielmaile.lama.aether.world.WorldManager
 import de.danielmaile.lama.aether.world.cloud.CloudEffects
 import de.danielmaile.lama.aether.world.dungeon.ListenerDungeon
 import de.danielmaile.lama.lamaapi.LamaAPI
 import org.bukkit.Bukkit
 import org.bukkit.World
-import org.bukkit.WorldCreator
-import org.bukkit.WorldType
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 
-const val aetherWorldName = "world_aether"
 
 class Aether : JavaPlugin() {
 
@@ -46,7 +43,7 @@ class Aether : JavaPlugin() {
     lateinit var particleManager: ParticleManager
         private set
 
-    lateinit var objectManager: ObjectManager
+    lateinit var worldManager: WorldManager
         private set
 
     fun getLanguageManager(): LanguageManager {
@@ -55,19 +52,6 @@ class Aether : JavaPlugin() {
 
     override fun onEnable() {
         instance = this
-
-        //Register listener and commands
-        server.pluginManager.registerEvents(ListenerPortal(), this)
-        server.pluginManager.registerEvents(ListenerBlock(), this)
-        server.pluginManager.registerEvents(ListenerCrafting(), this)
-        server.pluginManager.registerEvents(ListenerDungeon(), this)
-        server.pluginManager.registerEvents(ListenerAetherMobs(), this)
-        server.pluginManager.registerEvents(ListenerItem(), this)
-        server.pluginManager.registerEvents(ListenerArmor(), this)
-        server.pluginManager.registerEvents(ListenerParticle(), this)
-        server.pluginManager.registerEvents(ListenerConverter(), this)
-        server.pluginManager.registerEvents(ListenerMagicWand(), this)
-        server.pluginManager.registerEvents(ListenerAetherWorld(), this)
         Bukkit.getPluginCommand("aether")?.setExecutor(CommandAether())
 
         //Create data folder
@@ -97,10 +81,10 @@ class Aether : JavaPlugin() {
         val protocolManager = ProtocolLibrary.getProtocolManager()
         RideableLlama(protocolManager)
 
-        //Create aether world
-        createAetherWorld()
+        //World Manager
+        worldManager = WorldManager()
+
         //Init object manager and prefabs
-        objectManager = ObjectManager()
         PrefabType.loadPrefabs()
 
         //Particle manager
@@ -111,23 +95,29 @@ class Aether : JavaPlugin() {
 
         //Validate license
         LamaAPI.License.registerPluginLicenseChecker(this, "LamasNewAether")
+
+        //Register events
+        server.pluginManager.registerEvents(ListenerPortal(), this)
+        server.pluginManager.registerEvents(ListenerBlock(), this)
+        server.pluginManager.registerEvents(ListenerCrafting(), this)
+        server.pluginManager.registerEvents(ListenerDungeon(), this)
+        server.pluginManager.registerEvents(ListenerAetherMobs(), this)
+        server.pluginManager.registerEvents(ListenerItem(), this)
+        server.pluginManager.registerEvents(ListenerArmor(), this)
+        server.pluginManager.registerEvents(ListenerParticle(), this)
+        server.pluginManager.registerEvents(ListenerConverter(), this)
+        server.pluginManager.registerEvents(ListenerMagicWand(), this)
+        server.pluginManager.registerEvents(ListenerAetherWorld(), this)
     }
 
     override fun onDisable() {
-        objectManager.save()
+        worldManager.objectManager.save()
     }
 
     private fun registerRecipes() {
         for (recipe in Recipes.values()) {
             Bukkit.addRecipe(recipe.recipe)
         }
-    }
-
-    private fun createAetherWorld() {
-        val worldCreator = WorldCreator(aetherWorldName)
-        worldCreator.environment(World.Environment.NORMAL)
-        worldCreator.type(WorldType.NORMAL)
-        worldCreator.createWorld()
     }
 
     override fun reloadConfig() {
@@ -141,5 +131,5 @@ fun inst(): Aether {
 }
 
 fun aetherWorld(): World {
-    return Bukkit.getWorld(aetherWorldName)!!
+    return Aether.instance.worldManager.world
 }

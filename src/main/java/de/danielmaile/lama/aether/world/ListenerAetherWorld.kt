@@ -24,7 +24,7 @@ class ListenerAetherWorld : Listener {
     @EventHandler
     fun onSave(event: WorldSaveEvent) {
         if (event.world != aetherWorld()) return
-        inst().objectManager.save()
+        inst().worldManager.objectManager.save()
     }
 
     //Teleport players back to the overworld when they fall out of the aether

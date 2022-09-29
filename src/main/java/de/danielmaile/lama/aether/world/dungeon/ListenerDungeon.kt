@@ -30,7 +30,7 @@ class ListenerDungeon : Listener {
 
         val clickLocation = clickedBlock.location
         val targetDungeon =
-            inst().objectManager.dungeons.firstOrNull { it.monumentLocation == clickLocation } ?: return
+            inst().worldManager.objectManager.dungeons.firstOrNull { it.monumentLocation == clickLocation } ?: return
         val targetLocation = targetDungeon.monumentTargetLocation
         event.isCancelled = true
 
@@ -68,7 +68,7 @@ class ListenerDungeon : Listener {
 
         //Check for monument break
         val targetDungeon =
-            inst().objectManager.dungeons.firstOrNull { it.monumentLocation == event.block.location }
+            inst().worldManager.objectManager.dungeons.firstOrNull { it.monumentLocation == event.block.location }
         if (targetDungeon != null) {
             event.isCancelled = true
             return

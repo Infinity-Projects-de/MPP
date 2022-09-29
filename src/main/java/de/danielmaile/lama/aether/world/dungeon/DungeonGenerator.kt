@@ -26,7 +26,7 @@ class DungeonGenerator(private val random: Random) {
 
             //Check for other dungeons to avoid overlapping
             for (part in dungeon.outerParts) {
-                for (otherDungeon in inst().objectManager.dungeons) {
+                for (otherDungeon in inst().worldManager.objectManager.dungeons) {
                     for (otherOuterPart in otherDungeon.outerParts) {
                         if (part.worldLocation == otherOuterPart.worldLocation) return@Runnable
                     }
@@ -34,7 +34,7 @@ class DungeonGenerator(private val random: Random) {
             }
 
             //Add dungeon to object list
-            Bukkit.getScheduler().runTask(inst(), Runnable { inst().objectManager.dungeons.add(dungeon) })
+            Bukkit.getScheduler().runTask(inst(), Runnable { inst().worldManager.objectManager.dungeons.add(dungeon) })
 
             //Instantiate Prefabs
             Prefab(PrefabType.DUNGEON_MONUMENT, dungeon.monumentLocation!!, true).instantiate()

@@ -79,7 +79,7 @@ class CommandAether : CommandExecutor, TabCompleter {
     }
 
     private fun locateCMD(player: Player, languageManager: LanguageManager, cmdPrefix: Component) {
-        val dungeons: List<Dungeon> = inst().objectManager.dungeons
+        val dungeons: List<Dungeon> = inst().worldManager.objectManager.dungeons
         var smallestDistance = Double.MAX_VALUE
         var nearestDungeon: Dungeon? = null
         for (dungeon in dungeons) {
