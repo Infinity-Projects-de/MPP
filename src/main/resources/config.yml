@@ -1,5 +1,5 @@
 license_key: ""
-language_file: "de"
+language_file: "en"
 
 # If this is set to false, and you rename items in the language file, old items will no longer work properly
 item_converter: true

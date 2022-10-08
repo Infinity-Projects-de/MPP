@@ -1,13 +1,11 @@
-name: LamasNewAether
+name: MPP
 version: ${project.version}
-main: de.danielmaile.lama.aether.Aether
+main: de.danielmaile.mpp.MPP
 api-version: 1.19
-authors: [ WoizaWerner ]
-website: maile.ws
+authors: [ Daniel Maile ]
+website: daniel-maile.com
 depend: [ ProtocolLib, FastAsyncWorldEdit, LamaAPI ]
 
 commands:
-  aether:
-    aliases: [ ae ]
-    permission: aether.ae
-
+  mpp:
+    permission: mpp.mpp

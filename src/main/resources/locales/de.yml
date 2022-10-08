@@ -1,17 +1,17 @@
 messages:
-  prefix: "<gradient:#7403FB:#FB03E4>[The Aether] </gradient>"
+  prefix: "<gradient:#7403FB:#FB03E4>[MPP] </gradient>"
   cmd:
     info:
       reloaded_config: "<green>Die Config wurde neu geladen!"
       help_text:
         - "<gradient:#03FB5D:#03FBE1>/ae chest</gradient> <gradient:#D2FB03:#68FB03>- Spawnt eine Dungeon-Kiste an deiner Position.</gradient>"
-        - "<gradient:#03FB5D:#03FBE1>/ae give <name></gradient> <gradient:#D2FB03:#68FB03>- Gibt dir ein Aether Item.</gradient>"
+        - "<gradient:#03FB5D:#03FBE1>/ae give <name></gradient> <gradient:#D2FB03:#68FB03>- Gibt dir ein MPP Item.</gradient>"
         - "<gradient:#03FB5D:#03FBE1>/ae locate</gradient> <gradient:#D2FB03:#68FB03>- Zeigt dir die Koordinaten des nächsten Dungeon an.</gradient>"
         - "<gradient:#03FB5D:#03FBE1>/ae reload</gradient> <gradient:#D2FB03:#68FB03>- Läd die Config neu.</gradient>"
         - "<gradient:#03FB5D:#03FBE1>/ae teleport</gradient> <gradient:#D2FB03:#68FB03>- Teleportiert dich in die Aether-Welt.</gradient>"
-      next_dungeon: "<green>Das nächste Dungeon Monument ist <distance> Blöcke entfernt. (<aqua><hover:show_text:'<green>Klicke um dich zum Monument zu teleportieren.</green>'><click:run_command:/tp @s <location>><location></click></aqua>)"
+      next_dungeon: "<green>Das nächste Dungeon Monument ist <distance> Blöcke entfernt. (<aqua><hover:show_text:'<green>Klicke um dich zum Monument zu teleportieren.</green>'><click:run_command:/tp <location>><location></click></aqua>)"
     errors:
-      only_player_cmd: "<red>Aether-Befehle können nur von Spielern ausgeführt werden!"
+      only_player_cmd: "<red>MPP-Befehle können nur von Spielern ausgeführt werden!"
       item_does_not_exist: "<red>Dieses Item existiert nicht!"
       no_dungeon_found: "<red>Es wurde kein Dungeon gefunden!"
   chat:
@@ -40,10 +40,10 @@ items:
     name: "Himmelsschwarzeichenplanke"
     description: ~
   AETHER_JUNGLE_LOG:
-    name: "Himmelsjungelstamm"
+    name: "Himmelstropenstamm"
     description: ~
   AETHER_JUNGLE_PLANKS:
-    name: "Himmelsjungelplanke"
+    name: "Himmelstropenplanke"
     description: ~
   AETHER_OAK_LOG:
     name: "Himmelseichenstamm"
@@ -52,7 +52,7 @@ items:
     name: "Himmelseichenplanke"
     description: ~
   AETHER_SPRUCE_LOG:
-    name: "Himmelsakazienstamm"
+    name: "Himmelsfichtenstamm"
     description: ~
   AETHER_SPRUCE_PLANKS:
     name: "Himmelsfichtenplanke"
@@ -155,7 +155,7 @@ items:
   SUN_STONE:
     name: "<gradient:#FB2C03:#F0FB03>Stein der Sonne</gradient>"
     description:
-      - "Eine Element des Sonnenschwertes, jedoch fehlt noch etwas..."
+      - "Ein Element des Sonnenschwertes, jedoch fehlt noch etwas..."
   SUN_SWORD:
     name: "<gradient:#FB2C03:#F0FB03>Sonnenschwert</gradient>"
     description:

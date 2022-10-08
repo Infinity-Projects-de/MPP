@@ -1,0 +1,250 @@
+messages:
+  prefix: "<gradient:#7403FB:#FB03E4>[MPP] </gradient>"
+  cmd:
+    info:
+      reloaded_config: "<green>The config was reloaded!"
+      help_text:
+        - "<gradient:#03FB5D:#03FBE1>/ae chest</gradient> <gradient:#D2FB03:#68FB03>- Spawns a dungeon chest at your position.</gradient>"
+        - "<gradient:#03FB5D:#03FBE1>/ae give <name></gradient> <gradient:#D2FB03:#68FB03>- Gives you an MPP item.</gradient>"
+        - "<gradient:#03FB5D:#03FBE1>/ae locate</gradient> <gradient:#D2FB03:#68FB03>- Shows you the coordinates of the next dungeon.</gradient>"
+        - "<gradient:#03FB5D:#03FBE1>/ae reload</gradient> <gradient:#D2FB03:#68FB03>- Reloads the config.</gradient>"
+        - "<gradient:#03FB5D:#03FBE1>/ae teleport</gradient> <gradient:#D2FB03:#68FB03>- Teleports you to the aether world.</gradient>"
+      next_dungeon: "<green>The nearest dungeon monument is <distance> blocks away. (<aqua><hover:show_text:'<green>Click to teleport to the monument.</green>'><click:run_command:/tp <location>><location></click></aqua>)"
+    errors:
+      only_player_cmd: "<red>MPP commands can only be executed by players!"
+      item_does_not_exist: "<red>This item does not exist!"
+      no_dungeon_found: "<red>No dungeon was found!"
+  chat:
+    click_to_dungeon_teleport: "<gradient:#03FB5D:#03FBE1>Click on the block again to teleport into the dungeon.</gradient>"
+dungeons:
+  entry:
+    title: "<bold><gold>DUNGEON"
+    subtitle: "<bold><green>Size: <size> segments"
+items:
+  AETHER_ACACIA_LOG:
+    name: "Aether Acacia Log"
+    description: ~
+  AETHER_ACACIA_PLANKS:
+    name: "Aether Acacia Planks"
+    description: ~
+  AETHER_BIRCH_LOG:
+    name: "Aether Birch Log"
+    description: ~
+  AETHER_BIRCH_PLANKS:
+    name: "Aether Birch Planks"
+    description: ~
+  AETHER_DARK_OAK_LOG:
+    name: "Aether Dark Oak Log"
+    description: ~
+  AETHER_DARK_OAK_PLANKS:
+    name: "Aether Dark Oak Planks"
+    description: ~
+  AETHER_JUNGLE_LOG:
+    name: "Aether Jungle Log"
+    description: ~
+  AETHER_JUNGLE_PLANKS:
+    name: "Aether Jungle Planks"
+    description: ~
+  AETHER_OAK_LOG:
+    name: "Aether Oak Log"
+    description: ~
+  AETHER_OAK_PLANKS:
+    name: "Aether Oak Planks"
+    description: ~
+  AETHER_SPRUCE_LOG:
+    name: "Aether Spruce Log"
+    description: ~
+  AETHER_SPRUCE_PLANKS:
+    name: "Aether Spruce Planks"
+    description: ~
+  AETHER_STICK:
+    name: "Aether Stick"
+    description:
+      - "Stick from the sky"
+  AETHER_STONE:
+    name: "Aether Stone"
+    description: ~
+  AETHER_STONE_AXE:
+    name: "Aether Stone Axe"
+    description: ~
+  AETHER_STONE_HOE:
+    name: "Aether Stone Hoe"
+    description: ~
+  AETHER_STONE_PICKAXE:
+    name: "Aether Stone Pickaxe"
+    description: ~
+  AETHER_STONE_SHOVEL:
+    name: "Aether Stone Shovel"
+    description: ~
+  AETHER_STONE_SWORD:
+    name: "Aether Stone Sword"
+    description: ~
+  AETHER_WOODEN_AXE:
+    name: "Aether Stone Axe"
+    description: ~
+  AETHER_WOODEN_HOE:
+    name: "Aether Stone Hoe"
+    description: ~
+  AETHER_WOODEN_PICKAXE:
+    name: "Aether Stone Pickaxe"
+    description: ~
+  AETHER_WOODEN_SHOVEL:
+    name: "Aether Stone Shovel"
+    description: ~
+  AETHER_WOODEN_SWORD:
+    name: "Aether Stone Sword"
+    description: ~
+  FIRE_ESSENCE:
+    name: "<gradient:#FB2C03:#FB7F03>Fire Essence</gradient>"
+    description:
+      - "Can be used to improve the zanite sword."
+  FLAME_SWORD:
+    name: "<gradient:#FB2C03:#FB7F03>Flame Sword</gradient>"
+    description:
+      - "Burn your enemies if they get too close to you."
+  GRAVITITE_AXE:
+    name: "<gradient:#C303FB:#FB03DD>Gravitite Axe</gradient>"
+    description: ~
+  GRAVITITE_BOOTS:
+    name: "<gradient:#C303FB:#FB03DD>Gravitite Boots</gradient>"
+    description: ~
+  GRAVITITE_CHESTPLATE:
+    name: "<gradient:#C303FB:#FB03DD>Gravitite Chestplate</gradient>"
+    description: ~
+  GRAVITITE_HELMET:
+    name: "<gradient:#C303FB:#FB03DD>Gravitite Helmet</gradient>"
+    description: ~
+  GRAVITITE_HOE:
+    name: "<gradient:#C303FB:#FB03DD>Gravitite Hoe</gradient>"
+    description: ~
+  GRAVITITE_LEGGINGS:
+    name: "<gradient:#C303FB:#FB03DD>Gravitite Leggings</gradient>"
+    description: ~
+  GRAVITITE_ORE:
+    name: "<gradient:#C303FB:#FB03DD>Gravitite Ore</gradient>"
+    description: ~
+  GRAVITITE_PICKAXE:
+    name: "<gradient:#C303FB:#FB03DD>Gravitite Pickaxe</gradient>"
+    description: ~
+  GRAVITITE_PLATE:
+    name: "<gradient:#C303FB:#FB03DD>Gravitite Plate</gradient>"
+    description:
+      - "Plates so hard that almost everything can be repelled."
+  GRAVITITE_SHOVEL:
+    name: "<gradient:#C303FB:#FB03DD>Gravitite Shovel</gradient>"
+    description: ~
+  GRAVITITE_SWORD:
+    name: "<gradient:#C303FB:#FB03DD>Gravitite Sword</gradient>"
+    description: ~
+  ICE_ESSENCE:
+    name: "<gradient:#03FBD2:#03CEFB>Ice Essence</gradient>"
+    description:
+      - "Can be used to improve the zanite sword."
+  ICE_SWORD:
+    name: "<gradient:#03FBD2:#03CEFB>Ice Sword</gradient>"
+    description:
+      - "Freeze your opponents on contact."
+  LIGHTNING_ESSENCE:
+    name: "<gradient:#037FFB:#2103FB>Lightning Essence</gradient>"
+    description:
+      - "Can be used to improve the zanite sword."
+  LIGHTNING_SWORD:
+    name: "<gradient:#037FFB:#03FBD2>Lightning Sword</gradient>"
+    description:
+      - "Summon lightning on the one who tries to hurt you."
+  SUN_STONE:
+    name: "<gradient:#FB2C03:#F0FB03>Sun Stone</gradient>"
+    description:
+      - "An element of the sun sword, however, something is still missing..."
+  SUN_SWORD:
+    name: "<gradient:#FB2C03:#F0FB03>Sun Sword</gradient>"
+    description:
+      - "The sword of the sun god is a powerful weapon that makes everyone tremble."
+  VALKYRE_AXE:
+    name: "<gradient:#FBC603:#ECFB03>Valkyre Axe</gradient>"
+    description:
+      - "This is the battle axe of the Valkyries. It cuts everything that gets in its way."
+  VALKYRE_BOOTS:
+    name: "<gradient:#FBC603:#ECFB03>Valkyre Boots</gradient>"
+    description:
+      - "Valkyrie boots allow you to fall more slowly to the ground."
+  VALKYRE_LEGGINGS:
+    name: "<gradient:#FBC603:#ECFB03>Valkyre Leggings</gradient>"
+    description:
+      - "The Valkyries' leg protection is sturdy and can withstand a lot."
+  VALKYRE_RING:
+    name: "<gradient:#FBC603:#ECFB03>Valkyre Ring</gradient>"
+    description:
+      - "The sacred ring of the Valkyries. It has the power to strengthen you."
+  VALKYRE_SWORD:
+    name: "<gradient:#FBC603:#ECFB03>Valkyre Sword</gradient>"
+    description:
+      - "A powerful sword that evokes fear and anxiety."
+  VALKYRE_WINGS:
+    name: "<gradient:#FBC603:#ECFB03>Valkyre Wings</gradient>"
+    description:
+      - "With the Valkyrie wings you can glide through the sky like an angel."
+    boost_info: "<gray>Press <key:key.swapOffhand> to boost yourself!"
+  ZANITE_AXE:
+    name: "<gradient:#D012FF:#8000FF>Zanite Axe</gradient>"
+    description: ~
+  ZANITE_BOOTS:
+    name: "<gradient:#D012FF:#8000FF>Zanite Boots</gradient>"
+    description: ~
+  ZANITE_CHESTPLATE:
+    name: "<gradient:#D012FF:#8000FF>Zanite Chestplate</gradient>"
+    description: ~
+  ZANITE_HELMET:
+    name: "<gradient:#D012FF:#8000FF>Zanite Helmet</gradient>"
+    description: ~
+  ZANITE_HOE:
+    name: "<gradient:#D012FF:#8000FF>Zanite Hoe</gradient>"
+    description: ~
+  ZANITE_LEGGINGS:
+    name: "<gradient:#D012FF:#8000FF>Zanite Leggings</gradient>"
+    description: ~
+  ZANITE_ORE:
+    name: "<gradient:#D012FF:#8000FF>Zanite Ore</gradient>"
+    description: ~
+  ZANITE_PICKAXE:
+    name: "<gradient:#D012FF:#8000FF>Zanite Pickaxe</gradient>"
+    description: ~
+  ZANITE_SHOVEL:
+    name: "<gradient:#D012FF:#8000FF>Zanite Shovel</gradient>"
+    description: ~
+  ZANITE_STONE:
+    name: "<gradient:#D012FF:#8000FF>Zanite Stone</gradient>"
+    description:
+      - "A rock for making strong weapons and tools."
+  ZANITE_SWORD:
+    name: "<gradient:#D012FF:#8000FF>Zanite Sword</gradient>"
+    description: ~
+  MAGIC_WAND:
+    name: "<rainbow>Magic Wand</rainbow>"
+    description: ~
+    current_spell: "<gray>Current Spell: "
+    spells:
+      LLAMA_SPELL: "<white>Llama Spell"
+      YEET_SPELL: "<aqua>YEET Spell"
+      SOUND_BEAM: "<red>Sound Beam"
+  CLOUD_HEAL:
+    name: "<light_purple>Cloud of healing"
+    description: ~
+  CLOUD_SLOW_FALLING:
+    name: "<white>Cloud of slow fall"
+    description: ~
+  CLOUD_SPEED:
+    name: "<yellow>Cloud of speed"
+    description: ~
+  CLOUD_JUMP:
+    name: "<green>Cloud of bounce"
+    description: ~
+  CLOUD_HEAL2:
+    name: "<red>Cloud of strong healing"
+    description: ~
+  CLOUD_SPEED2:
+    name: "<orange>Cloud of strong speed"
+    description: ~
+  CLOUD_JUMP2:
+    name: "<dark_green>Cloud of strong bounce"
+    description: ~
