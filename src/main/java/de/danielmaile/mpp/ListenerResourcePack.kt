@@ -35,12 +35,12 @@ class ListenerResourcePack: Listener {
     }
 
     private fun applyDefaultResourcePack(player: Player) {
-        player.setResourcePack("https://github.com/DanielMaile/MPP_ResourcePacks/raw/main/MPP_v2.zip",
-            "e8e1322dadf0cd871fcd2856fc988523fd175164", true)
+        player.setResourcePack("https://github.com/DanielMaile/MPP_ResourcePacks/raw/main/MPP_v3.zip",
+            "376e954f49daf77e876ac607c90b9beb0dca9a20", true)
     }
 
     private fun applyAetherResourcePack(player: Player) {
-        player.setResourcePack("https://github.com/DanielMaile/MPP_ResourcePacks/raw/main/MPP_Aether_v7.zip",
-            "62e99f0fddfbac5d881266d3a32547ae55652814", true)
+        player.setResourcePack("https://github.com/DanielMaile/MPP_ResourcePacks/raw/main/MPP_Aether_v8.zip",
+            "97c290743c14935add7dc9216942b5f0ba34ce32", true)
     }
 }

@@ -1,5 +1,11 @@
 messages:
   prefix: "<gradient:#7403FB:#FB03E4>[MPP] </gradient>"
+  errors:
+    wrong_spigot_yml_settings:
+      - "The plugin could not be activated!"
+      - "1. Open the spigot.yml file and search for \"attribute:\""
+      - "2. Change the value of \"maxHealth:\" and \"attackDamage:\" from 2048.0 to 1E100"
+      - "3. Restart the Server"
   cmd:
     info:
       reloaded_config: "<green>The config was reloaded!"
@@ -251,6 +257,9 @@ items:
   CLOUD_JUMP2:
     name: "<dark_green>Cloud of strong bounce"
     description: ~
+  ADMIN_SWORD:
+    name: "<rainbow>Admin Sword</rainbow>"
+    description: ~
 mobs:
   TANK:
-    name: "<aqua>Tank<gold>[<level>] <white>| <red><health>❤"
+    name: "<aqua><bold>〈</bold><aqua>Tank<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"

@@ -48,6 +48,7 @@ enum class ItemType(
     AETHER_WOODEN_PICKAXE(2008, Material.WOODEN_PICKAXE, null, null),
     AETHER_WOODEN_SHOVEL(2009, Material.WOODEN_SHOVEL, null, null),
     AETHER_WOODEN_SWORD(2001, Material.WOODEN_SWORD, null, null),
+    ADMIN_SWORD(9999, Material.NETHERITE_SWORD, ToolAttribute(1000000.0, 0.1).toAttributeMap(), null),
     FIRE_ESSENCE(1003, Material.ORANGE_DYE, null, null),
     FLAME_SWORD(2200, Material.DIAMOND_SWORD, ToolAttribute(10.0, 1.6).toAttributeMap(), null),
     GRAVITITE_AXE(2020, Material.NETHERITE_AXE, null, null),

@@ -39,7 +39,7 @@ fun updateDisplayName(entity: LivingEntity) {
     try {
         val mppMob = MPPMob.valueOf(entity.persistentDataContainer.get(getMPPMobNameKey(), PersistentDataType.STRING)!!)
         val level = entity.persistentDataContainer.get(getMPPMobLevelKey(), PersistentDataType.LONG)!!
-        val health = ceil(entity.persistentDataContainer.get(getMPPMobHealthKey(), PersistentDataType.DOUBLE)!! / 2)
+        val health = ceil(entity.health / 2)
 
         val tagResolver = TagResolver.resolver(
             Placeholder.parsed("level", level.abbreviateNumber()),
@@ -63,8 +63,4 @@ fun getMPPMobNameKey(): NamespacedKey {
 
 fun getMPPMobLevelKey(): NamespacedKey {
     return NamespacedKey(inst(), "MPPMobLevel")
-}
-
-fun getMPPMobHealthKey(): NamespacedKey {
-    return NamespacedKey(inst(), "MPPMobHealth")
 }

@@ -29,4 +29,8 @@ class LanguageManager(private val languageFile: FileConfiguration) {
         }
         return componentList
     }
+
+    fun getStringList(path: String): List<String> {
+        return languageFile.getStringList(path)
+    }
 }
