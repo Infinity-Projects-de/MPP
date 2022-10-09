@@ -27,7 +27,7 @@ class ConfigManager {
             logError("Language file " + inst().config.getString("language_file") + ".yml was not found!")
             file = File(
                 (inst().dataFolder.absolutePath + File.separator
-                        + "locales" + File.separator + "de.yml")
+                        + "locales" + File.separator + "en.yml")
             )
         }
 

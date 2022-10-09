@@ -23,6 +23,7 @@ import de.danielmaile.mpp.aether.world.dungeon.ListenerDungeon
 import de.danielmaile.lama.lamaapi.LamaAPI
 import de.danielmaile.mpp.aether.world.WorldManager
 import de.danielmaile.mpp.command.CommandMPP
+import de.danielmaile.mpp.mob.ListenerMPPMobs
 import org.bukkit.Bukkit
 import org.bukkit.World
 import org.bukkit.plugin.java.JavaPlugin
@@ -107,6 +108,7 @@ class MPP : JavaPlugin() {
         server.pluginManager.registerEvents(ListenerMagicWand(), this)
         server.pluginManager.registerEvents(ListenerAetherWorld(), this)
         server.pluginManager.registerEvents(ListenerResourcePack(), this)
+        server.pluginManager.registerEvents(ListenerMPPMobs(), this)
     }
 
     override fun onDisable() {

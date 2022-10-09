@@ -17,6 +17,9 @@ import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import java.io.IOException
 import java.io.InputStream
+import java.text.CompactNumberFormat
+import java.text.NumberFormat
+import java.util.*
 
 fun logInfo(message: String) {
     inst().logger.info(message)
@@ -98,4 +101,18 @@ fun Block.isSurroundedByAirOrMaterial(allowedMaterials: Set<Material>): Boolean 
         if (relativeMaterial != Material.AIR && !allowedMaterials.contains(relativeMaterial)) return false
     }
     return true
+}
+
+fun String.isLong(): Boolean {
+    return try {
+        java.lang.Long.parseLong(this)
+        true
+    } catch (exception: java.lang.NumberFormatException) {
+        false
+    }
+}
+
+fun Long.abbreviateNumber(): String {
+    val locale = Locale.forLanguageTag(inst().config.getString("language_file"))
+    return CompactNumberFormat.getCompactNumberInstance(locale, NumberFormat.Style.SHORT).format(this).replace('\u00a0', ' ')
 }

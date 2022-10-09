@@ -4,15 +4,18 @@ messages:
     info:
       reloaded_config: "<green>Die Config wurde neu geladen!"
       help_text:
-        - "<gradient:#03FB5D:#03FBE1>/ae chest</gradient> <gradient:#D2FB03:#68FB03>- Spawnt eine Dungeon-Kiste an deiner Position.</gradient>"
-        - "<gradient:#03FB5D:#03FBE1>/ae give <name></gradient> <gradient:#D2FB03:#68FB03>- Gibt dir ein MPP Item.</gradient>"
-        - "<gradient:#03FB5D:#03FBE1>/ae locate</gradient> <gradient:#D2FB03:#68FB03>- Zeigt dir die Koordinaten des nächsten Dungeon an.</gradient>"
-        - "<gradient:#03FB5D:#03FBE1>/ae reload</gradient> <gradient:#D2FB03:#68FB03>- Läd die Config neu.</gradient>"
-        - "<gradient:#03FB5D:#03FBE1>/ae teleport</gradient> <gradient:#D2FB03:#68FB03>- Teleportiert dich in die Aether-Welt.</gradient>"
+        - "<gradient:#03FB5D:#03FBE1>/mpp chest</gradient> <gradient:#D2FB03:#68FB03>- Spawnt eine Dungeon-Kiste an deiner Position.</gradient>"
+        - "<gradient:#03FB5D:#03FBE1>/mpp give <name></gradient> <gradient:#D2FB03:#68FB03>- Gibt dir ein MPP Item.</gradient>"
+        - "<gradient:#03FB5D:#03FBE1>/mpp locate</gradient> <gradient:#D2FB03:#68FB03>- Zeigt dir die Koordinaten des nächsten Dungeon an.</gradient>"
+        - "<gradient:#03FB5D:#03FBE1>/mpp reload</gradient> <gradient:#D2FB03:#68FB03>- Läd die Config neu.</gradient>"
+        - "<gradient:#03FB5D:#03FBE1>/mpp summon <name> <level></gradient> <gradient:#D2FB03:#68FB03>- Spawnt ein MPP Mob an deiner Position.</gradient>"
+        - "<gradient:#03FB5D:#03FBE1>/mpp teleport</gradient> <gradient:#D2FB03:#68FB03>- Teleportiert dich in die Aether-Welt.</gradient>"
       next_dungeon: "<green>Das nächste Dungeon Monument ist <distance> Blöcke entfernt. (<aqua><hover:show_text:'<green>Klicke um dich zum Monument zu teleportieren.</green>'><click:run_command:/tp <location>><location></click></aqua>)"
     errors:
       only_player_cmd: "<red>MPP-Befehle können nur von Spielern ausgeführt werden!"
+      mob_does_not_exist: "<red>Dieser Mob existiert nicht!"
       item_does_not_exist: "<red>Dieses Item existiert nicht!"
+      value_no_integer: "<red>Der angegebene Wert ist keine ganze Zahl!"
       no_dungeon_found: "<red>Es wurde kein Dungeon gefunden!"
   chat:
     click_to_dungeon_teleport: "<gradient:#03FB5D:#03FBE1>Klicke nochmals auf den Block um dich in den Dungeon zu teleportieren.</gradient>"
@@ -248,3 +251,6 @@ items:
   CLOUD_JUMP2:
     name: "<dark_green>Wolke der starken Sprungkraft"
     description: ~
+mobs:
+  TANK:
+    name: "<aqua>Panzer<gold>[<level>] <white>| <red><health>❤"

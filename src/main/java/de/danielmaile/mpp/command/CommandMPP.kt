@@ -1,12 +1,14 @@
 package de.danielmaile.mpp.command
 
+import de.danielmaile.mpp.aether.world.dungeon.Dungeon
+import de.danielmaile.mpp.aether.world.dungeon.loot.DungeonChest
 import de.danielmaile.mpp.aetherWorld
 import de.danielmaile.mpp.config.LanguageManager
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.item.ItemType
+import de.danielmaile.mpp.mob.MPPMob
 import de.danielmaile.mpp.util.getDirection
-import de.danielmaile.mpp.aether.world.dungeon.Dungeon
-import de.danielmaile.mpp.aether.world.dungeon.loot.DungeonChest
+import de.danielmaile.mpp.util.isLong
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
@@ -18,7 +20,6 @@ import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 import java.util.*
 import java.util.stream.Stream
-import kotlin.collections.ArrayList
 
 class CommandMPP : CommandExecutor, TabCompleter {
 
@@ -73,6 +74,18 @@ class CommandMPP : CommandExecutor, TabCompleter {
                 }
             }
 
+            3 -> {
+                when (args[0].lowercase()) {
+                    "summon" -> {
+                        summonCMD(sender, args, languageManager, cmdPrefix)
+                    }
+
+                    else -> {
+                        sendHelp(sender, languageManager, cmdPrefix)
+                    }
+                }
+            }
+
             else -> sendHelp(sender, languageManager, cmdPrefix)
         }
         return true
@@ -108,6 +121,36 @@ class CommandMPP : CommandExecutor, TabCompleter {
         } else {
             player.sendMessage(cmdPrefix.append(languageManager.getComponent("messages.cmd.errors.no_dungeon_found")))
         }
+    }
+
+    private fun summonCMD(
+        player: Player,
+        args: Array<out String>,
+        languageManager: LanguageManager,
+        cmdPrefix: Component
+    ) {
+        val mob: MPPMob
+
+        try {
+            mob = MPPMob.valueOf(args[1].uppercase(Locale.getDefault()))
+        } catch (exception: IllegalArgumentException) {
+            player.sendMessage(
+                cmdPrefix
+                    .append(languageManager.getComponent("messages.cmd.errors.mob_does_not_exist"))
+            )
+            return
+        }
+
+        if(!args[2].isLong()) {
+            player.sendMessage(
+                cmdPrefix
+                    .append(languageManager.getComponent("messages.cmd.errors.value_no_integer"))
+            )
+            return
+        }
+
+        mob.level = java.lang.Long.parseLong(args[2])
+        mob.summon(player.location)
     }
 
     private fun teleportCMD(player: Player) {
@@ -155,13 +198,22 @@ class CommandMPP : CommandExecutor, TabCompleter {
             tabComplete.add("give")
             tabComplete.add("locate")
             tabComplete.add("reload")
+            tabComplete.add("summon")
             tabComplete.add("teleport")
             StringUtil.copyPartialMatches(args[0], tabComplete, completions)
         }
 
         if (args.size == 2 && args[0].equals("give", ignoreCase = true)) {
-            //Get ItemNames from enum
+            //Get item names from enum
             val itemNames = Stream.of(*ItemType.values()).map { obj: ItemType -> obj.name }
+                .toList()
+            tabComplete.addAll(itemNames)
+            StringUtil.copyPartialMatches(args[1], tabComplete, completions)
+        }
+
+        if (args.size == 2 && args[0].equals("summon", ignoreCase = true)) {
+            //Get mob names from enum
+            val itemNames = Stream.of(*MPPMob.values()).map { obj: MPPMob -> obj.name }
                 .toList()
             tabComplete.addAll(itemNames)
             StringUtil.copyPartialMatches(args[1], tabComplete, completions)
