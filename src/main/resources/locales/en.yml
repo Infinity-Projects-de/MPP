@@ -263,3 +263,41 @@ items:
 mobs:
   TANK:
     name: "<aqua><bold>〈</bold><aqua>Tank<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  TANK_ELITE:
+    name: "<light_purple><bold>〈Elite〉<aqua><bold>〈</bold><aqua>Tank<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  SCOUT:
+    name: "<aqua><bold>〈</bold><aqua>Scout<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  SCOUT_ELITE:
+    name: "<light_purple><bold>〈Elite〉<aqua><bold>〈</bold><aqua>Scout<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  PLAGUE:
+    name: "<aqua><bold>〈</bold><aqua>Plague<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  PLAGUE_ELITE:
+    name: "<light_purple><bold>〈Elite〉<aqua><bold>〈</bold><aqua>Plague<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  MOTHER:
+    name: "<aqua><bold>〈</bold><aqua>Mother<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  MOTHER_ELITE:
+    name: "<light_purple><bold>〈Elite〉<aqua><bold>〈</bold><aqua>Mother<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  HITMAN:
+    name: "<aqua><bold>〈</bold><aqua>Hitman<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  HITMAN_ELITE:
+    name: "<light_purple><bold>〈Elite〉<aqua><bold>〈</bold><aqua>Hitman<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  CHILD:
+    name: "<aqua><bold>〈</bold><aqua>Child<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  CHILD_ELITE:
+    name: "<light_purple><bold>〈Elite〉<aqua><bold>〈</bold><aqua>Child<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  SLAVE:
+    name: "<aqua><bold>〈</bold><aqua>Slave<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  SLAVE_ELITE:
+    name: "<light_purple><bold>〈Elite〉<aqua><bold>〈</bold><aqua>Slave<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  HEALER:
+    name: "<aqua><bold>〈</bold><aqua>Healer<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  HEALER_ELITE:
+    name: "<light_purple><bold>〈Elite〉<aqua><bold>〈</bold><aqua>Healer<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  NECROMACER:
+    name: "<aqua><bold>〈</bold><aqua>Necromancer<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  NECROMACER_ELITE:
+    name: "<light_purple><bold>〈Elite〉<aqua><bold>〈</bold><aqua>Necromancer<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  KING:
+    name: "<aqua><bold>〈</bold><aqua>King<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  KING_ELITE:
+    name: "<light_purple><bold>〈Elite〉<aqua><bold>〈</bold><aqua>King<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"

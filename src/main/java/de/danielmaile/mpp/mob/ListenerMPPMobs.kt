@@ -21,6 +21,7 @@ class ListenerMPPMobs : Listener {
             entity.customName(null)
             return
         }
+
         //Update display name
         updateDisplayName(event.entity as LivingEntity)
     }
