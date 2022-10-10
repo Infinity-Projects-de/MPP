@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.entity.EntityDeathEvent
 
 class ListenerMPPMobs : Listener {
 
@@ -16,13 +17,15 @@ class ListenerMPPMobs : Listener {
 
         if(!entity.persistentDataContainer.has(getMPPMobNameKey())) return
 
-        //Remove custom name before death to prevent console spamming
-        if(entity.health - event.finalDamage < 0) {
-            entity.customName(null)
-            return
-        }
-
         //Update display name
         updateDisplayName(event.entity as LivingEntity)
+    }
+
+    @EventHandler (priority = EventPriority.HIGHEST)
+    fun oEntityDeath(event: EntityDeathEvent) {
+        if(!event.entity.persistentDataContainer.has(getMPPMobNameKey())) return
+
+        //Remove custom name before death to prevent console spamming
+        event.entity.customName(null)
     }
 }

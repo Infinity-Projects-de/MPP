@@ -6,6 +6,11 @@ messages:
       - "1. Gehe in die spigot.yml und suche nach \"attribute:\""
       - "2. Ändere den Wert bei \"maxHealth:\" und \"attackDamage:\" von 2048.0 auf 1E100"
       - "3. Starte den Server neu"
+    wrong_paper_world_defaults_yml_settings:
+      - "Das Plugin konnte nicht aktiviert werden!"
+      - "1. Gehe in die config/paper-world-defaults.yml und suche nach \"count-all-mobs-for-spawning:\""
+      - "2. Ändere den Wert von false auf true"
+      - "3. Starte den Server neu"
   cmd:
     info:
       reloaded_config: "<green>Die Config wurde neu geladen!"
@@ -261,6 +266,16 @@ items:
     name: "<rainbow>Adminschwert</rainbow>"
     description: ~
 mobs:
+  ZOMBIE:
+    name: "<aqua><bold>〈</bold><aqua>Zombie<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  SKELETON:
+    name: "<aqua><bold>〈</bold><aqua>Skelett<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  SPIDER:
+    name: "<aqua><bold>〈</bold><aqua>Spinne<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  CREEPER:
+    name: "<aqua><bold>〈</bold><aqua>Creeper<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  ENDERMAN:
+    name: "<aqua><bold>〈</bold><aqua>Enderman<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
   TANK:
     name: "<aqua><bold>〈</bold><aqua>Panzer<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
   TANK_ELITE:
@@ -301,3 +316,7 @@ mobs:
     name: "<aqua><bold>〈</bold><aqua>König<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
   KING_ELITE:
     name: "<light_purple><bold>〈Elite〉<aqua><bold>〈</bold><aqua>König<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  RIFT:
+    name: "<aqua><bold>〈</bold><aqua>Riss<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  RIFT_ELITE:
+    name: "<light_purple><bold>〈Elite〉<aqua><bold>〈</bold><aqua>Riss<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"

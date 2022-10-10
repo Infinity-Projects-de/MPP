@@ -49,6 +49,12 @@ fun ItemStack.setDataString(key: String, value: String) {
     LamaAPI.ItemData.setData(this, namespacedKey, PersistentDataType.STRING, value)
 }
 
+fun ItemStack.setUnbreakable() {
+    val meta = this.itemMeta
+    meta.isUnbreakable = true
+    this.itemMeta = meta
+}
+
 fun Player.isGrounded(): Boolean {
     return this.getBlockBelow().type != Material.AIR
 }

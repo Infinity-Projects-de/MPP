@@ -2,6 +2,7 @@ package de.danielmaile.mpp.mob
 
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.util.abbreviateNumber
+import de.danielmaile.mpp.util.setUnbreakable
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 import org.bukkit.Location
@@ -13,14 +14,16 @@ import org.bukkit.entity.Ageable
 import org.bukkit.entity.Breedable
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.LivingEntity
+import org.bukkit.event.entity.CreatureSpawnEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import kotlin.math.ceil
+import kotlin.random.Random
 
 enum class MPPMob(
-    private val entityType: EntityType,
+    val entityType: EntityType,
     private val baby: Boolean,
     private val baseHPMultiplier: Float,
     private val hpMultiplier: Float,
@@ -37,32 +40,30 @@ enum class MPPMob(
     private val potionEffects: Array<PotionEffect>?,
     var level: Long
 ) {
+    //Vanilla replacements
+    ZOMBIE(EntityType.ZOMBIE),
+    SKELETON(EntityType.SKELETON),
+    SPIDER(EntityType.SPIDER),
+    CREEPER(EntityType.CREEPER),
+    ENDERMAN(EntityType.ENDERMAN),
 
+    //Custom mobs
     TANK(
         EntityType.ZOMBIE, false,
         2.8f, 0.02f, 0.8f, 1.6f, 0.01f, 10f,
         null, null,
         null, null,
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     TANK_ELITE(
         EntityType.ZOMBIE, false,
         3.2f, 0.025f, 1.0f, 2f, 0.015f, 10f,
         null, null,
-        null, ItemStack(Material.GOLDEN_CHESTPLATE).apply {
-            this.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 10)
-            val meta = this.itemMeta
-            meta.isUnbreakable = true
-            this.itemMeta = meta
-        },
+        null, getEliteChestPlate(),
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     SCOUT(
@@ -71,25 +72,16 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     SCOUT_ELITE(
         EntityType.ZOMBIE, false,
         1.4f, 0.02f, 1.5f, 1.4f, 0.015f, 0f,
         null, null,
-        null, ItemStack(Material.GOLDEN_CHESTPLATE).apply {
-            this.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5)
-            val meta = this.itemMeta
-            meta.isUnbreakable = true
-            this.itemMeta = meta
-        },
+        null, getEliteChestPlate(),
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     PLAGUE(
@@ -98,25 +90,16 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     PLAGUE_ELITE(
         EntityType.ZOMBIE, false,
         1.0f, 0.02f, 1.0f, 1.2f, 0.015f, 0f,
         null, null,
-        null, ItemStack(Material.GOLDEN_CHESTPLATE).apply {
-            this.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5)
-            val meta = this.itemMeta
-            meta.isUnbreakable = true
-            this.itemMeta = meta
-        },
+        null, getEliteChestPlate(),
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     MOTHER(
@@ -125,25 +108,16 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     MOTHER_ELITE(
         EntityType.ZOMBIE, false,
         1.0f, 0.02f, 1.0f, 1.3f, 0.015f, 0f,
         null, null,
-        null, ItemStack(Material.GOLDEN_CHESTPLATE).apply {
-            this.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5)
-            val meta = this.itemMeta
-            meta.isUnbreakable = true
-            this.itemMeta = meta
-        },
+        null, getEliteChestPlate(),
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     HITMAN(
@@ -152,25 +126,16 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     HITMAN_ELITE(
         EntityType.ZOMBIE, false,
         0.8f, 0.02f, 1.1f, 1.0f, 0.015f, 0f,
         null, null,
-        null, ItemStack(Material.GOLDEN_CHESTPLATE).apply {
-            this.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5)
-            val meta = this.itemMeta
-            meta.isUnbreakable = true
-            this.itemMeta = meta
-        },
+        null, getEliteChestPlate(),
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     CHILD(
@@ -179,25 +144,16 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     CHILD_ELITE(
         EntityType.ZOMBIE, true,
         0.8f, 0.02f, 1.6f, 1.2f, 0.015f, 0f,
         null, null,
-        null, ItemStack(Material.GOLDEN_CHESTPLATE).apply {
-            this.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5)
-            val meta = this.itemMeta
-            meta.isUnbreakable = true
-            this.itemMeta = meta
-        },
+        null, getEliteChestPlate(),
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     SNIPER(
@@ -206,25 +162,16 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     SNIPER_ELITE(
         EntityType.SKELETON, false,
         0.8f, 0.02f, 1.1f, 2.8f, 0.015f, 0f,
         null, null,
-        null, ItemStack(Material.GOLDEN_CHESTPLATE).apply {
-            this.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5)
-            val meta = this.itemMeta
-            meta.isUnbreakable = true
-            this.itemMeta = meta
-        },
+        null, getEliteChestPlate(),
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     RIFT(
@@ -233,25 +180,16 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     RIFT_ELITE(
         EntityType.SKELETON, false,
         1.2f, 0.02f, 1.35f, 1.8f, 0.015f, 0f,
         null, null,
-        null, ItemStack(Material.GOLDEN_CHESTPLATE).apply {
-            this.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5)
-            val meta = this.itemMeta
-            meta.isUnbreakable = true
-            this.itemMeta = meta
-        },
+        null, getEliteChestPlate(),
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     KING(
@@ -260,25 +198,16 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     KING_ELITE(
         EntityType.SKELETON, false,
         2.5f, 0.02f, 1.0f, 1.5f, 0.015f, 0f,
         null, null,
-        null, ItemStack(Material.GOLDEN_CHESTPLATE).apply {
-            this.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5)
-            val meta = this.itemMeta
-            meta.isUnbreakable = true
-            this.itemMeta = meta
-        },
+        null, getEliteChestPlate(),
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     SLAVE(
@@ -287,25 +216,16 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     SLAVE_ELITE(
         EntityType.SKELETON, false,
         0.8f, 0.02f, 1.35f, 1.0f, 0.015f, 0f,
         null, null,
-        null, ItemStack(Material.GOLDEN_CHESTPLATE).apply {
-            this.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5)
-            val meta = this.itemMeta
-            meta.isUnbreakable = true
-            this.itemMeta = meta
-        },
+        null, getEliteChestPlate(),
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     HEALER(
@@ -314,9 +234,7 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     HEALER_ELITE(
@@ -325,9 +243,7 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     NECROMACER(
@@ -336,9 +252,7 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     ),
     NECROMACER_ELITE(
@@ -347,14 +261,23 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(
-            PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
-        ),
+        arrayOf(getFireResistanceEffect()),
         1
     );
 
+    constructor(entityType: EntityType) : this(
+        entityType, false,
+        1f, 0.01f, 1f, 1f, 0.01f, 0f,
+        null, null,
+        null, null,
+        null, null,
+        null,
+        1
+    )
+
     fun summon(location: Location) {
-        val entity = location.world.spawnEntity(location, entityType) as LivingEntity
+        val entity =
+            location.world.spawnEntity(location, entityType, CreatureSpawnEvent.SpawnReason.CUSTOM) as LivingEntity
 
         //Set persistent data
         entity.persistentDataContainer.set(getMPPMobNameKey(), PersistentDataType.STRING, name)
@@ -417,6 +340,18 @@ enum class MPPMob(
     }
 }
 
+fun getRandomMob(entityType: EntityType?, level: Long): MPPMob {
+    val mobList = if (entityType != null) {
+        MPPMob.values().filter { it.entityType == entityType }
+    } else {
+        MPPMob.values().toList()
+    }
+
+    return mobList[Random.nextInt(MPPMob.values().size)].apply {
+        this.level = level
+    }
+}
+
 fun updateDisplayName(entity: LivingEntity) {
     if (!entity.persistentDataContainer.has(getMPPMobNameKey())) return
 
@@ -447,4 +382,15 @@ fun getMPPMobNameKey(): NamespacedKey {
 
 fun getMPPMobLevelKey(): NamespacedKey {
     return NamespacedKey(inst(), "MPPMobLevel")
+}
+
+private fun getFireResistanceEffect(): PotionEffect {
+    return PotionEffect(PotionEffectType.FIRE_RESISTANCE, Int.MAX_VALUE, 1)
+}
+
+private fun getEliteChestPlate(): ItemStack {
+    return ItemStack(Material.GOLDEN_CHESTPLATE).apply {
+        this.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5)
+        this.setUnbreakable()
+    }
 }

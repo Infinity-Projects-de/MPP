@@ -23,6 +23,7 @@ import de.danielmaile.mpp.item.funtion.magicwand.ListenerMagicWand
 import de.danielmaile.mpp.item.funtion.particle.ListenerParticle
 import de.danielmaile.mpp.item.funtion.particle.ParticleManager
 import de.danielmaile.mpp.mob.ListenerMPPMobs
+import de.danielmaile.mpp.mob.MPPMobSpawnManager
 import de.danielmaile.mpp.util.logError
 import org.bukkit.Bukkit
 import org.bukkit.World
@@ -108,9 +109,11 @@ class MPP : JavaPlugin() {
         server.pluginManager.registerEvents(ListenerAetherWorld(), this)
         server.pluginManager.registerEvents(ListenerResourcePack(), this)
         server.pluginManager.registerEvents(ListenerMPPMobs(), this)
+        server.pluginManager.registerEvents(MPPMobSpawnManager(), this)
 
-        //Setup spigot yml
+        //Setup spigot and paper yml
         checkSpigotYML()
+        checkPaperYML()
 
         //Validate license
         LamaAPI.License.registerPluginLicenseChecker(this, "MPP")
@@ -136,9 +139,25 @@ class MPP : JavaPlugin() {
         val movementSpeed = spigotSettings.get("settings.attribute.movementSpeed.max") as Double
         val attackDamage = spigotSettings.get("settings.attribute.attackDamage.max") as Double
 
-        //Set settings to max value when they are not set
+        //Send error message when values are not correct
         if(maxHealthSetting != maxValue || movementSpeed != maxValue || attackDamage != maxValue) {
             for(string in getLanguageManager().getStringList("messages.errors.wrong_spigot_yml_settings")) {
+                logError(string)
+            }
+            Bukkit.getPluginManager().disablePlugin(this)
+        }
+    }
+
+    //Check if settings in paper-world-defaults.yml are correct. If not disable the plugin
+    private fun checkPaperYML() {
+        val paperWorldDefaultsSettingsFile = File(dataFolder.parentFile.parentFile, "config" + File.separator + "paper-world-defaults.yml")
+        val paperWorldDefaultsSettings = YamlConfiguration.loadConfiguration(paperWorldDefaultsSettingsFile)
+
+        val countAllMobsForSpawning = paperWorldDefaultsSettings.get("entities.spawning.count-all-mobs-for-spawning") as Boolean
+
+        //Send error message when value is not correct
+        if(!countAllMobsForSpawning) {
+            for(string in getLanguageManager().getStringList("messages.errors.wrong_paper_world_defaults_yml_settings")) {
                 logError(string)
             }
             Bukkit.getPluginManager().disablePlugin(this)
