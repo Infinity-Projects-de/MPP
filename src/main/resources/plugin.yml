@@ -4,7 +4,7 @@ main: de.danielmaile.mpp.MPP
 api-version: 1.19
 authors: [ Daniel Maile ]
 website: daniel-maile.com
-depend: [ ProtocolLib, FastAsyncWorldEdit, LamaAPI ]
+depend: [ ProtocolLib, FastAsyncWorldEdit ]
 
 commands:
   mpp:
