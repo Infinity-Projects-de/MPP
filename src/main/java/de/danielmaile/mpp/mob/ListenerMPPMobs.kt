@@ -22,10 +22,17 @@ class ListenerMPPMobs : Listener {
     }
 
     @EventHandler (priority = EventPriority.HIGHEST)
-    fun oEntityDeath(event: EntityDeathEvent) {
+    fun onCustomMobDeath(event: EntityDeathEvent) {
         if(!event.entity.persistentDataContainer.has(getMPPMobNameKey())) return
 
         //Remove custom name before death to prevent console spamming
         event.entity.customName(null)
+
+        val mppMob = getFromEntity(event.entity)
+        if(mppMob == MPPMob.MOTHER || mppMob == MPPMob.MOTHER_ELITE) {
+            for(i in 1..3) {
+                MPPMob.CHILD.apply { this.level = mppMob.level }.summon(event.entity.location)
+            }
+        }
     }
 }

@@ -340,6 +340,12 @@ enum class MPPMob(
     }
 }
 
+fun getFromEntity(entity: LivingEntity): MPPMob {
+    val mppMob = MPPMob.valueOf(entity.persistentDataContainer.get(getMPPMobNameKey(), PersistentDataType.STRING)!!)
+    val level = entity.persistentDataContainer.get(getMPPMobLevelKey(), PersistentDataType.LONG)!!
+    return mppMob.apply { this.level = level }
+}
+
 fun getRandomMob(entityType: EntityType?, level: Long): MPPMob {
     val mobList = if (entityType != null) {
         MPPMob.values().filter { it.entityType == entityType }
@@ -356,12 +362,11 @@ fun updateDisplayName(entity: LivingEntity) {
     if (!entity.persistentDataContainer.has(getMPPMobNameKey())) return
 
     try {
-        val mppMob = MPPMob.valueOf(entity.persistentDataContainer.get(getMPPMobNameKey(), PersistentDataType.STRING)!!)
-        val level = entity.persistentDataContainer.get(getMPPMobLevelKey(), PersistentDataType.LONG)!!
+        val mppMob = getFromEntity(entity)
         val health = ceil(entity.health / 2)
 
         val tagResolver = TagResolver.resolver(
-            Placeholder.parsed("level", level.abbreviateNumber()),
+            Placeholder.parsed("level", mppMob.level.abbreviateNumber()),
             Placeholder.parsed("health", health.toLong().abbreviateNumber())
         )
 
