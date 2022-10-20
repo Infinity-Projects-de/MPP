@@ -3,7 +3,6 @@ package de.danielmaile.mpp.util
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.item.ArmorSet
 import de.danielmaile.mpp.item.ItemType
-import de.danielmaile.lama.lamaapi.LamaAPI
 import org.bukkit.FluidCollisionMode
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
@@ -21,6 +20,7 @@ import java.text.CompactNumberFormat
 import java.text.NumberFormat
 import java.util.*
 
+
 fun logInfo(message: String) {
     inst().logger.info(message)
 }
@@ -36,17 +36,33 @@ fun getResource(fileName: String): InputStream? {
 
 fun ItemStack.doesKeyExist(key: String): Boolean {
     val namespacedKey = NamespacedKey(inst(), key)
-    return LamaAPI.ItemData.doesKeyExist(this, namespacedKey)
+    return this.doesKeyExist(namespacedKey)
 }
 
 fun ItemStack.getDataString(key: String): String? {
     val namespacedKey = NamespacedKey(inst(), key)
-    return LamaAPI.ItemData.getData(this, namespacedKey, PersistentDataType.STRING)
+    return this.getData(namespacedKey, PersistentDataType.STRING)
 }
 
 fun ItemStack.setDataString(key: String, value: String) {
     val namespacedKey = NamespacedKey(inst(), key)
-    LamaAPI.ItemData.setData(this, namespacedKey, PersistentDataType.STRING, value)
+    this.setData(namespacedKey, PersistentDataType.STRING, value)
+}
+
+private fun ItemStack.doesKeyExist(key: NamespacedKey): Boolean {
+    val itemMeta = this.itemMeta ?: return false
+    return itemMeta.persistentDataContainer.has(key)
+}
+
+private fun <T, Z> ItemStack.getData(key: NamespacedKey, type: PersistentDataType<T, Z>): Z? {
+    val itemMeta = this.itemMeta ?: return null
+    return itemMeta.persistentDataContainer.get(key, type)
+}
+
+private fun <T, Z : Any> ItemStack.setData(key: NamespacedKey, type: PersistentDataType<T, Z>, value: Z) {
+    val itemMeta = this.itemMeta ?: return
+    itemMeta.persistentDataContainer.set(key, type, value)
+    this.itemMeta = itemMeta
 }
 
 fun ItemStack.setUnbreakable() {

@@ -1,7 +1,6 @@
 package de.danielmaile.mpp
 
 import com.comphenix.protocol.ProtocolLibrary
-import de.danielmaile.lama.lamaapi.LamaAPI
 import de.danielmaile.mpp.aether.mob.ListenerAetherMobs
 import de.danielmaile.mpp.aether.mob.RideableLlama
 import de.danielmaile.mpp.aether.world.ListenerAetherWorld
@@ -114,9 +113,6 @@ class MPP : JavaPlugin() {
         //Setup spigot and paper yml
         checkSpigotYML()
         checkPaperYML()
-
-        //Validate license
-        LamaAPI.License.registerPluginLicenseChecker(this, "MPP")
     }
 
     private fun registerRecipes() {

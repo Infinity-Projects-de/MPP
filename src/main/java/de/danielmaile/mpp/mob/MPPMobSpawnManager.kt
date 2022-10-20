@@ -39,7 +39,7 @@ class MPPMobSpawnManager : Listener {
         event.isCancelled = true
     }
 
-    //Calculate Pack spawn chance depending on distance to spawnj
+    //Calculate Pack spawn chance depending on distance to spawn
     private fun calculatePackSpawnChance(location: Location): Double {
         return when(location.distance(location.world.spawnLocation).toLong()) {
             in 0..100 -> 0.05
