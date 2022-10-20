@@ -246,7 +246,7 @@ enum class MPPMob(
         arrayOf(getFireResistanceEffect()),
         1
     ),
-    NECROMACER(
+    NECROMANCER(
         EntityType.WITCH, false,
         1.5f, 0.015f, 0.7f, 1.3f, 0.01f, 0f,
         null, null,
@@ -255,7 +255,7 @@ enum class MPPMob(
         arrayOf(getFireResistanceEffect()),
         1
     ),
-    NECROMACER_ELITE(
+    NECROMANCER_ELITE(
         EntityType.WITCH, false,
         1.8f, 0.02f, 0.7f, 1.5f, 0.015f, 0f,
         null, null,

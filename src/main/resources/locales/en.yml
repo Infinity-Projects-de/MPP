@@ -309,9 +309,9 @@ mobs:
     name: "<aqua><bold>〈</bold><aqua>Healer<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
   HEALER_ELITE:
     name: "<light_purple><bold>〈Elite〉<aqua><bold>〈</bold><aqua>Healer<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
-  NECROMACER:
+  NECROMANCER:
     name: "<aqua><bold>〈</bold><aqua>Necromancer<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
-  NECROMACER_ELITE:
+  NECROMANCER_ELITE:
     name: "<light_purple><bold>〈Elite〉<aqua><bold>〈</bold><aqua>Necromancer<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
   KING:
     name: "<aqua><bold>〈</bold><aqua>King<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
