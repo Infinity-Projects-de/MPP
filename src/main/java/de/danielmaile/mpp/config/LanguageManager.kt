@@ -33,4 +33,8 @@ class LanguageManager(private val languageFile: FileConfiguration) {
     fun getStringList(path: String): List<String> {
         return languageFile.getStringList(path)
     }
+
+    fun getString(path: String): String? {
+        return languageFile.getString(path)
+    }
 }

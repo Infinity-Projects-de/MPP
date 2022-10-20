@@ -84,7 +84,7 @@ class MPP : JavaPlugin() {
         RideableLlama(protocolManager)
 
         //World Manager
-        worldManager = WorldManager()
+        worldManager = WorldManager(this)
 
         //Init object manager and prefabs
         PrefabType.loadPrefabs()
@@ -117,10 +117,6 @@ class MPP : JavaPlugin() {
 
         //Validate license
         LamaAPI.License.registerPluginLicenseChecker(this, "MPP")
-    }
-
-    override fun onDisable() {
-        worldManager.objectManager.save()
     }
 
     private fun registerRecipes() {
