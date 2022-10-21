@@ -2,6 +2,7 @@ package de.danielmaile.mpp.item
 
 import de.danielmaile.mpp.aetherWorld
 import de.danielmaile.mpp.util.doesKeyExist
+import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
@@ -11,7 +12,7 @@ class ListenerBlock : Listener {
 
     @EventHandler
     fun onBlockBreak(event: BlockBreakEvent) {
-        if (event.isCancelled) return
+        if (event.isCancelled || event.player.gameMode == GameMode.CREATIVE) return
 
         val block = event.block
         if (block.world != aetherWorld()) return
