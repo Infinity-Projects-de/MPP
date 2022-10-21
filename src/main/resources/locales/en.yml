@@ -4,7 +4,7 @@ messages:
     wrong_spigot_yml_settings:
       - "The plugin could not be activated!"
       - "1. Open the spigot.yml file and search for \"attribute:\""
-      - "2. Change the value of \"maxHealth:\" and \"attackDamage:\" from 2048.0 to 1E100"
+      - "2. Change the value of \"maxHealth:\", \"attackDamage:\" and \"movementSpeed\" from 2048.0 to 1E100"
       - "3. Restart the Server"
     wrong_paper_world_defaults_yml_settings:
       - "The plugin could not be activated!"
