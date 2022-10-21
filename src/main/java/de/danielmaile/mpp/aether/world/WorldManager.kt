@@ -40,7 +40,6 @@ class WorldManager(mpp: MPP) {
 
     private fun saveOrUpdateDataPack() {
         val path = "mpp_datapack"
-        println(javaClass.protectionDomain.codeSource.location.path)
         val jarFile = File(javaClass.protectionDomain.codeSource.location.path)
         if (jarFile.isFile) {
             val jar = JarFile(jarFile)
@@ -49,7 +48,6 @@ class WorldManager(mpp: MPP) {
                 val jarEntry = entries.nextElement()
                 val name: String = jarEntry.name
                 if (name.startsWith("$path/")) {
-                    println(name)
                     if (name.endsWith('/')) continue
                     val outputPath = Bukkit.getWorldContainer()
                         .toString() + File.separator + Bukkit.getWorlds()[0].name + File.separator + "datapacks" + File.separator + name
