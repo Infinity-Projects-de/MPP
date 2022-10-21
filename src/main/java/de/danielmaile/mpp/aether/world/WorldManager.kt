@@ -5,11 +5,10 @@ import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.util.logError
 import org.bukkit.Bukkit
 import org.bukkit.World
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStream
-import java.time.Instant
+import java.io.*
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
 import java.util.*
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
@@ -39,9 +38,29 @@ class WorldManager(mpp: MPP) {
     }
 
     private fun saveOrUpdateDataPack() {
-        val path = "mpp_datapack"
+        // Determine if newer version is available from jar
+        val versionJar = getVersion(inst().javaClass.classLoader.getResourceAsStream("mpp_datapack/version.txt")!!)
+        if (versionJar == -1) {
+            logError("Could not detect data pack version from jar! Aborted data pack update.")
+            return
+        }
+        val dataPackPath = Bukkit.getWorldContainer().toString() + File.separator + Bukkit.getWorlds()[0].name + File.separator + "datapacks" + File.separator + "mpp_datapack"
+        val versionFilePath = dataPackPath + File.separator + "version.txt"
+        if (File(versionFilePath).exists() && versionJar <= getVersion(FileInputStream(versionFilePath)))
+            return
+
+        // Delete old data pack files
+        Files.walk(Paths.get(dataPackPath)).use { dirStream ->
+            dirStream
+                .map(Path::toFile)
+                .sorted(Comparator.reverseOrder())
+                .forEach(File::delete)
+        }
+
+        // Copy updated data pack from jar
         val jarFile = File(javaClass.protectionDomain.codeSource.location.path)
         if (jarFile.isFile) {
+            val path = "mpp_datapack"
             val jar = JarFile(jarFile)
             val entries: Enumeration<JarEntry> = jar.entries()
             while (entries.hasMoreElements()) {
@@ -49,25 +68,31 @@ class WorldManager(mpp: MPP) {
                 val name: String = jarEntry.name
                 if (name.startsWith("$path/")) {
                     if (name.endsWith('/')) continue
-                    val outputPath = Bukkit.getWorldContainer()
-                        .toString() + File.separator + Bukkit.getWorlds()[0].name + File.separator + "datapacks" + File.separator + name
-
-                    if (jarEntry.lastModifiedTime.toInstant()
-                            .isAfter(Instant.ofEpochMilli(File(outputPath).lastModified())))
-                        saveResourceToWorldFolder(name)
+                    saveResourceToWorldFolder(name)
                 }
             }
             jar.close()
         } else {
-            logError("[THIS SHOULD NOT BE REACHED]")
+            logError("[THIS SHOULD NOT BE REACHED] Failed to copy data pack.")
         }
+    }
+
+    private fun getVersion(versionFileStream: InputStream): Int {
+        val versionFileContents = String(versionFileStream.readAllBytes())
+        var version = -1
+        for (line in versionFileContents.split('\n'))
+            if (line.startsWith("version: "))
+                version = Integer.parseInt(line.replace("version: ", "").trim())
+        versionFileStream.close()
+        return version
     }
 
     @Throws(IOException::class)
     private fun saveResourceToWorldFolder(resourcePath: String) {
         val outputPath = Bukkit.getWorldContainer()
             .toString() + File.separator + Bukkit.getWorlds()[0].name + File.separator + "datapacks" + File.separator + resourcePath
-        val inputStream = inst().javaClass.classLoader.getResourceAsStream(resourcePath) ?: throw IllegalArgumentException()
+        val inputStream =
+            inst().javaClass.classLoader.getResourceAsStream(resourcePath) ?: throw IllegalArgumentException()
 
         //Create output directory
         val outputDirectory = File(outputPath.substring(0, outputPath.lastIndexOf('/')))
