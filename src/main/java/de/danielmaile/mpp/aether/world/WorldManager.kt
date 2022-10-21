@@ -9,6 +9,10 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
+import java.time.Instant
+import java.util.*
+import java.util.jar.JarEntry
+import java.util.jar.JarFile
 
 class WorldManager(mpp: MPP) {
 
@@ -17,20 +21,13 @@ class WorldManager(mpp: MPP) {
 
     init {
         //Copy datapack
-        saveResourceToWorldFolder("mpp_datapack/data/aether/dimension/aether.json")
-        saveResourceToWorldFolder("mpp_datapack/data/aether/dimension_type/aether.json")
-        saveResourceToWorldFolder("mpp_datapack/data/aether/worldgen/biome/plains.json")
-        saveResourceToWorldFolder("mpp_datapack/data/minecraft/worldgen/density_function/overworld/base_3d_noise.json")
-        saveResourceToWorldFolder("mpp_datapack/data/minecraft/worldgen/density_function/overworld/depth.json")
-        saveResourceToWorldFolder("mpp_datapack/data/minecraft/worldgen/density_function/overworld/factor.json")
-        saveResourceToWorldFolder("mpp_datapack/data/minecraft/worldgen/density_function/overworld/sloped_cheese.json")
-        saveResourceToWorldFolder("mpp_datapack/pack.mcmeta")
+        saveOrUpdateDataPack()
 
         //Try to get aether world
         val aetherWorld = Bukkit.getWorld("world_aether_aether")
 
         //If aether world is null send message and disable plugin
-        if(aetherWorld == null) {
+        if (aetherWorld == null) {
             mpp.getLanguageManager().getString("messages.errors.aether_world_not_generated")?.let { logError(it) }
             world = Bukkit.getWorlds()[0]
             Bukkit.getPluginManager().disablePlugin(mpp)
@@ -41,10 +38,37 @@ class WorldManager(mpp: MPP) {
         objectManager = ObjectManager()
     }
 
+    private fun saveOrUpdateDataPack() {
+        val path = "mpp_datapack"
+        println(javaClass.protectionDomain.codeSource.location.path)
+        val jarFile = File(javaClass.protectionDomain.codeSource.location.path)
+        if (jarFile.isFile) {
+            val jar = JarFile(jarFile)
+            val entries: Enumeration<JarEntry> = jar.entries()
+            while (entries.hasMoreElements()) {
+                val jarEntry = entries.nextElement()
+                val name: String = jarEntry.name
+                if (name.startsWith("$path/")) {
+                    println(name)
+                    if (name.endsWith('/')) continue
+                    val outputPath = Bukkit.getWorldContainer()
+                        .toString() + File.separator + Bukkit.getWorlds()[0].name + File.separator + "datapacks" + File.separator + name
+
+                    if (jarEntry.lastModifiedTime.toInstant()
+                            .isAfter(Instant.ofEpochMilli(File(outputPath).lastModified())))
+                        saveResourceToWorldFolder(name)
+                }
+            }
+            jar.close()
+        } else {
+            println("[THIS SHOULD NOT BE REACHED]")
+        }
+    }
+
     @Throws(IOException::class)
     private fun saveResourceToWorldFolder(resourcePath: String) {
         val outputPath = Bukkit.getWorldContainer()
-            .toString() + File.separator + "world" + File.separator + "datapacks" + File.separator + resourcePath
+            .toString() + File.separator + Bukkit.getWorlds()[0].name + File.separator + "datapacks" + File.separator + resourcePath
         val inputStream = inst().javaClass.classLoader.getResourceAsStream(resourcePath) ?: throw IllegalArgumentException()
 
         //Create output directory
