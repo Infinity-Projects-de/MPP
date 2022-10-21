@@ -1,0 +1,18 @@
+name: Spigot Installer
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Build Tools
+        run: |
+          mkdir spigot
+           cd spigot
+           wget -O BuildTools.jar https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
+           java -jar BuildTools.jar --rev latest --remapped
