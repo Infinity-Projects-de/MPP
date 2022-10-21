@@ -71,8 +71,10 @@ class MPP : JavaPlugin() {
 
         //Save default files
         saveDefaultConfig()
-        saveResource("locales/de.yml", false)
-        saveResource("locales/en.yml", false)
+        if (!File(getDataFolder(), "locales/de.yml").exists())
+            saveResource("locales/de.yml", false)
+        if (!File(getDataFolder(), "locales/en.yml").exists())
+            saveResource("locales/en.yml", false)
         reloadConfig()
 
         //Recipes
