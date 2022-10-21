@@ -2,7 +2,7 @@ name: MPP
 version: ${project.version}
 main: de.danielmaile.mpp.MPP
 api-version: 1.19
-authors: [ Daniel Maile ]
+authors: [ Daniel Maile and others ]
 website: daniel-maile.com
 depend: [ ProtocolLib, FastAsyncWorldEdit ]
 
