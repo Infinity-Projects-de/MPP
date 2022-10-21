@@ -59,7 +59,7 @@ class WorldManager(mpp: MPP) {
             }
             jar.close()
         } else {
-            println("[THIS SHOULD NOT BE REACHED]")
+            logError("[THIS SHOULD NOT BE REACHED]")
         }
     }
 
