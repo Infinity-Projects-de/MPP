@@ -48,7 +48,7 @@ object AetherPortal {
                 if (filled && checkPortal(block, direction, true)) {
                     return true
                 } else if (!filled && checkPortal(block, direction, false)) {
-                    lightPortal(block, direction)
+                    alterPortal(block, direction, true)
                     return true
                 }
             }
@@ -56,7 +56,49 @@ object AetherPortal {
         return false
     }
 
-    private fun lightPortal(bottomBlock: Block, direction: BlockFace) {
+    /**
+     * Checks for Portal in all different directions and lights it if one is found
+     *
+     * @param location location to check (location of the block above the portal bottom
+     * @param filled   true: Checks for filled Portal, false: Checks for empty Portal and lights it if it found one
+     * @return true if a portal was found
+     */
+    @JvmStatic
+    fun checkPortal(location: Location, filled: Boolean, direction: BlockFace): Boolean {
+        var block = location.block
+        for (i in 0..2) {
+            block = block.getRelative(BlockFace.DOWN)
+            if (filled && checkPortal(block, direction, true)) {
+                return true
+            } else if (!filled && checkPortal(block, direction, false)) {
+                alterPortal(block, direction, true)
+                return true
+            }
+        }
+        return false
+    }
+
+    @JvmStatic
+    fun removePortal(location: Location) {
+        val directions = arrayOf(BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST)
+        for (direction in directions) {
+            var block = location.block
+            for (i in 0..2) {
+                block = block.getRelative(BlockFace.DOWN)
+                if (checkPortal(block, direction, true)) {
+                    alterPortal(block, direction, false)
+                    return
+                }
+            }
+        }
+    }
+
+    /**
+     * @param bottomBlock bottom block of the portal frame
+     * @param direction   direction of an adjacent gateway block
+     * @param place       whether to place or to remove gateway blocks
+     */
+    private fun alterPortal(bottomBlock: Block, direction: BlockFace, place: Boolean) {
         val directions = arrayOf(
             BlockFace.UP, BlockFace.UP, BlockFace.UP,
             direction, BlockFace.DOWN, BlockFace.DOWN
@@ -65,7 +107,7 @@ object AetherPortal {
 
         for (blockFace in directions) {
             block = block.getRelative(blockFace)
-            block.type = Material.END_GATEWAY
+            block.type = if (place) Material.END_GATEWAY else Material.AIR
         }
     }
 
@@ -73,26 +115,34 @@ object AetherPortal {
      * Checks for a glowstone portal at given location
      *
      * @param bottomBlock bottom inside block of the portal
-     * @param direction   direction in with the portal is located
-     * @param filled      true if the portal should be filled with stained-glass, false if it should be air
+     * @param direction   direction in which the portal is located
+     * @param filled      true if the portal should be filled with gateways, false if it should be air
      * @return true if portal was found
      */
     private fun checkPortal(bottomBlock: Block, direction: BlockFace, filled: Boolean): Boolean {
         //Check bottom block
-        if (bottomBlock.type != Material.GLOWSTONE) return false
-
+        if (bottomBlock.type != Material.GLASS) return false
         //Check portal frame
-        val blockDirections = arrayOf(
-            direction, direction,
-            BlockFace.UP, BlockFace.UP, BlockFace.UP, BlockFace.UP,
-            direction.oppositeFace, direction.oppositeFace, direction.oppositeFace,
-            BlockFace.DOWN, BlockFace.DOWN, BlockFace.DOWN, BlockFace.DOWN
-        )
         var block = bottomBlock
-
+        //Not very elegant but the corners should not be required for the portal
+        val blockDirections = arrayOf(
+            "dir", "dirup",
+            "UP", "UP", "upopp",
+            "opp", "downopp",
+            "DOWN", "DOWN"
+        )
         for (blockFace in blockDirections) {
-            block = block.getRelative(blockFace)
-            if (block.type != Material.GLOWSTONE) return false
+            block = when (blockFace) {
+                "dir" -> block.getRelative(direction)
+                "opp" -> block.getRelative(direction.oppositeFace)
+                "dirup" -> block.getRelative(direction).getRelative(BlockFace.UP)
+                "upopp" -> block.getRelative(BlockFace.UP).getRelative(direction.oppositeFace)
+                "downopp" -> block.getRelative(BlockFace.DOWN).getRelative(direction.oppositeFace)
+                else -> block.getRelative(BlockFace.valueOf(blockFace))
+            }
+
+            if (block.type != Material.GLASS)
+                return false
         }
 
         //Check for blocks inside portal
@@ -105,7 +155,7 @@ object AetherPortal {
 
         for (blockFace in filledDirections) {
             block = block.getRelative(blockFace)
-            if (block.type != toCheck) return false
+            if (block.type != toCheck && block.type != Material.WATER) return false
         }
         return true
     }

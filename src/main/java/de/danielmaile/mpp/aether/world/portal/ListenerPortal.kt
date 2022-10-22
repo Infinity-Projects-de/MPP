@@ -4,13 +4,22 @@ import de.danielmaile.mpp.aetherWorld
 import de.danielmaile.mpp.aether.world.portal.AetherPortal.checkPortal
 import de.danielmaile.mpp.aether.world.portal.AetherPortal.createPortal
 import de.danielmaile.mpp.aether.world.portal.AetherPortal.findPortalInRadius
+import de.danielmaile.mpp.aether.world.portal.AetherPortal.removePortal
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.World
+import org.bukkit.block.Block
+import org.bukkit.block.BlockFace
+import org.bukkit.block.Dispenser
+import org.bukkit.block.data.Directional
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.block.*
+import org.bukkit.event.entity.EntityExplodeEvent
 import org.bukkit.event.player.PlayerBucketEmptyEvent
 import org.bukkit.event.player.PlayerMoveEvent
+import org.bukkit.inventory.ItemStack
 
 class ListenerPortal : Listener {
 
@@ -25,6 +34,79 @@ class ListenerPortal : Listener {
             return
         }
         event.isCancelled = true
+    }
+
+    @EventHandler
+    fun onWaterDispense(event: BlockDispenseEvent) {
+        if (event.item.type != Material.WATER_BUCKET) return
+
+        val directional = event.block.blockData as Directional
+        if (!checkPortal(event.block.getRelative(directional.facing).location, false)) return
+
+        event.isCancelled = true
+
+        val dispenser = event.block.state as Dispenser
+        for (i in IntRange(0, dispenser.inventory.size - 1)) {
+            if (dispenser.inventory.getItem(i) != null) {
+                if (dispenser.inventory.getItem(i)!!.type == Material.WATER_BUCKET) {
+                    dispenser.inventory.setItem(i, ItemStack(Material.BUCKET))
+                    break
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    fun onBlockExplode(event: BlockExplodeEvent) {
+        for (block in event.blockList())
+            removePortalIfPresent(block)
+    }
+
+    @EventHandler
+    fun onEntityExplode(event: EntityExplodeEvent) {
+        for (block in event.blockList())
+            removePortalIfPresent(block)
+    }
+
+    @EventHandler
+    fun onBlockPistonExtend(event: BlockPistonExtendEvent) {
+        for (block in event.blocks)
+            removePortalIfPresent(block)
+    }
+
+    @EventHandler
+    fun onBlockPistonRetract(event: BlockPistonRetractEvent) {
+        for (block in event.blocks)
+            removePortalIfPresent(block)
+    }
+
+    @EventHandler
+    fun onBlockBreak(event: BlockBreakEvent) {
+        removePortalIfPresent(event.block)
+    }
+
+    private fun removePortalIfPresent(block: Block) {
+        if (block.type != Material.GLASS) return
+
+        val locations = HashMap<Location, BlockFace>() // multiple portals can be present
+        val blockFaces = arrayOf(
+            BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST
+        )
+        for (blockFace in blockFaces) {
+            if (block.getRelative(blockFace).type == Material.END_GATEWAY) {
+                var blockIterating = block.getRelative(blockFace)
+                for (i in 0..2) {
+                    blockIterating = blockIterating.getRelative(BlockFace.DOWN)
+                    if (blockIterating.type != Material.END_GATEWAY) {
+                        locations[blockIterating.getRelative(BlockFace.UP).location] = blockFace
+                        break
+                    }
+                }
+            }
+        }
+
+        for (location in locations)
+            if (checkPortal(location.key, true, location.value)) removePortal(location.key)
     }
 
     @EventHandler
