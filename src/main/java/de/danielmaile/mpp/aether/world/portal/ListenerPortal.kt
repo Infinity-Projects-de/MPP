@@ -56,48 +56,61 @@ class ListenerPortal : Listener {
         }
     }
 
+    // If a player breaks the glowstone blocks, the portal (inside) gets destroyed
+    // If a player tries to break the inside blocks the event will get cancelled
+
     @EventHandler
     fun onBlockExplode(event: BlockExplodeEvent) {
-        for (block in event.blockList())
+        for (block in event.blockList()) {
             removePortalIfPresent(block)
+            event.isCancelled = isInnerPortalBlock(block)
+        }
+
     }
 
     @EventHandler
     fun onEntityExplode(event: EntityExplodeEvent) {
-        for (block in event.blockList())
+        for (block in event.blockList()) {
             removePortalIfPresent(block)
+            event.isCancelled = isInnerPortalBlock(block)
+        }
     }
 
     @EventHandler
     fun onBlockPistonExtend(event: BlockPistonExtendEvent) {
-        for (block in event.blocks)
+        for (block in event.blocks) {
             removePortalIfPresent(block)
+            event.isCancelled = isInnerPortalBlock(block)
+        }
     }
 
     @EventHandler
     fun onBlockPistonRetract(event: BlockPistonRetractEvent) {
-        for (block in event.blocks)
+        for (block in event.blocks) {
             removePortalIfPresent(block)
+            event.isCancelled = isInnerPortalBlock(block)
+        }
     }
 
     @EventHandler
     fun onBlockBreak(event: BlockBreakEvent) {
         removePortalIfPresent(event.block)
+        event.isCancelled = isInnerPortalBlock(event.block)
     }
 
     private fun removePortalIfPresent(block: Block) {
-        if (block.type != Material.GLASS) return
+        if (block.type != Material.GLOWSTONE) return
 
         val locations = HashMap<Location, BlockFace>() // multiple portals can be present
         val blockFaces = arrayOf(
             BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST
         )
         for (blockFace in blockFaces) {
-            if (block.getRelative(blockFace).type == Material.END_GATEWAY) {
+            if (block.getRelative(blockFace).type == Material.BLUE_STAINED_GLASS_PANE) {
                 var blockIterating = block.getRelative(blockFace)
                 for (i in 0..2) {
                     blockIterating = blockIterating.getRelative(BlockFace.DOWN)
-                    if (blockIterating.type != Material.END_GATEWAY) {
+                    if (blockIterating.type != Material.BLUE_STAINED_GLASS_PANE) {
                         locations[blockIterating.getRelative(BlockFace.UP).location] = blockFace
                         break
                     }
@@ -107,6 +120,11 @@ class ListenerPortal : Listener {
 
         for (location in locations)
             if (checkPortal(location.key, true, location.value)) removePortal(location.key)
+    }
+
+    private fun isInnerPortalBlock(block: Block) : Boolean {
+        if(block.type != Material.BLUE_STAINED_GLASS_PANE) return false
+        return checkPortal(block.location, true)
     }
 
     @EventHandler

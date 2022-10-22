@@ -6,6 +6,7 @@ import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
+import org.bukkit.block.data.type.GlassPane
 
 object AetherPortal {
 
@@ -42,15 +43,8 @@ object AetherPortal {
     fun checkPortal(location: Location, filled: Boolean): Boolean {
         val directions = arrayOf(BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST)
         for (direction in directions) {
-            var block = location.block
-            for (i in 0..2) {
-                block = block.getRelative(BlockFace.DOWN)
-                if (filled && checkPortal(block, direction, true)) {
-                    return true
-                } else if (!filled && checkPortal(block, direction, false)) {
-                    alterPortal(block, direction, true)
-                    return true
-                }
+            if(checkPortal(location, filled, direction)) {
+                return true
             }
         }
         return false
@@ -103,11 +97,27 @@ object AetherPortal {
             BlockFace.UP, BlockFace.UP, BlockFace.UP,
             direction, BlockFace.DOWN, BlockFace.DOWN
         )
-        var block = bottomBlock
 
+        var block = bottomBlock
         for (blockFace in directions) {
             block = block.getRelative(blockFace)
-            block.type = if (place) Material.END_GATEWAY else Material.AIR
+
+            if (place) {
+                block.type = Material.BLUE_STAINED_GLASS_PANE
+
+                //Check for neighbors and connect the glass panes
+                val blockData = block.blockData as GlassPane
+                val neighbors = arrayOf(BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST)
+
+                for(neighbor in neighbors) {
+                    if(block.getRelative(neighbor).type == Material.GLOWSTONE) {
+                        blockData.setFace(neighbor, true)
+                    }
+                }
+                block.blockData = blockData
+            } else {
+                block.type =Material.AIR
+            }
         }
     }
 
@@ -121,7 +131,7 @@ object AetherPortal {
      */
     private fun checkPortal(bottomBlock: Block, direction: BlockFace, filled: Boolean): Boolean {
         //Check bottom block
-        if (bottomBlock.type != Material.GLASS) return false
+        if (bottomBlock.type != Material.GLOWSTONE) return false
         //Check portal frame
         var block = bottomBlock
         //Not very elegant but the corners should not be required for the portal
@@ -141,12 +151,12 @@ object AetherPortal {
                 else -> block.getRelative(BlockFace.valueOf(blockFace))
             }
 
-            if (block.type != Material.GLASS)
+            if (block.type != Material.GLOWSTONE)
                 return false
         }
 
         //Check for blocks inside portal
-        val toCheck = if (filled) Material.END_GATEWAY else Material.AIR
+        val toCheck = if (filled) Material.BLUE_STAINED_GLASS_PANE else Material.AIR
         val filledDirections = arrayOf(
             BlockFace.UP, BlockFace.UP, BlockFace.UP,
             direction, BlockFace.DOWN, BlockFace.DOWN
