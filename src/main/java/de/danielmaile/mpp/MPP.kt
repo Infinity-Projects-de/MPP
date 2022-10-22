@@ -22,6 +22,7 @@ import de.danielmaile.mpp.item.funtion.magicwand.ListenerMagicWand
 import de.danielmaile.mpp.item.funtion.particle.ListenerParticle
 import de.danielmaile.mpp.item.funtion.particle.ParticleManager
 import de.danielmaile.mpp.mob.ListenerMPPMobs
+import de.danielmaile.mpp.mob.MPPMob
 import de.danielmaile.mpp.mob.MPPMobSpawnManager
 import de.danielmaile.mpp.util.logError
 import org.bukkit.Bukkit
@@ -97,6 +98,14 @@ class MPP : JavaPlugin() {
         CloudEffects()
 
         //Register events
+        registerEvents()
+
+        //Setup spigot and paper yml
+        checkSpigotYML()
+        checkPaperYML()
+    }
+
+    private fun registerEvents() {
         server.pluginManager.registerEvents(ListenerPortal(), this)
         server.pluginManager.registerEvents(ListenerBlock(), this)
         server.pluginManager.registerEvents(ListenerCrafting(), this)
@@ -111,10 +120,12 @@ class MPP : JavaPlugin() {
         server.pluginManager.registerEvents(ListenerResourcePack(), this)
         server.pluginManager.registerEvents(ListenerMPPMobs(), this)
         server.pluginManager.registerEvents(MPPMobSpawnManager(), this)
-
-        //Setup spigot and paper yml
-        checkSpigotYML()
-        checkPaperYML()
+        MPPMob.values().forEach { mob ->
+            mob.listener?.let { l ->
+                l.mob = mob
+                server.pluginManager.registerEvents(l, inst())
+            }
+        }
     }
 
     private fun registerRecipes() {

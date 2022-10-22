@@ -1,6 +1,8 @@
 package de.danielmaile.mpp.mob
 
 import de.danielmaile.mpp.inst
+import de.danielmaile.mpp.mob.listeners.MobListener
+import de.danielmaile.mpp.mob.listeners.NecromancerListener
 import de.danielmaile.mpp.util.abbreviateNumber
 import de.danielmaile.mpp.util.setUnbreakable
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
@@ -38,7 +40,8 @@ enum class MPPMob(
     private val leggings: ItemStack?,
     private val boots: ItemStack?,
     private val potionEffects: Array<PotionEffect>?,
-    var level: Long
+    var level: Long,
+    val listener: MobListener?
 ) {
     //Vanilla replacements
     ZOMBIE(EntityType.ZOMBIE),
@@ -55,7 +58,7 @@ enum class MPPMob(
         null, null,
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     TANK_ELITE(
         EntityType.ZOMBIE, false,
@@ -64,7 +67,7 @@ enum class MPPMob(
         null, getEliteChestPlate(),
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     SCOUT(
         EntityType.ZOMBIE, false,
@@ -73,7 +76,7 @@ enum class MPPMob(
         null, null,
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     SCOUT_ELITE(
         EntityType.ZOMBIE, false,
@@ -82,7 +85,7 @@ enum class MPPMob(
         null, getEliteChestPlate(),
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     PLAGUE(
         EntityType.ZOMBIE, false,
@@ -91,7 +94,7 @@ enum class MPPMob(
         null, null,
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     PLAGUE_ELITE(
         EntityType.ZOMBIE, false,
@@ -100,7 +103,7 @@ enum class MPPMob(
         null, getEliteChestPlate(),
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     MOTHER(
         EntityType.ZOMBIE, false,
@@ -109,7 +112,7 @@ enum class MPPMob(
         null, null,
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     MOTHER_ELITE(
         EntityType.ZOMBIE, false,
@@ -118,7 +121,7 @@ enum class MPPMob(
         null, getEliteChestPlate(),
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     HITMAN(
         EntityType.ZOMBIE, false,
@@ -127,7 +130,7 @@ enum class MPPMob(
         null, null,
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     HITMAN_ELITE(
         EntityType.ZOMBIE, false,
@@ -136,7 +139,7 @@ enum class MPPMob(
         null, getEliteChestPlate(),
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     CHILD(
         EntityType.ZOMBIE, true,
@@ -145,7 +148,7 @@ enum class MPPMob(
         null, null,
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     CHILD_ELITE(
         EntityType.ZOMBIE, true,
@@ -154,7 +157,7 @@ enum class MPPMob(
         null, getEliteChestPlate(),
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     SNIPER(
         EntityType.SKELETON, false,
@@ -163,7 +166,7 @@ enum class MPPMob(
         null, null,
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     SNIPER_ELITE(
         EntityType.SKELETON, false,
@@ -172,7 +175,7 @@ enum class MPPMob(
         null, getEliteChestPlate(),
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     RIFT(
         EntityType.SKELETON, false,
@@ -181,7 +184,7 @@ enum class MPPMob(
         null, null,
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     RIFT_ELITE(
         EntityType.SKELETON, false,
@@ -190,7 +193,7 @@ enum class MPPMob(
         null, getEliteChestPlate(),
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     KING(
         EntityType.SKELETON, false,
@@ -199,7 +202,7 @@ enum class MPPMob(
         null, null,
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     KING_ELITE(
         EntityType.SKELETON, false,
@@ -208,7 +211,7 @@ enum class MPPMob(
         null, getEliteChestPlate(),
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     SLAVE(
         EntityType.SKELETON, false,
@@ -217,7 +220,7 @@ enum class MPPMob(
         null, null,
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     SLAVE_ELITE(
         EntityType.SKELETON, false,
@@ -226,7 +229,7 @@ enum class MPPMob(
         null, getEliteChestPlate(),
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     HEALER(
         EntityType.WITCH, false,
@@ -235,7 +238,7 @@ enum class MPPMob(
         null, null,
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     HEALER_ELITE(
         EntityType.WITCH, false,
@@ -244,7 +247,7 @@ enum class MPPMob(
         null, null,
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     ),
     NECROMANCER(
         EntityType.WITCH, false,
@@ -253,7 +256,7 @@ enum class MPPMob(
         null, null,
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, NecromancerListener()
     ),
     NECROMANCER_ELITE(
         EntityType.WITCH, false,
@@ -262,7 +265,7 @@ enum class MPPMob(
         null, null,
         null, null,
         arrayOf(getFireResistanceEffect()),
-        1
+        1, null
     );
 
     constructor(entityType: EntityType) : this(
@@ -272,9 +275,8 @@ enum class MPPMob(
         null, null,
         null, null,
         null,
-        1
+        1, null
     )
-
     fun summon(location: Location) {
         val entity =
             location.world.spawnEntity(location, entityType, CreatureSpawnEvent.SpawnReason.CUSTOM) as LivingEntity
@@ -340,8 +342,9 @@ enum class MPPMob(
     }
 }
 
-fun getFromEntity(entity: LivingEntity): MPPMob {
-    val mppMob = MPPMob.valueOf(entity.persistentDataContainer.get(getMPPMobNameKey(), PersistentDataType.STRING)!!)
+fun getFromEntity(entity: LivingEntity): MPPMob? {
+    val type = entity.persistentDataContainer.get(getMPPMobNameKey(), PersistentDataType.STRING) ?: return null
+    val mppMob = MPPMob.valueOf(type)
     val level = entity.persistentDataContainer.get(getMPPMobLevelKey(), PersistentDataType.LONG)!!
     return mppMob.apply { this.level = level }
 }
@@ -362,7 +365,7 @@ fun updateDisplayName(entity: LivingEntity) {
     if (!entity.persistentDataContainer.has(getMPPMobNameKey())) return
 
     try {
-        val mppMob = getFromEntity(entity)
+        val mppMob = getFromEntity(entity) ?: return
         val health = ceil(entity.health / 2)
 
         val tagResolver = TagResolver.resolver(
