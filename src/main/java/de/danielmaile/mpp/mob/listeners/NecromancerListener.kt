@@ -3,6 +3,7 @@ package de.danielmaile.mpp.mob.listeners
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.mob.MPPMob
 import de.danielmaile.mpp.mob.getFromEntity
+import de.danielmaile.mpp.mob.getLevelFromEntity
 import org.bukkit.Effect
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntityDeathEvent
@@ -19,15 +20,15 @@ class NecromancerListener : MobListener() {
             .firstOrNull { e -> e.type == MPPMob.NECROMANCER.entityType }
         necromancer?.let {
             val location = event.entity.location
-            val levelDied = died.level
+            val levelDied = getLevelFromEntity(event.entity)
             object : BukkitRunnable() {
                 override fun run() {
                     if (necromancer.isDead) return
-                    died.apply { level = levelDied }.summon(location)
-                    necromancer.world.playEffect(necromancer.location.add(0.0,2.0,0.0), Effect.ELECTRIC_SPARK, 2)
+                    died.summon(location, levelDied)
+                    necromancer.world.playEffect(necromancer.location.add(0.0, 2.0, 0.0), Effect.ELECTRIC_SPARK, 2)
                     //TODO add particle trail to necromancer to show that he spawns it and maybe play a sound
-            }
-        }.runTaskLater(inst(), 100)
+                }
+            }.runTaskLater(inst(), 100)
+        }
     }
-}
 }
