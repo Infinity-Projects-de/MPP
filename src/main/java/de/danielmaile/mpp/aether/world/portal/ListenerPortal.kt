@@ -111,7 +111,18 @@ class ListenerPortal : Listener {
                 for (i in 0..2) {
                     blockIterating = blockIterating.getRelative(BlockFace.DOWN)
                     if (blockIterating.type != Material.BLUE_STAINED_GLASS_PANE) {
-                        locations[blockIterating.getRelative(BlockFace.UP).location] = blockFace
+                        if (blockFace == BlockFace.DOWN) {
+                            val sideFaces = arrayOf(
+                                BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST
+                            )
+                            val blockBelow = block.getRelative(BlockFace.DOWN)
+                            for (face in sideFaces) if (blockBelow.getRelative(face).type == Material.BLUE_STAINED_GLASS_PANE) {
+                                locations[blockIterating.getRelative(BlockFace.UP).location] = face
+                                break
+                            }
+                        } else {
+                            locations[blockIterating.getRelative(BlockFace.UP).location] = blockFace
+                        }
                         break
                     }
                 }
@@ -119,11 +130,12 @@ class ListenerPortal : Listener {
         }
 
         for (location in locations)
-            if (checkPortal(location.key, true, location.value)) removePortal(location.key)
+            if (checkPortal(location.key, true, location.value))
+                removePortal(location.key)
     }
 
-    private fun isInnerPortalBlock(block: Block) : Boolean {
-        if(block.type != Material.BLUE_STAINED_GLASS_PANE) return false
+    private fun isInnerPortalBlock(block: Block): Boolean {
+        if (block.type != Material.BLUE_STAINED_GLASS_PANE) return false
         return checkPortal(block.location, true)
     }
 

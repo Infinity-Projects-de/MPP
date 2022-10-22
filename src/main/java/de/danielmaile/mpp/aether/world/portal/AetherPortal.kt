@@ -116,7 +116,7 @@ object AetherPortal {
                 }
                 block.blockData = blockData
             } else {
-                block.type =Material.AIR
+                block.type = Material.AIR
             }
         }
     }
