@@ -1,56 +1,67 @@
 package de.danielmaile.mpp.aether.world
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.stream.JsonReader
-import de.danielmaile.mpp.inst
-import de.danielmaile.mpp.util.serializer.LocationSerializer
-import de.danielmaile.mpp.util.serializer.VectorSerializer
 import de.danielmaile.mpp.aether.world.dungeon.Dungeon
-import org.bukkit.Location
-import org.bukkit.util.Vector
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileReader
-import java.io.FileWriter
-import java.util.*
-import kotlin.collections.ArrayList
+import de.danielmaile.mpp.inst
+import de.danielmaile.mpp.util.logInfo
+import jakarta.persistence.Persistence
+import org.bukkit.Bukkit
 
 
 class ObjectManager {
 
-    var dungeons = ArrayList<Dungeon>()
-
-    private val dungeonSavePath = (inst().dataFolder.absolutePath
-            + File.separator + "data" + File.separator + "dungeons.aether")
-    private var gson: Gson = GsonBuilder()
-        .registerTypeAdapter(Location::class.java, LocationSerializer())
-        .registerTypeAdapter(Vector::class.java, VectorSerializer())
-        .setPrettyPrinting()
-        .create()
+    private var dungeons = ArrayList<Dungeon>()
 
     init {
         loadDungeons()
     }
 
-    fun save() {
-        saveDungeons()
+    //Return immutable list
+    fun getDungeons(): List<Dungeon> {
+        return dungeons.toList()
     }
 
-    private fun saveDungeons() {
-        if (dungeons.isEmpty()) return
+    fun addNewDungeon(dungeon: Dungeon) {
+        dungeons.add(dungeon)
 
-        FileWriter(dungeonSavePath, false).use {
-            gson.toJson(dungeons, it)
-            it.flush()
-        }
+        //Add dungeon to database
+        Bukkit.getScheduler().runTaskAsynchronously(inst(), Runnable {
+            Thread.currentThread().contextClassLoader = inst().javaClass.classLoader
+            val entityManagerFactory = Persistence.createEntityManagerFactory("persistence-unit")
+            val entityManager = entityManagerFactory.createEntityManager()
+            val transaction = entityManager.transaction
+            transaction.begin()
+
+            entityManager.persist(dungeon)
+
+            transaction.commit()
+            entityManager.close()
+            entityManagerFactory.close()
+        })
     }
 
     private fun loadDungeons() {
-        try {
-            val reader = JsonReader(FileReader(dungeonSavePath))
-            dungeons = gson.fromJson<Array<Dungeon>>(reader, Array<Dungeon>::class.java).toCollection(ArrayList())
-        } catch (ignored: FileNotFoundException) {
-        }
+        dungeons.clear()
+
+        Bukkit.getScheduler().runTaskAsynchronously(inst(), Runnable {
+            val startTime = System.currentTimeMillis()
+
+            Thread.currentThread().contextClassLoader = inst().javaClass.classLoader
+            val entityManagerFactory = Persistence.createEntityManagerFactory("persistence-unit")
+
+            val entityManager = entityManagerFactory.createEntityManager()
+
+            val criteriaBuilder = entityManager.criteriaBuilder
+            val criteriaQuery = criteriaBuilder.createQuery(Dungeon::class.java)
+            val rootEntry = criteriaQuery.from(Dungeon::class.java)
+            val all = criteriaQuery.select(rootEntry)
+            val allQuery = entityManager.createQuery(all)
+
+            dungeons = allQuery.resultList as ArrayList<Dungeon>
+
+            entityManager.close()
+            entityManagerFactory.close()
+
+            logInfo("Loading dungeons from database took %dms".format(System.currentTimeMillis() - startTime))
+        })
     }
 }

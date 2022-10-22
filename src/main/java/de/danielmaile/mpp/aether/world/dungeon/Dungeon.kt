@@ -1,12 +1,33 @@
 package de.danielmaile.mpp.aether.world.dungeon
 
+import de.danielmaile.mpp.util.converter.LocationConverter
+import jakarta.persistence.*
 import org.bukkit.Location
-import java.util.Random
+import java.util.*
 
-class Dungeon(val outerParts: List<OuterPart>, @Transient private val random: Random) {
+@Entity
+class Dungeon(
+    @Column(nullable = false)
+    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+    val outerParts: List<OuterPart>,
 
-    var monumentLocation: Location? = null
-    var monumentTargetLocation: Location? = null
+    @Transient
+    private val random: Random,
+
+    // monumentLocation is only null during generation and not when saving
+    @Column(nullable = false)
+    @Convert(converter = LocationConverter::class)
+    var monumentLocation: Location? = null,
+
+    // monumentTargetLocation is only null during generation and not when saving
+    @Column(nullable = false)
+    @Convert(converter = LocationConverter::class)
+    var monumentTargetLocation: Location? = null,
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private val id: Int? = null
+) {
 
     init {
         findMonumentLoc()
