@@ -12,6 +12,7 @@ import java.nio.file.Paths
 import java.util.*
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
+import kotlin.io.path.exists
 
 class WorldManager(mpp: MPP) {
 
@@ -44,18 +45,20 @@ class WorldManager(mpp: MPP) {
             logError("Could not detect data pack version from jar! Aborted data pack update.")
             return
         }
-        val dataPackPath = Bukkit.getWorldContainer().toString() + File.separator + Bukkit.getWorlds()[0].name + File.separator + "datapacks" + File.separator + "mpp_datapack"
+        val dataPackPath = Bukkit.getWorldContainer()
+            .toString() + File.separator + Bukkit.getWorlds()[0].name + File.separator + "datapacks" + File.separator + "mpp_datapack"
         val versionFilePath = dataPackPath + File.separator + "version.txt"
         if (File(versionFilePath).exists() && versionJar <= getVersion(FileInputStream(versionFilePath)))
             return
 
         // Delete old data pack files
-        Files.walk(Paths.get(dataPackPath)).use { dirStream ->
-            dirStream
-                .map(Path::toFile)
-                .sorted(Comparator.reverseOrder())
-                .forEach(File::delete)
-        }
+        if (Paths.get(dataPackPath).exists())
+            Files.walk(Paths.get(dataPackPath)).use { dirStream ->
+                dirStream
+                    .map(Path::toFile)
+                    .sorted(Comparator.reverseOrder())
+                    .forEach(File::delete)
+            }
 
         // Copy updated data pack from jar
         val jarFile = File(javaClass.protectionDomain.codeSource.location.path)
