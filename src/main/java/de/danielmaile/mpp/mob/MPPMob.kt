@@ -1,8 +1,6 @@
 package de.danielmaile.mpp.mob
 
 import de.danielmaile.mpp.inst
-import de.danielmaile.mpp.mob.listeners.MobListener
-import de.danielmaile.mpp.mob.listeners.NecromancerListener
 import de.danielmaile.mpp.util.abbreviateNumber
 import de.danielmaile.mpp.util.setUnbreakable
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
@@ -39,8 +37,7 @@ enum class MPPMob(
     private val chestplate: ItemStack?,
     private val leggings: ItemStack?,
     private val boots: ItemStack?,
-    private val potionEffects: Array<PotionEffect>?,
-    val listener: MobListener?
+    private val potionEffects: Array<PotionEffect>?
 ) {
     //Vanilla replacements
     ZOMBIE(EntityType.ZOMBIE),
@@ -56,8 +53,7 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     TANK_ELITE(
         EntityType.ZOMBIE, false,
@@ -65,8 +61,7 @@ enum class MPPMob(
         null, null,
         null, getEliteChestPlate(),
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     SCOUT(
         EntityType.ZOMBIE, false,
@@ -74,8 +69,7 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     SCOUT_ELITE(
         EntityType.ZOMBIE, false,
@@ -83,8 +77,7 @@ enum class MPPMob(
         null, null,
         null, getEliteChestPlate(),
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     PLAGUE(
         EntityType.ZOMBIE, false,
@@ -92,8 +85,7 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     PLAGUE_ELITE(
         EntityType.ZOMBIE, false,
@@ -101,8 +93,7 @@ enum class MPPMob(
         null, null,
         null, getEliteChestPlate(),
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     MOTHER(
         EntityType.ZOMBIE, false,
@@ -110,8 +101,7 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     MOTHER_ELITE(
         EntityType.ZOMBIE, false,
@@ -119,8 +109,7 @@ enum class MPPMob(
         null, null,
         null, getEliteChestPlate(),
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     HITMAN(
         EntityType.ZOMBIE, false,
@@ -128,8 +117,7 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     HITMAN_ELITE(
         EntityType.ZOMBIE, false,
@@ -137,8 +125,7 @@ enum class MPPMob(
         null, null,
         null, getEliteChestPlate(),
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     CHILD(
         EntityType.ZOMBIE, true,
@@ -146,8 +133,7 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     CHILD_ELITE(
         EntityType.ZOMBIE, true,
@@ -155,8 +141,7 @@ enum class MPPMob(
         null, null,
         null, getEliteChestPlate(),
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     SNIPER(
         EntityType.SKELETON, false,
@@ -164,8 +149,7 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     SNIPER_ELITE(
         EntityType.SKELETON, false,
@@ -173,8 +157,7 @@ enum class MPPMob(
         null, null,
         null, getEliteChestPlate(),
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     RIFT(
         EntityType.SKELETON, false,
@@ -182,8 +165,7 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     RIFT_ELITE(
         EntityType.SKELETON, false,
@@ -191,8 +173,7 @@ enum class MPPMob(
         null, null,
         null, getEliteChestPlate(),
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     KING(
         EntityType.SKELETON, false,
@@ -200,8 +181,7 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     KING_ELITE(
         EntityType.SKELETON, false,
@@ -209,8 +189,7 @@ enum class MPPMob(
         null, null,
         null, getEliteChestPlate(),
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     SLAVE(
         EntityType.SKELETON, false,
@@ -218,8 +197,7 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     SLAVE_ELITE(
         EntityType.SKELETON, false,
@@ -227,8 +205,7 @@ enum class MPPMob(
         null, null,
         null, getEliteChestPlate(),
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     HEALER(
         EntityType.WITCH, false,
@@ -236,8 +213,7 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     HEALER_ELITE(
         EntityType.WITCH, false,
@@ -245,8 +221,7 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     ),
     NECROMANCER(
         EntityType.WITCH, false,
@@ -254,8 +229,7 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        NecromancerListener()
+        arrayOf(getFireResistanceEffect())
     ),
     NECROMANCER_ELITE(
         EntityType.WITCH, false,
@@ -263,8 +237,7 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        arrayOf(getFireResistanceEffect()),
-        null
+        arrayOf(getFireResistanceEffect())
     );
 
     constructor(entityType: EntityType) : this(
@@ -273,7 +246,6 @@ enum class MPPMob(
         null, null,
         null, null,
         null, null,
-        null,
         null
     )
 
