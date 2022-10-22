@@ -150,7 +150,8 @@ class ListenerPortal : Listener {
         if (portalLocation != null) {
             event.player.teleport(portalLocation.add(0.0, 4.0, 0.0))
         } else {
-            toLocation.y = (toLocation.world.getHighestBlockYAt(toLocation) + 2).toDouble()
+            //Limit minimum y to 130 to prevent the portal from spawning at the bottom of the world if there is no ground block
+            toLocation.y = (toLocation.world.getHighestBlockYAt(toLocation) + 2).toDouble().coerceAtLeast(130.0)
             createPortal(toLocation)
             event.player.teleport(toLocation.add(0.0, 4.0, 0.0))
         }
