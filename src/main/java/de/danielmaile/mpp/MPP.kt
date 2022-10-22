@@ -25,6 +25,9 @@ import de.danielmaile.mpp.mob.ListenerMPPMobs
 import de.danielmaile.mpp.mob.MPPMob
 import de.danielmaile.mpp.mob.MPPMobSpawnManager
 import de.danielmaile.mpp.util.logError
+import jakarta.persistence.EntityManager
+import jakarta.persistence.EntityManagerFactory
+import jakarta.persistence.Persistence
 import org.bukkit.Bukkit
 import org.bukkit.World
 import org.bukkit.configuration.file.YamlConfiguration
@@ -47,6 +50,11 @@ class MPP : JavaPlugin() {
         private set
 
     lateinit var worldManager: WorldManager
+        private set
+
+    private lateinit var entityManagerFactory: EntityManagerFactory
+
+    lateinit var entityManager: EntityManager
         private set
 
     fun getLanguageManager(): LanguageManager {
@@ -77,6 +85,11 @@ class MPP : JavaPlugin() {
         if (!File(getDataFolder(), "locales/en.yml").exists())
             saveResource("locales/en.yml", false)
         reloadConfig()
+
+        //Connect to database
+        Thread.currentThread().contextClassLoader = inst().javaClass.classLoader
+        entityManagerFactory = Persistence.createEntityManagerFactory("persistence-unit")
+        entityManager = entityManagerFactory.createEntityManager()
 
         //Recipes
         registerRecipes()
@@ -126,6 +139,11 @@ class MPP : JavaPlugin() {
                 server.pluginManager.registerEvents(l, inst())
             }
         }
+    }
+
+    override fun onDisable() {
+        entityManager.close()
+        entityManagerFactory.close()
     }
 
     private fun registerRecipes() {

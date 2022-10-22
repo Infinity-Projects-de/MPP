@@ -27,13 +27,13 @@ class MPPMobSpawnManager : Listener {
                     val mobPack = MPPMobPack(packSize, calculatePackBaseLevel(location), 0.25)
                     mobPack.summon(location)
                 } else {
-                    MPPMob.ZOMBIE.apply { level = calculatePackBaseLevel(location) }.summon(location)
+                    MPPMob.ZOMBIE.summon(location, calculatePackBaseLevel(location))
                 }
             }
-            EntityType.SKELETON -> MPPMob.SKELETON.apply { level = calculatePackBaseLevel(location) }.summon(location)
-            EntityType.CREEPER -> MPPMob.CREEPER.apply { level = calculatePackBaseLevel(location) }.summon(location)
-            EntityType.SPIDER -> MPPMob.SPIDER.apply { level = calculatePackBaseLevel(location) }.summon(location)
-            EntityType.ENDERMAN -> MPPMob.ENDERMAN.apply { level = calculatePackBaseLevel(location) }.summon(location)
+            EntityType.SKELETON -> MPPMob.SKELETON.summon(location, calculatePackBaseLevel(location))
+            EntityType.CREEPER -> MPPMob.CREEPER.summon(location, calculatePackBaseLevel(location))
+            EntityType.SPIDER -> MPPMob.SPIDER.summon(location, calculatePackBaseLevel(location))
+            EntityType.ENDERMAN -> MPPMob.ENDERMAN.summon(location, calculatePackBaseLevel(location))
             else -> return
         }
         event.isCancelled = true

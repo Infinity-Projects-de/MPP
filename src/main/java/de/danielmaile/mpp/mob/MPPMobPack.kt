@@ -11,7 +11,7 @@ class MPPMobPack(
 
     fun summon(location: Location) {
         for(i in 1 ..size) {
-            getRandomMob(null, getRandomMobLevel()).summon(location)
+            getRandomMob(null).summon(location, getRandomMobLevel())
         }
     }
 

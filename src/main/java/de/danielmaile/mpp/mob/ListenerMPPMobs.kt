@@ -29,9 +29,11 @@ class ListenerMPPMobs : Listener {
         event.entity.customName(null)
 
         val mppMob = getFromEntity(event.entity)
+        val level = getLevelFromEntity(event.entity)
+
         if(mppMob == MPPMob.MOTHER || mppMob == MPPMob.MOTHER_ELITE) {
             for(i in 1..3) {
-                MPPMob.CHILD.apply { this.level = mppMob.level }.summon(event.entity.location)
+                MPPMob.CHILD.summon(event.entity.location, level)
             }
         }
     }

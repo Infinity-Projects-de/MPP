@@ -149,8 +149,8 @@ class CommandMPP : CommandExecutor, TabCompleter {
             return
         }
 
-        mob.level = java.lang.Long.parseLong(args[2])
-        mob.summon(player.location)
+        val level = java.lang.Long.parseLong(args[2])
+        mob.summon(player.location, level)
     }
 
     private fun teleportCMD(player: Player) {
