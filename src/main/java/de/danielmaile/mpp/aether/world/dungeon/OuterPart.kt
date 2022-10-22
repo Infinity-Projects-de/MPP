@@ -1,14 +1,41 @@
 package de.danielmaile.mpp.aether.world.dungeon
 
+import de.danielmaile.mpp.util.converter.LocationConverter
+import de.danielmaile.mpp.util.converter.VectorConverter
+import jakarta.persistence.*
 import org.bukkit.Location
 import org.bukkit.block.BlockFace
 import org.bukkit.util.Vector
-import java.util.Random
+import java.util.*
 
-class OuterPart(val outerType: OuterPartType, val relativePosition: Vector, val worldLocation: Location, random: Random, endPartChance: Double) {
+@Entity
+class OuterPart(
+    @Enumerated(EnumType.STRING)
+    val outerType: OuterPartType,
+
+    @Column(nullable = false)
+    @Convert(converter = VectorConverter::class)
+    val relativePosition: Vector,
+
+    @Column(nullable = false)
+    @Convert(converter = LocationConverter::class)
+    val worldLocation: Location,
+
+    @Transient
+    private val random: Random,
+
+    @Transient
+    private val endPartChance: Double,
 
     //Outer part has 25 inner parts (or 0)
-    val innerParts: ArrayList<InnerPart>?
+    @Column(nullable = true)
+    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+    var innerParts: List<InnerPart>? = null,
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private val id: Int? = null
+) {
 
     init {
         innerParts = generateInnerParts(random, endPartChance)

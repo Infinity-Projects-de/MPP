@@ -92,7 +92,7 @@ class CommandMPP : CommandExecutor, TabCompleter {
     }
 
     private fun locateCMD(player: Player, languageManager: LanguageManager, cmdPrefix: Component) {
-        val dungeons: List<Dungeon> = inst().worldManager.objectManager.dungeons
+        val dungeons: List<Dungeon> = inst().worldManager.objectManager.getDungeons()
         var smallestDistance = Double.MAX_VALUE
         var nearestDungeon: Dungeon? = null
         for (dungeon in dungeons) {

@@ -13,19 +13,11 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockFromToEvent
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.world.ChunkLoadEvent
-import org.bukkit.event.world.WorldSaveEvent
 import java.util.*
 
 private val treeList = listOf(PrefabType.TREE1, PrefabType.TREE2, PrefabType.TREE3)
 
 class ListenerAetherWorld : Listener {
-
-    //Save objects during vanilla world save
-    @EventHandler
-    fun onSave(event: WorldSaveEvent) {
-        if (event.world != aetherWorld()) return
-        inst().worldManager.objectManager.save()
-    }
 
     //Teleport players back to the overworld when they fall out of the aether
     @EventHandler

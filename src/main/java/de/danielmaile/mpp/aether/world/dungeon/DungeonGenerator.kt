@@ -1,16 +1,16 @@
 package de.danielmaile.mpp.aether.world.dungeon
 
-import de.danielmaile.mpp.inst
-import de.danielmaile.mpp.util.logInfo
 import de.danielmaile.mpp.aether.world.Prefab
 import de.danielmaile.mpp.aether.world.PrefabType
 import de.danielmaile.mpp.aether.world.dungeon.loot.DungeonChest
+import de.danielmaile.mpp.inst
+import de.danielmaile.mpp.util.logInfo
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.BlockFace
 import org.bukkit.util.Vector
-import java.util.Random
+import java.util.*
 import kotlin.math.floor
 
 class DungeonGenerator(private val random: Random) {
@@ -26,15 +26,15 @@ class DungeonGenerator(private val random: Random) {
 
             //Check for other dungeons to avoid overlapping
             for (part in dungeon.outerParts) {
-                for (otherDungeon in inst().worldManager.objectManager.dungeons) {
+                for (otherDungeon in inst().worldManager.objectManager.getDungeons()) {
                     for (otherOuterPart in otherDungeon.outerParts) {
                         if (part.worldLocation == otherOuterPart.worldLocation) return@Runnable
                     }
                 }
             }
 
-            //Add dungeon to object list
-            Bukkit.getScheduler().runTask(inst(), Runnable { inst().worldManager.objectManager.dungeons.add(dungeon) })
+            //Add dungeon to object manager
+            Bukkit.getScheduler().runTask(inst(), Runnable { inst().worldManager.objectManager.addNewDungeon(dungeon) })
 
             //Instantiate Prefabs
             Prefab(PrefabType.DUNGEON_MONUMENT, dungeon.monumentLocation!!, true).instantiate()
