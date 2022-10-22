@@ -1,4 +1,4 @@
-package de.danielmaile.mpp.aether.world
+package de.danielmaile.mpp.data
 
 import de.danielmaile.mpp.aether.world.dungeon.Dungeon
 import de.danielmaile.mpp.inst

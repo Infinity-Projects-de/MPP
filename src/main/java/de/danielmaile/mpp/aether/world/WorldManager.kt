@@ -1,6 +1,7 @@
 package de.danielmaile.mpp.aether.world
 
 import de.danielmaile.mpp.MPP
+import de.danielmaile.mpp.data.ObjectManager
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.util.logError
 import org.bukkit.Bukkit
