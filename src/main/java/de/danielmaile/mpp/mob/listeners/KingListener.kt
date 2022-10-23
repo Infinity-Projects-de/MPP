@@ -57,7 +57,7 @@ class KingListener : MobListener(MPPMob.KING, MPPMob.KING_ELITE) {
     @EventHandler
     fun onDeath(event: EntityDeathEvent) {
         if (shouldListen(event.entity)) {
-            //It's a king
+            //It's a king lets kill all its slaves
             val king = event.entity
             val slavesOfKing = king.persistentDataContainer.get(kingSlavesListKey, PersistentDataType.STRING) ?: return
             slavesOfKing.split('\n').forEach { slaveUUID ->
@@ -72,17 +72,22 @@ class KingListener : MobListener(MPPMob.KING, MPPMob.KING_ELITE) {
             //It's a slave
             val kingUUID = slave.persistentDataContainer.get(slaveOwnerKey, PersistentDataType.STRING)
             val king = slave.world.getEntity(UUID.fromString(kingUUID)) ?: return
+            //Let's remove their uuid from the king's slave list
             val slavesOfKing = king.persistentDataContainer.get(kingSlavesListKey, PersistentDataType.STRING)
             if (slavesOfKing != null) {
                 val slaveUUIDS = slavesOfKing.split('\n')
                 val slaveUUIDSNew = ArrayList<String>()
                 for (uuid in slaveUUIDS)
-                    if (!uuid.equals(slave.uniqueId)) slaveUUIDSNew.add(uuid)
-                king.persistentDataContainer.set(
-                    kingSlavesListKey,
-                    PersistentDataType.STRING,
-                    slaveUUIDSNew.joinToString("\n")
-                )
+                    if (uuid != slave.uniqueId.toString()) slaveUUIDSNew.add(uuid)
+
+                if (slaveUUIDSNew.isEmpty())
+                    king.persistentDataContainer.remove(kingSlavesListKey)
+                else
+                    king.persistentDataContainer.set(
+                        kingSlavesListKey,
+                        PersistentDataType.STRING,
+                        slaveUUIDSNew.joinToString("\n")
+                    )
             }
         }
     }
