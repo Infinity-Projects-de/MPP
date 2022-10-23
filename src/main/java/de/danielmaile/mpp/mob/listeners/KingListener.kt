@@ -23,7 +23,7 @@ class KingListener : MobListener(MPPMob.KING, MPPMob.KING_ELITE) {
         object : BukkitRunnable() {
             override fun run() {
                 for (world in inst().server.worlds)
-                    for (king in world.entities) {
+                    for (king in world.livingEntities) {
                         if (!shouldListen(king)) continue
                         val slaves = king.persistentDataContainer.get(kingSlavesListKey, PersistentDataType.STRING)
                         if (slaves == null || slaves.split('\n').size < 5) {
