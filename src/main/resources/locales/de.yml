@@ -38,77 +38,77 @@ dungeons:
 items:
   AETHER_ACACIA_LOG:
     name: "Himmelsakazienstamm"
-    description: ~
+    description: ""
   AETHER_ACACIA_PLANKS:
     name: "Himmelsakazienplanke"
-    description: ~
+    description: ""
   AETHER_BIRCH_LOG:
     name: "Himmelsbirkenstamm"
-    description: ~
+    description: ""
   AETHER_BIRCH_PLANKS:
     name: "Himmelsbirkenplanke"
-    description: ~
+    description: ""
   AETHER_DARK_OAK_LOG:
     name: "Himmelsschwarzeichenstamm"
-    description: ~
+    description: ""
   AETHER_DARK_OAK_PLANKS:
     name: "Himmelsschwarzeichenplanke"
-    description: ~
+    description: ""
   AETHER_JUNGLE_LOG:
     name: "Himmelstropenstamm"
-    description: ~
+    description: ""
   AETHER_JUNGLE_PLANKS:
     name: "Himmelstropenplanke"
-    description: ~
+    description: ""
   AETHER_OAK_LOG:
     name: "Himmelseichenstamm"
-    description: ~
+    description: ""
   AETHER_OAK_PLANKS:
     name: "Himmelseichenplanke"
-    description: ~
+    description: ""
   AETHER_SPRUCE_LOG:
     name: "Himmelsfichtenstamm"
-    description: ~
+    description: ""
   AETHER_SPRUCE_PLANKS:
     name: "Himmelsfichtenplanke"
-    description: ~
+    description: ""
   AETHER_STICK:
     name: "Himmelsstock"
     description:
       - "Stock aus dem Himmel"
   AETHER_STONE:
     name: "Himmelsstein"
-    description: ~
+    description: ""
   AETHER_STONE_AXE:
     name: "Heiligsteinaxt"
-    description: ~
+    description: ""
   AETHER_STONE_HOE:
     name: "Heiligsteinharke"
-    description: ~
+    description: ""
   AETHER_STONE_PICKAXE:
     name: "Heiligsteinspitzhacke"
-    description: ~
+    description: ""
   AETHER_STONE_SHOVEL:
     name: "Heiligsteinschaufel"
-    description: ~
+    description: ""
   AETHER_STONE_SWORD:
     name: "Heiligsteinschwert"
-    description: ~
+    description: ""
   AETHER_WOODEN_AXE:
     name: "Himmelsaxt"
-    description: ~
+    description: ""
   AETHER_WOODEN_HOE:
     name: "Himmelsharke"
-    description: ~
+    description: ""
   AETHER_WOODEN_PICKAXE:
     name: "Himmelsspitzhacke"
-    description: ~
+    description: ""
   AETHER_WOODEN_SHOVEL:
     name: "Himmelschaufel"
-    description: ~
+    description: ""
   AETHER_WOODEN_SWORD:
     name: "Himmelsholzschwert"
-    description: ~
+    description: ""
   FIRE_ESSENCE:
     name: "<gradient:#FB2C03:#FB7F03>Feueressenz</gradient>"
     description:
@@ -119,38 +119,38 @@ items:
       - "Verbrenne deine Feinde, falls sie dir zu nahe kommen."
   GRAVITITE_AXE:
     name: "<gradient:#C303FB:#FB03DD>Gravititaxt</gradient>"
-    description: ~
+    description: ""
   GRAVITITE_BOOTS:
     name: "<gradient:#C303FB:#FB03DD>Gravititschuhe</gradient>"
-    description: ~
+    description: ""
   GRAVITITE_CHESTPLATE:
     name: "<gradient:#C303FB:#FB03DD>Gravititbrustplatte</gradient>"
-    description: ~
+    description: ""
   GRAVITITE_HELMET:
     name: "<gradient:#C303FB:#FB03DD>Gravitithelm</gradient>"
-    description: ~
+    description: ""
   GRAVITITE_HOE:
     name: "<gradient:#C303FB:#FB03DD>Gravititharke</gradient>"
-    description: ~
+    description: ""
   GRAVITITE_LEGGINGS:
     name: "<gradient:#C303FB:#FB03DD>Gravitithose</gradient>"
-    description: ~
+    description: ""
   GRAVITITE_ORE:
     name: "<gradient:#C303FB:#FB03DD>Gravititerz</gradient>"
-    description: ~
+    description: ""
   GRAVITITE_PICKAXE:
     name: "<gradient:#C303FB:#FB03DD>Gravititspitzhacke</gradient>"
-    description: ~
+    description: ""
   GRAVITITE_PLATE:
     name: "<gradient:#C303FB:#FB03DD>Gravititplatte</gradient>"
     description:
       - "Platten so fest, das fast alles Abgewehrt werden kann."
   GRAVITITE_SHOVEL:
     name: "<gradient:#C303FB:#FB03DD>Gravititschaufel</gradient>"
-    description: ~
+    description: ""
   GRAVITITE_SWORD:
     name: "<gradient:#C303FB:#FB03DD>Gravititschwert</gradient>"
-    description: ~
+    description: ""
   ICE_ESSENCE:
     name: "<gradient:#03FBD2:#03CEFB>Eisessenz</gradient>"
     description:
@@ -202,41 +202,41 @@ items:
     boost_info: "<gray>Drücke <key:key.swapOffhand> um dich zu boosten!"
   ZANITE_AXE:
     name: "<gradient:#D012FF:#8000FF>Zaniteaxt</gradient>"
-    description: ~
+    description: ""
   ZANITE_BOOTS:
     name: "<gradient:#D012FF:#8000FF>Zaniteschuhe</gradient>"
-    description: ~
+    description: ""
   ZANITE_CHESTPLATE:
     name: "<gradient:#D012FF:#8000FF>Zanitebrustplatte</gradient>"
-    description: ~
+    description: ""
   ZANITE_HELMET:
     name: "<gradient:#D012FF:#8000FF>Zanitehelm</gradient>"
-    description: ~
+    description: ""
   ZANITE_HOE:
     name: "<gradient:#D012FF:#8000FF>Zaniteharke</gradient>"
-    description: ~
+    description: ""
   ZANITE_LEGGINGS:
     name: "<gradient:#D012FF:#8000FF>Zanitehose</gradient>"
-    description: ~
+    description: ""
   ZANITE_ORE:
     name: "<gradient:#D012FF:#8000FF>Zaniteerz</gradient>"
-    description: ~
+    description: ""
   ZANITE_PICKAXE:
     name: "<gradient:#D012FF:#8000FF>Zanitespitzhacke</gradient>"
-    description: ~
+    description: ""
   ZANITE_SHOVEL:
     name: "<gradient:#D012FF:#8000FF>Zaniteschaufel</gradient>"
-    description: ~
+    description: ""
   ZANITE_STONE:
     name: "<gradient:#D012FF:#8000FF>Zanitgestein</gradient>"
     description:
       - "Ein Gestein zum Herstellen starker Waffen und Werkzeuge."
   ZANITE_SWORD:
     name: "<gradient:#D012FF:#8000FF>Zaniteschwert</gradient>"
-    description: ~
+    description: ""
   MAGIC_WAND:
     name: "<rainbow>Zauberstab</rainbow>"
-    description: ~
+    description: ""
     current_spell: "<gray>Aktueller Zauber: "
     spells:
       LLAMA_SPELL: "<white>Lamazauber"
@@ -244,28 +244,28 @@ items:
       SOUND_BEAM: "<red>Soundstrahl"
   CLOUD_HEAL:
     name: "<light_purple>Wolke der Heilung"
-    description: ~
+    description: ""
   CLOUD_SLOW_FALLING:
     name: "<white>Wolke des langsamen Fallens"
-    description: ~
+    description: ""
   CLOUD_SPEED:
     name: "<yellow>Wolke der Geschwindigkeit"
-    description: ~
+    description: ""
   CLOUD_JUMP:
     name: "<green>Wolke der Sprungkraft"
-    description: ~
+    description: ""
   CLOUD_HEAL2:
     name: "<red>Wolke der starken Heilung"
-    description: ~
+    description: ""
   CLOUD_SPEED2:
     name: "<orange>Wolke der starken Geschwindigkeit"
-    description: ~
+    description: ""
   CLOUD_JUMP2:
     name: "<dark_green>Wolke der starken Sprungkraft"
-    description: ~
+    description: ""
   ADMIN_SWORD:
     name: "<rainbow>Adminschwert</rainbow>"
-    description: ~
+    description: ""
 mobs:
   ZOMBIE:
     name: "<aqua><bold>〈</bold><aqua>Zombie<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"

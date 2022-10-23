@@ -25,6 +25,10 @@ fun logInfo(message: String) {
     inst().logger.info(message)
 }
 
+fun logWarning(message: String) {
+    inst().logger.warning(message)
+}
+
 fun logError(message: String) {
     inst().logger.severe(message)
 }

@@ -38,77 +38,77 @@ dungeons:
 items:
   AETHER_ACACIA_LOG:
     name: "Aether Acacia Log"
-    description: ~
+    description: ""
   AETHER_ACACIA_PLANKS:
     name: "Aether Acacia Planks"
-    description: ~
+    description: ""
   AETHER_BIRCH_LOG:
     name: "Aether Birch Log"
-    description: ~
+    description: ""
   AETHER_BIRCH_PLANKS:
     name: "Aether Birch Planks"
-    description: ~
+    description: ""
   AETHER_DARK_OAK_LOG:
     name: "Aether Dark Oak Log"
-    description: ~
+    description: ""
   AETHER_DARK_OAK_PLANKS:
     name: "Aether Dark Oak Planks"
-    description: ~
+    description: ""
   AETHER_JUNGLE_LOG:
     name: "Aether Jungle Log"
-    description: ~
+    description: ""
   AETHER_JUNGLE_PLANKS:
     name: "Aether Jungle Planks"
-    description: ~
+    description: ""
   AETHER_OAK_LOG:
     name: "Aether Oak Log"
-    description: ~
+    description: ""
   AETHER_OAK_PLANKS:
     name: "Aether Oak Planks"
-    description: ~
+    description: ""
   AETHER_SPRUCE_LOG:
     name: "Aether Spruce Log"
-    description: ~
+    description: ""
   AETHER_SPRUCE_PLANKS:
     name: "Aether Spruce Planks"
-    description: ~
+    description: ""
   AETHER_STICK:
     name: "Aether Stick"
     description:
       - "Stick from the sky"
   AETHER_STONE:
     name: "Aether Stone"
-    description: ~
+    description: ""
   AETHER_STONE_AXE:
     name: "Aether Stone Axe"
-    description: ~
+    description: ""
   AETHER_STONE_HOE:
     name: "Aether Stone Hoe"
-    description: ~
+    description: ""
   AETHER_STONE_PICKAXE:
     name: "Aether Stone Pickaxe"
-    description: ~
+    description: ""
   AETHER_STONE_SHOVEL:
     name: "Aether Stone Shovel"
-    description: ~
+    description: ""
   AETHER_STONE_SWORD:
     name: "Aether Stone Sword"
-    description: ~
+    description: ""
   AETHER_WOODEN_AXE:
     name: "Aether Stone Axe"
-    description: ~
+    description: ""
   AETHER_WOODEN_HOE:
     name: "Aether Stone Hoe"
-    description: ~
+    description: ""
   AETHER_WOODEN_PICKAXE:
     name: "Aether Stone Pickaxe"
-    description: ~
+    description: ""
   AETHER_WOODEN_SHOVEL:
     name: "Aether Stone Shovel"
-    description: ~
+    description: ""
   AETHER_WOODEN_SWORD:
     name: "Aether Stone Sword"
-    description: ~
+    description: ""
   FIRE_ESSENCE:
     name: "<gradient:#FB2C03:#FB7F03>Fire Essence</gradient>"
     description:
@@ -119,38 +119,38 @@ items:
       - "Burn your enemies if they get too close to you."
   GRAVITITE_AXE:
     name: "<gradient:#C303FB:#FB03DD>Gravitite Axe</gradient>"
-    description: ~
+    description: ""
   GRAVITITE_BOOTS:
     name: "<gradient:#C303FB:#FB03DD>Gravitite Boots</gradient>"
-    description: ~
+    description: ""
   GRAVITITE_CHESTPLATE:
     name: "<gradient:#C303FB:#FB03DD>Gravitite Chestplate</gradient>"
-    description: ~
+    description: ""
   GRAVITITE_HELMET:
     name: "<gradient:#C303FB:#FB03DD>Gravitite Helmet</gradient>"
-    description: ~
+    description: ""
   GRAVITITE_HOE:
     name: "<gradient:#C303FB:#FB03DD>Gravitite Hoe</gradient>"
-    description: ~
+    description: ""
   GRAVITITE_LEGGINGS:
     name: "<gradient:#C303FB:#FB03DD>Gravitite Leggings</gradient>"
-    description: ~
+    description: ""
   GRAVITITE_ORE:
     name: "<gradient:#C303FB:#FB03DD>Gravitite Ore</gradient>"
-    description: ~
+    description: ""
   GRAVITITE_PICKAXE:
     name: "<gradient:#C303FB:#FB03DD>Gravitite Pickaxe</gradient>"
-    description: ~
+    description: ""
   GRAVITITE_PLATE:
     name: "<gradient:#C303FB:#FB03DD>Gravitite Plate</gradient>"
     description:
       - "Plates so hard that almost everything can be repelled."
   GRAVITITE_SHOVEL:
     name: "<gradient:#C303FB:#FB03DD>Gravitite Shovel</gradient>"
-    description: ~
+    description: ""
   GRAVITITE_SWORD:
     name: "<gradient:#C303FB:#FB03DD>Gravitite Sword</gradient>"
-    description: ~
+    description: ""
   ICE_ESSENCE:
     name: "<gradient:#03FBD2:#03CEFB>Ice Essence</gradient>"
     description:
@@ -202,41 +202,41 @@ items:
     boost_info: "<gray>Press <key:key.swapOffhand> to boost yourself!"
   ZANITE_AXE:
     name: "<gradient:#D012FF:#8000FF>Zanite Axe</gradient>"
-    description: ~
+    description: ""
   ZANITE_BOOTS:
     name: "<gradient:#D012FF:#8000FF>Zanite Boots</gradient>"
-    description: ~
+    description: ""
   ZANITE_CHESTPLATE:
     name: "<gradient:#D012FF:#8000FF>Zanite Chestplate</gradient>"
-    description: ~
+    description: ""
   ZANITE_HELMET:
     name: "<gradient:#D012FF:#8000FF>Zanite Helmet</gradient>"
-    description: ~
+    description: ""
   ZANITE_HOE:
     name: "<gradient:#D012FF:#8000FF>Zanite Hoe</gradient>"
-    description: ~
+    description: ""
   ZANITE_LEGGINGS:
     name: "<gradient:#D012FF:#8000FF>Zanite Leggings</gradient>"
-    description: ~
+    description: ""
   ZANITE_ORE:
     name: "<gradient:#D012FF:#8000FF>Zanite Ore</gradient>"
-    description: ~
+    description: ""
   ZANITE_PICKAXE:
     name: "<gradient:#D012FF:#8000FF>Zanite Pickaxe</gradient>"
-    description: ~
+    description: ""
   ZANITE_SHOVEL:
     name: "<gradient:#D012FF:#8000FF>Zanite Shovel</gradient>"
-    description: ~
+    description: ""
   ZANITE_STONE:
     name: "<gradient:#D012FF:#8000FF>Zanite Stone</gradient>"
     description:
       - "A rock for making strong weapons and tools."
   ZANITE_SWORD:
     name: "<gradient:#D012FF:#8000FF>Zanite Sword</gradient>"
-    description: ~
+    description: ""
   MAGIC_WAND:
     name: "<rainbow>Magic Wand</rainbow>"
-    description: ~
+    description: ""
     current_spell: "<gray>Current Spell: "
     spells:
       LLAMA_SPELL: "<white>Llama Spell"
@@ -244,28 +244,28 @@ items:
       SOUND_BEAM: "<red>Sound Beam"
   CLOUD_HEAL:
     name: "<light_purple>Cloud of healing"
-    description: ~
+    description: ""
   CLOUD_SLOW_FALLING:
     name: "<white>Cloud of slow fall"
-    description: ~
+    description: ""
   CLOUD_SPEED:
     name: "<yellow>Cloud of speed"
-    description: ~
+    description: ""
   CLOUD_JUMP:
     name: "<green>Cloud of bounce"
-    description: ~
+    description: ""
   CLOUD_HEAL2:
     name: "<red>Cloud of strong healing"
-    description: ~
+    description: ""
   CLOUD_SPEED2:
     name: "<orange>Cloud of strong speed"
-    description: ~
+    description: ""
   CLOUD_JUMP2:
     name: "<dark_green>Cloud of strong bounce"
-    description: ~
+    description: ""
   ADMIN_SWORD:
     name: "<rainbow>Admin Sword</rainbow>"
-    description: ~
+    description: ""
 mobs:
   ZOMBIE:
     name: "<aqua><bold>〈</bold><aqua>Zombie<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"

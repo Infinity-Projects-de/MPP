@@ -1,9 +1,11 @@
 package de.danielmaile.mpp.config
 
 import de.danielmaile.mpp.inst
+import de.danielmaile.mpp.util.getResource
 import de.danielmaile.mpp.util.logError
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
+import java.io.InputStreamReader
 
 class ConfigManager {
 
@@ -31,7 +33,15 @@ class ConfigManager {
             )
         }
 
-        languageManager = LanguageManager(YamlConfiguration.loadConfiguration(file))
+        val languageFile = YamlConfiguration.loadConfiguration(file)
+
+        // Use locale files included in the plugin as fallback file
+        // If the plugin doesn't include the language file provided in the config use the english file
+        val fallBackLanguageFileStream = getResource("locales/${inst().config.getString("language_file")}.yml") ?: getResource("locales/en.yml")!!
+        val fallBackLanguageFile = YamlConfiguration.loadConfiguration(InputStreamReader(fallBackLanguageFileStream, Charsets.UTF_8))
+        languageFile.setDefaults(fallBackLanguageFile)
+        languageManager = LanguageManager(languageFile)
+
         itemConverterEnabled = inst().config.getBoolean("item_converter")
         dungeonEndPartChance = inst().config.getDouble("world_generation.dungeons.end_part_chance").toFloat()
         dungeonProbability = inst().config.getDouble("world_generation.dungeons.probability").toFloat()
