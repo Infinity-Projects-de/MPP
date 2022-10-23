@@ -247,7 +247,7 @@ enum class MPPMob(
         null
     )
 
-    fun summon(location: Location, level: Long) : LivingEntity {
+    fun summon(location: Location, level: Long): LivingEntity {
         val entity =
             location.world.spawnEntity(location, entityType, CreatureSpawnEvent.SpawnReason.CUSTOM) as LivingEntity
 
@@ -335,16 +335,20 @@ fun getRandomMob(entityType: EntityType?): MPPMob {
 }
 
 fun updateDisplayName(entity: LivingEntity) {
+    updateDisplayName(entity, entity.health)
+}
+
+fun updateDisplayName(entity: LivingEntity, health: Double) {
     if (!entity.persistentDataContainer.has(getMPPMobNameKey())) return
 
     try {
         val mppMob = getFromEntity(entity) ?: return
         val level = getLevelFromEntity(entity)
-        val health = ceil(entity.health / 2)
+        val healthCeiled = ceil(health / 2)
 
         val tagResolver = TagResolver.resolver(
             Placeholder.parsed("level", level.abbreviateNumber()),
-            Placeholder.parsed("health", health.toLong().abbreviateNumber())
+            Placeholder.parsed("health", healthCeiled.toLong().abbreviateNumber())
         )
 
         val displayName = inst().getLanguageManager().getComponent(

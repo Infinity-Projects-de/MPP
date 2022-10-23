@@ -10,15 +10,13 @@ import org.bukkit.event.entity.EntityDeathEvent
 class ListenerMPPMobs : Listener {
 
     //Handle health and update display name
-    @EventHandler (priority = EventPriority.HIGHEST)
+    @EventHandler (priority = EventPriority.MONITOR)
     fun onEntityDamage(event: EntityDamageEvent) {
         if(event.entity !is LivingEntity) return
         val entity = event.entity as LivingEntity
 
-        if(!entity.persistentDataContainer.has(getMPPMobNameKey())) return
-
         //Update display name
-        updateDisplayName(event.entity as LivingEntity)
+        updateDisplayName(entity, entity.health - event.damage)
     }
 
     @EventHandler (priority = EventPriority.HIGHEST)
