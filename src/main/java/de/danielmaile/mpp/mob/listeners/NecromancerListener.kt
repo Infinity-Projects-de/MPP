@@ -9,15 +9,15 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.scheduler.BukkitRunnable
 
-class NecromancerListener : MobListener() {
-
-    override lateinit var mob: MPPMob
+class NecromancerListener : MobListener(MPPMob.NECROMANCER, MPPMob.NECROMANCER_ELITE) {
 
     @EventHandler
     fun onDeath(event: EntityDeathEvent) {
         val died = getFromEntity(event.entity) ?: return
         val necromancer = event.entity.getNearbyEntities(5.0, 5.0, 5.0)
-            .firstOrNull { e -> e.type == MPPMob.NECROMANCER.entityType }
+            .firstOrNull { e ->
+                shouldListen(e)
+            }
         necromancer?.let {
             val location = event.entity.location
             val levelDied = getLevelFromEntity(event.entity)
