@@ -5,7 +5,6 @@ import de.danielmaile.mpp.mob.MPPMob
 import de.danielmaile.mpp.mob.getFromEntity
 import de.danielmaile.mpp.mob.getLevelFromEntity
 import org.bukkit.Effect
-import org.bukkit.entity.LivingEntity
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.scheduler.BukkitRunnable
@@ -17,8 +16,7 @@ class NecromancerListener : MobListener(MPPMob.NECROMANCER, MPPMob.NECROMANCER_E
         val died = getFromEntity(event.entity) ?: return
         val necromancer = event.entity.getNearbyEntities(5.0, 5.0, 5.0)
             .firstOrNull { e ->
-                if (e !is LivingEntity) return
-                shouldListen(getFromEntity(e))
+                shouldListen(e)
             }
         necromancer?.let {
             val location = event.entity.location

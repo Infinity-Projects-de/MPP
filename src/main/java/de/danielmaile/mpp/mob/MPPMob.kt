@@ -1,5 +1,6 @@
 package de.danielmaile.mpp.mob
 
+import de.danielmaile.mpp.event.MPPMobSpawnEvent
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.util.abbreviateNumber
 import de.danielmaile.mpp.util.setUnbreakable
@@ -10,10 +11,7 @@ import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.attribute.Attribute
 import org.bukkit.enchantments.Enchantment
-import org.bukkit.entity.Ageable
-import org.bukkit.entity.Breedable
-import org.bukkit.entity.EntityType
-import org.bukkit.entity.LivingEntity
+import org.bukkit.entity.*
 import org.bukkit.event.entity.CreatureSpawnEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType
@@ -249,7 +247,7 @@ enum class MPPMob(
         null
     )
 
-    fun summon(location: Location, level: Long) {
+    fun summon(location: Location, level: Long) : LivingEntity {
         val entity =
             location.world.spawnEntity(location, entityType, CreatureSpawnEvent.SpawnReason.CUSTOM) as LivingEntity
 
@@ -311,6 +309,9 @@ enum class MPPMob(
 
         //Update display name
         updateDisplayName(entity)
+
+        inst().server.pluginManager.callEvent(MPPMobSpawnEvent(entity, this))
+        return entity
     }
 }
 
