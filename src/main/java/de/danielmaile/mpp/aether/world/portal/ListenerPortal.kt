@@ -5,7 +5,6 @@ import de.danielmaile.mpp.aether.world.portal.AetherPortal.checkPortal
 import de.danielmaile.mpp.aether.world.portal.AetherPortal.createPortal
 import de.danielmaile.mpp.aether.world.portal.AetherPortal.findPortalInRadius
 import de.danielmaile.mpp.aether.world.portal.AetherPortal.removePortal
-import de.danielmaile.mpp.util.logInfo
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
@@ -131,8 +130,6 @@ class ListenerPortal : Listener {
         }
 
         for (location in locations) {
-            logInfo(location.key.toString())
-            logInfo(location.value.name)
             if (checkPortal(location.key, true, location.value))
                 removePortal(location.key)
         }
