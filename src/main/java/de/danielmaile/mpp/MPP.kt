@@ -138,6 +138,7 @@ class MPP : JavaPlugin() {
         server.pluginManager.registerEvents(PlagueListener(), this)
         server.pluginManager.registerEvents(RiftListener(), this)
         server.pluginManager.registerEvents(HealerListener(), this)
+        server.pluginManager.registerEvents(HitmanListener(), this)
     }
 
     override fun onDisable() {
