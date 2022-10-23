@@ -5,6 +5,7 @@ import de.danielmaile.mpp.aether.world.portal.AetherPortal.checkPortal
 import de.danielmaile.mpp.aether.world.portal.AetherPortal.createPortal
 import de.danielmaile.mpp.aether.world.portal.AetherPortal.findPortalInRadius
 import de.danielmaile.mpp.aether.world.portal.AetherPortal.removePortal
+import de.danielmaile.mpp.util.logInfo
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
@@ -111,11 +112,11 @@ class ListenerPortal : Listener {
                 for (i in 0..2) {
                     blockIterating = blockIterating.getRelative(BlockFace.DOWN)
                     if (blockIterating.type != Material.BLUE_STAINED_GLASS_PANE) {
-                        if (blockFace == BlockFace.DOWN) {
+                        if (blockFace == BlockFace.DOWN || blockFace == BlockFace.UP) {
                             val sideFaces = arrayOf(
                                 BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST
                             )
-                            val blockBelow = block.getRelative(BlockFace.DOWN)
+                            val blockBelow = block.getRelative(blockFace)
                             for (face in sideFaces) if (blockBelow.getRelative(face).type == Material.BLUE_STAINED_GLASS_PANE) {
                                 locations[blockIterating.getRelative(BlockFace.UP).location] = face
                                 break
@@ -129,9 +130,12 @@ class ListenerPortal : Listener {
             }
         }
 
-        for (location in locations)
+        for (location in locations) {
+            logInfo(location.key.toString())
+            logInfo(location.value.name)
             if (checkPortal(location.key, true, location.value))
                 removePortal(location.key)
+        }
     }
 
     private fun isInnerPortalBlock(block: Block): Boolean {
@@ -150,8 +154,7 @@ class ListenerPortal : Listener {
         if (portalLocation != null) {
             event.player.teleport(portalLocation.add(0.0, 4.0, 0.0))
         } else {
-            //Limit minimum y to 130 to prevent the portal from spawning at the bottom of the world if there is no ground block
-            toLocation.y = (toLocation.world.getHighestBlockYAt(toLocation) + 2).toDouble().coerceAtLeast(130.0)
+            toLocation.y = (toLocation.world.getHighestBlockYAt(toLocation) + 2).toDouble()
             createPortal(toLocation)
             event.player.teleport(toLocation.add(0.0, 4.0, 0.0))
         }
