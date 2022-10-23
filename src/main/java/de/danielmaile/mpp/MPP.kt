@@ -23,10 +23,7 @@ import de.danielmaile.mpp.item.funtion.particle.ListenerParticle
 import de.danielmaile.mpp.item.funtion.particle.ParticleManager
 import de.danielmaile.mpp.mob.ListenerMPPMobs
 import de.danielmaile.mpp.mob.MPPMobSpawnManager
-import de.danielmaile.mpp.mob.listeners.KingListener
-import de.danielmaile.mpp.mob.listeners.NecromancerListener
-import de.danielmaile.mpp.mob.listeners.PlagueListener
-import de.danielmaile.mpp.mob.listeners.RiftListener
+import de.danielmaile.mpp.mob.listeners.*
 import de.danielmaile.mpp.util.logError
 import jakarta.persistence.EntityManager
 import jakarta.persistence.EntityManagerFactory
@@ -140,6 +137,7 @@ class MPP : JavaPlugin() {
         server.pluginManager.registerEvents(KingListener(), this)
         server.pluginManager.registerEvents(PlagueListener(), this)
         server.pluginManager.registerEvents(RiftListener(), this)
+        server.pluginManager.registerEvents(HealerListener(), this)
     }
 
     override fun onDisable() {
