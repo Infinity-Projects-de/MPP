@@ -121,14 +121,6 @@ fun Player.getDirection(): BlockFace {
     return if (yaw > 135 || yaw <= -135) BlockFace.NORTH else if (yaw > -135 && yaw <= -45) BlockFace.EAST else if (yaw > -45 && yaw <= 45) BlockFace.SOUTH else BlockFace.WEST
 }
 
-fun Block.isSurroundedByAirOrMaterial(allowedMaterials: Set<Material>): Boolean {
-    for (blockFace in BlockFace.values().filter { it.isCartesian }) {
-        val relativeMaterial = this.getRelative(blockFace).type
-        if (relativeMaterial != Material.AIR && !allowedMaterials.contains(relativeMaterial)) return false
-    }
-    return true
-}
-
 fun String.isLong(): Boolean {
     return try {
         java.lang.Long.parseLong(this)

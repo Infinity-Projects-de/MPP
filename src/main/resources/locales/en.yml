@@ -258,7 +258,7 @@ items:
     name: "<red>Cloud of strong healing"
     description: ""
   CLOUD_SPEED2:
-    name: "<orange>Cloud of strong speed"
+    name: "<gold>Cloud of strong speed"
     description: ""
   CLOUD_JUMP2:
     name: "<dark_green>Cloud of strong bounce"

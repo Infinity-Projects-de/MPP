@@ -26,7 +26,7 @@ class ListenerConverter : Listener {
     }
 
     private fun checkAndReplace(inventory: Inventory) {
-        val content = inventory.contents ?: return
+        val content = inventory.contents
 
         for (i in content.indices) {
             val itemStack = content[i] ?: continue

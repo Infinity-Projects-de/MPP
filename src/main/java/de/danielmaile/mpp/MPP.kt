@@ -130,7 +130,6 @@ class MPP : JavaPlugin() {
         server.pluginManager.registerEvents(ListenerConverter(), this)
         server.pluginManager.registerEvents(ListenerMagicWand(), this)
         server.pluginManager.registerEvents(ListenerAetherWorld(), this)
-        server.pluginManager.registerEvents(ListenerResourcePack(), this)
         server.pluginManager.registerEvents(ListenerMPPMobs(), this)
         server.pluginManager.registerEvents(MPPMobSpawnManager(), this)
         MPPMob.values().forEach { mob ->
