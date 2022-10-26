@@ -1,17 +1,16 @@
-package de.danielmaile.mpp.item
+package de.danielmaile.mpp.block
 
+import de.danielmaile.mpp.item.ItemType
+import de.danielmaile.mpp.item.MPP_ITEM_TAG_KEY
 import de.danielmaile.mpp.util.doesKeyExist
-import org.bukkit.GameMode
 import org.bukkit.Instrument
 import org.bukkit.Material
 import org.bukkit.Note
-import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.block.data.type.NoteBlock
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
-import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPhysicsEvent
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.block.NotePlayEvent
@@ -77,30 +76,5 @@ class ListenerBlock : Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     fun onNotePlay(event: NotePlayEvent) {
         event.isCancelled = true
-    }
-
-    // Drop the correct item based on noteblock data
-    @EventHandler
-    fun onBlockBreak(event: BlockBreakEvent) {
-        if(event.player.gameMode == GameMode.CREATIVE) return
-        event.isDropItems = !dropCustomBlock(event.block)
-    }
-
-    /**
-     * Checks if a block is a custom mpp block
-     * If this is the case the block gets removed and the correct item is dropped
-     * @return If the block was successfully destroyed and dropped
-     */
-    private fun dropCustomBlock(block: Block): Boolean {
-        if(block.type != Material.NOTE_BLOCK) return false
-
-        val blockData = block.blockData as NoteBlock
-        val blockType = BlockType.fromBlockData(blockData) ?: return false
-
-        val itemType = ItemType.fromPlaceBlockType(blockType) ?: return false
-
-        block.world.dropItemNaturally(block.location, itemType.getItemStack(1))
-        block.type = Material.AIR
-        return true
     }
 }

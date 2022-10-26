@@ -2,6 +2,7 @@ package de.danielmaile.mpp.item
 
 import com.google.common.collect.ArrayListMultimap
 import com.google.common.collect.Multimap
+import de.danielmaile.mpp.block.BlockType
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.util.getDataString
 import de.danielmaile.mpp.util.setDataString

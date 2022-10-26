@@ -1,7 +1,7 @@
 package de.danielmaile.mpp.aether.mob
 
 import com.comphenix.protocol.PacketType
-import com.comphenix.protocol.ProtocolManager
+import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.events.ListenerPriority
 import com.comphenix.protocol.events.PacketAdapter
 import com.comphenix.protocol.events.PacketEvent
@@ -10,9 +10,9 @@ import de.danielmaile.mpp.inst
 import org.bukkit.entity.Llama
 import org.bukkit.util.Vector
 
-class RideableLlama(protocolManager: ProtocolManager) {
+class RideableLlama() {
     init {
-        protocolManager.addPacketListener(object :
+        ProtocolLibrary.getProtocolManager().addPacketListener(object :
             PacketAdapter(inst(), ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE) {
             override fun onPacketReceiving(event: PacketEvent) {
                 val packetContainer = event.packet

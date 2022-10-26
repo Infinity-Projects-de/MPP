@@ -1,7 +1,7 @@
-package de.danielmaile.mpp.aether.world.cloud
+package de.danielmaile.mpp.block.cloud
 
 import de.danielmaile.mpp.inst
-import de.danielmaile.mpp.item.BlockType
+import de.danielmaile.mpp.block.BlockType
 import de.danielmaile.mpp.util.getBlockBelow
 import org.bukkit.Bukkit
 import org.bukkit.block.data.type.NoteBlock
@@ -24,6 +24,7 @@ class CloudEffects {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(inst(), {
             for (player in Bukkit.getOnlinePlayers()) {
                 val block = player.getBlockBelow()
+                if(block.blockData !is NoteBlock) continue
                 val blockType = BlockType.fromBlockData(block.blockData as NoteBlock) ?: continue
                 val effect = effects[blockType] ?: continue
                 player.addPotionEffect(PotionEffect(effect.first, 60, effect.second, false, false))
