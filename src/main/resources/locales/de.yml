@@ -258,7 +258,7 @@ items:
     name: "<red>Wolke der starken Heilung"
     description: ""
   CLOUD_SPEED2:
-    name: "<orange>Wolke der starken Geschwindigkeit"
+    name: "<gold>Wolke der starken Geschwindigkeit"
     description: ""
   CLOUD_JUMP2:
     name: "<dark_green>Wolke der starken Sprungkraft"

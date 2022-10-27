@@ -1,18 +1,18 @@
 package de.danielmaile.mpp
 
-import com.comphenix.protocol.ProtocolLibrary
 import de.danielmaile.mpp.aether.mob.ListenerAetherMobs
 import de.danielmaile.mpp.aether.mob.RideableLlama
 import de.danielmaile.mpp.aether.world.ListenerAetherWorld
 import de.danielmaile.mpp.aether.world.PrefabType
 import de.danielmaile.mpp.aether.world.WorldManager
-import de.danielmaile.mpp.aether.world.cloud.CloudEffects
 import de.danielmaile.mpp.aether.world.dungeon.ListenerDungeon
 import de.danielmaile.mpp.aether.world.portal.ListenerPortal
+import de.danielmaile.mpp.block.BlockBreakingService
+import de.danielmaile.mpp.block.ListenerBlock
+import de.danielmaile.mpp.block.cloud.CloudEffects
 import de.danielmaile.mpp.command.CommandMPP
 import de.danielmaile.mpp.config.ConfigManager
 import de.danielmaile.mpp.config.LanguageManager
-import de.danielmaile.mpp.item.ListenerBlock
 import de.danielmaile.mpp.item.ListenerConverter
 import de.danielmaile.mpp.item.ListenerCrafting
 import de.danielmaile.mpp.item.Recipes
@@ -94,9 +94,8 @@ class MPP : JavaPlugin() {
         //Recipes
         registerRecipes()
 
-        //Protocol lib
-        val protocolManager = ProtocolLibrary.getProtocolManager()
-        RideableLlama(protocolManager)
+        //Rideable Llama
+        RideableLlama()
 
         //World Manager
         worldManager = WorldManager(this)
@@ -116,6 +115,9 @@ class MPP : JavaPlugin() {
         //Setup spigot and paper yml
         checkSpigotYML()
         checkPaperYML()
+
+        // Init BlockBreakingService
+        BlockBreakingService.init()
     }
 
     private fun registerEvents() {
@@ -130,7 +132,6 @@ class MPP : JavaPlugin() {
         server.pluginManager.registerEvents(ListenerConverter(), this)
         server.pluginManager.registerEvents(ListenerMagicWand(), this)
         server.pluginManager.registerEvents(ListenerAetherWorld(), this)
-        server.pluginManager.registerEvents(ListenerResourcePack(), this)
         server.pluginManager.registerEvents(ListenerMPPMobs(), this)
         server.pluginManager.registerEvents(MPPMobSpawnManager(), this)
         server.pluginManager.registerEvents(NecromancerListener(), this)

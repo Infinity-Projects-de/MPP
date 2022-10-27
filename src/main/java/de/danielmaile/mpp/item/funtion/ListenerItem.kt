@@ -1,6 +1,6 @@
 package de.danielmaile.mpp.item.funtion
 
-import de.danielmaile.mpp.item.AETHER_ITEM_TAG_KEY
+import de.danielmaile.mpp.item.MPP_ITEM_TAG_KEY
 import de.danielmaile.mpp.item.ItemType
 import de.danielmaile.mpp.util.doesKeyExist
 import org.bukkit.entity.LivingEntity
@@ -45,12 +45,12 @@ class ListenerItem : Listener {
         }
     }
 
-    //Prevent use of aether items (iron horse armor material) on horses
+    //Prevent use of mpp items (iron horse armor material) on horses
     @EventHandler
     fun onSaddleEquip(event: InventoryClickEvent) {
         if (event.inventory !is HorseInventory) return
         val currentItem = event.currentItem ?: return
-        if (!currentItem.doesKeyExist(AETHER_ITEM_TAG_KEY)) return
+        if (!currentItem.doesKeyExist(MPP_ITEM_TAG_KEY)) return
         event.isCancelled = true
     }
 }

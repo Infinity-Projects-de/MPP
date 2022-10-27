@@ -2,6 +2,7 @@ package de.danielmaile.mpp.item
 
 import com.google.common.collect.ArrayListMultimap
 import com.google.common.collect.Multimap
+import de.danielmaile.mpp.block.BlockType
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.util.getDataString
 import de.danielmaile.mpp.util.setDataString
@@ -15,29 +16,29 @@ import org.bukkit.inventory.ItemStack
 import java.util.*
 import kotlin.collections.ArrayList
 
-const val AETHER_ITEM_TAG_KEY = "aether_item"
+const val MPP_ITEM_TAG_KEY = "mpp_item"
 
 enum class ItemType(
     private val modelID: Int,
     val material: Material,
     private val attributeModifiers: Multimap<Attribute, AttributeModifier>?,
-    val placeMaterial: Material?
+    val placeBlockType: BlockType?
 ) {
 
-    AETHER_ACACIA_LOG(4005, Material.ACACIA_LOG, null, Material.ACACIA_LOG),
-    AETHER_ACACIA_PLANKS(4011, Material.ACACIA_PLANKS, null, Material.ACACIA_PLANKS),
-    AETHER_BIRCH_LOG(4003, Material.BIRCH_LOG, null, Material.BIRCH_LOG),
-    AETHER_BIRCH_PLANKS(4009, Material.BIRCH_PLANKS, null, Material.BIRCH_PLANKS),
-    AETHER_DARK_OAK_LOG(4006, Material.DARK_OAK_LOG, null, Material.DARK_OAK_LOG),
-    AETHER_DARK_OAK_PLANKS(4012, Material.DARK_OAK_PLANKS, null, Material.DARK_OAK_PLANKS),
-    AETHER_JUNGLE_LOG(4004, Material.JUNGLE_LOG, null, Material.JUNGLE_LOG),
-    AETHER_JUNGLE_PLANKS(4010, Material.JUNGLE_PLANKS, null, Material.JUNGLE_PLANKS),
-    AETHER_OAK_LOG(4001, Material.OAK_LOG, null, Material.OAK_LOG),
-    AETHER_OAK_PLANKS(4007, Material.OAK_PLANKS, null, Material.OAK_PLANKS),
-    AETHER_SPRUCE_LOG(4002, Material.SPRUCE_LOG, null, Material.SPRUCE_LOG),
-    AETHER_SPRUCE_PLANKS(4008, Material.SPRUCE_PLANKS, null, Material.SPRUCE_PLANKS),
+    AETHER_ACACIA_LOG(4005, Material.ACACIA_LOG, null, BlockType.AETHER_ACACIA_LOG),
+    AETHER_ACACIA_PLANKS(4011, Material.ACACIA_PLANKS, null, BlockType.AETHER_ACACIA_PLANKS),
+    AETHER_BIRCH_LOG(4003, Material.BIRCH_LOG, null, BlockType.AETHER_BIRCH_LOG),
+    AETHER_BIRCH_PLANKS(4009, Material.BIRCH_PLANKS, null, BlockType.AETHER_BIRCH_PLANKS),
+    AETHER_DARK_OAK_LOG(4006, Material.DARK_OAK_LOG, null, BlockType.AETHER_DARK_OAK_LOG),
+    AETHER_DARK_OAK_PLANKS(4012, Material.DARK_OAK_PLANKS, null, BlockType.AETHER_DARK_OAK_PLANKS),
+    AETHER_JUNGLE_LOG(4004, Material.JUNGLE_LOG, null, BlockType.AETHER_JUNGLE_LOG),
+    AETHER_JUNGLE_PLANKS(4010, Material.JUNGLE_PLANKS, null, BlockType.AETHER_JUNGLE_PLANKS),
+    AETHER_OAK_LOG(4001, Material.OAK_LOG, null, BlockType.AETHER_OAK_LOG),
+    AETHER_OAK_PLANKS(4007, Material.OAK_PLANKS, null, BlockType.AETHER_OAK_PLANKS),
+    AETHER_SPRUCE_LOG(4002, Material.SPRUCE_LOG, null, BlockType.AETHER_SPRUCE_LOG),
+    AETHER_SPRUCE_PLANKS(4008, Material.SPRUCE_PLANKS, null, BlockType.AETHER_SPRUCE_PLANKS),
     AETHER_STICK(1001, Material.STICK, null, null),
-    AETHER_STONE(4015, Material.STONE, null, Material.STONE),
+    AETHER_STONE(4015, Material.STONE, null, BlockType.AETHER_STONE),
     AETHER_STONE_AXE(2011, Material.STONE_AXE, null, null),
     AETHER_STONE_HOE(2010, Material.STONE_HOE, null, null),
     AETHER_STONE_PICKAXE(2012, Material.STONE_PICKAXE, null, null),
@@ -57,7 +58,7 @@ enum class ItemType(
     GRAVITITE_HELMET(3009, Material.NETHERITE_HELMET, ArmorAttribute(3.9, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
     GRAVITITE_HOE(2019, Material.NETHERITE_HOE, null, null),
     GRAVITITE_LEGGINGS(3011, Material.NETHERITE_LEGGINGS, ArmorAttribute(7.8, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
-    GRAVITITE_ORE(4014, Material.ANCIENT_DEBRIS,null, Material.ANCIENT_DEBRIS),
+    GRAVITITE_ORE(4014, Material.ANCIENT_DEBRIS,null, BlockType.GRAVITITE_ORE),
     GRAVITITE_PICKAXE(2021, Material.NETHERITE_PICKAXE, null, null),
     GRAVITITE_PLATE(1006, Material.NETHERITE_SCRAP, null, null),
     GRAVITITE_SHOVEL(2022, Material.NETHERITE_SHOVEL, null, null),
@@ -80,19 +81,19 @@ enum class ItemType(
     ZANITE_HELMET(3005, Material.DIAMOND_HELMET, ArmorAttribute(3.45, 2.3, EquipmentSlot.HEAD).toAttributeMap(), null),
     ZANITE_HOE(2015, Material.DIAMOND_HOE, null, null),
     ZANITE_LEGGINGS(3007, Material.DIAMOND_LEGGINGS, ArmorAttribute(6.9, 2.3, EquipmentSlot.LEGS).toAttributeMap(), null),
-    ZANITE_ORE(4013, Material.DIAMOND_ORE, null, Material.DIAMOND_ORE),
+    ZANITE_ORE(4013, Material.DIAMOND_ORE, null, BlockType.ZANITE_ORE),
     ZANITE_PICKAXE(2017, Material.DIAMOND_PICKAXE, null, null),
     ZANITE_SHOVEL(2018, Material.DIAMOND_SHOVEL, null, null),
     ZANITE_STONE(1005, Material.DIAMOND, null, null),
     ZANITE_SWORD(2004, Material.DIAMOND_SWORD, ToolAttribute(7.0, 1.6).toAttributeMap(), null),
     MAGIC_WAND(1008, Material.IRON_HORSE_ARMOR, null, null),
-    CLOUD_HEAL(4016, Material.PINK_STAINED_GLASS, null, Material.PINK_STAINED_GLASS),
-    CLOUD_SLOW_FALLING(4017, Material.WHITE_STAINED_GLASS, null, Material.WHITE_STAINED_GLASS),
-    CLOUD_SPEED(4018, Material.YELLOW_STAINED_GLASS, null, Material.YELLOW_STAINED_GLASS),
-    CLOUD_JUMP(4019, Material.LIME_STAINED_GLASS, null, Material.LIME_STAINED_GLASS),
-    CLOUD_HEAL2(4020, Material.RED_STAINED_GLASS, null, Material.RED_STAINED_GLASS),
-    CLOUD_SPEED2(4021, Material.ORANGE_STAINED_GLASS, null, Material.ORANGE_STAINED_GLASS),
-    CLOUD_JUMP2(4022, Material.GREEN_STAINED_GLASS, null, Material.GREEN_STAINED_GLASS);
+    CLOUD_HEAL(4016, Material.PINK_STAINED_GLASS, null, BlockType.CLOUD_HEAL),
+    CLOUD_SLOW_FALLING(4017, Material.WHITE_STAINED_GLASS, null, BlockType.CLOUD_SLOW_FALLING),
+    CLOUD_SPEED(4018, Material.YELLOW_STAINED_GLASS, null, BlockType.CLOUD_SPEED),
+    CLOUD_JUMP(4019, Material.LIME_STAINED_GLASS, null, BlockType.CLOUD_JUMP),
+    CLOUD_HEAL2(4020, Material.RED_STAINED_GLASS, null, BlockType.CLOUD_HEAL2),
+    CLOUD_SPEED2(4021, Material.ORANGE_STAINED_GLASS, null, BlockType.CLOUD_SPEED2),
+    CLOUD_JUMP2(4022, Material.GREEN_STAINED_GLASS, null, BlockType.CLOUD_JUMP2);
 
     private val displayName = inst().getLanguageManager().getComponent("items.$name.name")
     private val description = inst().getLanguageManager().getComponentList("items.$name.description")
@@ -120,7 +121,7 @@ enum class ItemType(
         itemStack.itemMeta = itemMeta
         itemStack.amount = amount
 
-        itemStack.setDataString(AETHER_ITEM_TAG_KEY, name)
+        itemStack.setDataString(MPP_ITEM_TAG_KEY, name)
         return itemStack
     }
 
@@ -130,10 +131,17 @@ enum class ItemType(
         fun fromTag(itemStack: ItemStack?): ItemType? {
             if(itemStack == null) return null
             return try {
-                val itemTag = itemStack.getDataString(AETHER_ITEM_TAG_KEY)?: return null
+                val itemTag = itemStack.getDataString(MPP_ITEM_TAG_KEY)?: return null
                 valueOf(itemTag)
             } catch (e: IllegalArgumentException) {
                 null
+            }
+        }
+
+        @JvmStatic
+        fun fromPlaceBlockType(placeBlockType: BlockType): ItemType? {
+            return values().firstOrNull {
+                it.placeBlockType == placeBlockType
             }
         }
     }
