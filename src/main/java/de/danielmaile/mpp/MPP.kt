@@ -5,14 +5,14 @@ import de.danielmaile.mpp.aether.mob.RideableLlama
 import de.danielmaile.mpp.aether.world.ListenerAetherWorld
 import de.danielmaile.mpp.aether.world.PrefabType
 import de.danielmaile.mpp.aether.world.WorldManager
-import de.danielmaile.mpp.block.cloud.CloudEffects
 import de.danielmaile.mpp.aether.world.dungeon.ListenerDungeon
 import de.danielmaile.mpp.aether.world.portal.ListenerPortal
-import de.danielmaile.mpp.block.ListenerBlockBreak
+import de.danielmaile.mpp.block.BlockBreakingService
+import de.danielmaile.mpp.block.ListenerBlock
+import de.danielmaile.mpp.block.cloud.CloudEffects
 import de.danielmaile.mpp.command.CommandMPP
 import de.danielmaile.mpp.config.ConfigManager
 import de.danielmaile.mpp.config.LanguageManager
-import de.danielmaile.mpp.block.ListenerBlock
 import de.danielmaile.mpp.item.ListenerConverter
 import de.danielmaile.mpp.item.ListenerCrafting
 import de.danielmaile.mpp.item.Recipes
@@ -115,12 +115,14 @@ class MPP : JavaPlugin() {
         //Setup spigot and paper yml
         checkSpigotYML()
         checkPaperYML()
+
+        // Init BlockBreakingService
+        BlockBreakingService.init()
     }
 
     private fun registerEvents() {
         server.pluginManager.registerEvents(ListenerPortal(), this)
         server.pluginManager.registerEvents(ListenerBlock(), this)
-        server.pluginManager.registerEvents(ListenerBlockBreak(), this)
         server.pluginManager.registerEvents(ListenerCrafting(), this)
         server.pluginManager.registerEvents(ListenerDungeon(), this)
         server.pluginManager.registerEvents(ListenerAetherMobs(), this)

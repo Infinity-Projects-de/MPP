@@ -2,14 +2,24 @@ package de.danielmaile.mpp.util
 
 import de.danielmaile.mpp.item.ArmorSet
 import de.danielmaile.mpp.item.ItemType
+import net.minecraft.network.protocol.Packet
+import net.minecraft.server.level.ServerPlayer
+import net.minecraft.server.network.ServerGamePacketListenerImpl
 import org.bukkit.FluidCollisionMode
 import org.bukkit.Material
 import org.bukkit.attribute.Attribute
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
+import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
+
+val Player.serverPlayer: ServerPlayer
+    get() = (this as CraftPlayer).handle
+
+val Player.connection: ServerGamePacketListenerImpl
+    get() = serverPlayer.connection
 
 fun Player.isGrounded(): Boolean {
     return this.getBlockBelow().type != Material.AIR
@@ -51,8 +61,14 @@ fun Player.getEquippedArmorSet(): ArmorSet? {
     }
 }
 
-//Returns the block face of the direction the player is facing (only yaw)
+// Returns the block face of the direction the player is facing (only yaw)
 fun Player.getDirection(): BlockFace {
     val yaw = this.location.yaw
     return if (yaw > 135 || yaw <= -135) BlockFace.NORTH else if (yaw > -135 && yaw <= -45) BlockFace.EAST else if (yaw > -45 && yaw <= 45) BlockFace.SOUTH else BlockFace.WEST
+}
+
+// Sends all given packets to player
+fun Player.sendPackets(vararg packets: Packet<*>) {
+    val connection = connection
+    packets.forEach { connection.send(it) }
 }
