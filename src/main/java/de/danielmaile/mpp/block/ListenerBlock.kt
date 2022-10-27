@@ -167,4 +167,10 @@ class ListenerBlock : Listener {
             it.type = Material.AIR
         }
     }
+
+    // Prevent the breaking of custom blocks because it's done by the custom system
+    @EventHandler
+    fun onBlockBreak(event: BlockBreakEvent) {
+        event.isCancelled = event.block.isCustom()
+    }
 }

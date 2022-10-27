@@ -72,3 +72,8 @@ fun Player.sendPackets(vararg packets: Packet<*>) {
     val connection = connection
     packets.forEach { connection.send(it) }
 }
+
+fun Player.getPotionEffectLevel(potionEffectType: PotionEffectType): Int {
+    val portionEffect = this.getPotionEffect(potionEffectType) ?: return 0
+    return portionEffect.amplifier + 1
+}

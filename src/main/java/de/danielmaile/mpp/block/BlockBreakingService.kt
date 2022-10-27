@@ -8,20 +8,25 @@ import com.comphenix.protocol.events.PacketEvent
 import com.comphenix.protocol.wrappers.EnumWrappers
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.item.ItemType
-import de.danielmaile.mpp.util.sendDestructionStagePacket
-import de.danielmaile.mpp.util.sendPackets
+import de.danielmaile.mpp.util.*
 import net.minecraft.network.protocol.game.ClientboundBlockChangedAckPacket
 import net.minecraft.network.protocol.game.ClientboundRemoveMobEffectPacket
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectInstance
 import org.bukkit.Bukkit
+import org.bukkit.GameMode
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.data.type.NoteBlock
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffectType
+import kotlin.math.ceil
+import kotlin.math.min
+import kotlin.math.pow
 import kotlin.math.round
 
 private val MINING_FATIGUE = MobEffectInstance(MobEffect.byId(4), Integer.MAX_VALUE, 255, false, false, false)
@@ -52,37 +57,47 @@ object BlockBreakingService {
 
         // Handle ticks
         Bukkit.getScheduler().scheduleSyncRepeatingTask(inst(), {
-            // Use Iterator to avoid ConcurrentModificationException
-            val iterator = damagedBlocks.iterator()
-            while (iterator.hasNext()) {
-                iterator.next().value.tick()
+            damagedBlocks.forEach { (_, u) -> u.tick() }
+            toRemoveDamageBlocks.forEach {
+                damagedBlocks.remove(it)
             }
+            toRemoveDamageBlocks.clear()
         }, 1L, 1L)
     }
 
     private val damagedBlocks: HashMap<Location, DamagedBlock> = HashMap()
 
+    // Use second list to avoid ConcurrentModificationException
+    private val toRemoveDamageBlocks = mutableListOf<Location>()
+
     fun damageBlock(block: Block, player: Player, sequence: Int) {
         if (block.blockData !is NoteBlock) return
         val blockType = BlockType.fromBlockData(block.blockData as NoteBlock) ?: return
 
-        damagedBlocks.getOrPut(block.location) { DamagedBlock(block, blockType, player, sequence) }
+        // Break block instant if player is in creative mode
+        if(player.gameMode == GameMode.CREATIVE) {
+            block.type = Material.AIR
+            return
+        }
+
+        damagedBlocks.getOrPut(block.location) { DamagedBlock(block, blockType, player, player.inventory.itemInMainHand, sequence) }
     }
 
     fun stopDamaging(block: Block) {
         val damagedBlock = damagedBlocks[block.location] ?: return
         damagedBlock.stop()
-        damagedBlocks.remove(block.location)
+        toRemoveDamageBlocks.add(block.location)
     }
 
     private class DamagedBlock(
         private val block: Block,
         private val blockType: BlockType,
         private val player: Player,
+        private val itemInHand: ItemStack,
         private val sequence: Int
     ) {
 
-        private val breakTime = blockType.breakTime
+        private val breakTime = calculateBreakingTime()
         private var ticksPassed = 0
         private var lastDestructionStage = -1
 
@@ -143,7 +158,7 @@ object BlockBreakingService {
             player.sendPackets(packet)
 
             // Remove DamagedBlock instance from service
-            damagedBlocks.remove(block.location)
+            toRemoveDamageBlocks.add(block.location)
         }
 
         private fun getDestructionStage(): Int {
@@ -155,6 +170,59 @@ object BlockBreakingService {
             block.type = Material.AIR
             val itemType = ItemType.fromPlaceBlockType(blockType) ?: return
             block.world.dropItemNaturally(block.location, itemType.getItemStack(1))
+        }
+
+        /**
+         * Calculates the breaking time in ticks based on the hardness of the block
+         * and the current tool
+         * Based on: https://minecraft.fandom.com/wiki/Breaking
+         */
+        private fun calculateBreakingTime(): Int {
+            var speedMultiplier = 1.0
+
+            // Check if player has correct tool
+            val toolType = ToolType.fromMaterial(itemInHand.type)
+            val isCorrectTool = toolType != null && toolType == blockType.toolType
+            if(isCorrectTool) {
+                speedMultiplier = toolType!!.materialToSpeedMapping[itemInHand.type]!!.toDouble()
+                val efficiencyLevel = itemInHand.getEnchantmentLevel(Enchantment.DIG_SPEED)
+                if(efficiencyLevel > 0) {
+                    speedMultiplier += (efficiencyLevel * efficiencyLevel) + 1
+                }
+            }
+
+            // Check if player has haste effect
+            val hasteLevel = player.getPotionEffectLevel(PotionEffectType.FAST_DIGGING)
+            if(hasteLevel > 0) {
+                speedMultiplier *= 0.2 * hasteLevel + 1
+            }
+
+            // Check if player has haste effect
+            val miningFatigueLevel = player.getPotionEffectLevel(PotionEffectType.SLOW_DIGGING)
+            if(miningFatigueLevel > 0) {
+                speedMultiplier *= 0.3.pow(min(miningFatigueLevel, 4))
+            }
+
+            // Check if player is in water and has no aqua affinity
+            if(player.isInWater) {
+                val helmet = player.inventory.helmet
+
+                if(helmet == null || helmet.getEnchantmentLevel(Enchantment.WATER_WORKER) < 1) {
+                    speedMultiplier /= 5
+                }
+            }
+
+            // Check if player is in air
+            if(!player.isGrounded()) {
+                speedMultiplier /= 5
+            }
+
+            val damage = (speedMultiplier / blockType.hardness) / 30
+            return if(damage > 1) {
+                0
+            } else {
+                ceil(1 / damage).toInt()
+            }
         }
     }
 }
