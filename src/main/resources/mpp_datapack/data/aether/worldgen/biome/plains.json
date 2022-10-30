@@ -7,7 +7,6 @@
     "fog_color": 14863615,
     "water_color": 5558783,
     "water_fog_color": 5558783,
-    "grass_color": 4718524,
     "foliage_color": 11599657
   },
   "spawners": {
@@ -46,11 +45,23 @@
             "targets": [
               {
                 "target": {
-                  "predicate_type": "minecraft:tag_match",
-                  "tag": "minecraft:stone_ore_replaceables"
+                  "predicate_type": "minecraft:blockstate_match",
+                  "block_state": {
+                    "Name": "minecraft:note_block",
+                    "Properties": {
+                      "instrument": "harp",
+                      "note": "15",
+                      "powered": "false"
+                    }
+                  }
                 },
                 "state": {
-                  "Name": "minecraft:ancient_debris"
+                  "Name": "minecraft:note_block",
+                  "Properties": {
+                    "instrument": "harp",
+                    "note": "13",
+                    "powered": "false"
+                  }
                 }
               }
             ]
@@ -90,11 +101,23 @@
             "targets": [
               {
                 "target": {
-                  "predicate_type": "minecraft:tag_match",
-                  "tag": "minecraft:stone_ore_replaceables"
+                  "predicate_type": "minecraft:blockstate_match",
+                  "block_state": {
+                    "Name": "minecraft:note_block",
+                    "Properties": {
+                      "instrument": "harp",
+                      "powered": "false",
+                      "note": "15"
+                    }
+                  }
                 },
                 "state": {
-                  "Name": "minecraft:diamond_ore"
+                  "Name": "minecraft:note_block",
+                  "Properties": {
+                    "instrument": "harp",
+                    "note": "14",
+                    "powered": "false"
+                  }
                 }
               }
             ]

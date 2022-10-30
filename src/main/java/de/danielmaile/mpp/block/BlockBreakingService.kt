@@ -45,7 +45,9 @@ object BlockBreakingService {
 
                 if (digType == EnumWrappers.PlayerDigType.START_DESTROY_BLOCK) {
                     val block = event.player.world.getBlockAt(blockPosition.x, blockPosition.y, blockPosition.z)
-                    damageBlock(block, event.player, sequence)
+                    if(block.isCustom()) {
+                        damageBlock(block, event.player, sequence)
+                    }
                 }
 
                 if (digType == EnumWrappers.PlayerDigType.STOP_DESTROY_BLOCK || digType == EnumWrappers.PlayerDigType.ABORT_DESTROY_BLOCK) {
@@ -57,11 +59,11 @@ object BlockBreakingService {
 
         // Handle ticks
         Bukkit.getScheduler().scheduleSyncRepeatingTask(inst(), {
-            damagedBlocks.forEach { (_, u) -> u.tick() }
             toRemoveDamageBlocks.forEach {
                 damagedBlocks.remove(it)
             }
             toRemoveDamageBlocks.clear()
+            damagedBlocks.forEach { (_, u) -> u.tick() }
         }, 1L, 1L)
     }
 
@@ -71,7 +73,6 @@ object BlockBreakingService {
     private val toRemoveDamageBlocks = mutableListOf<Location>()
 
     fun damageBlock(block: Block, player: Player, sequence: Int) {
-        if (block.blockData !is NoteBlock) return
         val blockType = BlockType.fromBlockData(block.blockData as NoteBlock) ?: return
 
         // Break block instant if player is in creative mode
@@ -143,6 +144,7 @@ object BlockBreakingService {
 
             // Remove slow mining effect from player
             val effect = player.getPotionEffect(PotionEffectType.SLOW_DIGGING)
+
             val packet = if (effect != null) {
                 // If the player actually has mining fatigue, send the correct effect again
                 val effectInstance = MobEffectInstance(
@@ -167,7 +169,10 @@ object BlockBreakingService {
 
         // Drop item corresponding to the broken block
         private fun dropItem() {
-            block.type = Material.AIR
+            // Run a next tick to ensure it's not async
+            Bukkit.getScheduler().runTask(inst(), Runnable {
+                block.type = Material.AIR
+            })
             val itemType = ItemType.fromPlaceBlockType(blockType) ?: return
             block.world.dropItemNaturally(block.location, itemType.getItemStack(1))
         }

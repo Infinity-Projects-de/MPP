@@ -33,7 +33,9 @@ enum class BlockType(
     CLOUD_JUMP(Instrument.PIANO, Note(19), false, ToolType.SHOVEL, 2f),
     CLOUD_HEAL2(Instrument.PIANO, Note(20), false, ToolType.SHOVEL, 2f),
     CLOUD_SPEED2(Instrument.PIANO, Note(21), false, ToolType.SHOVEL, 2f),
-    CLOUD_JUMP2(Instrument.PIANO, Note(22), false, ToolType.SHOVEL, 2f);
+    CLOUD_JUMP2(Instrument.PIANO, Note(22), false, ToolType.SHOVEL, 2f),
+    AETHER_GRASS(Instrument.PIANO, Note(23), false, ToolType.SHOVEL, 0.6f),
+    AETHER_DIRT(Instrument.PIANO, Note(24), false, ToolType.SHOVEL, 0.6f);
 
     companion object {
 

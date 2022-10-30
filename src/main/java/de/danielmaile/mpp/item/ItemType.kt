@@ -93,7 +93,9 @@ enum class ItemType(
     CLOUD_JUMP(4019, Material.LIME_STAINED_GLASS, null, BlockType.CLOUD_JUMP),
     CLOUD_HEAL2(4020, Material.RED_STAINED_GLASS, null, BlockType.CLOUD_HEAL2),
     CLOUD_SPEED2(4021, Material.ORANGE_STAINED_GLASS, null, BlockType.CLOUD_SPEED2),
-    CLOUD_JUMP2(4022, Material.GREEN_STAINED_GLASS, null, BlockType.CLOUD_JUMP2);
+    CLOUD_JUMP2(4022, Material.GREEN_STAINED_GLASS, null, BlockType.CLOUD_JUMP2),
+    AETHER_GRASS(1000, Material.GRASS_BLOCK, null, BlockType.AETHER_GRASS),
+    AETHER_DIRT(1000, Material.DIRT, null, BlockType.AETHER_DIRT);
 
     private val displayName = inst().getLanguageManager().getComponent("items.$name.name")
     private val description = inst().getLanguageManager().getComponentList("items.$name.description")

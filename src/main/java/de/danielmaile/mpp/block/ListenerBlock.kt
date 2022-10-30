@@ -79,18 +79,19 @@ class ListenerBlock : Listener {
         event.isCancelled = true
     }
 
-    // Prevent a player from changing the noteblock tone
+    // Handle block placement against custom block
     @EventHandler(priority = EventPriority.HIGHEST)
     fun onInteract(event: PlayerInteractEvent) {
         if (event.action != Action.RIGHT_CLICK_BLOCK) return
         val clickedBlock = event.clickedBlock ?: return
         if (clickedBlock.type != Material.NOTE_BLOCK) return
-        event.isCancelled = true
 
         // Return if clicked block is no custom block
         if(!clickedBlock.isCustom()) {
             return
         }
+
+        event.isCancelled = true
 
         // Player is not trying to place a block
         val item = event.item ?: return
