@@ -4,6 +4,7 @@ import de.danielmaile.mpp.MPP
 import de.danielmaile.mpp.data.ObjectManager
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.util.logError
+import de.danielmaile.mpp.util.saveResource
 import org.bukkit.Bukkit
 import org.bukkit.World
 import java.io.*
@@ -93,27 +94,7 @@ class WorldManager(mpp: MPP) {
 
     @Throws(IOException::class)
     private fun saveResourceToWorldFolder(resourcePath: String) {
-        val outputPath = Bukkit.getWorldContainer()
-            .toString() + File.separator + Bukkit.getWorlds()[0].name + File.separator + "datapacks" + File.separator + resourcePath
-        val inputStream =
-            inst().javaClass.classLoader.getResourceAsStream(resourcePath) ?: throw IllegalArgumentException()
-
-        //Create output directory
-        val outputDirectory = File(outputPath.substring(0, outputPath.lastIndexOf('/')))
-        if (!outputDirectory.exists() && !outputDirectory.mkdirs()) {
-            logError("Output directories for resource can't be created!")
-            return
-        }
-
-        //Write file
-        val outFile = File(outputPath)
-        val outputStream: OutputStream = FileOutputStream(outFile)
-        val buf = ByteArray(1024)
-        var length: Int
-        while (inputStream.read(buf).also { length = it } > 0) {
-            outputStream.write(buf, 0, length)
-        }
-        outputStream.close()
-        inputStream.close()
+        val outputPath = Paths.get(Bukkit.getWorldContainer().toString(), Bukkit.getWorlds()[0].name, "datapacks", resourcePath)
+        saveResource(resourcePath, outputPath)
     }
 }

@@ -94,7 +94,7 @@ enum class ItemType(
     CLOUD_HEAL2(67, Material.RED_STAINED_GLASS, null, BlockType.CLOUD_HEAL2),
     CLOUD_SPEED2(68, Material.ORANGE_STAINED_GLASS, null, BlockType.CLOUD_SPEED2),
     CLOUD_JUMP2(69, Material.GREEN_STAINED_GLASS, null, BlockType.CLOUD_JUMP2),
-    AETHER_GRASS(70, Material.GRASS_BLOCK, null, BlockType.AETHER_GRASS),
+    AETHER_GRASS_BLOCK(70, Material.GRASS_BLOCK, null, BlockType.AETHER_GRASS_BLOCK),
     AETHER_DIRT(71, Material.DIRT, null, BlockType.AETHER_DIRT);
 
     private val displayName = inst().getLanguageManager().getComponent("items.$name.name")

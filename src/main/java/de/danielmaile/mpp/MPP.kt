@@ -13,6 +13,7 @@ import de.danielmaile.mpp.block.cloud.CloudEffects
 import de.danielmaile.mpp.command.CommandMPP
 import de.danielmaile.mpp.config.ConfigManager
 import de.danielmaile.mpp.config.LanguageManager
+import de.danielmaile.mpp.data.ResourcePackBuilder
 import de.danielmaile.mpp.item.ListenerConverter
 import de.danielmaile.mpp.item.ListenerCrafting
 import de.danielmaile.mpp.item.Recipes
@@ -85,6 +86,9 @@ class MPP : JavaPlugin() {
         if (!File(getDataFolder(), "locales/en.yml").exists())
             saveResource("locales/en.yml", false)
         reloadConfig()
+
+        //Generate resource pack
+        ResourcePackBuilder()
 
         //Connect to database
         Thread.currentThread().contextClassLoader = inst().javaClass.classLoader

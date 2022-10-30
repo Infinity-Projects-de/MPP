@@ -266,7 +266,7 @@ items:
   ADMIN_SWORD:
     name: "<rainbow>Adminschwert</rainbow>"
     description: ""
-  AETHER_GRASS:
+  AETHER_GRASS_BLOCK:
     name: "Himmelsgras"
     description: ""
   AETHER_DIRT:
