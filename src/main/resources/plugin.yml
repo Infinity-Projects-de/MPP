@@ -5,6 +5,13 @@ api-version: 1.19
 authors: [ Daniel Maile and others ]
 website: daniel-maile.com
 depend: [ ProtocolLib, FastAsyncWorldEdit ]
+libraries:
+  - org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin.version}
+  - org.hibernate.orm:hibernate-core:6.1.4.Final
+  - org.hibernate.orm:hibernate-community-dialects:6.1.4.Final
+  - org.xerial:sqlite-jdbc:3.39.3.0
+  - org.apache.commons:commons-compress:1.21
+  - commons-codec:commons-codec:1.11
 
 commands:
   mpp:
