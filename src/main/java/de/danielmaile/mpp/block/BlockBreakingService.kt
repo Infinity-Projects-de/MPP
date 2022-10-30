@@ -14,10 +14,7 @@ import net.minecraft.network.protocol.game.ClientboundRemoveMobEffectPacket
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectInstance
-import org.bukkit.Bukkit
-import org.bukkit.GameMode
-import org.bukkit.Location
-import org.bukkit.Material
+import org.bukkit.*
 import org.bukkit.block.Block
 import org.bukkit.block.data.type.NoteBlock
 import org.bukkit.enchantments.Enchantment
@@ -77,7 +74,10 @@ object BlockBreakingService {
 
         // Break block instant if player is in creative mode
         if(player.gameMode == GameMode.CREATIVE) {
-            block.type = Material.AIR
+            // Run at next tick to ensure it's not async
+            Bukkit.getScheduler().runTask(inst(), Runnable {
+                block.type = Material.AIR
+            })
             return
         }
 
@@ -107,6 +107,12 @@ object BlockBreakingService {
 
             // Break block and stop
             if (ticksPassed >= breakTime) {
+                // Run at next tick to ensure it's not async
+                Bukkit.getScheduler().runTask(inst(), Runnable {
+                    block.type = Material.AIR
+                })
+
+                playBreakSound()
                 dropItem()
                 stop()
                 return
@@ -169,10 +175,6 @@ object BlockBreakingService {
 
         // Drop item corresponding to the broken block
         private fun dropItem() {
-            // Run a next tick to ensure it's not async
-            Bukkit.getScheduler().runTask(inst(), Runnable {
-                block.type = Material.AIR
-            })
             val itemType = ItemType.fromPlaceBlockType(blockType) ?: return
             block.world.dropItemNaturally(block.location, itemType.getItemStack(1))
         }
@@ -228,6 +230,10 @@ object BlockBreakingService {
             } else {
                 ceil(1 / damage).toInt()
             }
+        }
+
+        private fun playBreakSound() {
+            block.world.playSound(block.location, blockType.breakSound, 1f, 1f)
         }
     }
 }

@@ -132,6 +132,9 @@ class ListenerBlock : Listener {
             blockData.isPowered = blockType.isPowered
             blockData.note = blockType.note
             placeBlock.blockData = blockData
+
+            // Play place sound
+            placeBlock.world.playSound(placeBlock.location, blockType.placeSound, 1f, 1f)
         }
 
         // Remove item from inventory

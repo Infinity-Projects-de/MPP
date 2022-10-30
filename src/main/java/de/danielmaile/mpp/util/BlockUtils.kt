@@ -5,8 +5,11 @@ import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.events.PacketContainer
 import com.comphenix.protocol.wrappers.BlockPosition
 import de.danielmaile.mpp.block.BlockType
+import de.danielmaile.mpp.inst
+import org.bukkit.Bukkit
 import org.bukkit.block.Block
 import org.bukkit.block.data.type.NoteBlock
+import org.bukkit.entity.Player
 
 /**
  * @return if the given block is a custom mpp block
@@ -31,10 +34,13 @@ fun Block.sendDestructionStagePacket(stage: Int) {
         .write(0, this.getEntityID())
         .write(1, stage)
 
-    this.location.getPlayersNearby(32.0)
-        .forEach {
-            ProtocolLibrary.getProtocolManager().sendServerPacket(it, packetContainer)
-        }
+    // Run at next tick to ensure it's not async
+    Bukkit.getScheduler().runTask(inst(), Runnable {
+        this.location.getNearbyEntitiesByType(Player::class.java, 16.0)
+            .forEach {
+                ProtocolLibrary.getProtocolManager().sendServerPacket(it, packetContainer)
+            }
+    })
 }
 
 fun Block.getEntityID(): Int {

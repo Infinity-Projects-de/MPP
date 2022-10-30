@@ -36,5 +36,6 @@ fun String.isLong(): Boolean {
 
 fun Long.abbreviateNumber(): String {
     val locale = Locale.forLanguageTag(inst().config.getString("language_file"))
-    return CompactNumberFormat.getCompactNumberInstance(locale, NumberFormat.Style.SHORT).format(this).replace('\u00a0', ' ')
+    return CompactNumberFormat.getCompactNumberInstance(locale, NumberFormat.Style.SHORT).format(this)
+        .replace('\u00a0', ' ')
 }
