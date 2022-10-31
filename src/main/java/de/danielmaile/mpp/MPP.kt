@@ -88,7 +88,11 @@ class MPP : JavaPlugin() {
         reloadConfig()
 
         //Generate resource pack
-        ResourcePackBuilder()
+        val resourcePackBuilder = ResourcePackBuilder()
+        server.pluginManager.registerEvents(
+            ResourcePackListener(resourcePackBuilder.url, resourcePackBuilder.hash),
+            this
+        )
 
         //Connect to database
         Thread.currentThread().contextClassLoader = inst().javaClass.classLoader
@@ -168,8 +172,8 @@ class MPP : JavaPlugin() {
         val attackDamage = spigotSettings.get("settings.attribute.attackDamage.max") as Double
 
         //Send error message when values are not correct
-        if(maxHealthSetting != maxValue || movementSpeed != maxValue || attackDamage != maxValue) {
-            for(string in getLanguageManager().getStringList("messages.errors.wrong_spigot_yml_settings")) {
+        if (maxHealthSetting != maxValue || movementSpeed != maxValue || attackDamage != maxValue) {
+            for (string in getLanguageManager().getStringList("messages.errors.wrong_spigot_yml_settings")) {
                 logError(string)
             }
             Bukkit.getPluginManager().disablePlugin(this)
@@ -178,14 +182,16 @@ class MPP : JavaPlugin() {
 
     //Check if settings in paper-world-defaults.yml are correct. If not disable the plugin
     private fun checkPaperYML() {
-        val paperWorldDefaultsSettingsFile = File(dataFolder.parentFile.parentFile, "config" + File.separator + "paper-world-defaults.yml")
+        val paperWorldDefaultsSettingsFile =
+            File(dataFolder.parentFile.parentFile, "config" + File.separator + "paper-world-defaults.yml")
         val paperWorldDefaultsSettings = YamlConfiguration.loadConfiguration(paperWorldDefaultsSettingsFile)
 
-        val countAllMobsForSpawning = paperWorldDefaultsSettings.get("entities.spawning.count-all-mobs-for-spawning") as Boolean
+        val countAllMobsForSpawning =
+            paperWorldDefaultsSettings.get("entities.spawning.count-all-mobs-for-spawning") as Boolean
 
         //Send error message when value is not correct
-        if(!countAllMobsForSpawning) {
-            for(string in getLanguageManager().getStringList("messages.errors.wrong_paper_world_defaults_yml_settings")) {
+        if (!countAllMobsForSpawning) {
+            for (string in getLanguageManager().getStringList("messages.errors.wrong_paper_world_defaults_yml_settings")) {
                 logError(string)
             }
             Bukkit.getPluginManager().disablePlugin(this)

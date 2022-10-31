@@ -86,12 +86,12 @@ class ListenerBlock : Listener {
         val clickedBlock = event.clickedBlock ?: return
         if (clickedBlock.type != Material.NOTE_BLOCK) return
 
+        event.isCancelled = true
+
         // Return if clicked block is no custom block
         if(!clickedBlock.isCustom()) {
             return
         }
-
-        event.isCancelled = true
 
         // Player is not trying to place a block
         val item = event.item ?: return

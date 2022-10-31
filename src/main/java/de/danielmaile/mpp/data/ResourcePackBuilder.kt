@@ -1,9 +1,14 @@
 package de.danielmaile.mpp.data
 
+import com.google.cloud.storage.BlobId
+import com.google.cloud.storage.BlobInfo
+import com.google.cloud.storage.StorageOptions
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import de.danielmaile.mpp.block.BlockType
 import de.danielmaile.mpp.inst
+import de.danielmaile.mpp.item.ItemType
 import de.danielmaile.mpp.util.logError
 import de.danielmaile.mpp.util.logInfo
 import de.danielmaile.mpp.util.saveResource
@@ -20,8 +25,13 @@ import java.util.*
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
 
-
 class ResourcePackBuilder {
+
+    val hash: String
+    val url: String
+
+    private val bucketName = ""
+    private val objectName = "MPP Resource Pack - ${System.currentTimeMillis()}"
 
     private val resourcePackFolder = Paths.get(inst().dataFolder.absolutePath, "mpp_resourcepack")
     private val resourcePackZipPath = Paths.get(inst().dataFolder.absolutePath, "MPP Resource Pack.zip")
@@ -30,11 +40,14 @@ class ResourcePackBuilder {
         logInfo("Generation resource pack...")
         copyAssets()
         generateBlockStatesJson()
+        generateItemModels()
         createZipFile()
         deleteWorkingDirectory()
-        val hash = calculateSHA1Hash()
+        hash = calculateSHA1Hash()
+        url = uploadPack()
+
         logInfo("Saved resource pack to: " + resourcePackZipPath.toAbsolutePath())
-        logInfo("Hash: $hash")
+        logInfo("Hash: $hash Link: $url")
     }
 
     private fun copyAssets() {
@@ -87,6 +100,60 @@ class ResourcePackBuilder {
         fileWriter.close()
     }
 
+    private fun generateItemModels() {
+        val groupedTypes = ItemType.values().groupBy {
+            it.material
+        }
+
+        for((material, types) in groupedTypes) {
+            val jsonObject = JsonObject()
+
+            val textures = JsonObject()
+            if(material.isBlock) {
+                jsonObject.addProperty("parent", "minecraft:block/cube_all")
+                textures.addProperty("all", "minecraft:block/" + material.name.lowercase())
+
+            } else {
+                jsonObject.addProperty("parent", "minecraft:item/handheld")
+                textures.addProperty("layer0", "minecraft:item/" + material.name.lowercase())
+            }
+            jsonObject.add("textures", textures)
+
+            val overrides = JsonArray()
+            for(type in types) {
+                val entry = JsonObject()
+
+                val predicate = JsonObject()
+                predicate.addProperty("custom_model_data", type.modelID)
+                entry.add("predicate", predicate)
+
+                entry.addProperty("model", "item/" + type.name.lowercase())
+
+                overrides.add(entry)
+            }
+
+            jsonObject.add("overrides", overrides)
+
+            val gson = GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create()
+            val outputFile = File(
+                Paths.get(
+                    inst().dataFolder.absolutePath,
+                    "mpp_resourcepack",
+                    "assets",
+                    "minecraft",
+                    "models",
+                    "item",
+                    material.name.lowercase() + ".json"
+                ).toString()
+            )
+            outputFile.parentFile.mkdirs()
+            val fileWriter = FileWriter(outputFile)
+            gson.toJson(jsonObject, fileWriter)
+            fileWriter.flush()
+            fileWriter.close()
+        }
+    }
+
     private fun createZipFile() {
         ZipArchiveOutputStream(FileOutputStream(resourcePackZipPath.toFile())).use { archive ->
             Files.walk(resourcePackFolder.toFile().toPath()).forEach { p ->
@@ -111,6 +178,13 @@ class ResourcePackBuilder {
 
     private fun calculateSHA1Hash(): String {
         return DigestUtils.sha1Hex(FileInputStream(resourcePackZipPath.toFile()))
+    }
+
+    /*
+    * Uploads the pack to google cloud and return the link
+     */
+    private fun uploadPack(): String {
+        TODO()
     }
 
     /*
