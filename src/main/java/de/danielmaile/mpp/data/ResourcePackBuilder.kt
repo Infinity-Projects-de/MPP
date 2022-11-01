@@ -1,8 +1,5 @@
 package de.danielmaile.mpp.data
 
-import com.google.cloud.storage.BlobId
-import com.google.cloud.storage.BlobInfo
-import com.google.cloud.storage.StorageOptions
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
@@ -13,11 +10,16 @@ import de.danielmaile.mpp.util.logError
 import de.danielmaile.mpp.util.logInfo
 import de.danielmaile.mpp.util.saveResource
 import de.danielmaile.mpp.util.toMinecraftName
+import kong.unirest.Unirest
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
+import org.apache.commons.lang3.RandomStringUtils
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerJoinEvent
 import java.io.*
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -25,29 +27,37 @@ import java.util.*
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
 
+
 class ResourcePackBuilder {
 
-    val hash: String
-    val url: String
-
-    private val bucketName = ""
-    private val objectName = "MPP Resource Pack - ${System.currentTimeMillis()}"
-
+    private val packName =
+        "${RandomStringUtils.randomAlphanumeric(32)}.zip"
     private val resourcePackFolder = Paths.get(inst().dataFolder.absolutePath, "mpp_resourcepack")
-    private val resourcePackZipPath = Paths.get(inst().dataFolder.absolutePath, "MPP Resource Pack.zip")
+    private val resourcePackZipPath = Paths.get(inst().dataFolder.absolutePath, packName)
+
+    private val url =
+        "http://${inst().configManager.resourcePackHostIP}:${inst().configManager.resourcePackHostPort}/files/$packName"
 
     init {
-        logInfo("Generation resource pack...")
+        logInfo("Generating resource pack...")
         copyAssets()
         generateBlockStatesJson()
         generateItemModels()
         createZipFile()
-        deleteWorkingDirectory()
-        hash = calculateSHA1Hash()
-        url = uploadPack()
+        logInfo("Successfully generated resource pack! Uploading...")
 
-        logInfo("Saved resource pack to: " + resourcePackZipPath.toAbsolutePath())
-        logInfo("Hash: $hash Link: $url")
+        // Upload pack to hosting server
+        uploadPack()
+
+        // Calculate hash
+        val hash = calculateSHA1Hash()
+
+        // Delete directory
+        deleteWorkingDirectory()
+
+        // Register listener
+        inst().server.pluginManager.registerEvents(ResourcePackListener(url, hash), inst())
+
     }
 
     private fun copyAssets() {
@@ -105,11 +115,11 @@ class ResourcePackBuilder {
             it.material
         }
 
-        for((material, types) in groupedTypes) {
+        for ((material, types) in groupedTypes) {
             val jsonObject = JsonObject()
 
             val textures = JsonObject()
-            if(material.isBlock) {
+            if (material.isBlock) {
                 jsonObject.addProperty("parent", "minecraft:block/cube_all")
                 textures.addProperty("all", "minecraft:block/" + material.name.lowercase())
 
@@ -120,7 +130,7 @@ class ResourcePackBuilder {
             jsonObject.add("textures", textures)
 
             val overrides = JsonArray()
-            for(type in types) {
+            for (type in types) {
                 val entry = JsonObject()
 
                 val predicate = JsonObject()
@@ -159,8 +169,11 @@ class ResourcePackBuilder {
             Files.walk(resourcePackFolder.toFile().toPath()).forEach { p ->
                 val file = p.toFile()
 
-                if(!file.isDirectory) {
-                    val entry = ZipArchiveEntry(file, file.toString().substringAfter(resourcePackFolder.toString() + File.separator))
+                if (!file.isDirectory) {
+                    val entry = ZipArchiveEntry(
+                        file,
+                        file.toString().substringAfter(resourcePackFolder.toString() + File.separator)
+                    )
                     FileInputStream(file).use { fis ->
                         archive.putArchiveEntry(entry)
                         IOUtils.copy(fis, archive)
@@ -180,11 +193,19 @@ class ResourcePackBuilder {
         return DigestUtils.sha1Hex(FileInputStream(resourcePackZipPath.toFile()))
     }
 
-    /*
-    * Uploads the pack to google cloud and return the link
-     */
-    private fun uploadPack(): String {
-        TODO()
+    private fun uploadPack() {
+        Unirest
+            .post("http://${inst().configManager.resourcePackHostIP}:${inst().configManager.resourcePackHostPort}/upload")
+            .field("file", resourcePackZipPath.toFile())
+            .asStringAsync {
+                logInfo("Successfully uploaded resource pack!")
+                deleteZip()
+            }
+
+    }
+
+    private fun deleteZip() {
+        Files.delete(resourcePackZipPath)
     }
 
     /*
@@ -198,5 +219,16 @@ class ResourcePackBuilder {
             this.note.id,
             this.isPowered.toString()
         )
+    }
+
+    private class ResourcePackListener(
+        private val url: String,
+        private val hash: String
+    ) : Listener {
+
+        @EventHandler
+        fun onJoin(event: PlayerJoinEvent) {
+            event.player.setResourcePack(url, hash, true)
+        }
     }
 }

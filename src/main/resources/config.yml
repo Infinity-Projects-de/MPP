@@ -18,3 +18,9 @@ world_generation:
     probability: 0.00125
   trees:
     probability: 0.1
+
+# Don't change these values unless you know what you are doing!
+resource_pack:
+  host:
+    ip: "lamahost.de"
+    port: 8050

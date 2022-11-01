@@ -88,11 +88,7 @@ class MPP : JavaPlugin() {
         reloadConfig()
 
         //Generate resource pack
-        val resourcePackBuilder = ResourcePackBuilder()
-        server.pluginManager.registerEvents(
-            ResourcePackListener(resourcePackBuilder.url, resourcePackBuilder.hash),
-            this
-        )
+        ResourcePackBuilder()
 
         //Connect to database
         Thread.currentThread().contextClassLoader = inst().javaClass.classLoader

@@ -19,6 +19,8 @@ class ConfigManager {
     val llamaSpeed: Float
     val minDungeonChestChecks: Int
     val maxDungeonChestChecks: Int
+    val resourcePackHostIP: String
+    val resourcePackHostPort: Int
 
     init {
         var file = File(
@@ -51,5 +53,8 @@ class ConfigManager {
         llamaSpeed = inst().config.getDouble("entities.llama.speed").toFloat()
         minDungeonChestChecks = inst().config.getInt("world_generation.dungeons.chests.min_checks")
         maxDungeonChestChecks = inst().config.getInt("world_generation.dungeons.chests.max_checks")
+
+        resourcePackHostIP = inst().config.getString("resource_pack.host.ip")!!
+        resourcePackHostPort = inst().config.getInt("resource_pack.host.port")
     }
 }

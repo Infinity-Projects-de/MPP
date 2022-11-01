@@ -11,8 +11,8 @@ libraries:
   - org.hibernate.orm:hibernate-community-dialects:6.1.4.Final
   - org.xerial:sqlite-jdbc:3.39.3.0
   - org.apache.commons:commons-compress:1.21
-  - commons-codec:commons-codec:1.11
-  - com.google.cloud:google-cloud-storage:2.14.0
+  - commons-codec:commons-codec:1.15
+  - com.konghq:unirest-java:3.13.11
 
 commands:
   mpp:
