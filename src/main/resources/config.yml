@@ -22,5 +22,5 @@ world_generation:
 # Don't change these values unless you know what you are doing!
 resource_pack:
   host:
-    ip: "lamahost.de"
+    ip: "mpp.lamahost.de"
     port: 8050
