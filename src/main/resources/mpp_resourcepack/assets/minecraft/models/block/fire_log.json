@@ -4,8 +4,8 @@
     64
   ],
   "textures": {
-    "3": "block/aether_grass_block",
-    "particle": "block/aether_grass_block"
+    "2": "block/fire_log",
+    "particle": "block/fire_log"
   },
   "elements": [
     {
@@ -27,7 +27,7 @@
             4,
             4
           ],
-          "texture": "#3"
+          "texture": "#2"
         },
         "east": {
           "uv": [
@@ -36,7 +36,7 @@
             4,
             8
           ],
-          "texture": "#3"
+          "texture": "#2"
         },
         "south": {
           "uv": [
@@ -45,7 +45,7 @@
             8,
             4
           ],
-          "texture": "#3"
+          "texture": "#2"
         },
         "west": {
           "uv": [
@@ -54,7 +54,7 @@
             8,
             8
           ],
-          "texture": "#3"
+          "texture": "#2"
         },
         "up": {
           "uv": [
@@ -63,7 +63,7 @@
             0,
             8
           ],
-          "texture": "#3"
+          "texture": "#2"
         },
         "down": {
           "uv": [
@@ -72,7 +72,7 @@
             8,
             4
           ],
-          "texture": "#3"
+          "texture": "#2"
         }
       }
     }

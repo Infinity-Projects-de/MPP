@@ -36,41 +36,44 @@ dungeons:
     title: "<bold><gold>DUNGEON"
     subtitle: "<bold><green>Größe: <size> Segmente"
 items:
-  AETHER_ACACIA_LOG:
-    name: "Himmelsakazienstamm"
+AETHER_LOG:
+  name: "Himmelsstamm"
+  description: ""
+  FIRE_LOG:
+    name: "Holz des Feuers"
     description: ""
-  AETHER_ACACIA_PLANKS:
-    name: "Himmelsakazienplanke"
+  WATER_LOG:
+    name: "Holz des Wassers"
     description: ""
-  AETHER_BIRCH_LOG:
-    name: "Himmelsbirkenstamm"
+  AIR_LOG:
+    name: "Holz der Luft"
     description: ""
-  AETHER_BIRCH_PLANKS:
-    name: "Himmelsbirkenplanke"
+  EARTH_LOG:
+    name: "Holz der Erde"
     description: ""
-  AETHER_DARK_OAK_LOG:
-    name: "Himmelsschwarzeichenstamm"
+  AETHER_PLANKS:
+    name: "Himmelsplanken"
     description: ""
-  AETHER_DARK_OAK_PLANKS:
-    name: "Himmelsschwarzeichenplanke"
+  FIRE_PLANKS:
+    name: "Feuerplanken"
     description: ""
-  AETHER_JUNGLE_LOG:
-    name: "Himmelstropenstamm"
+  WATER_PLANKS:
+    name: "Wasserplanken"
     description: ""
-  AETHER_JUNGLE_PLANKS:
-    name: "Himmelstropenplanke"
+  AIR_PLANKS:
+    name: "Luftplanken"
     description: ""
-  AETHER_OAK_LOG:
-    name: "Himmelseichenstamm"
+  EARTH_PLANKS:
+    name: "Erdplanken"
     description: ""
-  AETHER_OAK_PLANKS:
-    name: "Himmelseichenplanke"
+  SILVER_ORE:
+    name: "Silbererz"
     description: ""
-  AETHER_SPRUCE_LOG:
-    name: "Himmelsfichtenstamm"
+  TITANIUM_ORE:
+    name: "Titanerz"
     description: ""
-  AETHER_SPRUCE_PLANKS:
-    name: "Himmelsfichtenplanke"
+  CRYSTAL_ORE:
+    name: "Kristallerz"
     description: ""
   AETHER_STICK:
     name: "Himmelsstock"

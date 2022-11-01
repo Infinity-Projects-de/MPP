@@ -25,20 +25,37 @@ enum class ItemType(
     val placeBlockType: BlockType?
 ) {
 
-    AETHER_ACACIA_LOG(Material.OAK_WOOD, null, BlockType.AETHER_ACACIA_LOG),
-    AETHER_ACACIA_PLANKS(Material.OAK_WOOD, null, BlockType.AETHER_ACACIA_PLANKS),
-    AETHER_BIRCH_LOG(Material.OAK_WOOD, null, BlockType.AETHER_BIRCH_LOG),
-    AETHER_BIRCH_PLANKS(Material.OAK_WOOD, null, BlockType.AETHER_BIRCH_PLANKS),
-    AETHER_DARK_OAK_LOG(Material.OAK_WOOD, null, BlockType.AETHER_DARK_OAK_LOG),
-    AETHER_DARK_OAK_PLANKS( Material.OAK_WOOD, null, BlockType.AETHER_DARK_OAK_PLANKS),
-    AETHER_JUNGLE_LOG(Material.OAK_WOOD, null, BlockType.AETHER_JUNGLE_LOG),
-    AETHER_JUNGLE_PLANKS(Material.OAK_WOOD, null, BlockType.AETHER_JUNGLE_PLANKS),
-    AETHER_OAK_LOG(Material.OAK_WOOD, null, BlockType.AETHER_OAK_LOG),
-    AETHER_OAK_PLANKS(Material.OAK_WOOD, null, BlockType.AETHER_OAK_PLANKS),
-    AETHER_SPRUCE_LOG( Material.OAK_WOOD, null, BlockType.AETHER_SPRUCE_LOG),
-    AETHER_SPRUCE_PLANKS( Material.OAK_WOOD, null, BlockType.AETHER_SPRUCE_PLANKS),
-    AETHER_STICK( Material.STICK, null, null),
+    AETHER_LOG(Material.OAK_WOOD, null, BlockType.AETHER_LOG),
+    FIRE_LOG(Material.OAK_WOOD, null, BlockType.FIRE_LOG),
+    WATER_LOG(Material.OAK_WOOD, null, BlockType.WATER_LOG),
+    AIR_LOG(Material.OAK_WOOD, null, BlockType.AIR_LOG),
+    EARTH_LOG(Material.OAK_WOOD, null, BlockType.EARTH_LOG),
+
+    AETHER_PLANKS( Material.OAK_PLANKS, null, BlockType.AETHER_PLANKS),
+    FIRE_PLANKS(Material.OAK_PLANKS, null, BlockType.FIRE_PLANKS),
+    WATER_PLANKS(Material.OAK_PLANKS, null, BlockType.WATER_PLANKS),
+    AIR_PLANKS(Material.OAK_PLANKS, null, BlockType.AIR_PLANKS),
+    EARTH_PLANKS(Material.OAK_PLANKS, null, BlockType.EARTH_PLANKS),
+
+    SILVER_ORE( Material.STONE, null, BlockType.SILVER_ORE),
+    TITANIUM_ORE( Material.STONE, null, BlockType.TITANIUM_ORE),
+    ZANITE_ORE( Material.STONE, null, BlockType.ZANITE_ORE),
+    GRAVITITE_ORE( Material.STONE,null, BlockType.GRAVITITE_ORE),
+
     AETHER_STONE( Material.STONE, null, BlockType.AETHER_STONE),
+    CLOUD_HEAL( Material.WHITE_WOOL, null, BlockType.CLOUD_HEAL),
+    CLOUD_SLOW_FALLING( Material.WHITE_WOOL, null, BlockType.CLOUD_SLOW_FALLING),
+    CLOUD_SPEED( Material.WHITE_WOOL, null, BlockType.CLOUD_SPEED),
+    CLOUD_JUMP( Material.WHITE_WOOL, null, BlockType.CLOUD_JUMP),
+    CLOUD_HEAL2( Material.WHITE_WOOL, null, BlockType.CLOUD_HEAL2),
+    CLOUD_SPEED2( Material.WHITE_WOOL, null, BlockType.CLOUD_SPEED2),
+    CLOUD_JUMP2( Material.WHITE_WOOL, null, BlockType.CLOUD_JUMP2),
+    AETHER_GRASS_BLOCK( Material.DIRT, null, BlockType.AETHER_GRASS_BLOCK),
+    AETHER_DIRT( Material.DIRT, null, BlockType.AETHER_DIRT),
+
+    CRYSTAL_ORE(Material.AMETHYST_BLOCK, null, BlockType.CRYSTAL_ORE),
+
+    AETHER_STICK( Material.STICK, null, null),
     AETHER_STONE_AXE( Material.STONE_AXE, null, null),
     AETHER_STONE_HOE(Material.STONE_HOE, null, null),
     AETHER_STONE_PICKAXE( Material.STONE_PICKAXE, null, null),
@@ -58,7 +75,6 @@ enum class ItemType(
     GRAVITITE_HELMET( Material.NETHERITE_HELMET, ArmorAttribute(3.9, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
     GRAVITITE_HOE( Material.NETHERITE_HOE, null, null),
     GRAVITITE_LEGGINGS( Material.NETHERITE_LEGGINGS, ArmorAttribute(7.8, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
-    GRAVITITE_ORE( Material.STONE,null, BlockType.GRAVITITE_ORE),
     GRAVITITE_PICKAXE( Material.NETHERITE_PICKAXE, null, null),
     GRAVITITE_PLATE( Material.NETHERITE_SCRAP, null, null),
     GRAVITITE_SHOVEL( Material.NETHERITE_SHOVEL, null, null),
@@ -81,21 +97,11 @@ enum class ItemType(
     ZANITE_HELMET(Material.DIAMOND_HELMET, ArmorAttribute(3.45, 2.3, EquipmentSlot.HEAD).toAttributeMap(), null),
     ZANITE_HOE( Material.DIAMOND_HOE, null, null),
     ZANITE_LEGGINGS( Material.DIAMOND_LEGGINGS, ArmorAttribute(6.9, 2.3, EquipmentSlot.LEGS).toAttributeMap(), null),
-    ZANITE_ORE( Material.STONE, null, BlockType.ZANITE_ORE),
     ZANITE_PICKAXE(Material.DIAMOND_PICKAXE, null, null),
     ZANITE_SHOVEL( Material.DIAMOND_SHOVEL, null, null),
     ZANITE_STONE( Material.DIAMOND, null, null),
     ZANITE_SWORD( Material.DIAMOND_SWORD, ToolAttribute(7.0, 1.6).toAttributeMap(), null),
-    MAGIC_WAND( Material.IRON_HORSE_ARMOR, null, null),
-    CLOUD_HEAL( Material.WHITE_WOOL, null, BlockType.CLOUD_HEAL),
-    CLOUD_SLOW_FALLING( Material.WHITE_WOOL, null, BlockType.CLOUD_SLOW_FALLING),
-    CLOUD_SPEED( Material.WHITE_WOOL, null, BlockType.CLOUD_SPEED),
-    CLOUD_JUMP( Material.WHITE_WOOL, null, BlockType.CLOUD_JUMP),
-    CLOUD_HEAL2( Material.WHITE_WOOL, null, BlockType.CLOUD_HEAL2),
-    CLOUD_SPEED2( Material.WHITE_WOOL, null, BlockType.CLOUD_SPEED2),
-    CLOUD_JUMP2( Material.WHITE_WOOL, null, BlockType.CLOUD_JUMP2),
-    AETHER_GRASS_BLOCK( Material.DIRT, null, BlockType.AETHER_GRASS_BLOCK),
-    AETHER_DIRT( Material.DIRT, null, BlockType.AETHER_DIRT);
+    MAGIC_WAND( Material.IRON_HORSE_ARMOR, null, null);
 
     private val displayName = inst().getLanguageManager().getComponent("items.$name.name")
     private val description = inst().getLanguageManager().getComponentList("items.$name.description")

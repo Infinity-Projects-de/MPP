@@ -36,41 +36,44 @@ dungeons:
     title: "<bold><gold>DUNGEON"
     subtitle: "<bold><green>Size: <size> segments"
 items:
-  AETHER_ACACIA_LOG:
-    name: "Aether Acacia Log"
+  AETHER_LOG:
+    name: "Aether Log"
     description: ""
-  AETHER_ACACIA_PLANKS:
-    name: "Aether Acacia Planks"
+  FIRE_LOG:
+    name: "Fire Log"
     description: ""
-  AETHER_BIRCH_LOG:
-    name: "Aether Birch Log"
+  WATER_LOG:
+    name: "Water Log"
     description: ""
-  AETHER_BIRCH_PLANKS:
-    name: "Aether Birch Planks"
+  AIR_LOG:
+    name: "Air Log"
     description: ""
-  AETHER_DARK_OAK_LOG:
-    name: "Aether Dark Oak Log"
+  EARTH_LOG:
+    name: "Earth Log"
     description: ""
-  AETHER_DARK_OAK_PLANKS:
-    name: "Aether Dark Oak Planks"
+  AETHER_PLANKS:
+    name: "Aether Planks"
     description: ""
-  AETHER_JUNGLE_LOG:
-    name: "Aether Jungle Log"
+  FIRE_PLANKS:
+    name: "Fire Planks"
     description: ""
-  AETHER_JUNGLE_PLANKS:
-    name: "Aether Jungle Planks"
+  WATER_PLANKS:
+    name: "Water Planks"
     description: ""
-  AETHER_OAK_LOG:
-    name: "Aether Oak Log"
+  AIR_PLANKS:
+    name: "Air Planks"
     description: ""
-  AETHER_OAK_PLANKS:
-    name: "Aether Oak Planks"
+  EARTH_PLANKS:
+    name: "Earth Planks"
     description: ""
-  AETHER_SPRUCE_LOG:
-    name: "Aether Spruce Log"
+  SILVER_ORE:
+    name: "Silver Ore"
     description: ""
-  AETHER_SPRUCE_PLANKS:
-    name: "Aether Spruce Planks"
+  TITANIUM_ORE:
+    name: "Titanium Ore"
+    description: ""
+  CRYSTAL_ORE:
+    name: "Crystal Ore"
     description: ""
   AETHER_STICK:
     name: "Aether Stick"
