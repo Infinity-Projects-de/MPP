@@ -1,7 +1,7 @@
 {
   "textures": {
-    "0": "block/aether_dirt",
-    "particle": "block/aether_dirt"
+    "0": "block/aether_stone",
+    "particle": "block/aether_stone"
   },
   "elements": [
     {
@@ -54,18 +54,18 @@
         },
         "up": {
           "uv": [
-            0,
-            0,
             16,
-            16
+            16,
+            0,
+            0
           ],
           "texture": "#0"
         },
         "down": {
           "uv": [
-            0,
-            0,
             16,
+            0,
+            0,
             16
           ],
           "texture": "#0"
