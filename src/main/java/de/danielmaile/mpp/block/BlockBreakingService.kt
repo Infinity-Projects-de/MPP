@@ -20,11 +20,13 @@ import org.bukkit.block.data.type.NoteBlock
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.Damageable
 import org.bukkit.potion.PotionEffectType
 import kotlin.math.ceil
 import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.round
+import kotlin.random.Random
 
 private val MINING_FATIGUE = MobEffectInstance(MobEffect.byId(4), Integer.MAX_VALUE, 255, false, false, false)
 
@@ -114,6 +116,7 @@ object BlockBreakingService {
 
                 playBreakSound()
                 dropItem()
+                damageTool()
                 stop()
                 return
             }
@@ -234,6 +237,19 @@ object BlockBreakingService {
 
         private fun playBreakSound() {
             block.world.playSound(block.location, blockType.breakSound, 1f, 1f)
+        }
+
+        private fun damageTool() {
+            // Return if item is not damageable
+            if(itemInHand.itemMeta !is Damageable) return
+
+            // Random chance to damage tool (based on vanilla behaviour)
+            val durabilityLvl = itemInHand.getEnchantmentLevel(Enchantment.DURABILITY)
+            if(Random.nextInt(0, durabilityLvl + 1) != 0) return
+
+            val itemMeta = itemInHand.itemMeta as Damageable
+            itemMeta.damage = itemMeta.damage + 1
+            itemInHand.itemMeta = itemMeta
         }
     }
 }
