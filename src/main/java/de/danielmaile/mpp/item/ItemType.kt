@@ -17,7 +17,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 const val MPP_ITEM_TAG_KEY = "mpp_item"
-private val modelIdOffset = Random().nextInt(1, 1000000)
+
+// Don't change this, otherwise existing items will break
+private val modelIdOffset = 1000
 
 enum class ItemType(
     val material: Material,

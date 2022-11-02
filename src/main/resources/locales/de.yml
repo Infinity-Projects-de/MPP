@@ -36,9 +36,9 @@ dungeons:
     title: "<bold><gold>DUNGEON"
     subtitle: "<bold><green>Größe: <size> Segmente"
 items:
-AETHER_LOG:
-  name: "Himmelsstamm"
-  description: ""
+  AETHER_LOG:
+    name: "Himmelsstamm"
+    description: ""
   FIRE_LOG:
     name: "Holz des Feuers"
     description: ""
