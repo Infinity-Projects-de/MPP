@@ -2,6 +2,7 @@ package de.danielmaile.mpp.block
 
 import de.danielmaile.mpp.item.ItemType
 import de.danielmaile.mpp.item.MPP_ITEM_TAG_KEY
+import de.danielmaile.mpp.util.centerLocation
 import de.danielmaile.mpp.util.doesKeyExist
 import de.danielmaile.mpp.util.isCustom
 import org.bukkit.*
@@ -106,7 +107,7 @@ class ListenerBlock : Listener {
         }
 
         // Can't place block because there are entities inside the block
-        if(!placeBlock.world.getNearbyEntities(placeBlock.location, 0.5, 0.5, 0.5).isEmpty()) {
+        if(!placeBlock.world.getNearbyLivingEntities(placeBlock.centerLocation, 0.8, 0.5, 0.8).isEmpty()) {
             return
         }
 

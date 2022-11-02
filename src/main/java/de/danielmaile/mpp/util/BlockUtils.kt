@@ -7,6 +7,7 @@ import com.comphenix.protocol.wrappers.BlockPosition
 import de.danielmaile.mpp.block.BlockType
 import de.danielmaile.mpp.inst
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.block.Block
 import org.bukkit.block.data.type.NoteBlock
 import org.bukkit.entity.Player
@@ -46,3 +47,6 @@ fun Block.sendDestructionStagePacket(stage: Int) {
 fun Block.getEntityID(): Int {
     return this.x and 0xFFF shl 20 or (this.z and 0xFFF) shl 8 or (this.y and 0xFF)
 }
+
+val Block.centerLocation: Location
+    get() = this.location.add(0.5, 0.5, 0.5)
