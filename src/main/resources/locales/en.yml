@@ -63,6 +63,18 @@ items:
   AIR_PLANKS:
     name: "Air Planks"
     description: ""
+  FIRE_LEAVES:
+    name: "Fire Leaves"
+    description: ""
+  WATER_LEAVES:
+    name: "Water Leaves"
+    description: ""
+  AIR_LEAVES:
+    name: "Air Leaves"
+    description: ""
+  EARTH_LEAVES:
+    name: "Earth Leaves"
+    description: ""
   EARTH_PLANKS:
     name: "Earth Planks"
     description: ""

@@ -1,11 +1,7 @@
 {
-  "texture_size": [
-    64,
-    64
-  ],
   "textures": {
-    "2": "block/air_log",
-    "particle": "block/air_log"
+    "0": "block/air_leaves",
+    "particle": "block/air_leaves"
   },
   "elements": [
     {
@@ -24,55 +20,55 @@
           "uv": [
             0,
             0,
-            4,
-            4
+            16,
+            16
           ],
-          "texture": "#2"
+          "texture": "#0"
         },
         "east": {
           "uv": [
             0,
-            4,
-            4,
-            8
+            0,
+            16,
+            16
           ],
-          "texture": "#2"
+          "texture": "#0"
         },
         "south": {
           "uv": [
-            4,
             0,
-            8,
-            4
+            0,
+            16,
+            16
           ],
-          "texture": "#2"
+          "texture": "#0"
         },
         "west": {
           "uv": [
-            4,
-            4,
-            8,
-            8
+            0,
+            0,
+            16,
+            16
           ],
-          "texture": "#2"
+          "texture": "#0"
         },
         "up": {
           "uv": [
-            4,
-            12,
+            16,
+            16,
             0,
-            8
+            0
           ],
-          "texture": "#2"
+          "texture": "#0"
         },
         "down": {
           "uv": [
-            12,
+            16,
             0,
-            8,
-            4
+            0,
+            16
           ],
-          "texture": "#2"
+          "texture": "#0"
         }
       }
     }

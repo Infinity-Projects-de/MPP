@@ -66,6 +66,18 @@ items:
   EARTH_PLANKS:
     name: "Erdplanken"
     description: ""
+  FIRE_LEAVES:
+    name: "Feuerblätter"
+    description: ""
+  WATER_LEAVES:
+    name: "Wasserblätter"
+    description: ""
+  AIR_LEAVES:
+    name: "Luftblätter"
+    description: ""
+  EARTH_LEAVES:
+    name: "Erdblätter"
+    description: ""
   SILVER_ORE:
     name: "Silbererz"
     description: ""

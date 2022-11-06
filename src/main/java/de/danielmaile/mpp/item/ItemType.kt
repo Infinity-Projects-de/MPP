@@ -19,7 +19,7 @@ import kotlin.collections.ArrayList
 const val MPP_ITEM_TAG_KEY = "mpp_item"
 
 // Don't change this, otherwise existing items will break
-private val modelIdOffset = 1000
+private const val modelIdOffset = 1000
 
 enum class ItemType(
     val material: Material,
@@ -27,23 +27,21 @@ enum class ItemType(
     val placeBlockType: BlockType?
 ) {
 
+    // Don't change order because existing items will break
     AETHER_LOG(Material.OAK_WOOD, null, BlockType.AETHER_LOG),
     FIRE_LOG(Material.OAK_WOOD, null, BlockType.FIRE_LOG),
     WATER_LOG(Material.OAK_WOOD, null, BlockType.WATER_LOG),
     AIR_LOG(Material.OAK_WOOD, null, BlockType.AIR_LOG),
     EARTH_LOG(Material.OAK_WOOD, null, BlockType.EARTH_LOG),
-
     AETHER_PLANKS( Material.OAK_PLANKS, null, BlockType.AETHER_PLANKS),
     FIRE_PLANKS(Material.OAK_PLANKS, null, BlockType.FIRE_PLANKS),
     WATER_PLANKS(Material.OAK_PLANKS, null, BlockType.WATER_PLANKS),
     AIR_PLANKS(Material.OAK_PLANKS, null, BlockType.AIR_PLANKS),
     EARTH_PLANKS(Material.OAK_PLANKS, null, BlockType.EARTH_PLANKS),
-
     SILVER_ORE( Material.STONE, null, BlockType.SILVER_ORE),
     TITANIUM_ORE( Material.STONE, null, BlockType.TITANIUM_ORE),
     ZANITE_ORE( Material.STONE, null, BlockType.ZANITE_ORE),
     GRAVITITE_ORE( Material.STONE,null, BlockType.GRAVITITE_ORE),
-
     AETHER_STONE( Material.STONE, null, BlockType.AETHER_STONE),
     CLOUD_HEAL( Material.WHITE_WOOL, null, BlockType.CLOUD_HEAL),
     CLOUD_SLOW_FALLING( Material.WHITE_WOOL, null, BlockType.CLOUD_SLOW_FALLING),
@@ -54,9 +52,7 @@ enum class ItemType(
     CLOUD_JUMP2( Material.WHITE_WOOL, null, BlockType.CLOUD_JUMP2),
     AETHER_GRASS_BLOCK( Material.DIRT, null, BlockType.AETHER_GRASS_BLOCK),
     AETHER_DIRT( Material.DIRT, null, BlockType.AETHER_DIRT),
-
     CRYSTAL_ORE(Material.AMETHYST_BLOCK, null, BlockType.CRYSTAL_ORE),
-
     AETHER_STICK( Material.STICK, null, null),
     AETHER_STONE_AXE( Material.STONE_AXE, null, null),
     AETHER_STONE_HOE(Material.STONE_HOE, null, null),
@@ -103,7 +99,11 @@ enum class ItemType(
     ZANITE_SHOVEL( Material.DIAMOND_SHOVEL, null, null),
     ZANITE_STONE( Material.DIAMOND, null, null),
     ZANITE_SWORD( Material.DIAMOND_SWORD, ToolAttribute(7.0, 1.6).toAttributeMap(), null),
-    MAGIC_WAND( Material.IRON_HORSE_ARMOR, null, null);
+    MAGIC_WAND( Material.IRON_HORSE_ARMOR, null, null),
+    FIRE_LEAVES(Material.OAK_LEAVES, null, BlockType.FIRE_LEAVES),
+    WATER_LEAVES(Material.OAK_LEAVES, null, BlockType.WATER_LEAVES),
+    AIR_LEAVES(Material.OAK_LEAVES, null, BlockType.AIR_LEAVES),
+    EARTH_LEAVES(Material.OAK_LEAVES, null, BlockType.EARTH_LEAVES);
 
     private val displayName = inst().getLanguageManager().getComponent("items.$name.name")
     private val description = inst().getLanguageManager().getComponentList("items.$name.description")
