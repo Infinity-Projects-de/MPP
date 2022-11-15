@@ -13,7 +13,9 @@ import de.danielmaile.mpp.block.cloud.CloudEffects
 import de.danielmaile.mpp.command.CommandMPP
 import de.danielmaile.mpp.config.ConfigManager
 import de.danielmaile.mpp.config.LanguageManager
+import de.danielmaile.mpp.data.LicenseManager
 import de.danielmaile.mpp.data.ResourcePackBuilder
+import de.danielmaile.mpp.demo.ListenerJoinDemo
 import de.danielmaile.mpp.item.ListenerConverter
 import de.danielmaile.mpp.item.ListenerCrafting
 import de.danielmaile.mpp.item.Recipes
@@ -26,6 +28,7 @@ import de.danielmaile.mpp.mob.ListenerMPPMobs
 import de.danielmaile.mpp.mob.MPPMobSpawnManager
 import de.danielmaile.mpp.mob.listeners.*
 import de.danielmaile.mpp.util.logError
+import de.danielmaile.mpp.util.logInfo
 import jakarta.persistence.EntityManager
 import jakarta.persistence.EntityManagerFactory
 import jakarta.persistence.Persistence
@@ -58,6 +61,9 @@ class MPP : JavaPlugin() {
     lateinit var entityManager: EntityManager
         private set
 
+    var validLicense: Boolean = false
+        private set
+
     fun getLanguageManager(): LanguageManager {
         return configManager.languageManager
     }
@@ -86,6 +92,13 @@ class MPP : JavaPlugin() {
         if (!File(getDataFolder(), "locales/en.yml").exists())
             saveResource("locales/en.yml", false)
         reloadConfig()
+
+        //Check license
+        logInfo("Validating license...")
+        validLicense = LicenseManager.validateLicense()
+        if(!validLicense) {
+            logError("License key validation failed! Please check your key in the config and restart the server to try again. If this fails again try updating the plugin. Demo mode gets disabled...")
+        }
 
         //Generate resource pack
         ResourcePackBuilder()
@@ -144,6 +157,7 @@ class MPP : JavaPlugin() {
         server.pluginManager.registerEvents(RiftListener(), this)
         server.pluginManager.registerEvents(HealerListener(), this)
         server.pluginManager.registerEvents(HitmanListener(), this)
+        server.pluginManager.registerEvents(ListenerJoinDemo(), this)
     }
 
     override fun onDisable() {
