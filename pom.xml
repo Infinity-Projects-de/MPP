@@ -6,7 +6,7 @@
 
     <groupId>de.danielmaile</groupId>
     <artifactId>mpp</artifactId>
-    <version>1.0-BETA-1.19.2</version>
+    <version>v0.1</version>
     <packaging>jar</packaging>
 
     <name>MPP</name>
@@ -15,7 +15,7 @@
         <main.class>de.danielmaile.mpp.MPP</main.class>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.7.20</kotlin.version>
+        <kotlin.version>1.7.21</kotlin.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
