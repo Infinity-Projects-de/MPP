@@ -5,7 +5,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      issues: write
+      pull-requests: write
+      contents: write
       packages: write
     strategy:
       matrix:
@@ -41,4 +43,15 @@ jobs:
           SPIGOT_M2: ~/.m2/repository/org/spigotmc/spigot
 
       - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots package
+        run: |
+          mvn --batch-mode --update-snapshots package
+
+      - name: Create Release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          automatic_release_tag: "latest-dev-build"
+          prerelease: true
+          title: "MPP Development Build"
+          files: |
+            /home/runner/work/MPP/MPP/target/MPP-*.jar
