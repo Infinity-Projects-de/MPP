@@ -10,7 +10,7 @@ You can download the latest development builds from [here](https://github.com/Th
 - Only the newest version of [Paper](https://papermc.io/) is supported. **Spigot builds will not work!**
 - [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) and [FastAsyncWorldEdit](https://www.spigotmc.org/resources/fastasyncworldedit.13932/) are required.
 - This plugin is still in early development and as such bugs can occur.
-- To use this plugin you will need to buy a license from [here](https://patreon.com/lamaprojects).
+- **You can download and test this plugin for free, but demo mode will be enabled and as such ads about MPP will be shown to players. To use this plugin and disable demo mode you need to buy a license key from [here](https://patreon.com/lamaprojects).**
 
 ## :bug: Report bugs or other issues
 If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://github.com/TheRealKabo/MPP/issues). When doing so, make sure to use one of the provided templates and fill out all the requested information. Make sure to keep your issue's description clear and concise. Your issue's title should also be easy to digest, giving our developers and reporters a good idea of what's wrong without including too many details.
