@@ -34,7 +34,8 @@ body:
     attributes:
       label: "What server distribution (Paper, Purpur, etc.) and what version are you using? Do not say 'latest'."
       description: "Hint: run /version in the console and paste the output here."
-      placeholder: "ex. This server is running Paper version git-Paper-271 (MC: 1.19.2) (Implementing API version 1.19.2-R0.1-SNAPSHOT) (Git: 2151112)
+      placeholder: "ex. This server is running Paper version git-Paper-271 (MC: 1.19.2) (Implementing API version 1.19.2-R0.1-SNAPSHOT) (Git: 2151112)"
+    validations:
       required: true
   - type: textarea
     attributes:
