@@ -1,0 +1,57 @@
+name: 🚀 Feature request
+description: "Have an idea for a new feature in MPP? Suggest it here!"
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: feat-type
+    attributes:
+      label: What Feature Types Apply to This Request?
+      multiple: true
+      options:
+        - Art/Assets
+        - Audio
+        - Block
+        - Config
+        - Entity
+        - Item
+        - System
+        - World-Gen
+        - Other (Please Describe)
+  - type: input
+    attributes:
+      label: Other Type
+      description: If you selected other in the dropdown above, please what type it is.
+  - type: checkboxes
+    attributes:
+      label: Is This an Enhancement to a Preexisting Feature?
+      options:
+        - label: I confirm this request is an enhancement to a feature already in MPP.
+          required: false
+  - type: textarea
+    attributes:
+      label: "Describe the feature and how it would be used"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Why should this feature be in MPP?"
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Does This Feature Improve Compatibility With Another Plugin?
+      description: If this feature would create a better experience between the MPP and another plugin, please put the name and version of the plugin here. Leave blank otherwise.
+  - type: textarea
+    attributes:
+      label: "Are you able to work on this?"
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: Please Read and Confirm the Following
+      options:
+        - label: I have confirmed this suggestion is unique and has not been suggested already.
+          required: true
+  - type: textarea
+    attributes:
+      label: Additional information
