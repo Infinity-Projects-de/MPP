@@ -1,0 +1,52 @@
+name: 🐛 Bug report
+description: Found a bug in MPP? Report it here!
+labels: ["bug"]
+body:
+  - type: checkboxes
+    attributes:
+      label: "Check if the issue is fixed in the latest dev build"
+      description: "You can find the latest dev build in the Releases tab on GitHub."
+      options:
+        - label: "I have confirmed that the issue is present on the latest dev build"
+          required: true
+  - type: textarea
+    attributes:
+      label: "What steps will reproduce the issue?"
+      description: "It's much more difficult to fix a bug if you don't know how to cause it."
+      value: |-
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "What was supposed to happen?"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "What happened instead?"
+      placeholder: "ex. Item ... did nothing and this error appeared in console: ..."
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: "What server distribution (Paper, Purpur, etc.) and what version are you using? Do not say 'latest'."
+      description: "Hint: run /version in the console and paste the output here."
+      placeholder: "ex. This server is running Paper version git-Paper-271 (MC: 1.19.2) (Implementing API version 1.19.2-R0.1-SNAPSHOT) (Git: 2151112)
+      required: true
+  - type: textarea
+    attributes:
+      label: "What plugins do you have installed?"
+      description: "Hint: run /plugins in the console and paste the output here."
+      placeholder: "ex. Plugins (5): Essentials, LuckPerms, MPP, FastAsyncWorldEdit, ProtocolLib, WorldGuard"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Are there any errors in the console or in logs?"
+      description: "They might be Greek to you but they're gold when diagnosing an issue."
+  - type: textarea
+    attributes:
+      label: Additional information that could be helpful in fixing the problem
