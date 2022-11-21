@@ -128,8 +128,8 @@ items:
     name: "<gradient:#FB2C03:#FB7F03>Fire Essence</gradient>"
     description:
       - "Can be used to improve the zanite sword."
-  FLAME_SWORD:
-    name: "<gradient:#FB2C03:#FB7F03>Flame Sword</gradient>"
+  FIRE_SWORD:
+    name: "<gradient:#FB2C03:#FB7F03>Fire Sword</gradient>"
     description:
       - "Burn your enemies if they get too close to you."
   GRAVITITE_AXE:
