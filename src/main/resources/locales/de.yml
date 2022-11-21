@@ -128,7 +128,7 @@ items:
     name: "<gradient:#FB2C03:#FB7F03>Feueressenz</gradient>"
     description:
       - "Kann zum Verbessern des Zaniteschwertes benutzt werden."
-  FLAME_SWORD:
+  FIRE_SWORD:
     name: "<gradient:#FB2C03:#FB7F03>Feuerschwert</gradient>"
     description:
       - "Verbrenne deine Feinde, falls sie dir zu nahe kommen."

@@ -34,7 +34,7 @@ class ListenerItem : Listener {
             ItemType.LIGHTNING_SWORD -> {
                 victim.world.strikeLightning(victim.location)
             }
-            ItemType.FLAME_SWORD, ItemType.SUN_SWORD -> {
+            ItemType.FIRE_SWORD, ItemType.SUN_SWORD -> {
                 victim.fireTicks = 300
             }
             ItemType.ICE_SWORD -> {

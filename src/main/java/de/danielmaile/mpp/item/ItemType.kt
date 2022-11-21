@@ -66,7 +66,7 @@ enum class ItemType(
     AETHER_WOODEN_SWORD( Material.WOODEN_SWORD, null, null),
     ADMIN_SWORD(Material.NETHERITE_SWORD, ToolAttribute(1000000.0, 0.1).toAttributeMap(), null),
     FIRE_ESSENCE( Material.ORANGE_DYE, null, null),
-    FLAME_SWORD( Material.DIAMOND_SWORD, ToolAttribute(10.0, 1.6).toAttributeMap(), null),
+    FIRE_SWORD( Material.DIAMOND_SWORD, ToolAttribute(10.0, 1.6).toAttributeMap(), null),
     GRAVITITE_AXE( Material.NETHERITE_AXE, null, null),
     GRAVITITE_BOOTS( Material.NETHERITE_BOOTS,  ArmorAttribute(3.9, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
     GRAVITITE_CHESTPLATE( Material.NETHERITE_CHESTPLATE, ArmorAttribute(10.4, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),

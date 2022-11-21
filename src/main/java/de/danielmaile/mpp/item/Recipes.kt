@@ -265,8 +265,8 @@ enum class Recipes {
         false, ItemType.LIGHTNING_SWORD, 1,
         ItemType.ZANITE_SWORD, ItemType.LIGHTNING_ESSENCE
     ),
-    FLAME_SWORD(
-        false, ItemType.FLAME_SWORD, 1,
+    FIRE_SWORD(
+        false, ItemType.FIRE_SWORD, 1,
         ItemType.ZANITE_SWORD, ItemType.FIRE_ESSENCE
     ),
     ICE_SWORD(
