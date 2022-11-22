@@ -64,7 +64,7 @@ enum class BlockType(
     }
 
     private fun calculateIsPowered(): Boolean {
-        return this.ordinal % 50 > 24
+        return this.ordinal % 50 >= 24
     }
 
     companion object {
