@@ -320,6 +320,36 @@ items:
   PHOENIX_BOOTS:
     name: "Phoenix Boots"
     description: ""
+  AETHERIUM_BLADE:
+    name: "Aetherium Blade"
+    description: ""
+  DEMON_BLADE:
+    name: "Demon Blade"
+    description: ""
+  CHERRY:
+    name: "Cherry"
+    description: ""
+  STONE_OF_HEALING:
+    name: "Stone of Healing"
+    description: ""
+  STONE_OF_SPEED:
+    name: "Stone of Speed"
+    description: ""
+  STONE_OF_STRENGTH:
+    name: "Stone of Strength"
+    description: ""
+  LIGHTNING_DAGGER:
+    name: "Lightning Dagger"
+    description: ""
+  VALKYRE_SPEAR:
+    name: "Valkyre Spear"
+    description: ""
+  PARACHUTE:
+    name: "Parachute"
+    description: ""
+  GOLDEN_PARACHUTE:
+    name: "Golden Parachute"
+    description: ""
 mobs:
   ZOMBIE:
     name: "<aqua><bold>〈</bold><aqua>Zombie<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
