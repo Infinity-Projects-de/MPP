@@ -287,6 +287,39 @@ items:
   AETHER_DIRT:
     name: "Himmelserde"
     description: ""
+  OBSIDIAN_HELMET:
+    name: "Obsidian Helm"
+    description: ""
+  OBSIDIAN_CHESTPLATE:
+    name: "Obsidian Brustplatte"
+    description: ""
+  OBSIDIAN_LEGGINGS:
+    name: "Obsidian Hose"
+    description: ""
+  OBSIDIAN_BOOTS:
+    name: "Obsidian Schuhe"
+    description: ""
+  SILVER_INGOT:
+    name: "Silberbarren"
+    description: ""
+  TITANIUM_INGOT:
+    name: "Titanbarren"
+    description: ""
+  CRYSTAL_SHARD:
+    name: "Kristallscherbe"
+    description: ""
+  PHOENIX_HELMET:
+    name: "Phoenix Helm"
+    description: ""
+  PHOENIX_CHESTPLATE:
+    name: "Phoenix Brustplatte"
+    description: ""
+  PHOENIX_LEGGINGS:
+    name: "Phoenix Hose"
+    description: ""
+  PHOENIX_BOOTS:
+    name: "Phoenix Schuhe"
+    description: ""
 mobs:
   ZOMBIE:
     name: "<aqua><bold>〈</bold><aqua>Zombie<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
