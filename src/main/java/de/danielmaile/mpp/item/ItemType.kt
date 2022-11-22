@@ -111,10 +111,10 @@ enum class ItemType(
     SILVER_INGOT( Material.IRON_INGOT, null, null),
     TITANIUM_INGOT( Material.IRON_INGOT, null, null),
     CRYSTAL_SHARD( Material.QUARTZ, null, null),
-    PHOENIX_HELMET( Material.ELYTRA, ArmorAttribute(7.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    PHOENIX_CHESTPLATE( Material.ELYTRA, ArmorAttribute(12.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    PHOENIX_LEGGINGS( Material.ELYTRA, ArmorAttribute(7.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    PHOENIX_BOOTS( Material.ELYTRA, ArmorAttribute(10.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null);
+    PHOENIX_HELMET( Material.GOLDEN_HELMET, ArmorAttribute(7.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
+    PHOENIX_CHESTPLATE( Material.GOLDEN_CHESTPLATE, ArmorAttribute(12.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
+    PHOENIX_LEGGINGS( Material.GOLDEN_LEGGINGS, ArmorAttribute(7.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
+    PHOENIX_BOOTS( Material.GOLDEN_BOOTS, ArmorAttribute(10.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null);
 
     private val displayName = inst().getLanguageManager().getComponent("items.$name.name")
     private val description = inst().getLanguageManager().getComponentList("items.$name.description")
