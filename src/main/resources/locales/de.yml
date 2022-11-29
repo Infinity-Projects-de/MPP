@@ -350,6 +350,264 @@ items:
   GOLDEN_PARACHUTE:
     name: "Goldener Fallschirm"
     description: ""
+  GOLDEN_PARACHUTE:
+    name: "Goldener Fallschirm"
+    description: ""
+  ENDER_SHARD:
+    name: "Ender Scherbe"
+    description: ""
+  AMBER_GEM:
+    name: "Amber Stein"
+    description: ""
+  AMETRINE_CRYSTAL:
+    name: "Ametrin Kristall"
+    description: ""
+  PERIDOT_SHARD:
+    name: "Peridot Scherbe"
+    description: ""
+  RUBY:
+    name: "Rubin"
+    description: ""
+  SAPPHIRE:
+    name: "Saphier"
+    description: ""
+  CINCINNASITE:
+    name: "Cincinnasit"
+    description: ""
+  THALLASIUM_INGOT:
+    name: "Thallasiumbarren"
+    description: ""
+  PENDORITE_INGOT:
+    name: "Pendoritbarren"
+    description: ""
+  ENDERITE_INGOT:
+    name: "Enderitbarren"
+    description: ""
+  TUNGSTEN_INGOT:
+    name: "Tungstenbarren"
+    description: ""
+  TIN_INGOT:
+    name: "Zinnbarren"
+    description: ""
+  NIKOLITE_INGOT:
+    name: "Nikolitbarren"
+    description: ""
+  CINNEBAR_INGOT:
+    name: "Cinnebarbarren"
+    description: ""
+  IRIDIUM_INGOT:
+    name: "Iridiumbarren"
+    description: ""
+  PYRITE_INGOT:
+    name: "Pyritbarren"
+    description: ""
+  SHELDONITE_INGOT:
+    name: "Sheldonitbarren"
+    description: ""
+  SODALITE_INGOT:
+    name: "Sodalitbarren"
+    description: ""
+  SPHALERITE_INGOT:
+    name: "Sphaleritbarren"
+    description: ""
+  ZINC_INGOT:
+    name: "Zinkbarren"
+    description: ""
+  CINCINNASITE_INGOT:
+    name: "Cincinnasitbarren"
+    description: ""
+  AETHERIUM_INGOT:
+    name: "Ätherischer Barren"
+    description: ""
+  STEEL_INGOT:
+    name: "Stahlbarren"
+    description: ""
+  REFINED_IRON_INGOT:
+    name: "Verarbeiteter Eisenbarren"
+    description: ""
+  IRIDIUM_ALLOY_INGOT:
+    name: "Iridiumlegierung"
+    description: ""
+  TERMINITE_INGOT:
+    name: "Terminitbarren"
+    description: ""
+  CHARGED_NIKOLITE_INGOT:
+    name: "Geladener Nikolitbarren"
+    description: ""
+  ENDER_DUST:
+    name: "Enderstaub"
+    description: ""
+  AMBER_DUST:
+    name: "Amberstaub"
+    description: ""
+  THALLASIUM_DUST:
+    name: "Thallasiumstaub"
+    description: ""
+  AMETRINE_DUST:
+    name: "Ametrinestaub"
+    description: ""
+  TUNGSTEN_DUST:
+    name: "Tungstenstaub"
+    description: ""
+  TIN_DUST:
+    name: "Zinnstaub"
+    description: ""
+  NIKOLITE_DUST:
+    name: "Nikolitstaub"
+    description: ""
+  LEAD_DUST:
+    name: "Bleistaub"
+    description: ""
+  BAUXITE_DUST:
+    name: "Bauxitstaub"
+    description: ""
+  CINNEBAR_DUST:
+    name: "Cinnebarstaub"
+    description: ""
+  GELANA_DUST:
+    name: "Gelanastaub"
+    description: ""
+  IRIDIUM_DUST:
+    name: "Iridiumstaub"
+    description: ""
+  PERIDOT_DUST:
+    name: "Peridotstaub"
+    description: ""
+  PYRITE_DUST:
+    name: "Pyritstaub"
+    description: ""
+  RUBY_DUST:
+    name: "Rubinstaub"
+    description: ""
+  SHELDONITE_DUST:
+    name: "Sheldonitstaub"
+    description: ""
+  SAPPHIRE_DUST:
+    name: "Saphierstaub"
+    description: ""
+  SODALITE_DUST:
+    name: "Sodalitstaub"
+    description: ""
+  SPHALERITE_DUST:
+    name: "Sphaleritstaub"
+    description: ""
+  ZINC_DUST:
+    name: "Zinkstaub"
+    description: ""
+  TERMINITE_DUST:
+    name: "Terminitstaub"
+    description: ""
+  PYROPE_DUST:
+    name: "Pyropstaub"
+    description: ""
+  CHARGED_NIKOLITE_DUST:
+    name: "Geladener Nikolitstaub"
+    description: ""
+  STEEL_DUST:
+    name: "Stahlstaub"
+    description: ""
+  TUNGSTEN_NUGGET:
+    name: "Tungstenstaub"
+    description: ""
+  STEEL_NUGGET:
+    name: "Stahlklumpen"
+    description: ""
+  TIN_NUGGET:
+    name: "Zinnklumpen"
+    description: ""
+  NIKOLITE_NUGGET:
+    name: "Nikoliteklumpen"
+    description: ""
+  LEAD_NUGGET:
+    name: "Bleiklumpen"
+    description: ""
+  BAUXITE_NUGGET:
+    name: "Bauxitklumpen"
+    description: ""
+  CINNEBAR_NUGGET:
+    name: "Cinnebarklumpen"
+    description: ""
+  GELANA_NUGGET:
+    name: "Gelanaklumpen"
+    description: ""
+  IRIDIUM_NUGGET:
+    name: "Iridiumklumpen"
+    description: ""
+  SODALITE_NUGGET:
+    name: "Sodalitklumpen"
+    description: ""
+  SPHALERITE_NUGGET:
+    name: "Sphaleritklumpen"
+    description: ""
+  ZINC_NUGGET:
+    name: "Zinkklumpen"
+    description: ""
+  ENDER_PLATE:
+    name: "Enderplatte"
+    description: ""
+  THALLASIUM_PLATE:
+    name: "Thallasiumplatte"
+    description: ""
+  ENDERITE_PLATE:
+    name: "Enderitplatte"
+    description: ""
+  TUNGSTEN_PLATE:
+    name: "Tungstenplatte"
+    description: ""
+  TIN_PLATE:
+    name: "Zinnplatte"
+    description: ""
+  NIKOLITE_PLATE:
+    name: "Nikolitplatte"
+    description: ""
+  LEAD_PLATE:
+    name: "Bleiplatte"
+    description: ""
+  BAUXITE_PLATE:
+    name: "Bauxitplatte"
+    description: ""
+  CINNEBAR_PLATE:
+    name: "Cinnebarplatte"
+    description: ""
+  GELANA_PLATE:
+    name: "Gelanaplatte"
+    description: ""
+  IRIDIUM_PLATE:
+    name: "Iridiumplatte"
+    description: ""
+  PERIDOT_PLATE:
+    name: "Peridotplatte"
+    description: ""
+  PYRITE_PLATE:
+    name: "Pyritplatte"
+    description: ""
+  RUBY_PLATE:
+    name: "Rubinplatte"
+    description: ""
+  SHELDONITE_PLATE:
+    name: "Sheldonitplatte"
+    description: ""
+  SODALITE:
+    name: "Sodalitplatte"
+    description: ""
+  SPHALERITE_PLATE:
+    name: "Sphaleritplatte"
+    description: ""
+  ZINC_PLATE:
+    name: "Zinkplatte"
+    description: ""
+  AETHERIUM_PLATE:
+    name: "Ätherische Platte"
+    description: ""
+  TERMINITE_PLATE:
+    name: "Terminitplatte"
+    description: ""
+  STEEL_PLATE:
+    name: "Stahlplatte"
+    description: ""
+  IRIDIUM_ALLOY_PLATE:
+    name: "Iridiumlegierung Platte"
+    description: ""
 mobs:
   ZOMBIE:
     name: "<aqua><bold>〈</bold><aqua>Zombie<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
