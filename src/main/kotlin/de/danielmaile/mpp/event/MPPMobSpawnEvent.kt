@@ -26,6 +26,13 @@ class MPPMobSpawnEvent(entity: LivingEntity, val mob: MPPMob) : EntityEvent(enti
 
     companion object {
         private val handlerList = HandlerList()
+
+        // don't remove unused method to avoid "static getHandlerList method required exception"
+        @JvmStatic
+        @Suppress("unused")
+        fun getHandlerList(): HandlerList {
+            return handlerList
+        }
     }
 
     override fun getHandlers(): HandlerList {

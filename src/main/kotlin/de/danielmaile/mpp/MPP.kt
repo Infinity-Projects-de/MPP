@@ -114,7 +114,7 @@ class MPP : JavaPlugin() {
         logInfo("Validating license...")
         validLicense = LicenseManager.validateLicense()
         if(!validLicense) {
-            logError("License key validation failed! Please check your key in the config and restart the server to try again. If this fails again try updating the plugin. Demo mode gets disabled...")
+            logError("License key validation failed! Please check your key in the config and restart the server to try again. If this fails again try updating the plugin. Demo mode gets enabled...")
         }
 
         // generate resource pack
