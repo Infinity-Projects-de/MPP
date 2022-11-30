@@ -584,7 +584,7 @@ items:
   SHELDONITE_PLATE:
     name: "Sheldonitplatte"
     description: ""
-  SODALITE:
+  SODALITE_PLATE:
     name: "Sodalitplatte"
     description: ""
   SPHALERITE_PLATE:
@@ -604,6 +604,192 @@ items:
     description: ""
   IRIDIUM_ALLOY_PLATE:
     name: "Iridiumlegierung Platte"
+    description: ""
+  RAW_PENDORITE:
+    name: "Rohes Pendorit"
+    description: ""
+  RAW_TIN:
+    name: "Rohes Zinn"
+    description: ""
+  RAW_NIKOLITE:
+    name: "Rohes Nikolit"
+    description: ""
+  RAW_LEAD:
+    name: "Rohes Blei"
+    description: ""
+  RAW_BAUXITE:
+    name: "Rohes Bauxit"
+    description: ""
+  RAW_CINNEBAR:
+    name: "Rohes Cinnebar"
+    description: ""
+  RAW_GELANA:
+    name: "Rohes Gelana"
+    description: ""
+  RAW_IRIDIUM:
+    name: "Rohes Iridium"
+    description: ""
+  RAW_PYRITE:
+    name: "Rohes Pyrit"
+    description: ""
+  RAW_ZINC:
+    name: "Rohes Zink"
+    description: ""
+  THALLASIUM_HELMET:
+    name: "Thallasium Helm"
+    description: ""
+  THALLASIUM_CHESTPLATE:
+    name: "Thallasium Brustplatte"
+    description: ""
+  THALLASIUM_LEGGINGS:
+    name: "Thallasium Hose"
+    description: ""
+  THALLASIUM_BOOTS:
+    name: "Thallasium Schuhe"
+    description: ""
+  PENDORITE_HELMET:
+    name: "Pendorit Helm"
+    description: ""
+  PENDORITE_CHESTPLATE:
+    name: "Pendorit Brustplatte"
+    description: ""
+  PENDORITE_LEGGINGS:
+    name: "Pendorit Hose"
+    description: ""
+  PENDORITE_BOOTS:
+    name: "Pendorit Schuhe"
+    description: ""
+  LEAD_HELMET:
+    name: "Lead Helm"
+    description: ""
+  LEAD_CHESTPLATE:
+    name: "Lead Brustplatte"
+    description: ""
+  LEAD_LEGGINGS:
+    name: "Lead Hose"
+    description: ""
+  LEAD_BOOTS:
+    name: "Lead Schuhe"
+    description: ""
+  BAUXITE_HELMET:
+    name: "Bauxit Helm"
+    description: ""
+  BAUXITE_CHESTPLATE:
+    name: "Bauxit Chestplate"
+    description: ""
+  BAUXITE_LEGGINGS:
+    name: "Bauxit Leggings"
+    description: ""
+  BAUXITE_BOOTS:
+    name: "Bauxit Schuhe"
+    description: ""
+  RUBY_HELMET:
+    name: "Rubin Helm"
+    description: ""
+  RUBY_CHESTPLATE:
+    name: "Rubin Brustplatte"
+    description: ""
+  RUBY_LEGGINGS:
+    name: "Rubin Hose"
+    description: ""
+  RUBY_BOOTS:
+    name: "Rubin Schuhe"
+    description: ""
+  AETHERIUM_HELMET:
+    name: "Aetherium Helm"
+    description: ""
+  AETHERIUM_CHESTPLATE:
+    name: "Aetherium Brustplatte"
+    description: ""
+  AETHERIUM_LEGGINGS:
+    name: "Aetherium Hose"
+    description: ""
+  AETHERIUM_BOOTS:
+    name: "Aetherium Schuhe"
+    description: ""
+  TERMINITE_HELMET:
+    name: "Terminit Helm"
+    description: ""
+  TERMINITE_CHESTPLATE:
+    name: "Terminit Brustplatte"
+    description: ""
+  TERMINITE_LEGGINGS:
+    name: "Terminit Hose"
+    description: ""
+  TERMINITE_BOOTS:
+    name: "Terminit Schuhe"
+    description: ""
+  ENDERITE_HELMET:
+    name: "Enderit Helm"
+    description: ""
+  ENDERITE_CHESTPLATE:
+    name: "Enderit Brustplatte"
+    description: ""
+  ENDERITE_LEGGINGS:
+    name: "Enderit Hose"
+    description: ""
+  ENDERITE_BOOTS:
+    name: "Enderit Schuhe"
+    description: ""
+  PYRITE_HELMET:
+    name: "Pyrit Helm"
+    description: ""
+  PYRITE_CHESTPLATE:
+    name: "Pyrit Brustplatte"
+    description: ""
+  PYRITE_LEGGINGS:
+    name: "Pyrit Hose"
+    description: ""
+  PYRITE_BOOTS:
+    name: "Pyrit Schuhe"
+    description: ""
+  SODALITE_HELMET:
+    name: "Sodalit Helm"
+    description: ""
+  SODALITE_CHESTPLATE:
+    name: "Sodalit Brustplatte"
+    description: ""
+  SODALITE_LEGGINGS:
+    name: "Sodalit Hose"
+    description: ""
+  SODALITE_BOOTS:
+    name: "Sodalit Schuhe"
+    description: ""
+  TIN_HELMET:
+    name: "Zinn Helm"
+    description: ""
+  TIN_CHESTPLATE:
+    name: "Zinn Brustplatte"
+    description: ""
+  TIN_LEGGINGS:
+    name: "Zinn Hose"
+    description: ""
+  TIN_BOOTS:
+    name: "Zinn Schuhe"
+    description: ""
+  CINNEBAR_HELMET:
+    name: "Cinnebar Helm"
+    description: ""
+  CINNEBAR_CHESTPLATE:
+    name: "Cinnebar Brustplatte"
+    description: ""
+  CINNEBAR_LEGGINGS:
+    name: "Cinnebar Hose"
+    description: ""
+  CINNEBAR_BOOTS:
+    name: "Cinnebar Schuhe"
+    description: ""
+  AURORA_HELMET:
+    name: "Aurora Helm"
+    description: ""
+  AURORA_CHESTPLATE:
+    name: "Aurora Brustplatte"
+    description: ""
+  AURORA_LEGGINGS:
+    name: "Aurora Hose"
+    description: ""
+  AURORA_BOOTS:
+    name: "Aurora Schuhe"
     description: ""
 mobs:
   ZOMBIE:
