@@ -97,7 +97,17 @@ enum class ArmorSet(val head: ItemType, val chest: ItemType, val legs: ItemType,
         ItemType.AURORA_HELMET,
         ItemType.AURORA_CHESTPLATE,
         ItemType.AURORA_LEGGINGS,
-        ItemType.AURORA_BOOTS);
+        ItemType.AURORA_BOOTS),
+    OBSIDIAN(
+        ItemType.OBSIDIAN_HELMET,
+        ItemType.OBSIDIAN_CHESTPLATE,
+        ItemType.OBSIDIAN_LEGGINGS,
+        ItemType.OBSIDIAN_BOOTS),
+    PHOENIX(
+        ItemType.PHOENIX_HELMET,
+        ItemType.PHOENIX_CHESTPLATE,
+        ItemType.PHOENIX_LEGGINGS,
+        ItemType.PHOENIX_BOOTS);
 
     fun contains(itemType: ItemType?): Boolean {
         return head == itemType || chest == itemType || legs == itemType || feet == itemType
