@@ -605,6 +605,192 @@ items:
   IRIDIUM_ALLOY_PLATE:
     name: "Iridium Alloy Plate"
     description: ""
+  RAW_PENDORITE:
+    name: "Raw Pendorite"
+    description: ""
+  RAW_TIN:
+    name: "Raw Tin"
+    description: ""
+  RAW_NIKOLITE:
+    name: "Raw Nikolite"
+    description: ""
+  RAW_LEAD:
+    name: "Raw Lead"
+    description: ""
+  RAW_BAUXITE:
+    name: "Raw Bauxite"
+    description: ""
+  RAW_CINNEBAR:
+    name: "Raw Cinnebar"
+    description: ""
+  RAW_GELANA:
+    name: "Raw Gelana"
+    description: ""
+  RAW_IRIDIUM:
+    name: "Raw Iridium"
+    description: ""
+  RAW_PYRITE:
+    name: "Raw Pyrite"
+    description: ""
+  RAW_ZINC:
+    name: "Raw Zinc"
+    description: ""
+  THALLASIUM_HELMET:
+    name: "Thallasium Helmet"
+    description: ""
+  THALLASIUM_CHESTPLATE:
+    name: "Thallasium Chestplate"
+    description: ""
+  THALLASIUM_LEGGINGS:
+    name: "Thallasium Leggings"
+    description: ""
+  THALLASIUM_BOOTS:
+    name: "Thallasium Boots"
+    description: ""
+  PENDORITE_HELMET:
+    name: "Pendorite Helmet"
+    description: ""
+  PENDORITE_CHESTPLATE:
+    name: "Pendorite Chestplate"
+    description: ""
+  PENDORITE_LEGGINGS:
+    name: "Pendorite Leggings"
+    description: ""
+  PENDORITE_BOOTS:
+    name: "Pendorite Boots"
+    description: ""
+  LEAD_HELMET:
+    name: "Lead Helmet"
+    description: ""
+  LEAD_CHESTPLATE:
+    name: "Lead Chestplate"
+    description: ""
+  LEAD_LEGGINGS:
+    name: "Lead Leggings"
+    description: ""
+  LEAD_BOOTS:
+    name: "Lead Boots"
+    description: ""
+  BAUXITE_HELMET:
+    name: "Bauxite Helmet"
+    description: ""
+  BAUXITE_CHESTPLATE:
+    name: "Bauxite Chestplate"
+    description: ""
+  BAUXITE_LEGGINGS:
+    name: "Bauxite Leggings"
+    description: ""
+  BAUXITE_BOOTS:
+    name: "Bauxite Boots"
+    description: ""
+  RUBY_HELMET:
+    name: "Ruby Helmet"
+    description: ""
+  RUBY_CHESTPLATE:
+    name: "Ruby Chestplate"
+    description: ""
+  RUBY_LEGGINGS:
+    name: "Ruby Leggings"
+    description: ""
+  RUBY_BOOTS:
+    name: "Ruby Boots"
+    description: ""
+  AETHERIUM_HELMET:
+    name: "Aetherium Helmet"
+    description: ""
+  AETHERIUM_CHESTPLATE:
+    name: "Aetherium Chestplate"
+    description: ""
+  AETHERIUM_LEGGINGS:
+    name: "Aetherium Leggings"
+    description: ""
+  AETHERIUM_BOOTS:
+    name: "Aetherium Boots"
+    description: ""
+  TERMINITE_HELMET:
+    name: "Terminite Helmet"
+    description: ""
+  TERMINITE_CHESTPLATE:
+    name: "Terminite Chestplate"
+    description: ""
+  TERMINITE_LEGGINGS:
+    name: "Terminite Leggings"
+    description: ""
+  TERMINITE_BOOTS:
+    name: "Terminite Boots"
+    description: ""
+  ENDERITE_HELMET:
+    name: "Enderite Helmet"
+    description: ""
+  ENDERITE_CHESTPLATE:
+    name: "Enderite Chestplate"
+    description: ""
+  ENDERITE_LEGGINGS:
+    name: "Enderite Leggings"
+    description: ""
+  ENDERITE_BOOTS:
+    name: "Enderite Boots"
+    description: ""
+  PYRITE_HELMET:
+    name: "Pyrite Helmet"
+    description: ""
+  PYRITE_CHESTPLATE:
+    name: "Pyrite Chestplate"
+    description: ""
+  PYRITE_LEGGINGS:
+    name: "Pyrite Leggings"
+    description: ""
+  PYRITE_BOOTS:
+    name: "Pyrite Boots"
+    description: ""
+  SODALITE_HELMET:
+    name: "Sodalite Helmet"
+    description: ""
+  SODALITE_CHESTPLATE:
+    name: "Sodalite Chestplate"
+    description: ""
+  SODALITE_LEGGINGS:
+    name: "Sodalite Leggings"
+    description: ""
+  SODALITE_BOOTS:
+    name: "Sodalite Boots"
+    description: ""
+  TIN_HELMET:
+    name: "Tin Helmet"
+    description: ""
+  TIN_CHESTPLATE:
+    name: "Tin Chestplate"
+    description: ""
+  TIN_LEGGINGS:
+    name: "Tin Leggings"
+    description: ""
+  TIN_BOOTS:
+    name: "Tin Boots"
+    description: ""
+  CINNEBAR_HELMET:
+    name: "Cinnebar Helmet"
+    description: ""
+  CINNEBAR_CHESTPLATE:
+    name: "Cinnebar Chestplate"
+    description: ""
+  CINNEBAR_LEGGINGS:
+    name: "Cinnebar Leggings"
+    description: ""
+  CINNEBAR_BOOTS:
+    name: "Cinnebar Boots"
+    description: ""
+  AURORA_HELMET:
+    name: "Aurora Helmet"
+    description: ""
+  AURORA_CHESTPLATE:
+    name: "Aurora Chestplate"
+    description: ""
+  AURORA_LEGGINGS:
+    name: "Aurora Leggings"
+    description: ""
+  AURORA_BOOTS:
+    name: "Aurora Boots"
+    description: ""
 mobs:
   ZOMBIE:
     name: "<aqua><bold>〈</bold><aqua>Zombie<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
