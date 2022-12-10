@@ -287,7 +287,13 @@ enum class ItemType(
     AURORA_HELMET(Material.GOLDEN_HELMET, ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
     AURORA_CHESTPLATE(Material.GOLDEN_CHESTPLATE, ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
     AURORA_LEGGINGS(Material.GOLDEN_LEGGINGS, ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
-    AURORA_BOOTS(Material.GOLDEN_BOOTS, ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null);
+    AURORA_BOOTS(Material.GOLDEN_BOOTS, ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
+    ENDER_SWORD(Material.IRON_SWORD, ToolAttribute(10.0, 1.0).toAttributeMap(), null),
+    ENDERITE_SWORD(Material.IRON_SWORD, ToolAttribute(10.0, 1.0).toAttributeMap(), null),
+    TUNGSTEN_SWORD(Material.IRON_SWORD, ToolAttribute(10.0, 1.0).toAttributeMap(), null),
+    RUBY_SWORD(Material.IRON_SWORD, ToolAttribute(10.0, 1.0).toAttributeMap(), null),
+    SAPPHIRE_SWORD(Material.IRON_SWORD, ToolAttribute(10.0, 1.0).toAttributeMap(), null),
+    AETHERIUM_SWORD(Material.IRON_SWORD, ToolAttribute(10.0, 1.0).toAttributeMap(), null);
 
     private val displayName = inst().getLanguageManager().getComponent("items.$name.name")
     private val description = inst().getLanguageManager().getComponentList("items.$name.description")
