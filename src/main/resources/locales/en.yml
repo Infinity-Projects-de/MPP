@@ -809,6 +809,162 @@ items:
   AETHERIUM_SWORD:
     name: "Aetherium Sword"
     description: ""
+  ENDER_ORE:
+    name: "Ender Ore"
+    description: ""
+  AMBER_ORE:
+    name: "Amber Ore"
+    description: ""
+  THALLASIUM_ORE:
+    name: "Thallasium Ore"
+    description: ""
+  AMETRINE_ORE:
+    name: "Ametrine Ore"
+    description: ""
+  PENDORITE_ORE:
+    name: "Pendorite Ore"
+    description: ""
+  NETHER_EMERLAD_ORE:
+    name: "Nether Emerald Ore"
+    description: ""
+  ENDERITE_ORE:
+    name: "Enderite Ore"
+    description: ""
+  CRACKED_ENDERITE_ORE:
+    name: "Cracked Enderite Ore"
+    description: ""
+  TUNGSTEN_ORE:
+    name: "Tungsten Ore"
+    description: ""
+  TIN_ORE:
+    name: "Tin Ore"
+    description: ""
+  NIKOLITE_ORE:
+    name: "Nikolite Ore"
+    description: ""
+  LEAD_ORE:
+    name: "Lead Ore"
+    description: ""
+  BAUXITE_ORE:
+    name: "Bauxite Ore"
+    description: ""
+  CINNEBAR_ORE:
+    name: "Cinnebar Ore"
+    description: ""
+  GALANA_ORE:
+    name: "Galana Ore"
+    description: ""
+  IRIDIUM_ORE:
+    name: "Iridium Ore"
+    description: ""
+  PERIDOT_ORE:
+    name: "Peridot Ore"
+    description: ""
+  PYRITE_ORE:
+    name: "Pyrite Ore"
+    description: ""
+  RUBY_ORE:
+    name: "Ruby Ore"
+    description: ""
+  SHELDONITE_ORE:
+    name: "Sheldonite Ore"
+    description: ""
+  SAPPHIRE_ORE:
+    name: "Sapphire Ore"
+    description: ""
+  SODALITE_ORE:
+    name: "Sodalite Ore"
+    description: ""
+  SPHALERITE_ORE:
+    name: "Sphalerite Ore"
+    description: ""
+  ZINC_ORE:
+    name: "Zinc Ore"
+    description: ""
+  CINCINNASITE_ORE:
+    name: "Cincinnasite Ore"
+    description: ""
+  AETHERIUM_ORE:
+    name: "Aetherium Ore"
+    description: ""
+  TERMINITE_ORE:
+    name: "Terminite Ore"
+    description: ""
+  DEEPSLATE_SILVER_ORE:
+    name: "Deepslate Silver Ore"
+    description: ""
+  DEEPSLATE_TUNGSTEN_ORE:
+    name: "Deepslate Tungsten Ore"
+    description: ""
+  DEEPSLATE_LEAD_ORE:
+    name: "Deepslate Lead Ore"
+    description: ""
+  DEEPSLATE_NIKOLITE_ORE:
+    name: "Deepslate Nikolite Ore"
+    description: ""
+  DEEPSLATE_TIN_ORE:
+    name: "Deepslate Tin Ore"
+    description: ""
+  DEEPSLATE_BAUXITE_ORE:
+    name: "Deepslate Bauxite Ore"
+    description: ""
+  DEEPSLATE_GALANA_ORE:
+    name: "Deepslate Galana Ore"
+    description: ""
+  DEEPSLATE_IRIDIUM_ORE:
+    name: "Deepslate Iridium Ore"
+    description: ""
+  DEEPSLATE_PERIDOT_ORE:
+    name: "Deepslate Peridot Ore"
+    description: ""
+  DEEPSLATE_ZINC_ORE:
+    name: "Deepslate Zinc Ore"
+    description: ""
+  NETHER_ZINC_ORE:
+    name: "Nether Zinc Ore"
+    description: ""
+  NETHER_TUNGSTEN_ORE:
+    name: "Nether Tungsten Ore"
+    description: ""
+  NETHER_LEAD_ORE:
+    name: "Nether Lead Ore"
+    description: ""
+  NETHER_BAUXITE_ORE:
+    name: "Nether Bauxite Ore"
+    description: ""
+  NETHER_RUBY_ORE:
+    name: "Nether Ruby Ore"
+    description: ""
+  NETHER_SAPPHIRE_ORE:
+    name: "Nether Sapphire Ore"
+    description: ""
+  NETHER_TIN_ORE:
+    name: "Nether Tin Ore"
+    description: ""
+  END_NIKOLITE_ORE:
+    name: "End Nikolite Ore"
+    description: ""
+  END_IRIDIUM_ORE:
+    name: "End Iridium Ore"
+    description: ""
+  END_TUNGSTEN_ORE:
+    name: "End Tungsten Ore"
+    description: ""
+  END_TIN_ORE:
+    name: "End Tin Ore"
+    description: ""
+  END_LEAD_ORE:
+    name: "End Lead Ore"
+    description: ""
+  END_BAUXITE_ORE:
+    name: "End Bauxite Ore"
+    description: ""
+  END_CINNEBAR_ORE:
+    name: "End Cinnebar Ore"
+    description: ""
+  END_GALANA_ORE:
+    name: "End Galana Ore"
+    description: ""
 mobs:
   ZOMBIE:
     name: "<aqua><bold>〈</bold><aqua>Zombie<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"

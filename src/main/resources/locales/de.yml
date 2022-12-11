@@ -809,6 +809,162 @@ items:
   AETHERIUM_SWORD:
     name: "Aetherium Sword"
     description: ""
+  ENDER_ORE:
+    name: "Endererz"
+    description: ""
+  AMBER_ORE:
+    name: "Ambererz"
+    description: ""
+  THALLASIUM_ORE:
+    name: "Thallasiumerz"
+    description: ""
+  AMETRINE_ORE:
+    name: "Ametrinerz"
+    description: ""
+  PENDORITE_ORE:
+    name: "Pendoriterz"
+    description: ""
+  NETHER_EMERLAD_ORE:
+    name: "Nethersmaragterz"
+    description: ""
+  ENDERITE_ORE:
+    name: "Enderiterz"
+    description: ""
+  CRACKED_ENDERITE_ORE:
+    name: "Rissiges Enderiterz"
+    description: ""
+  TUNGSTEN_ORE:
+    name: "Tungstenerz"
+    description: ""
+  TIN_ORE:
+    name: "Zinnerz"
+    description: ""
+  NIKOLITE_ORE:
+    name: "Nikoliterz"
+    description: ""
+  LEAD_ORE:
+    name: "Bleierz"
+    description: ""
+  BAUXITE_ORE:
+    name: "Bauxiterz"
+    description: ""
+  CINNEBAR_ORE:
+    name: "Cinnebarerz"
+    description: ""
+  GALANA_ORE:
+    name: "Galanaerz"
+    description: ""
+  IRIDIUM_ORE:
+    name: "Iridiumerz"
+    description: ""
+  PERIDOT_ORE:
+    name: "Peridoterz"
+    description: ""
+  PYRITE_ORE:
+    name: "Pyriterz"
+    description: ""
+  RUBY_ORE:
+    name: "Rubinerz"
+    description: ""
+  SHELDONITE_ORE:
+    name: "Sheldoniterz"
+    description: ""
+  SAPPHIRE_ORE:
+    name: "Sapphirerz"
+    description: ""
+  SODALITE_ORE:
+    name: "Sodaliterz"
+    description: ""
+  SPHALERITE_ORE:
+    name: "Sphaleriterz"
+    description: ""
+  ZINC_ORE:
+    name: "Zinkerz"
+    description: ""
+  CINCINNASITE_ORE:
+    name: "Cincinnasiterz"
+    description: ""
+  AETHERIUM_ORE:
+    name: "Aetheriumerz"
+    description: ""
+  TERMINITE_ORE:
+    name: "Terminiterz"
+    description: ""
+  DEEPSLATE_SILVER_ORE:
+    name: "Tiefenschiefer Silvererz"
+    description: ""
+  DEEPSLATE_TUNGSTEN_ORE:
+    name: "Tiefenschiefer Tungstenerz"
+    description: ""
+  DEEPSLATE_LEAD_ORE:
+    name: "Tiefenschiefer Bleierz"
+    description: ""
+  DEEPSLATE_NIKOLITE_ORE:
+    name: "Tiefenschiefer Nikoliterz"
+    description: ""
+  DEEPSLATE_TIN_ORE:
+    name: "Tiefenschiefer Zinnerz"
+    description: ""
+  DEEPSLATE_BAUXITE_ORE:
+    name: "Tiefenschiefer Bauxiterz"
+    description: ""
+  DEEPSLATE_GALANA_ORE:
+    name: "Tiefenschiefer Galanaerz"
+    description: ""
+  DEEPSLATE_IRIDIUM_ORE:
+    name: "Tiefenschiefer Iridiumerz"
+    description: ""
+  DEEPSLATE_PERIDOT_ORE:
+    name: "Tiefenschiefer Peridoterz"
+    description: ""
+  DEEPSLATE_ZINC_ORE:
+    name: "Tiefenschiefer Zinkerz"
+    description: ""
+  NETHER_ZINC_ORE:
+    name: "Nether Zinkerz"
+    description: ""
+  NETHER_TUNGSTEN_ORE:
+    name: "Nether Tungstenerz"
+    description: ""
+  NETHER_LEAD_ORE:
+    name: "Nether Bleierz"
+    description: ""
+  NETHER_BAUXITE_ORE:
+    name: "Nether Bauxiterz"
+    description: ""
+  NETHER_RUBY_ORE:
+    name: "Nether Rubinerz"
+    description: ""
+  NETHER_SAPPHIRE_ORE:
+    name: "Nether Sapphirerz"
+    description: ""
+  NETHER_TIN_ORE:
+    name: "Nether Zinnerz"
+    description: ""
+  END_NIKOLITE_ORE:
+    name: "End Nikoliterz"
+    description: ""
+  END_IRIDIUM_ORE:
+    name: "End Iridiumerz"
+    description: ""
+  END_TUNGSTEN_ORE:
+    name: "End Tungstenerz"
+    description: ""
+  END_TIN_ORE:
+    name: "End Zinnerz"
+    description: ""
+  END_LEAD_ORE:
+    name: "End Bleierz"
+    description: ""
+  END_BAUXITE_ORE:
+    name: "End Bauxiterz"
+    description: ""
+  END_CINNEBAR_ORE:
+    name: "End Cinnebarerz"
+    description: ""
+  END_GALANA_ORE:
+    name: "End Galanaerz"
+    description: ""
 mobs:
   ZOMBIE:
     name: "<aqua><bold>〈</bold><aqua>Zombie<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
