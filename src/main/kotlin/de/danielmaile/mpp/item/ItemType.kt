@@ -345,7 +345,13 @@ enum class ItemType(
     END_LEAD_ORE(Material.STONE, null, BlockType.END_LEAD_ORE),
     END_BAUXITE_ORE(Material.STONE, null, BlockType.END_BAUXITE_ORE),
     END_CINNEBAR_ORE(Material.STONE, null, BlockType.END_CINNEBAR_ORE),
-    END_GALANA_ORE(Material.STONE, null, BlockType.END_GALANA_ORE);
+    END_GALANA_ORE(Material.STONE, null, BlockType.END_GALANA_ORE),
+    CRACKED_AETHER_STONE(Material.STONE, null, BlockType.CRACKED_AETHER_STONE),
+    AETHER_QUARTZ_PILLAR(Material.STONE, null, BlockType.AETHER_QUARTZ_PILLAR),
+    AETHER_QUARTZ_BLOCK(Material.STONE, null, BlockType.AETHER_QUARTZ_BLOCK),
+    ZANITE_BLOCK(Material.STONE, null, BlockType.ZANITE_BLOCK),
+    GRAVITITE_BLOCK(Material.STONE, null, BlockType.GRAVITITE_BLOCK),
+    CHISELED_AETHER_STONE_BRICKS(Material.STONE, null, BlockType.CHISELED_AETHER_STONE_BRICKS);
 
     private val displayName = inst().getLanguageManager().getComponent("items.$name.name")
     private val description = inst().getLanguageManager().getComponentList("items.$name.description")
