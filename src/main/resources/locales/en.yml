@@ -110,144 +110,144 @@ items:
     name: "Aether Stone Sword"
     description: ""
   AETHER_WOODEN_AXE:
-    name: "Aether Stone Axe"
+    name: "Aether Wooden Axe"
     description: ""
   AETHER_WOODEN_HOE:
-    name: "Aether Stone Hoe"
+    name: "Aether Wooden Hoe"
     description: ""
   AETHER_WOODEN_PICKAXE:
-    name: "Aether Stone Pickaxe"
+    name: "Aether Wooden Pickaxe"
     description: ""
   AETHER_WOODEN_SHOVEL:
-    name: "Aether Stone Shovel"
+    name: "Aether Wooden Shovel"
     description: ""
   AETHER_WOODEN_SWORD:
-    name: "Aether Stone Sword"
+    name: "Aether Wooden Sword"
     description: ""
   FIRE_ESSENCE:
-    name: "<gradient:#FB2C03:#FB7F03>Fire Essence</gradient>"
+    name: "Fire Essence"
     description:
-      - "Can be used to improve the zanite sword."
+      - ""
   FIRE_SWORD:
-    name: "<gradient:#FB2C03:#FB7F03>Fire Sword</gradient>"
+    name: "Fire Sword"
     description:
-      - "Burn your enemies if they get too close to you."
+      - ""
   GRAVITITE_AXE:
-    name: "<gradient:#C303FB:#FB03DD>Gravitite Axe</gradient>"
+    name: "Gravitite Axe"
     description: ""
   GRAVITITE_BOOTS:
-    name: "<gradient:#C303FB:#FB03DD>Gravitite Boots</gradient>"
+    name: "Gravitite Boots"
     description: ""
   GRAVITITE_CHESTPLATE:
-    name: "<gradient:#C303FB:#FB03DD>Gravitite Chestplate</gradient>"
+    name: "Gravitite Chestplate"
     description: ""
   GRAVITITE_HELMET:
-    name: "<gradient:#C303FB:#FB03DD>Gravitite Helmet</gradient>"
+    name: "Gravitite Helmet"
     description: ""
   GRAVITITE_HOE:
-    name: "<gradient:#C303FB:#FB03DD>Gravitite Hoe</gradient>"
+    name: "Gravitite Hoe"
     description: ""
   GRAVITITE_LEGGINGS:
-    name: "<gradient:#C303FB:#FB03DD>Gravitite Leggings</gradient>"
+    name: "Gravitite Leggings"
     description: ""
   GRAVITITE_ORE:
-    name: "<gradient:#C303FB:#FB03DD>Gravitite Ore</gradient>"
+    name: "Gravitite Ore"
     description: ""
   GRAVITITE_PICKAXE:
-    name: "<gradient:#C303FB:#FB03DD>Gravitite Pickaxe</gradient>"
+    name: "Gravitite Pickaxe"
     description: ""
   GRAVITITE_PLATE:
-    name: "<gradient:#C303FB:#FB03DD>Gravitite Plate</gradient>"
+    name: "Gravitite Plate"
     description:
-      - "Plates so hard that almost everything can be repelled."
+      - ""
   GRAVITITE_SHOVEL:
-    name: "<gradient:#C303FB:#FB03DD>Gravitite Shovel</gradient>"
+    name: "Gravitite Shovel"
     description: ""
   GRAVITITE_SWORD:
-    name: "<gradient:#C303FB:#FB03DD>Gravitite Sword</gradient>"
+    name: "Gravitite Sword"
     description: ""
   ICE_ESSENCE:
-    name: "<gradient:#03FBD2:#03CEFB>Ice Essence</gradient>"
+    name: "Ice Essence"
     description:
-      - "Can be used to improve the zanite sword."
+      - ""
   ICE_SWORD:
-    name: "<gradient:#03FBD2:#03CEFB>Ice Sword</gradient>"
+    name: "Ice Sword"
     description:
-      - "Freeze your opponents on contact."
+      - ""
   LIGHTNING_ESSENCE:
-    name: "<gradient:#037FFB:#2103FB>Lightning Essence</gradient>"
+    name: "Lightning Essence"
     description:
-      - "Can be used to improve the zanite sword."
+      - ""
   LIGHTNING_SWORD:
-    name: "<gradient:#037FFB:#03FBD2>Lightning Sword</gradient>"
+    name: "Lightning Sword"
     description:
-      - "Summon lightning on the one who tries to hurt you."
+      - ""
   SUN_STONE:
-    name: "<gradient:#FB2C03:#F0FB03>Sun Stone</gradient>"
+    name: "Sun Stone"
     description:
-      - "An element of the sun sword, however, something is still missing..."
+      - "."
   SUN_SWORD:
-    name: "<gradient:#FB2C03:#F0FB03>Sun Sword</gradient>"
+    name: "Sun Sword"
     description:
-      - "The sword of the sun god is a powerful weapon that makes everyone tremble."
+      - ""
   VALKYRE_AXE:
-    name: "<gradient:#FBC603:#ECFB03>Valkyre Axe</gradient>"
+    name: "Valkyre Axe"
     description:
-      - "This is the battle axe of the Valkyries. It cuts everything that gets in its way."
+      - ""
   VALKYRE_BOOTS:
-    name: "<gradient:#FBC603:#ECFB03>Valkyre Boots</gradient>"
+    name: "Valkyre Boots"
     description:
-      - "Valkyrie boots allow you to fall more slowly to the ground."
+      - ""
   VALKYRE_LEGGINGS:
-    name: "<gradient:#FBC603:#ECFB03>Valkyre Leggings</gradient>"
+    name: "Valkyre Leggings"
     description:
-      - "The Valkyries' leg protection is sturdy and can withstand a lot."
+      - ""
   VALKYRE_RING:
-    name: "<gradient:#FBC603:#ECFB03>Valkyre Ring</gradient>"
+    name: "Valkyre Ring"
     description:
-      - "The sacred ring of the Valkyries. It has the power to strengthen you."
+      - ""
   VALKYRE_SWORD:
-    name: "<gradient:#FBC603:#ECFB03>Valkyre Sword</gradient>"
+    name: "Valkyre Sword"
     description:
-      - "A powerful sword that evokes fear and anxiety."
+      - ""
   VALKYRE_WINGS:
-    name: "<gradient:#FBC603:#ECFB03>Valkyre Wings</gradient>"
+    name: "Valkyre Wings"
     description:
-      - "With the Valkyrie wings you can glide through the sky like an angel."
+      - ""
     boost_info: "<gray>Press <key:key.swapOffhand> to boost yourself!"
   ZANITE_AXE:
-    name: "<gradient:#D012FF:#8000FF>Zanite Axe</gradient>"
+    name: "Zanite Axe"
     description: ""
   ZANITE_BOOTS:
-    name: "<gradient:#D012FF:#8000FF>Zanite Boots</gradient>"
+    name: "Zanite Boots"
     description: ""
   ZANITE_CHESTPLATE:
-    name: "<gradient:#D012FF:#8000FF>Zanite Chestplate</gradient>"
+    name: "Zanite Chestplate"
     description: ""
   ZANITE_HELMET:
-    name: "<gradient:#D012FF:#8000FF>Zanite Helmet</gradient>"
+    name: "Zanite Helmet"
     description: ""
   ZANITE_HOE:
-    name: "<gradient:#D012FF:#8000FF>Zanite Hoe</gradient>"
+    name: "Zanite Hoe"
     description: ""
   ZANITE_LEGGINGS:
-    name: "<gradient:#D012FF:#8000FF>Zanite Leggings</gradient>"
+    name: "Zanite Leggings"
     description: ""
   ZANITE_ORE:
-    name: "<gradient:#D012FF:#8000FF>Zanite Ore</gradient>"
+    name: "Zanite Ore"
     description: ""
   ZANITE_PICKAXE:
-    name: "<gradient:#D012FF:#8000FF>Zanite Pickaxe</gradient>"
+    name: "Zanite Pickaxe"
     description: ""
   ZANITE_SHOVEL:
-    name: "<gradient:#D012FF:#8000FF>Zanite Shovel</gradient>"
+    name: "Zanite Shovel"
     description: ""
   ZANITE_STONE:
-    name: "<gradient:#D012FF:#8000FF>Zanite Stone</gradient>"
+    name: "Zanite Stone"
     description:
-      - "A rock for making strong weapons and tools."
+      - ""
   ZANITE_SWORD:
-    name: "<gradient:#D012FF:#8000FF>Zanite Sword</gradient>"
+    name: "Zanite Sword"
     description: ""
   MAGIC_WAND:
     name: "<rainbow>Magic Wand</rainbow>"
@@ -991,6 +991,12 @@ items:
     description: ""
   VALKYRE_CHESTPLATE:
     name: "Valkyre Chestplate"
+    description: ""
+  POLISHED_OBSIDIAN:
+    name: "Polished Obsidian"
+    description: ""
+  SMOOTH_OBSIDIAN:
+    name: "Smooth Obsidian"
     description: ""
 mobs:
   ZOMBIE:

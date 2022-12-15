@@ -108,15 +108,21 @@ enum class Recipes {
     ),
     ZANITE_SWORD(
         true, ItemType.ZANITE_SWORD, 1,
-        ItemType.ZANITE_STONE, null, null, ItemType.ZANITE_STONE, null, null, ItemType.AETHER_STICK, null, null
+        ItemType.ZANITE_STONE, null, null,
+        ItemType.ZANITE_STONE, null, null,
+        ItemType.AETHER_STICK, null, null
     ),
     ZANITE_SWORD1(
         true, ItemType.ZANITE_SWORD, 1,
-        null, ItemType.ZANITE_STONE, null, null, ItemType.ZANITE_STONE, null, null, ItemType.AETHER_STICK, null
+        null, ItemType.ZANITE_STONE, null,
+        null, ItemType.ZANITE_STONE, null,
+        null, ItemType.AETHER_STICK, null
     ),
     ZANITE_SWORD2(
         true, ItemType.ZANITE_SWORD, 1,
-        null, null, ItemType.ZANITE_STONE, null, null, ItemType.ZANITE_STONE, null, null, ItemType.AETHER_STICK
+        null, null, ItemType.ZANITE_STONE,
+        null, null, ItemType.ZANITE_STONE,
+        null, null, ItemType.AETHER_STICK
     ),
     ZANITE_HOE(
         true,
@@ -163,15 +169,21 @@ enum class Recipes {
     ),
     ZANITE_SHOVEL(
         true, ItemType.ZANITE_SHOVEL, 1,
-        ItemType.ZANITE_STONE, null, null, ItemType.AETHER_STICK, null, null, ItemType.AETHER_STICK, null, null
+        ItemType.ZANITE_STONE, null, null,
+        ItemType.AETHER_STICK, null, null,
+        ItemType.AETHER_STICK, null, null
     ),
     ZANITE_SHOVEL1(
         true, ItemType.ZANITE_SHOVEL, 1,
-        null, ItemType.ZANITE_STONE, null, null, ItemType.AETHER_STICK, null, null, ItemType.AETHER_STICK, null
+        null, ItemType.ZANITE_STONE, null,
+        null, ItemType.AETHER_STICK, null,
+        null, ItemType.AETHER_STICK, null
     ),
     ZANITE_SHOVEL2(
         true, ItemType.ZANITE_SHOVEL, 1,
-        null, null, ItemType.ZANITE_STONE, null, null, ItemType.AETHER_STICK, null, null, ItemType.AETHER_STICK
+        null, null, ItemType.ZANITE_STONE,
+        null, null, ItemType.AETHER_STICK,
+        null, null, ItemType.AETHER_STICK
     ),
     ZANITE_AXE(
         true,
@@ -194,89 +206,88 @@ enum class Recipes {
     ),
     GRAVITITE_SWORD(
         true, ItemType.GRAVITITE_SWORD, 1,
-        ItemType.GRAVITITE_PLATE, null, null, ItemType.GRAVITITE_PLATE, null, null, ItemType.AETHER_STICK, null, null
+        ItemType.GRAVITITE_PLATE, null, null,
+        ItemType.GRAVITITE_PLATE, null, null,
+        ItemType.AETHER_STICK, null, null
     ),
     GRAVITITE_SWORD1(
         true, ItemType.GRAVITITE_SWORD, 1,
-        null, ItemType.GRAVITITE_PLATE, null, null, ItemType.GRAVITITE_PLATE, null, null, ItemType.AETHER_STICK, null
+        null, ItemType.GRAVITITE_PLATE, null,
+        null, ItemType.GRAVITITE_PLATE, null,
+        null, ItemType.AETHER_STICK, null
     ),
     GRAVITITE_SWORD2(
         true, ItemType.GRAVITITE_SWORD, 1,
-        null, null, ItemType.GRAVITITE_PLATE, null, null, ItemType.GRAVITITE_PLATE, null, null, ItemType.AETHER_STICK
+        null, null, ItemType.GRAVITITE_PLATE,
+        null, null, ItemType.GRAVITITE_PLATE,
+        null, null, ItemType.AETHER_STICK
     ),
     GRAVITITE_HOE(
         true,
         ItemType.GRAVITITE_HOE, 1,
-        ItemType.GRAVITITE_ORE,
-        ItemType.GRAVITITE_ORE, null,
-        ItemType.AETHER_STICK, null,
-        ItemType.AETHER_STICK, null, null, null
+        ItemType.GRAVITITE_ORE, ItemType.GRAVITITE_ORE, null,
+        ItemType.AETHER_STICK, null, ItemType.AETHER_STICK,
+        null, null, null
     ),
     GRAVITITE_HOE1(
         true,
         ItemType.GRAVITITE_HOE, 1,
-        ItemType.GRAVITITE_ORE,
-        ItemType.GRAVITITE_ORE, null, null,
-        ItemType.AETHER_STICK, null, null,
-        ItemType.AETHER_STICK, null
+        ItemType.GRAVITITE_ORE, ItemType.GRAVITITE_ORE, null,
+        null, ItemType.AETHER_STICK, null,
+        null, ItemType.AETHER_STICK, null
     ),
     GRAVITITE_HOE2(
         true,
         ItemType.GRAVITITE_HOE, 1,
-        null,
-        ItemType.GRAVITITE_ORE,
-        ItemType.GRAVITITE_ORE, null,
-        ItemType.AETHER_STICK, null, null,
-        ItemType.AETHER_STICK, null
+        null, ItemType.GRAVITITE_ORE, ItemType.GRAVITITE_ORE,
+        null, ItemType.AETHER_STICK, null,
+        null, ItemType.AETHER_STICK, null
     ),
     GRAVITITE_HOE3(
         true,
         ItemType.GRAVITITE_HOE, 1,
-        null,
-        ItemType.GRAVITITE_ORE,
-        ItemType.GRAVITITE_ORE, null, null,
-        ItemType.AETHER_STICK, null, null,
-        ItemType.AETHER_STICK
+        null, ItemType.GRAVITITE_ORE, ItemType.GRAVITITE_ORE,
+        null, null, ItemType.AETHER_STICK,
+        null, null, ItemType.AETHER_STICK
     ),
     GRAVITITE_PICKAXE(
         true,
         ItemType.GRAVITITE_PICKAXE, 1,
-        ItemType.GRAVITITE_ORE,
-        ItemType.GRAVITITE_ORE,
-        ItemType.GRAVITITE_ORE, null,
-        ItemType.AETHER_STICK, null, null,
-        ItemType.AETHER_STICK, null
+        ItemType.GRAVITITE_ORE, ItemType.GRAVITITE_ORE, ItemType.GRAVITITE_ORE,
+        null, ItemType.AETHER_STICK, null,
+        null, ItemType.AETHER_STICK, null
     ),
     GRAVITITE_SHOVEL(
         true, ItemType.GRAVITITE_SHOVEL, 1,
-        ItemType.GRAVITITE_ORE, null, null, ItemType.AETHER_STICK, null, null, ItemType.AETHER_STICK, null, null
+        ItemType.GRAVITITE_ORE, null, null,
+        ItemType.AETHER_STICK, null, null,
+        ItemType.AETHER_STICK, null, null
     ),
     GRAVITITE_SHOVEL1(
         true, ItemType.GRAVITITE_SHOVEL, 1,
-        null, ItemType.GRAVITITE_ORE, null, null, ItemType.AETHER_STICK, null, null, ItemType.AETHER_STICK, null
+        null, ItemType.GRAVITITE_ORE, null,
+        null, ItemType.AETHER_STICK, null,
+        null, ItemType.AETHER_STICK, null
     ),
     GRAVITITE_SHOVEL2(
         true, ItemType.GRAVITITE_SHOVEL, 1,
-        null, null, ItemType.GRAVITITE_ORE, null, null, ItemType.AETHER_STICK, null, null, ItemType.AETHER_STICK
+        null, null, ItemType.GRAVITITE_ORE,
+        null, null, ItemType.AETHER_STICK,
+        null, null, ItemType.AETHER_STICK
     ),
     GRAVITITE_AXE(
         true,
         ItemType.GRAVITITE_AXE, 1,
-        ItemType.GRAVITITE_ORE,
-        ItemType.GRAVITITE_ORE, null,
-        ItemType.GRAVITITE_ORE,
-        ItemType.AETHER_STICK, null, null,
-        ItemType.AETHER_STICK, null
+        ItemType.GRAVITITE_ORE, ItemType.GRAVITITE_ORE, null,
+        ItemType.GRAVITITE_ORE, ItemType.AETHER_STICK, null,
+        null, ItemType.AETHER_STICK, null
     ),
     GRAVITITE_AXE1(
         true,
         ItemType.GRAVITITE_AXE, 1,
-        null,
-        ItemType.GRAVITITE_ORE,
-        ItemType.GRAVITITE_ORE, null,
-        ItemType.AETHER_STICK,
-        ItemType.GRAVITITE_ORE, null,
-        ItemType.AETHER_STICK, null
+        null, ItemType.GRAVITITE_ORE, ItemType.GRAVITITE_ORE,
+        null, ItemType.AETHER_STICK, ItemType.GRAVITITE_ORE,
+        null, ItemType.AETHER_STICK, null
     ),
     LIGHTNING_SWORD(
         false, ItemType.LIGHTNING_SWORD, 1,
@@ -291,95 +302,65 @@ enum class Recipes {
         ItemType.ZANITE_SWORD, ItemType.ICE_ESSENCE
     ),
     SUN_SWORD(
-        true,
+        false,
         ItemType.SUN_SWORD, 1,
-        ItemType.LIGHTNING_ESSENCE,
-        ItemType.FIRE_ESSENCE,
-        ItemType.ICE_ESSENCE, null, null,
-        ItemType.SUN_STONE, null,
-        ItemType.AETHER_STICK, null
+        ItemType.LIGHTNING_ESSENCE, ItemType.FIRE_ESSENCE, ItemType.ICE_ESSENCE, ItemType.SUN_STONE, ItemType.FIRE_SWORD
     ),
     ZANITE_HELMET(
         true,
         ItemType.ZANITE_HELMET, 1,
-        ItemType.ZANITE_STONE,
-        ItemType.ZANITE_STONE,
-        ItemType.ZANITE_STONE,
-        ItemType.ZANITE_STONE, null,
-        ItemType.ZANITE_STONE, null, null, null
+        ItemType.ZANITE_STONE, ItemType.ZANITE_STONE, ItemType.ZANITE_STONE,
+        ItemType.ZANITE_STONE, null, ItemType.ZANITE_STONE,
+        null, null, null
     ),
     ZANITE_CHESTPLATE(
         true,
         ItemType.ZANITE_CHESTPLATE, 1,
-        ItemType.ZANITE_STONE, null,
-        ItemType.ZANITE_STONE,
-        ItemType.ZANITE_STONE,
-        ItemType.ZANITE_STONE,
-        ItemType.ZANITE_STONE,
-        ItemType.ZANITE_STONE,
-        ItemType.ZANITE_STONE,
-        ItemType.ZANITE_STONE
+        ItemType.ZANITE_STONE, null, ItemType.ZANITE_STONE,
+        ItemType.ZANITE_STONE, ItemType.ZANITE_STONE, ItemType.ZANITE_STONE,
+        ItemType.ZANITE_STONE, ItemType.ZANITE_STONE, ItemType.ZANITE_STONE
     ),
     ZANITE_LEGGINGS(
         true,
         ItemType.ZANITE_LEGGINGS, 1,
-        ItemType.ZANITE_STONE,
-        ItemType.ZANITE_STONE,
-        ItemType.ZANITE_STONE,
-        ItemType.ZANITE_STONE, null,
-        ItemType.ZANITE_STONE,
-        ItemType.ZANITE_STONE, null,
-        ItemType.ZANITE_STONE
+        ItemType.ZANITE_STONE, ItemType.ZANITE_STONE, ItemType.ZANITE_STONE,
+        ItemType.ZANITE_STONE, null, ItemType.ZANITE_STONE,
+        ItemType.ZANITE_STONE, null, ItemType.ZANITE_STONE
     ),
     ZANITE_BOOTS(
         true,
         ItemType.ZANITE_BOOTS, 1,
         null, null, null,
-        ItemType.ZANITE_STONE, null,
-        ItemType.ZANITE_STONE,
-        ItemType.ZANITE_STONE, null,
-        ItemType.ZANITE_STONE
+        ItemType.ZANITE_STONE, null, ItemType.ZANITE_STONE,
+        ItemType.ZANITE_STONE, null, ItemType.ZANITE_STONE
     ),
     GRAVITITE_HELMET(
         true,
         ItemType.GRAVITITE_HELMET, 1,
-        ItemType.GRAVITITE_PLATE,
-        ItemType.GRAVITITE_PLATE,
-        ItemType.GRAVITITE_PLATE,
-        ItemType.GRAVITITE_PLATE, null,
-        ItemType.GRAVITITE_PLATE, null, null, null
+        ItemType.GRAVITITE_PLATE, ItemType.GRAVITITE_PLATE, ItemType.GRAVITITE_PLATE,
+        ItemType.GRAVITITE_PLATE, null, ItemType.GRAVITITE_PLATE,
+        null, null, null
     ),
     GRAVITITE_CHESTPLATE(
         true,
         ItemType.GRAVITITE_CHESTPLATE, 1,
-        ItemType.GRAVITITE_PLATE, null,
-        ItemType.GRAVITITE_PLATE,
-        ItemType.GRAVITITE_PLATE,
-        ItemType.GRAVITITE_PLATE,
-        ItemType.GRAVITITE_PLATE,
-        ItemType.GRAVITITE_PLATE,
-        ItemType.GRAVITITE_PLATE,
-        ItemType.GRAVITITE_PLATE
+        ItemType.GRAVITITE_PLATE, null, ItemType.GRAVITITE_PLATE,
+        ItemType.GRAVITITE_PLATE, ItemType.GRAVITITE_PLATE, ItemType.GRAVITITE_PLATE,
+        ItemType.GRAVITITE_PLATE, ItemType.GRAVITITE_PLATE, ItemType.GRAVITITE_PLATE
     ),
     GRAVITITE_LEGGINGS(
         true,
         ItemType.GRAVITITE_LEGGINGS, 1,
-        ItemType.GRAVITITE_PLATE,
-        ItemType.GRAVITITE_PLATE,
-        ItemType.GRAVITITE_PLATE,
-        ItemType.GRAVITITE_PLATE, null,
-        ItemType.GRAVITITE_PLATE,
-        ItemType.GRAVITITE_PLATE, null,
-        ItemType.GRAVITITE_PLATE
+        ItemType.GRAVITITE_PLATE, ItemType.GRAVITITE_PLATE, ItemType.GRAVITITE_PLATE,
+        ItemType.GRAVITITE_PLATE, null, ItemType.GRAVITITE_PLATE,
+        ItemType.GRAVITITE_PLATE, null, ItemType.GRAVITITE_PLATE
     ),
     GRAVITITE_BOOTS(
         true,
         ItemType.GRAVITITE_BOOTS, 1,
         null, null, null,
-        ItemType.GRAVITITE_PLATE, null,
-        ItemType.GRAVITITE_PLATE,
-        ItemType.GRAVITITE_PLATE, null,
-        ItemType.GRAVITITE_PLATE
+        ItemType.GRAVITITE_PLATE, null, ItemType.GRAVITITE_PLATE,
+        ItemType.GRAVITITE_PLATE, null, ItemType.GRAVITITE_PLATE
     ),
     AETHER_PLANKS(
         false, ItemType.AETHER_PLANKS, 4,
