@@ -351,7 +351,10 @@ enum class ItemType(
     AETHER_QUARTZ_BLOCK(Material.STONE, null, BlockType.AETHER_QUARTZ_BLOCK),
     ZANITE_BLOCK(Material.STONE, null, BlockType.ZANITE_BLOCK),
     GRAVITITE_BLOCK(Material.STONE, null, BlockType.GRAVITITE_BLOCK),
-    CHISELED_AETHER_STONE_BRICKS(Material.STONE, null, BlockType.CHISELED_AETHER_STONE_BRICKS);
+    CHISELED_AETHER_STONE_BRICKS(Material.STONE, null, BlockType.CHISELED_AETHER_STONE_BRICKS),
+    AETHER_THIN_QUARTZ_PILLAR(Material.STONE, null, BlockType.AETHER_THIN_QUARTZ_PILLAR),
+    VALKYRE_CHESTPLATE(Material.IRON_CHESTPLATE, ArmorAttribute(10.0, 1.0, EquipmentSlot.CHEST).toAttributeMap(), null),
+    VALKYRE_HELMET(Material.IRON_HELMET, ArmorAttribute(5.0, 1.0, EquipmentSlot.HEAD).toAttributeMap(), null);
 
     private val displayName = inst().getLanguageManager().getComponent("items.$name.name")
     private val description = inst().getLanguageManager().getComponentList("items.$name.description")
