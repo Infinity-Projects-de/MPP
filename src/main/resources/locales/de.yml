@@ -209,7 +209,7 @@ items:
   VALKYRE_SWORD:
     name: "Walkürenklinge"
     description:
-      - "Ein mächtiges Schwert welches Furcht und Angst hervorruft."
+      - ""
   VALKYRE_WINGS:
     name: "Walkürenflügel"
     description:
@@ -318,10 +318,7 @@ items:
   PHOENIX_BOOTS:
     name: "Phoenix Schuhe"
     description: ""
-  AETHERIUM_BLADE:
-    name: "Aetheriumklinge"
-    description: ""
-  DEMON_BLADE:
+  DEMON_SWORD:
     name: "Dämonenklinge"
     description: ""
   CHERRY:
@@ -995,6 +992,9 @@ items:
     description: ""
   SMOOTH_OBSIDIAN:
     name: "Glatter Obsidian"
+    description: ""
+  PYROPE_PLATE:
+    name: "Pyrop Platte"
     description: ""
 mobs:
   ZOMBIE:

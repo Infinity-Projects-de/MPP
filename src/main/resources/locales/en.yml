@@ -320,10 +320,7 @@ items:
   PHOENIX_BOOTS:
     name: "Phoenix Boots"
     description: ""
-  AETHERIUM_BLADE:
-    name: "Aetherium Blade"
-    description: ""
-  DEMON_BLADE:
+  DEMON_SWORD:
     name: "Demon Blade"
     description: ""
   CHERRY:
@@ -997,6 +994,9 @@ items:
     description: ""
   SMOOTH_OBSIDIAN:
     name: "Smooth Obsidian"
+    description: ""
+  PYROPE_PLATE:
+    name: "Pyrope Plate"
     description: ""
 mobs:
   ZOMBIE:

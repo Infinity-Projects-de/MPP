@@ -131,8 +131,7 @@ enum class ItemType(
     PHOENIX_CHESTPLATE(Material.GOLDEN_CHESTPLATE, ArmorAttribute(12.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
     PHOENIX_LEGGINGS(Material.GOLDEN_LEGGINGS, ArmorAttribute(7.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
     PHOENIX_BOOTS(Material.GOLDEN_BOOTS, ArmorAttribute(10.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
-    AETHERIUM_BLADE(Material.DIAMOND_SWORD, ToolAttribute(12.0, 10.0).toAttributeMap(), null),
-    DEMON_BLADE(Material.DIAMOND_SWORD, ToolAttribute(12.0, 3.0).toAttributeMap(), null),
+    DEMON_SWORD(Material.DIAMOND_SWORD, ToolAttribute(12.0, 3.0).toAttributeMap(), null),
     CHERRY(Material.APPLE, null, null),
     STONE_OF_HEALING(Material.CLOCK, null, null),
     STONE_OF_SPEED(Material.CLOCK, null, null),
@@ -356,7 +355,8 @@ enum class ItemType(
     VALKYRE_CHESTPLATE(Material.IRON_CHESTPLATE, ArmorAttribute(10.0, 1.0, EquipmentSlot.CHEST).toAttributeMap(), null),
     VALKYRE_HELMET(Material.IRON_HELMET, ArmorAttribute(5.0, 1.0, EquipmentSlot.HEAD).toAttributeMap(), null),
     POLISHED_OBSIDIAN(Material.STONE, null, BlockType.POLISHED_OBSIDIAN),
-    SMOOTH_OBSIDIAN(Material.STONE, null, BlockType.SMOOTH_OBSIDIAN);
+    SMOOTH_OBSIDIAN(Material.STONE, null, BlockType.SMOOTH_OBSIDIAN),
+    PYROPE_PLATE(Material.NETHERITE_SCRAP, null, null);
 
     private val displayName = inst().getLanguageManager().getComponent("items.$name.name")
     private val description = inst().getLanguageManager().getComponentList("items.$name.description")
