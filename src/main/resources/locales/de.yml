@@ -996,6 +996,78 @@ items:
   PYROPE_PLATE:
     name: "Pyrop Platte"
     description: ""
+  ENDER_AXE:
+    name: "Enderaxt"
+    description: ""
+  ENDER_PICKAXE:
+    name: "Enderspitzhacke"
+    description: ""
+  ENDER_SHOVEL:
+    name: "Enderschaufel"
+    description: ""
+  ENDER_HOE:
+    name: "Enderharke"
+    description: ""
+  ENDERITE_SHOVEL:
+    name: "Enderitschaufel"
+    description: ""
+  ENDERITE_PICKAXE:
+    name: "Enderitspitzhacke"
+    description: ""
+  ENDERITE_AXE:
+    name: "Enderitaxt"
+    description: ""
+  ENDERITE_HOE:
+    name: "Enderitharke"
+    description: ""
+  TUNGSTEN_AXE:
+    name: "Tungstenaxt"
+    description: ""
+  TUNGSTEN_PICKAXE:
+    name: "Tungstenspitzhacke"
+    description: ""
+  TUNGSTEN_SHOVEL:
+    name: "Tungstenschaufel"
+    description: ""
+  TUNGSTEN_HOE:
+    name: "Tungstenharke"
+    description: ""
+  RUBY_AXE:
+    name: "Rubinaxt"
+    description: ""
+  RUBY_PICKAXE:
+    name: "Rubinspitzhacke"
+    description: ""
+  RUBY_SHOVEL:
+    name: "Rubinschaufel"
+    description: ""
+  RUBY_HOE:
+    name: "Rubinharke"
+    description: ""
+  SAPPHIRE_AXE:
+    name: "Saphieraxt"
+    description: ""
+  SAPPHIRE_PICKAXE:
+    name: "Saphierspitzhacke"
+    description: ""
+  SAPPHIRE_SHOVEL:
+    name: "Saphierschaufel"
+    description: ""
+  SAPPHIRE_HOE:
+    name: "Saphierharke"
+    description: ""
+  AETHERIUM_AXE:
+    name: "Aetheriumaxt"
+    description: ""
+  AETHERIUM_PICKAXE:
+    name: "Aetheriumspitzhacke"
+    description: ""
+  AETHERIUM_SHOVEL:
+    name: "Aetheriumschaufel"
+    description: ""
+  AETHERIUM_HOE:
+    name: "Aetheriumharke"
+    description: ""
 mobs:
   ZOMBIE:
     name: "<aqua><bold>〈</bold><aqua>Zombie<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"

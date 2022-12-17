@@ -998,6 +998,78 @@ items:
   PYROPE_PLATE:
     name: "Pyrope Plate"
     description: ""
+  ENDER_AXE:
+    name: "Ender Axe"
+    description: ""
+  ENDER_PICKAXE:
+    name: "Ender Pickaxe"
+    description: ""
+  ENDER_SHOVEL:
+    name: "Ender Shovel"
+    description: ""
+  ENDER_HOE:
+    name: "Ender Hoe"
+    description: ""
+  ENDERITE_SHOVEL:
+    name: "Enderite Shovel"
+    description: ""
+  ENDERITE_PICKAXE:
+    name: "Enderite Pickaxe"
+    description: ""
+  ENDERITE_AXE:
+    name: "Enderite Axe"
+    description: ""
+  ENDERITE_HOE:
+    name: "Enderite Hoe"
+    description: ""
+  TUNGSTEN_AXE:
+    name: "Tungsten Axe"
+    description: ""
+  TUNGSTEN_PICKAXE:
+    name: "Tungsten Pickaxe"
+    description: ""
+  TUNGSTEN_SHOVEL:
+    name: "Tungsten Shovel"
+    description: ""
+  TUNGSTEN_HOE:
+    name: "Tungsten Hoe"
+    description: ""
+  RUBY_AXE:
+    name: "Ruby Axe"
+    description: ""
+  RUBY_PICKAXE:
+    name: "Ruby Pickaxe"
+    description: ""
+  RUBY_SHOVEL:
+    name: "Ruby Shovel"
+    description: ""
+  RUBY_HOE:
+    name: "Ruby Hoe"
+    description: ""
+  SAPPHIRE_AXE:
+    name: "Sapphire Axe"
+    description: ""
+  SAPPHIRE_PICKAXE:
+    name: "Sapphire Pickaxe"
+    description: ""
+  SAPPHIRE_SHOVEL:
+    name: "Sapphire Shovel"
+    description: ""
+  SAPPHIRE_HOE:
+    name: "Sapphire Hoe"
+    description: ""
+  AETHERIUM_AXE:
+    name: "Aetherium Axe"
+    description: ""
+  AETHERIUM_PICKAXE:
+    name: "Aetherium Pickaxe"
+    description: ""
+  AETHERIUM_SHOVEL:
+    name: "Aetherium Shovel"
+    description: ""
+  AETHERIUM_HOE:
+    name: "Aetherium Hoe"
+    description: ""
 mobs:
   ZOMBIE:
     name: "<aqua><bold>〈</bold><aqua>Zombie<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"

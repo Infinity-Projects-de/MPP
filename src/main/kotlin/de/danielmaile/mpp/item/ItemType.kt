@@ -356,7 +356,31 @@ enum class ItemType(
     VALKYRE_HELMET(Material.IRON_HELMET, ArmorAttribute(5.0, 1.0, EquipmentSlot.HEAD).toAttributeMap(), null),
     POLISHED_OBSIDIAN(Material.STONE, null, BlockType.POLISHED_OBSIDIAN),
     SMOOTH_OBSIDIAN(Material.STONE, null, BlockType.SMOOTH_OBSIDIAN),
-    PYROPE_PLATE(Material.NETHERITE_SCRAP, null, null);
+    PYROPE_PLATE(Material.NETHERITE_SCRAP, null, null),
+    ENDER_AXE(Material.DIAMOND_AXE, null, null),
+    ENDER_PICKAXE(Material.DIAMOND_PICKAXE, null, null),
+    ENDER_SHOVEL(Material.DIAMOND_SHOVEL, null, null),
+    ENDER_HOE(Material.DIAMOND_HOE, null, null),
+    ENDERITE_AXE(Material.NETHERITE_AXE, null, null),
+    ENDERITE_PICKAXE(Material.NETHERITE_PICKAXE, null, null),
+    ENDERITE_SHOVEL(Material.NETHERITE_SHOVEL, null, null),
+    ENDERITE_HOE(Material.NETHERITE_HOE, null, null),
+    TUNGSTEN_AXE(Material.DIAMOND_AXE, null, null),
+    TUNGSTEN_PICKAXE(Material.DIAMOND_PICKAXE, null, null),
+    TUNGSTEN_SHOVEL(Material.DIAMOND_SHOVEL, null, null),
+    TUNGSTEN_HOE(Material.DIAMOND_HOE, null, null),
+    RUBY_AXE(Material.DIAMOND_AXE, null, null),
+    RUBY_PICKAXE(Material.DIAMOND_PICKAXE, null, null),
+    RUBY_SHOVEL(Material.DIAMOND_SHOVEL, null, null),
+    RUBY_HOE(Material.DIAMOND_HOE, null, null),
+    SAPPHIRE_AXE(Material.DIAMOND_AXE, null, null),
+    SAPPHIRE_PICKAXE(Material.DIAMOND_PICKAXE, null, null),
+    SAPPHIRE_SHOVEL(Material.DIAMOND_SHOVEL, null, null),
+    SAPPHIRE_HOE(Material.DIAMOND_HOE, null, null),
+    AETHERIUM_AXE(Material.NETHERITE_AXE, null, null),
+    AETHERIUM_PICKAXE(Material.NETHERITE_PICKAXE, null, null),
+    AETHERIUME_SHOVEL(Material.NETHERITE_SHOVEL, null, null),
+    AETHERIUM_HOE(Material.NETHERITE_HOE, null, null);
 
     private val displayName = inst().getLanguageManager().getComponent("items.$name.name")
     private val description = inst().getLanguageManager().getComponentList("items.$name.description")
