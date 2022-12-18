@@ -22,6 +22,7 @@
     <url>daniel-maile.com</url>
 
     <build>
+        <finalName>MPP-${project.version}</finalName>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
         <plugins>
             <plugin>
