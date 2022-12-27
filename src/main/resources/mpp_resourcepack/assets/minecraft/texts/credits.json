@@ -1,0 +1,64 @@
+[
+    {
+        "section": "Project MPP",
+        "titles": [
+            {
+                "title": "Founder",
+                "names": [
+                    "EinWildesLama#8951"
+                ]
+            },
+            {
+                "title": "Sr. Developer",
+                "names": [
+                    "Kabo#0402"
+                ]
+            },
+            {
+                "title": "Jr. Developer",
+                "names": [
+                    "NubeBuster#1998"
+                ]
+            },{
+                "title": "Textures",
+                "names": [
+                    "carlos52#1544"
+                ]
+            },{
+                "title": "Sr. Builder",
+                "names": [
+                    "UniCats#1617",
+                    "Absolium#4914"
+                ]
+            },
+            {
+                "title": "Jr. Builder",
+                "names": [
+                    "G0wther_Nya",
+                    "robotandrej",
+                    "Schneemil31",
+                    "Pheonix_MD"
+                ]
+            }
+        ]
+    },
+    {
+        "section": "Special Thanks to",
+        "titles": [
+            {
+                "title": "Patreon/Supporters",
+                "names": [
+                    "none",
+                    "none"
+                ]
+            },
+            {
+                "title": "Additional Content Ideas",
+                "names": [
+                    "slapthedodo#6888",
+                    "none"
+                ]
+            }
+        ]
+    }
+]
