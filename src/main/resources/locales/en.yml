@@ -1148,6 +1148,9 @@ items:
   HELL_CROWN:
     name: "Hell Crown"
     description: ""
+  AETHER_LEAVES:
+    name: "Aether Leaves"
+    description: ""
 mobs:
   ZOMBIE:
     name: "<aqua><bold>〈</bold><aqua>Zombie<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"

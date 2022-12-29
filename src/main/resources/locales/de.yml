@@ -1146,6 +1146,9 @@ items:
   HELL_CROWN:
     name: "Höllenkrone"
     description: ""
+  AETHER_LEAVES:
+    name: "Himmelsblätter"
+    description: ""
 mobs:
   ZOMBIE:
     name: "<aqua><bold>〈</bold><aqua>Zombie<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
