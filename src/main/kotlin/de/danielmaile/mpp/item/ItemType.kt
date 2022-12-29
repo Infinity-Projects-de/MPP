@@ -409,7 +409,8 @@ enum class ItemType(
     HELL_CROWN(Material.NETHERITE_HELMET, ArmorAttribute(15.0, 1.0, EquipmentSlot.HEAD).toAttributeMap(), null),
     AETHER_LEAVES(Material.STONE, null, BlockType.AETHER_LEAVES),
     HELL_PLANKS(Material.OAK_PLANKS, null, BlockType.HELL_PLANKS),
-    EMERALD_SHARD(Material.NETHERITE_SCRAP, null, null);
+    EMERALD_SHARD(Material.NETHERITE_SCRAP, null, null),
+    AURORA_SHARD(Material.NETHERITE_SCRAP, null, null);
 
     private val displayName = inst().getLanguageManager().getComponent("items.$name.name")
     private val description = inst().getLanguageManager().getComponentList("items.$name.description")
