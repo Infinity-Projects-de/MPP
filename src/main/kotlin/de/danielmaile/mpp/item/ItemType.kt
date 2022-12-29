@@ -407,7 +407,8 @@ enum class ItemType(
     HELL_STONE_PICKAXE(Material.STONE_PICKAXE, null, null),
     HELL_STONE_SWORD(Material.STONE_SWORD, ToolAttribute(6.0, 1.0).toAttributeMap(), null),
     HELL_CROWN(Material.NETHERITE_HELMET, ArmorAttribute(15.0, 1.0, EquipmentSlot.HEAD).toAttributeMap(), null),
-    AETHER_LEAVES(Material.STONE, null, BlockType.AETHER_LEAVES),;
+    AETHER_LEAVES(Material.STONE, null, BlockType.AETHER_LEAVES),
+    HELL_PLANKS(Material.OAK_PLANKS, null, BlockType.HELL_PLANKS);
 
     private val displayName = inst().getLanguageManager().getComponent("items.$name.name")
     private val description = inst().getLanguageManager().getComponentList("items.$name.description")
