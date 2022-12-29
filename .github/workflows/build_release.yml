@@ -2,7 +2,7 @@ name: Build MPP and create Release
 on:
   push:
     branches:
-      - master
+      - dev
 
 jobs:
   build:
