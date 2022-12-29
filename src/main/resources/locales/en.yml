@@ -1070,6 +1070,90 @@ items:
   AETHERIUM_HOE:
     name: "Aetherium Hoe"
     description: ""
+  HELL_STONE:
+    name: "Hell Stone"
+    description: ""
+  CRACKED_HELL_STONE:
+    name: "Cracked Hell Stone"
+    description: ""
+  HELL_STONE_BRICKS:
+    name: "Hell Stone Bricks"
+    description: ""
+  CRACKED_HELL_STONE_BRICKS:
+    name: "Cracked Hell Stone Bricks"
+    description: ""
+  SMOOTH_HELL_STONE_BRICKS:
+    name: "Smooth Hell Stone Bricks"
+    description: ""
+  HELL_DIAMOND:
+    name: "Hell Diamond"
+    description: ""
+  HELL_DIAMOND_BLOCK:
+    name: "Hell Diamond Block"
+    description: ""
+  HELL_DIRT:
+    name: "Hell Dirt"
+    description: ""
+  HELL_GRASS_BLOCK:
+    name: "Hell Grass Block"
+    description: ""
+  HELL_GOLD_ORE:
+    name: "Hell Gold Ore"
+    description: ""
+  HELL_LOG:
+    name: "Hell Log"
+    description: ""
+  HELL_OBSIDIAN:
+    name: "Hell Obsidian"
+    description: ""
+  LAVA_STONE:
+    name: "Lava Stone"
+    description: ""
+  LAVA_STONE_BRICKS:
+    name: "Lava Stone Bricks"
+    description: ""
+  ORANGE_HELL_LEAVES:
+    name: "Orange Hell Leaves"
+    description: ""
+  RED_HELL_LEAVES:
+    name: "Red Hell Leaves"
+    description: ""
+  YELLOW_HELL_LEAVES:
+    name: "Yellow Hell Leaves"
+    description: ""
+  PLATIN_BLOCK:
+    name: "Platin Block"
+    description: ""
+  PLATIN_INGOT:
+    name: "Platin Ingot"
+    description: ""
+  PLATIN_ORE:
+    name: "Platin Ore"
+    description: ""
+  SILVER_BLOCK:
+    name: "Silver Ore"
+    description: ""
+  TITANIUM_BLOCK:
+    name: "Titanium Block"
+    description: ""
+  HELL_TRIDENT:
+    name: "Hell Trident"
+    description: ""
+  HELL_STONE_PICKAXE:
+    name: "Hell Stone Pickaxe"
+    description: ""
+  HELL_STONE_SWORD:
+    name: "Hell Stone Sword"
+    description: ""
+  HELL_CROWN:
+    name: "Hell Crown"
+    description: ""
+  AETHER_LEAVES:
+    name: "Aether Leaves"
+    description: ""
+  HELL_PLANKS:
+    name: "Hell Planks"
+    description: ""
 mobs:
   ZOMBIE:
     name: "<aqua><bold>〈</bold><aqua>Zombie<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
