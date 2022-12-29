@@ -35,12 +35,12 @@ import de.danielmaile.mpp.data.ResourcePackBuilder
 import de.danielmaile.mpp.demo.ListenerJoinDemo
 import de.danielmaile.mpp.item.ListenerConverter
 import de.danielmaile.mpp.item.ListenerCrafting
-import de.danielmaile.mpp.item.Recipes
 import de.danielmaile.mpp.item.funtion.ListenerArmor
 import de.danielmaile.mpp.item.funtion.ListenerItem
 import de.danielmaile.mpp.item.funtion.magicwand.ListenerMagicWand
 import de.danielmaile.mpp.item.funtion.particle.ListenerParticle
 import de.danielmaile.mpp.item.funtion.particle.ParticleManager
+import de.danielmaile.mpp.item.recipe.recipeList
 import de.danielmaile.mpp.mob.ListenerMPPMobs
 import de.danielmaile.mpp.mob.MPPMobSpawnManager
 import de.danielmaile.mpp.mob.listeners.*
@@ -183,8 +183,10 @@ class MPP : JavaPlugin() {
     }
 
     private fun registerRecipes() {
-        for (recipe in Recipes.values()) {
-            Bukkit.addRecipe(recipe.recipe)
+        for(recipes in recipeList) {
+            for(recipe in recipes.spigotRecipes) {
+                Bukkit.addRecipe(recipe)
+            }
         }
     }
 
