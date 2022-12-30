@@ -140,22 +140,38 @@ private val armorRecipeList: List<Recipe> = listOf(
 
 private val toolRecipeList: List<Recipe> = listOf(
 
-    // swords
-    SwordRecipe(AETHER_WOODEN_SWORD.getItemStack(), AETHER_PLANKS.getItemStack(), ItemStack(STICK)),
-    SwordRecipe(AETHER_STONE_SWORD.getItemStack(), AETHER_STONE.getItemStack(), ItemStack(STICK)),
-    SwordRecipe(ZANITE_SWORD.getItemStack(), ZANITE_STONE.getItemStack(), ItemStack(STICK)),
-    SwordRecipe(GRAVITITE_SWORD.getItemStack(), GRAVITITE_PLATE.getItemStack(), ItemStack(STICK)),
+    // swords - normal stick
     SwordRecipe(HELL_STONE_SWORD.getItemStack(), HELL_STONE.getItemStack(), ItemStack(STICK)),
     SwordRecipe(ENDER_SWORD.getItemStack(), ENDER_PLATE.getItemStack(), ItemStack(STICK)),
     SwordRecipe(ENDERITE_SWORD.getItemStack(), ENDERITE_INGOT.getItemStack(), ItemStack(STICK)),
     SwordRecipe(TUNGSTEN_SWORD.getItemStack(), TUNGSTEN_INGOT.getItemStack(), ItemStack(STICK)),
     SwordRecipe(RUBY_SWORD.getItemStack(), RUBY.getItemStack(), ItemStack(STICK)),
     SwordRecipe(SAPPHIRE_SWORD.getItemStack(), SAPPHIRE.getItemStack(), ItemStack(STICK)),
-    SwordRecipe(AETHERIUM_SWORD.getItemStack(), AETHERIUM_INGOT.getItemStack(), ItemStack(STICK)),
     SwordRecipe(DEMON_SWORD.getItemStack(), HELL_DIAMOND.getItemStack(), ItemStack(STICK)),
 
+    // swords - aether stick
+    SwordRecipe(AETHER_WOODEN_SWORD.getItemStack(), AETHER_PLANKS.getItemStack(), AETHER_STICK.getItemStack()),
+    SwordRecipe(AETHER_STONE_SWORD.getItemStack(), AETHER_STONE.getItemStack(), AETHER_STICK.getItemStack()),
+    SwordRecipe(ZANITE_SWORD.getItemStack(), ZANITE_STONE.getItemStack(), AETHER_STICK.getItemStack()),
+    SwordRecipe(GRAVITITE_SWORD.getItemStack(), GRAVITITE_PLATE.getItemStack(), AETHER_STICK.getItemStack()),
+    SwordRecipe(HELL_STONE_SWORD.getItemStack(), HELL_STONE.getItemStack(), AETHER_STICK.getItemStack()),
+    SwordRecipe(ENDER_SWORD.getItemStack(), ENDER_PLATE.getItemStack(), AETHER_STICK.getItemStack()),
+    SwordRecipe(ENDERITE_SWORD.getItemStack(), ENDERITE_INGOT.getItemStack(), AETHER_STICK.getItemStack()),
+    SwordRecipe(TUNGSTEN_SWORD.getItemStack(), TUNGSTEN_INGOT.getItemStack(), AETHER_STICK.getItemStack()),
+    SwordRecipe(RUBY_SWORD.getItemStack(), RUBY.getItemStack(), AETHER_STICK.getItemStack()),
+    SwordRecipe(SAPPHIRE_SWORD.getItemStack(), SAPPHIRE.getItemStack(), AETHER_STICK.getItemStack()),
+    SwordRecipe(AETHERIUM_SWORD.getItemStack(), AETHERIUM_INGOT.getItemStack(), AETHER_STICK.getItemStack()),
+    SwordRecipe(DEMON_SWORD.getItemStack(), HELL_DIAMOND.getItemStack(), AETHER_STICK.getItemStack()),
 
-    // hoes
+    //hoes - normal stick
+    HoeRecipe(ENDER_HOE.getItemStack(), ENDER_PLATE.getItemStack(), ItemStack(STICK)),
+    HoeRecipe(ENDERITE_HOE.getItemStack(), ENDERITE_PLATE.getItemStack(), ItemStack(STICK)),
+    HoeRecipe(TUNGSTEN_HOE.getItemStack(), TUNGSTEN_INGOT.getItemStack(), ItemStack(STICK)),
+    HoeRecipe(RUBY_HOE.getItemStack(), RUBY.getItemStack(), ItemStack(STICK)),
+    HoeRecipe(SAPPHIRE_HOE.getItemStack(), SAPPHIRE.getItemStack(), ItemStack(STICK)),
+
+
+    // hoes - aether stick
     HoeRecipe(AETHER_WOODEN_HOE.getItemStack(), AETHER_PLANKS.getItemStack(), AETHER_STICK.getItemStack()),
     HoeRecipe(AETHER_STONE_HOE.getItemStack(), AETHER_STONE.getItemStack(), AETHER_STICK.getItemStack()),
     HoeRecipe(ZANITE_HOE.getItemStack(), ZANITE_STONE.getItemStack(), AETHER_STICK.getItemStack()),
@@ -167,7 +183,15 @@ private val toolRecipeList: List<Recipe> = listOf(
     HoeRecipe(SAPPHIRE_HOE.getItemStack(), SAPPHIRE.getItemStack(), AETHER_STICK.getItemStack()),
     HoeRecipe(AETHERIUM_HOE.getItemStack(), AETHERIUM_INGOT.getItemStack(), AETHER_STICK.getItemStack()),
 
-    // pickaxes
+    // pickaxes - normal stick
+    PickaxeRecipe(ENDER_PICKAXE.getItemStack(), ENDER_PLATE.getItemStack(), ItemStack(STICK)),
+    PickaxeRecipe(ENDERITE_PICKAXE.getItemStack(), ENDERITE_PLATE.getItemStack(), ItemStack(STICK)),
+    PickaxeRecipe(TUNGSTEN_PICKAXE.getItemStack(), TUNGSTEN_INGOT.getItemStack(), ItemStack(STICK)),
+    PickaxeRecipe(RUBY_PICKAXE.getItemStack(), RUBY.getItemStack(), ItemStack(STICK)),
+    PickaxeRecipe(SAPPHIRE_PICKAXE.getItemStack(), SAPPHIRE.getItemStack(), ItemStack(STICK)),
+    PickaxeRecipe(HELL_STONE_PICKAXE.getItemStack(), HELL_STONE.getItemStack(), ItemStack(STICK)),
+
+    // pickaxes - aether stick
     PickaxeRecipe(AETHER_WOODEN_PICKAXE.getItemStack(), AETHER_PLANKS.getItemStack(), AETHER_STICK.getItemStack()),
     PickaxeRecipe(AETHER_STONE_PICKAXE.getItemStack(), AETHER_STONE.getItemStack(), AETHER_STICK.getItemStack()),
     PickaxeRecipe(ZANITE_PICKAXE.getItemStack(), ZANITE_STONE.getItemStack(), AETHER_STICK.getItemStack()),
@@ -180,7 +204,14 @@ private val toolRecipeList: List<Recipe> = listOf(
     PickaxeRecipe(AETHERIUM_PICKAXE.getItemStack(), AETHERIUM_INGOT.getItemStack(), AETHER_STICK.getItemStack()),
     PickaxeRecipe(HELL_STONE_PICKAXE.getItemStack(), HELL_STONE.getItemStack(), AETHER_STICK.getItemStack()),
 
-    // shovels
+    // shovels - normal stick
+    ShovelRecipe(ENDER_SHOVEL.getItemStack(), ENDER_PLATE.getItemStack(), ItemStack(STICK)),
+    ShovelRecipe(ENDERITE_SHOVEL.getItemStack(), ENDERITE_PLATE.getItemStack(), ItemStack(STICK)),
+    ShovelRecipe(TUNGSTEN_SHOVEL.getItemStack(), TUNGSTEN_INGOT.getItemStack(), ItemStack(STICK)),
+    ShovelRecipe(RUBY_SHOVEL.getItemStack(), RUBY.getItemStack(), ItemStack(STICK)),
+    ShovelRecipe(SAPPHIRE_SHOVEL.getItemStack(), SAPPHIRE.getItemStack(), ItemStack(STICK)),
+
+    // shovels - aether stick
     ShovelRecipe(AETHER_WOODEN_SHOVEL.getItemStack(), AETHER_PLANKS.getItemStack(), AETHER_STICK.getItemStack()),
     ShovelRecipe(AETHER_STONE_SHOVEL.getItemStack(), AETHER_STONE.getItemStack(), AETHER_STICK.getItemStack()),
     ShovelRecipe(ZANITE_SHOVEL.getItemStack(), ZANITE_STONE.getItemStack(), AETHER_STICK.getItemStack()),
@@ -192,7 +223,14 @@ private val toolRecipeList: List<Recipe> = listOf(
     ShovelRecipe(SAPPHIRE_SHOVEL.getItemStack(), SAPPHIRE.getItemStack(), AETHER_STICK.getItemStack()),
     ShovelRecipe(AETHERIUM_SHOVEL.getItemStack(), AETHERIUM_INGOT.getItemStack(), AETHER_STICK.getItemStack()),
 
-    // axes
+    // axes - normal stick
+    AxeRecipe(ENDER_AXE.getItemStack(), ENDER_PLATE.getItemStack(), ItemStack(STICK)),
+    AxeRecipe(ENDERITE_AXE.getItemStack(), ENDERITE_PLATE.getItemStack(), ItemStack(STICK)),
+    AxeRecipe(TUNGSTEN_AXE.getItemStack(), TUNGSTEN_INGOT.getItemStack(), ItemStack(STICK)),
+    AxeRecipe(RUBY_AXE.getItemStack(), RUBY.getItemStack(), ItemStack(STICK)),
+    AxeRecipe(SAPPHIRE_AXE.getItemStack(), SAPPHIRE.getItemStack(), ItemStack(STICK)),
+
+    // axes - aether stick
     AxeRecipe(AETHER_WOODEN_AXE.getItemStack(), AETHER_PLANKS.getItemStack(), AETHER_STICK.getItemStack()),
     AxeRecipe(AETHER_STONE_AXE.getItemStack(), AETHER_STONE.getItemStack(), AETHER_STICK.getItemStack()),
     AxeRecipe(ZANITE_AXE.getItemStack(), ZANITE_STONE.getItemStack(), AETHER_STICK.getItemStack()),
