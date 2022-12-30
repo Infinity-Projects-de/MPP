@@ -17,18 +17,18 @@
 
 package de.danielmaile.mpp.item.recipe
 
-import de.danielmaile.mpp.item.ItemType
+import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.Recipe
 
 abstract class ArmorRecipe : CraftingRecipe() {
 
     class HelmetRecipe(
-        result: ItemType,
-        ingotMaterial: ItemType
+        result: ItemStack,
+        ingotMaterial: ItemStack
     ) : ArmorRecipe() {
 
         private val helmetTop = ShapedRecipe(
-            result, 1, listOf(
+            result, listOf(
                 ingotMaterial, ingotMaterial, ingotMaterial,
                 ingotMaterial, null, ingotMaterial,
                 null, null, null
@@ -36,7 +36,7 @@ abstract class ArmorRecipe : CraftingRecipe() {
         ).spigotRecipes
 
         private val helmetBottom = ShapedRecipe(
-            result, 1, listOf(
+            result, listOf(
                 null, null, null,
                 ingotMaterial, ingotMaterial, ingotMaterial,
                 ingotMaterial, null, ingotMaterial
@@ -48,13 +48,13 @@ abstract class ArmorRecipe : CraftingRecipe() {
     }
 
     class ChestplateRecipe(
-        private val result: ItemType,
-        private val ingotMaterial: ItemType
+        private val result: ItemStack,
+        private val ingotMaterial: ItemStack
     ) : ArmorRecipe() {
 
         override val spigotRecipes: List<Recipe>
             get() = ShapedRecipe(
-                result, 1, listOf(
+                result, listOf(
                     ingotMaterial, null, ingotMaterial,
                     ingotMaterial, ingotMaterial, ingotMaterial,
                     ingotMaterial, ingotMaterial, ingotMaterial
@@ -63,13 +63,13 @@ abstract class ArmorRecipe : CraftingRecipe() {
     }
 
     class LeggingsRecipe(
-        private val result: ItemType,
-        private val ingotMaterial: ItemType
+        private val result: ItemStack,
+        private val ingotMaterial: ItemStack
     ) : ArmorRecipe() {
 
         override val spigotRecipes: List<Recipe>
             get() = ShapedRecipe(
-                result, 1, listOf(
+                result, listOf(
                     ingotMaterial, ingotMaterial, ingotMaterial,
                     ingotMaterial, null, ingotMaterial,
                     ingotMaterial, null, ingotMaterial
@@ -78,12 +78,12 @@ abstract class ArmorRecipe : CraftingRecipe() {
     }
 
     class BootsRecipe(
-        result: ItemType,
-        ingotMaterial: ItemType
+        result: ItemStack,
+        ingotMaterial: ItemStack
     ) : ArmorRecipe() {
 
         private val bootsTop = ShapedRecipe(
-            result, 1, listOf(
+            result, listOf(
                 ingotMaterial, null, ingotMaterial,
                 ingotMaterial, null, ingotMaterial,
                 null, null, null
@@ -91,7 +91,7 @@ abstract class ArmorRecipe : CraftingRecipe() {
         ).spigotRecipes
 
         private val bootsBottom = ShapedRecipe(
-            result, 1, listOf(
+            result, listOf(
                 null, null, null,
                 ingotMaterial, null, ingotMaterial,
                 ingotMaterial, null, ingotMaterial

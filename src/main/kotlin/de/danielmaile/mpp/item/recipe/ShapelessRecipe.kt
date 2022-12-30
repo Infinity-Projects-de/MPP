@@ -17,25 +17,24 @@
 
 package de.danielmaile.mpp.item.recipe
 
-import de.danielmaile.mpp.item.ItemType
+import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.Recipe
 import org.bukkit.inventory.RecipeChoice
 import org.bukkit.inventory.ShapelessRecipe
 
 class ShapelessRecipe(
-    private val result: ItemType,
-    private val amount: Int,
-    private val ingredients: List<ItemType?>
+    private val result: ItemStack,
+    private val ingredients: List<ItemStack?>
 ) : CraftingRecipe() {
 
     override val spigotRecipes: List<Recipe>
         get() = listOf(getSpigotRecipe())
 
     private fun getSpigotRecipe(): Recipe {
-        val shapelessRecipe = ShapelessRecipe(getRandomRecipeKey(), result.getItemStack(amount))
+        val shapelessRecipe = ShapelessRecipe(getRandomRecipeKey(), result)
         for (itemType in ingredients) {
             if (itemType == null) continue
-            shapelessRecipe.addIngredient(RecipeChoice.ExactChoice(itemType.getItemStack()))
+            shapelessRecipe.addIngredient(RecipeChoice.ExactChoice(itemType))
         }
         return shapelessRecipe
     }

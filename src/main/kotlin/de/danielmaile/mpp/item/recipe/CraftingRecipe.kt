@@ -17,17 +17,17 @@
 
 package de.danielmaile.mpp.item.recipe
 
-import de.danielmaile.mpp.item.ItemType
+import org.bukkit.inventory.ItemStack
 
 abstract class CraftingRecipe : Recipe() {
 
     class StickRecipe(
-        result: ItemType,
-        woodMaterial: ItemType
+        result: ItemStack,
+        woodMaterial: ItemStack
     ) : ToolRecipe() {
 
         private val stickTopLeft = ShapedRecipe(
-            result, 4, listOf(
+            result, listOf(
                 woodMaterial, null, null,
                 woodMaterial, null, null,
                 null, null, null
@@ -35,7 +35,7 @@ abstract class CraftingRecipe : Recipe() {
         ).spigotRecipes
 
         private val stickTopMiddle = ShapedRecipe(
-            result, 4, listOf(
+            result, listOf(
                 null, woodMaterial, null,
                 null, woodMaterial, null,
                 null, null, null
@@ -43,7 +43,7 @@ abstract class CraftingRecipe : Recipe() {
         ).spigotRecipes
 
         private val stickTopRight = ShapedRecipe(
-            result, 4, listOf(
+            result, listOf(
                 null, null, woodMaterial,
                 null, null, woodMaterial,
                 null, null, null
@@ -51,7 +51,7 @@ abstract class CraftingRecipe : Recipe() {
         ).spigotRecipes
 
         private val stickBottomLeft = ShapedRecipe(
-            result, 4, listOf(
+            result, listOf(
                 null, null, null,
                 woodMaterial, null, null,
                 woodMaterial, null, null
@@ -59,7 +59,7 @@ abstract class CraftingRecipe : Recipe() {
         ).spigotRecipes
 
         private val stickBottomMiddle = ShapedRecipe(
-            result, 4, listOf(
+            result,  listOf(
                 null, null, null,
                 null, woodMaterial, null,
                 null, woodMaterial, null
@@ -67,7 +67,7 @@ abstract class CraftingRecipe : Recipe() {
         ).spigotRecipes
 
         private val stickBottomRight = ShapedRecipe(
-            result, 4, listOf(
+            result,  listOf(
                 null, null, null,
                 null, null, woodMaterial,
                 null, null, woodMaterial

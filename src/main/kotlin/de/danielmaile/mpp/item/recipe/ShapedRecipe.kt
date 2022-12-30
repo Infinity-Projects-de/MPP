@@ -17,22 +17,21 @@
 
 package de.danielmaile.mpp.item.recipe
 
-import de.danielmaile.mpp.item.ItemType
+import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.Recipe
 import org.bukkit.inventory.RecipeChoice
 import org.bukkit.inventory.ShapedRecipe
 
 class ShapedRecipe(
-    private val result: ItemType,
-    private val amount: Int,
-    private val ingredients: List<ItemType?>
+    private val result: ItemStack,
+    private val ingredients: List<ItemStack?>
 ) : CraftingRecipe() {
 
     override val spigotRecipes: List<Recipe>
         get() = listOf(getSpigotRecipe())
 
     private fun getSpigotRecipe(): Recipe {
-        val shapedRecipe = ShapedRecipe(getRandomRecipeKey(), result.getItemStack(amount))
+        val shapedRecipe = ShapedRecipe(getRandomRecipeKey(), result)
 
         // set shape
         val shape = charArrayOf('A', 'B', 'C', 'D', 'E', 'F', 'H', 'I', 'J')
@@ -48,7 +47,7 @@ class ShapedRecipe(
         for (i in shape.indices) {
             val ingredient = ingredients[i]
             if (shape[i] != ' ' && ingredient != null) {
-                shapedRecipe.setIngredient(shape[i], RecipeChoice.ExactChoice(ingredient.getItemStack()))
+                shapedRecipe.setIngredient(shape[i], RecipeChoice.ExactChoice(ingredient))
             }
         }
         return shapedRecipe

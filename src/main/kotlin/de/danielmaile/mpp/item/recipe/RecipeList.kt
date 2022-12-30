@@ -17,7 +17,9 @@
 
 package de.danielmaile.mpp.item.recipe
 
-import de.danielmaile.mpp.item.ItemType
+import de.danielmaile.mpp.item.ItemType.*
+import org.bukkit.Material.*
+import org.bukkit.inventory.ItemStack
 
 typealias HelmetRecipe = ArmorRecipe.HelmetRecipe
 typealias ChestplateRecipe = ArmorRecipe.ChestplateRecipe
@@ -30,108 +32,108 @@ typealias PickaxeRecipe = ToolRecipe.PickaxeRecipe
 typealias ShovelRecipe = ToolRecipe.ShovelRecipe
 typealias AxeRecipe = ToolRecipe.AxeRecipe
 
-
 private val craftingRecipeList: List<Recipe> = listOf(
 
     // other items
-    ShapedRecipe(ItemType.PARACHUTE, 1, listOf(
-        ItemType.CLOUD_SLOW_FALLING, ItemType.CLOUD_SLOW_FALLING, ItemType.CLOUD_SLOW_FALLING,
-        ItemType.CLOUD_SLOW_FALLING, null, ItemType.CLOUD_SLOW_FALLING,
-        ItemType.AIR_LEAVES, ItemType.AIR_LEAVES, ItemType.AIR_LEAVES)),
+    ShapedRecipe(PARACHUTE.getItemStack(), listOf(
+        CLOUD_SLOW_FALLING.getItemStack(), CLOUD_SLOW_FALLING.getItemStack(), CLOUD_SLOW_FALLING.getItemStack(),
+        CLOUD_SLOW_FALLING.getItemStack(), null, CLOUD_SLOW_FALLING.getItemStack(),
+        AIR_LEAVES.getItemStack(), AIR_LEAVES.getItemStack(), AIR_LEAVES.getItemStack()
+    )),
 
     // planks
-    ShapelessRecipe(ItemType.AETHER_PLANKS, 4, listOf(ItemType.AETHER_LOG)),
-    ShapelessRecipe(ItemType.FIRE_PLANKS, 4, listOf(ItemType.FIRE_LOG)),
-    ShapelessRecipe(ItemType.WATER_PLANKS, 4, listOf(ItemType.WATER_LOG)),
-    ShapelessRecipe(ItemType.AIR_PLANKS, 4, listOf(ItemType.AIR_LOG)),
-    ShapelessRecipe(ItemType.EARTH_PLANKS, 4, listOf(ItemType.EARTH_LOG)),
-    ShapelessRecipe(ItemType.HELL_PLANKS, 4, listOf(ItemType.HELL_LOG)),
+    ShapelessRecipe(AETHER_PLANKS.getItemStack(4), listOf(AETHER_LOG.getItemStack())),
+    ShapelessRecipe(FIRE_PLANKS.getItemStack(4), listOf(FIRE_LOG.getItemStack())),
+    ShapelessRecipe(WATER_PLANKS.getItemStack(4), listOf(WATER_LOG.getItemStack())),
+    ShapelessRecipe(AIR_PLANKS.getItemStack(4), listOf(AIR_LOG.getItemStack())),
+    ShapelessRecipe(EARTH_PLANKS.getItemStack(4), listOf(EARTH_LOG.getItemStack())),
+    ShapelessRecipe(HELL_PLANKS.getItemStack(4), listOf(HELL_LOG.getItemStack())),
 
     // sticks
-    CraftingRecipe.StickRecipe(ItemType.AETHER_STICK, ItemType.AETHER_PLANKS),
-    CraftingRecipe.StickRecipe(ItemType.AETHER_STICK, ItemType.FIRE_PLANKS),
-    CraftingRecipe.StickRecipe(ItemType.AETHER_STICK, ItemType.WATER_PLANKS),
-    CraftingRecipe.StickRecipe(ItemType.AETHER_STICK, ItemType.AIR_PLANKS),
-    CraftingRecipe.StickRecipe(ItemType.AETHER_STICK, ItemType.EARTH_PLANKS)
+    CraftingRecipe.StickRecipe(AETHER_STICK.getItemStack(4), AETHER_PLANKS.getItemStack()),
+    CraftingRecipe.StickRecipe(AETHER_STICK.getItemStack(4), FIRE_PLANKS.getItemStack()),
+    CraftingRecipe.StickRecipe(AETHER_STICK.getItemStack(4), WATER_PLANKS.getItemStack()),
+    CraftingRecipe.StickRecipe(AETHER_STICK.getItemStack(4), AIR_PLANKS.getItemStack()),
+    CraftingRecipe.StickRecipe(AETHER_STICK.getItemStack(4), EARTH_PLANKS.getItemStack())
 )
 
 private val armorRecipeList: List<Recipe> = listOf(
 
     // helmets
-    HelmetRecipe(ItemType.ZANITE_HELMET, ItemType.ZANITE_STONE),
-    HelmetRecipe(ItemType.GRAVITITE_HELMET, ItemType.GRAVITITE_PLATE),
-    HelmetRecipe(ItemType.OBSIDIAN_HELMET, ItemType.POLISHED_OBSIDIAN),
-    HelmetRecipe(ItemType.OBSIDIAN_HELMET, ItemType.SMOOTH_OBSIDIAN),
-    HelmetRecipe(ItemType.THALLASIUM_HELMET, ItemType.THALLASIUM_INGOT),
-    HelmetRecipe(ItemType.PENDORITE_HELMET, ItemType.PENDORITE_INGOT),
-    HelmetRecipe(ItemType.ENDERITE_HELMET, ItemType.ENDERITE_PLATE),
-    HelmetRecipe(ItemType.TIN_HELMET, ItemType.TIN_INGOT),
-    HelmetRecipe(ItemType.LEAD_HELMET, ItemType.LEAD_PLATE),
-    HelmetRecipe(ItemType.BAUXITE_HELMET, ItemType.BAUXITE_PLATE),
-    HelmetRecipe(ItemType.CINNEBAR_HELMET, ItemType.CINNEBAR_INGOT),
-    HelmetRecipe(ItemType.PYRITE_HELMET, ItemType.PYRITE_INGOT),
-    HelmetRecipe(ItemType.RUBY_HELMET, ItemType.RUBY),
-    HelmetRecipe(ItemType.SODALITE_HELMET, ItemType.SODALITE_INGOT),
-    HelmetRecipe(ItemType.AETHERIUM_HELMET, ItemType.AETHERIUM_INGOT),
-    HelmetRecipe(ItemType.TERMINITE_HELMET, ItemType.TERMINITE_INGOT),
-    HelmetRecipe(ItemType.AURORA_HELMET, ItemType.AURORA_SHARD),
+    HelmetRecipe(ZANITE_HELMET.getItemStack(), ZANITE_STONE.getItemStack()),
+    HelmetRecipe(GRAVITITE_HELMET.getItemStack(), GRAVITITE_PLATE.getItemStack()),
+    HelmetRecipe(OBSIDIAN_HELMET.getItemStack(), POLISHED_OBSIDIAN.getItemStack()),
+    HelmetRecipe(OBSIDIAN_HELMET.getItemStack(), SMOOTH_OBSIDIAN.getItemStack()),
+    HelmetRecipe(THALLASIUM_HELMET.getItemStack(), THALLASIUM_INGOT.getItemStack()),
+    HelmetRecipe(PENDORITE_HELMET.getItemStack(), PENDORITE_INGOT.getItemStack()),
+    HelmetRecipe(ENDERITE_HELMET.getItemStack(), ENDERITE_PLATE.getItemStack()),
+    HelmetRecipe(TIN_HELMET.getItemStack(), TIN_INGOT.getItemStack()),
+    HelmetRecipe(LEAD_HELMET.getItemStack(), LEAD_PLATE.getItemStack()),
+    HelmetRecipe(BAUXITE_HELMET.getItemStack(), BAUXITE_PLATE.getItemStack()),
+    HelmetRecipe(CINNEBAR_HELMET.getItemStack(), CINNEBAR_INGOT.getItemStack()),
+    HelmetRecipe(PYRITE_HELMET.getItemStack(), PYRITE_INGOT.getItemStack()),
+    HelmetRecipe(RUBY_HELMET.getItemStack(), RUBY.getItemStack()),
+    HelmetRecipe(SODALITE_HELMET.getItemStack(), SODALITE_INGOT.getItemStack()),
+    HelmetRecipe(AETHERIUM_HELMET.getItemStack(), AETHERIUM_INGOT.getItemStack()),
+    HelmetRecipe(TERMINITE_HELMET.getItemStack(), TERMINITE_INGOT.getItemStack()),
+    HelmetRecipe(AURORA_HELMET.getItemStack(), AURORA_SHARD.getItemStack()),
 
     // chestplates
-    ChestplateRecipe(ItemType.ZANITE_CHESTPLATE, ItemType.ZANITE_STONE),
-    ChestplateRecipe(ItemType.GRAVITITE_CHESTPLATE, ItemType.GRAVITITE_PLATE),
-    ChestplateRecipe(ItemType.OBSIDIAN_CHESTPLATE, ItemType.SMOOTH_OBSIDIAN),
-    ChestplateRecipe(ItemType.OBSIDIAN_CHESTPLATE, ItemType.POLISHED_OBSIDIAN),
-    ChestplateRecipe(ItemType.THALLASIUM_CHESTPLATE, ItemType.THALLASIUM_INGOT),
-    ChestplateRecipe(ItemType.PENDORITE_CHESTPLATE, ItemType.PENDORITE_INGOT),
-    ChestplateRecipe(ItemType.ENDERITE_CHESTPLATE, ItemType.ENDERITE_PLATE),
-    ChestplateRecipe(ItemType.TIN_CHESTPLATE, ItemType.TIN_INGOT),
-    ChestplateRecipe(ItemType.LEAD_CHESTPLATE, ItemType.LEAD_PLATE),
-    ChestplateRecipe(ItemType.BAUXITE_CHESTPLATE, ItemType.BAUXITE_PLATE),
-    ChestplateRecipe(ItemType.CINNEBAR_CHESTPLATE, ItemType.CINNEBAR_INGOT),
-    ChestplateRecipe(ItemType.PYRITE_CHESTPLATE, ItemType.PYRITE_INGOT),
-    ChestplateRecipe(ItemType.RUBY_CHESTPLATE, ItemType.RUBY),
-    ChestplateRecipe(ItemType.SODALITE_CHESTPLATE, ItemType.SODALITE_INGOT),
-    ChestplateRecipe(ItemType.AETHERIUM_CHESTPLATE, ItemType.AETHERIUM_INGOT),
-    ChestplateRecipe(ItemType.TERMINITE_CHESTPLATE, ItemType.TERMINITE_INGOT),
-    ChestplateRecipe(ItemType.AURORA_CHESTPLATE, ItemType.AURORA_SHARD),
+    ChestplateRecipe(ZANITE_CHESTPLATE.getItemStack(), ZANITE_STONE.getItemStack()),
+    ChestplateRecipe(GRAVITITE_CHESTPLATE.getItemStack(), GRAVITITE_PLATE.getItemStack()),
+    ChestplateRecipe(OBSIDIAN_CHESTPLATE.getItemStack(), SMOOTH_OBSIDIAN.getItemStack()),
+    ChestplateRecipe(OBSIDIAN_CHESTPLATE.getItemStack(), POLISHED_OBSIDIAN.getItemStack()),
+    ChestplateRecipe(THALLASIUM_CHESTPLATE.getItemStack(), THALLASIUM_INGOT.getItemStack()),
+    ChestplateRecipe(PENDORITE_CHESTPLATE.getItemStack(), PENDORITE_INGOT.getItemStack()),
+    ChestplateRecipe(ENDERITE_CHESTPLATE.getItemStack(), ENDERITE_PLATE.getItemStack()),
+    ChestplateRecipe(TIN_CHESTPLATE.getItemStack(), TIN_INGOT.getItemStack()),
+    ChestplateRecipe(LEAD_CHESTPLATE.getItemStack(), LEAD_PLATE.getItemStack()),
+    ChestplateRecipe(BAUXITE_CHESTPLATE.getItemStack(), BAUXITE_PLATE.getItemStack()),
+    ChestplateRecipe(CINNEBAR_CHESTPLATE.getItemStack(), CINNEBAR_INGOT.getItemStack()),
+    ChestplateRecipe(PYRITE_CHESTPLATE.getItemStack(), PYRITE_INGOT.getItemStack()),
+    ChestplateRecipe(RUBY_CHESTPLATE.getItemStack(), RUBY.getItemStack()),
+    ChestplateRecipe(SODALITE_CHESTPLATE.getItemStack(), SODALITE_INGOT.getItemStack()),
+    ChestplateRecipe(AETHERIUM_CHESTPLATE.getItemStack(), AETHERIUM_INGOT.getItemStack()),
+    ChestplateRecipe(TERMINITE_CHESTPLATE.getItemStack(), TERMINITE_INGOT.getItemStack()),
+    ChestplateRecipe(AURORA_CHESTPLATE.getItemStack(), AURORA_SHARD.getItemStack()),
 
     // leggings
-    LeggingsRecipe(ItemType.ZANITE_LEGGINGS, ItemType.ZANITE_STONE),
-    LeggingsRecipe(ItemType.GRAVITITE_LEGGINGS, ItemType.GRAVITITE_PLATE),
-    LeggingsRecipe(ItemType.OBSIDIAN_LEGGINGS, ItemType.SMOOTH_OBSIDIAN),
-    LeggingsRecipe(ItemType.OBSIDIAN_LEGGINGS, ItemType.POLISHED_OBSIDIAN),
-    LeggingsRecipe(ItemType.THALLASIUM_LEGGINGS, ItemType.THALLASIUM_INGOT),
-    LeggingsRecipe(ItemType.PENDORITE_LEGGINGS, ItemType.PENDORITE_INGOT),
-    LeggingsRecipe(ItemType.ENDERITE_LEGGINGS, ItemType.ENDERITE_PLATE),
-    LeggingsRecipe(ItemType.TIN_LEGGINGS, ItemType.TIN_INGOT),
-    LeggingsRecipe(ItemType.LEAD_LEGGINGS, ItemType.LEAD_PLATE),
-    LeggingsRecipe(ItemType.BAUXITE_LEGGINGS, ItemType.BAUXITE_PLATE),
-    LeggingsRecipe(ItemType.CINNEBAR_LEGGINGS, ItemType.CINNEBAR_INGOT),
-    LeggingsRecipe(ItemType.PYRITE_LEGGINGS, ItemType.PYRITE_INGOT),
-    LeggingsRecipe(ItemType.RUBY_LEGGINGS, ItemType.RUBY),
-    LeggingsRecipe(ItemType.SODALITE_LEGGINGS, ItemType.SODALITE_INGOT),
-    LeggingsRecipe(ItemType.AETHERIUM_LEGGINGS, ItemType.AETHERIUM_INGOT),
-    LeggingsRecipe(ItemType.TERMINITE_LEGGINGS, ItemType.TERMINITE_INGOT),
-    LeggingsRecipe(ItemType.AURORA_LEGGINGS, ItemType.AURORA_SHARD),
+    LeggingsRecipe(ZANITE_LEGGINGS.getItemStack(), ZANITE_STONE.getItemStack()),
+    LeggingsRecipe(GRAVITITE_LEGGINGS.getItemStack(), GRAVITITE_PLATE.getItemStack()),
+    LeggingsRecipe(OBSIDIAN_LEGGINGS.getItemStack(), SMOOTH_OBSIDIAN.getItemStack()),
+    LeggingsRecipe(OBSIDIAN_LEGGINGS.getItemStack(), POLISHED_OBSIDIAN.getItemStack()),
+    LeggingsRecipe(THALLASIUM_LEGGINGS.getItemStack(), THALLASIUM_INGOT.getItemStack()),
+    LeggingsRecipe(PENDORITE_LEGGINGS.getItemStack(), PENDORITE_INGOT.getItemStack()),
+    LeggingsRecipe(ENDERITE_LEGGINGS.getItemStack(), ENDERITE_PLATE.getItemStack()),
+    LeggingsRecipe(TIN_LEGGINGS.getItemStack(), TIN_INGOT.getItemStack()),
+    LeggingsRecipe(LEAD_LEGGINGS.getItemStack(), LEAD_PLATE.getItemStack()),
+    LeggingsRecipe(BAUXITE_LEGGINGS.getItemStack(), BAUXITE_PLATE.getItemStack()),
+    LeggingsRecipe(CINNEBAR_LEGGINGS.getItemStack(), CINNEBAR_INGOT.getItemStack()),
+    LeggingsRecipe(PYRITE_LEGGINGS.getItemStack(), PYRITE_INGOT.getItemStack()),
+    LeggingsRecipe(RUBY_LEGGINGS.getItemStack(), RUBY.getItemStack()),
+    LeggingsRecipe(SODALITE_LEGGINGS.getItemStack(), SODALITE_INGOT.getItemStack()),
+    LeggingsRecipe(AETHERIUM_LEGGINGS.getItemStack(), AETHERIUM_INGOT.getItemStack()),
+    LeggingsRecipe(TERMINITE_LEGGINGS.getItemStack(), TERMINITE_INGOT.getItemStack()),
+    LeggingsRecipe(AURORA_LEGGINGS.getItemStack(), AURORA_SHARD.getItemStack()),
 
     // boots
-    BootsRecipe(ItemType.ZANITE_BOOTS, ItemType.ZANITE_STONE),
-    BootsRecipe(ItemType.GRAVITITE_BOOTS, ItemType.GRAVITITE_PLATE),
-    BootsRecipe(ItemType.OBSIDIAN_BOOTS, ItemType.SMOOTH_OBSIDIAN),
-    BootsRecipe(ItemType.OBSIDIAN_BOOTS, ItemType.POLISHED_OBSIDIAN),
-    BootsRecipe(ItemType.THALLASIUM_BOOTS, ItemType.THALLASIUM_INGOT),
-    BootsRecipe(ItemType.PENDORITE_BOOTS, ItemType.PENDORITE_INGOT),
-    BootsRecipe(ItemType.ENDERITE_BOOTS, ItemType.ENDERITE_PLATE),
-    BootsRecipe(ItemType.TIN_BOOTS, ItemType.TIN_INGOT),
-    BootsRecipe(ItemType.LEAD_BOOTS, ItemType.LEAD_PLATE),
-    BootsRecipe(ItemType.BAUXITE_BOOTS, ItemType.BAUXITE_PLATE),
-    BootsRecipe(ItemType.CINNEBAR_BOOTS, ItemType.CINNEBAR_INGOT),
-    BootsRecipe(ItemType.PYRITE_BOOTS, ItemType.PYRITE_INGOT),
-    BootsRecipe(ItemType.RUBY_BOOTS, ItemType.RUBY),
-    BootsRecipe(ItemType.SODALITE_BOOTS, ItemType.SODALITE_INGOT),
-    BootsRecipe(ItemType.AETHERIUM_BOOTS, ItemType.AETHERIUM_INGOT),
-    BootsRecipe(ItemType.TERMINITE_BOOTS, ItemType.TERMINITE_INGOT),
-    BootsRecipe(ItemType.AURORA_BOOTS, ItemType.AURORA_SHARD),
+    BootsRecipe(ZANITE_BOOTS.getItemStack(), ZANITE_STONE.getItemStack()),
+    BootsRecipe(GRAVITITE_BOOTS.getItemStack(), GRAVITITE_PLATE.getItemStack()),
+    BootsRecipe(OBSIDIAN_BOOTS.getItemStack(), SMOOTH_OBSIDIAN.getItemStack()),
+    BootsRecipe(OBSIDIAN_BOOTS.getItemStack(), POLISHED_OBSIDIAN.getItemStack()),
+    BootsRecipe(THALLASIUM_BOOTS.getItemStack(), THALLASIUM_INGOT.getItemStack()),
+    BootsRecipe(PENDORITE_BOOTS.getItemStack(), PENDORITE_INGOT.getItemStack()),
+    BootsRecipe(ENDERITE_BOOTS.getItemStack(), ENDERITE_PLATE.getItemStack()),
+    BootsRecipe(TIN_BOOTS.getItemStack(), TIN_INGOT.getItemStack()),
+    BootsRecipe(LEAD_BOOTS.getItemStack(), LEAD_PLATE.getItemStack()),
+    BootsRecipe(BAUXITE_BOOTS.getItemStack(), BAUXITE_PLATE.getItemStack()),
+    BootsRecipe(CINNEBAR_BOOTS.getItemStack(), CINNEBAR_INGOT.getItemStack()),
+    BootsRecipe(PYRITE_BOOTS.getItemStack(), PYRITE_INGOT.getItemStack()),
+    BootsRecipe(RUBY_BOOTS.getItemStack(), RUBY.getItemStack()),
+    BootsRecipe(SODALITE_BOOTS.getItemStack(), SODALITE_INGOT.getItemStack()),
+    BootsRecipe(AETHERIUM_BOOTS.getItemStack(), AETHERIUM_INGOT.getItemStack()),
+    BootsRecipe(TERMINITE_BOOTS.getItemStack(), TERMINITE_INGOT.getItemStack()),
+    BootsRecipe(AURORA_BOOTS.getItemStack(), AURORA_SHARD.getItemStack()),
 
 
 )
@@ -139,131 +141,131 @@ private val armorRecipeList: List<Recipe> = listOf(
 private val toolRecipeList: List<Recipe> = listOf(
 
     // swords
-    SwordRecipe(ItemType.AETHER_WOODEN_SWORD, ItemType.AETHER_PLANKS, ItemType.AETHER_STICK),
-    SwordRecipe(ItemType.AETHER_STONE_SWORD, ItemType.AETHER_STONE, ItemType.AETHER_STICK),
-    SwordRecipe(ItemType.ZANITE_SWORD, ItemType.ZANITE_STONE, ItemType.AETHER_STICK),
-    SwordRecipe(ItemType.GRAVITITE_SWORD, ItemType.GRAVITITE_PLATE, ItemType.AETHER_STICK),
-    SwordRecipe(ItemType.HELL_STONE_SWORD, ItemType.HELL_STONE, ItemType.AETHER_STICK),
-    SwordRecipe(ItemType.ENDER_SWORD, ItemType.ENDER_PLATE, ItemType.AETHER_STICK),
-    SwordRecipe(ItemType.ENDERITE_SWORD, ItemType.ENDERITE_INGOT, ItemType.AETHER_STICK),
-    SwordRecipe(ItemType.TUNGSTEN_SWORD, ItemType.TUNGSTEN_INGOT, ItemType.AETHER_STICK),
-    SwordRecipe(ItemType.RUBY_SWORD, ItemType.RUBY, ItemType.AETHER_STICK),
-    SwordRecipe(ItemType.SAPPHIRE_SWORD, ItemType.SAPPHIRE, ItemType.AETHER_STICK),
-    SwordRecipe(ItemType.AETHERIUM_SWORD, ItemType.AETHERIUM_INGOT, ItemType.AETHER_STICK),
-    SwordRecipe(ItemType.DEMON_SWORD, ItemType.HELL_DIAMOND, ItemType.AETHER_STICK),
+    SwordRecipe(AETHER_WOODEN_SWORD.getItemStack(), AETHER_PLANKS.getItemStack(), ItemStack(STICK)),
+    SwordRecipe(AETHER_STONE_SWORD.getItemStack(), AETHER_STONE.getItemStack(), ItemStack(STICK)),
+    SwordRecipe(ZANITE_SWORD.getItemStack(), ZANITE_STONE.getItemStack(), ItemStack(STICK)),
+    SwordRecipe(GRAVITITE_SWORD.getItemStack(), GRAVITITE_PLATE.getItemStack(), ItemStack(STICK)),
+    SwordRecipe(HELL_STONE_SWORD.getItemStack(), HELL_STONE.getItemStack(), ItemStack(STICK)),
+    SwordRecipe(ENDER_SWORD.getItemStack(), ENDER_PLATE.getItemStack(), ItemStack(STICK)),
+    SwordRecipe(ENDERITE_SWORD.getItemStack(), ENDERITE_INGOT.getItemStack(), ItemStack(STICK)),
+    SwordRecipe(TUNGSTEN_SWORD.getItemStack(), TUNGSTEN_INGOT.getItemStack(), ItemStack(STICK)),
+    SwordRecipe(RUBY_SWORD.getItemStack(), RUBY.getItemStack(), ItemStack(STICK)),
+    SwordRecipe(SAPPHIRE_SWORD.getItemStack(), SAPPHIRE.getItemStack(), ItemStack(STICK)),
+    SwordRecipe(AETHERIUM_SWORD.getItemStack(), AETHERIUM_INGOT.getItemStack(), ItemStack(STICK)),
+    SwordRecipe(DEMON_SWORD.getItemStack(), HELL_DIAMOND.getItemStack(), ItemStack(STICK)),
 
 
     // hoes
-    HoeRecipe(ItemType.AETHER_WOODEN_HOE, ItemType.AETHER_PLANKS, ItemType.AETHER_STICK),
-    HoeRecipe(ItemType.AETHER_STONE_HOE, ItemType.AETHER_STONE, ItemType.AETHER_STICK),
-    HoeRecipe(ItemType.ZANITE_HOE, ItemType.ZANITE_STONE, ItemType.AETHER_STICK),
-    HoeRecipe(ItemType.GRAVITITE_HOE, ItemType.GRAVITITE_PLATE, ItemType.AETHER_STICK),
-    HoeRecipe(ItemType.ENDER_HOE, ItemType.ENDER_PLATE, ItemType.AETHER_STICK),
-    HoeRecipe(ItemType.ENDERITE_HOE, ItemType.ENDERITE_PLATE, ItemType.AETHER_STICK),
-    HoeRecipe(ItemType.TUNGSTEN_HOE, ItemType.TUNGSTEN_INGOT, ItemType.AETHER_STICK),
-    HoeRecipe(ItemType.RUBY_HOE, ItemType.RUBY, ItemType.AETHER_STICK),
-    HoeRecipe(ItemType.SAPPHIRE_HOE, ItemType.SAPPHIRE, ItemType.AETHER_STICK),
-    HoeRecipe(ItemType.AETHERIUM_HOE, ItemType.AETHERIUM_INGOT, ItemType.AETHER_STICK),
+    HoeRecipe(AETHER_WOODEN_HOE.getItemStack(), AETHER_PLANKS.getItemStack(), AETHER_STICK.getItemStack()),
+    HoeRecipe(AETHER_STONE_HOE.getItemStack(), AETHER_STONE.getItemStack(), AETHER_STICK.getItemStack()),
+    HoeRecipe(ZANITE_HOE.getItemStack(), ZANITE_STONE.getItemStack(), AETHER_STICK.getItemStack()),
+    HoeRecipe(GRAVITITE_HOE.getItemStack(), GRAVITITE_PLATE.getItemStack(), AETHER_STICK.getItemStack()),
+    HoeRecipe(ENDER_HOE.getItemStack(), ENDER_PLATE.getItemStack(), AETHER_STICK.getItemStack()),
+    HoeRecipe(ENDERITE_HOE.getItemStack(), ENDERITE_PLATE.getItemStack(), AETHER_STICK.getItemStack()),
+    HoeRecipe(TUNGSTEN_HOE.getItemStack(), TUNGSTEN_INGOT.getItemStack(), AETHER_STICK.getItemStack()),
+    HoeRecipe(RUBY_HOE.getItemStack(), RUBY.getItemStack(), AETHER_STICK.getItemStack()),
+    HoeRecipe(SAPPHIRE_HOE.getItemStack(), SAPPHIRE.getItemStack(), AETHER_STICK.getItemStack()),
+    HoeRecipe(AETHERIUM_HOE.getItemStack(), AETHERIUM_INGOT.getItemStack(), AETHER_STICK.getItemStack()),
 
     // pickaxes
-    PickaxeRecipe(ItemType.AETHER_WOODEN_PICKAXE, ItemType.AETHER_PLANKS, ItemType.AETHER_STICK),
-    PickaxeRecipe(ItemType.AETHER_STONE_PICKAXE, ItemType.AETHER_STONE, ItemType.AETHER_STICK),
-    PickaxeRecipe(ItemType.ZANITE_PICKAXE, ItemType.ZANITE_STONE, ItemType.AETHER_STICK),
-    PickaxeRecipe(ItemType.GRAVITITE_PICKAXE, ItemType.GRAVITITE_PLATE, ItemType.AETHER_STICK),
-    PickaxeRecipe(ItemType.ENDER_PICKAXE, ItemType.ENDER_PLATE, ItemType.AETHER_STICK),
-    PickaxeRecipe(ItemType.ENDERITE_PICKAXE, ItemType.ENDERITE_PLATE, ItemType.AETHER_STICK),
-    PickaxeRecipe(ItemType.TUNGSTEN_PICKAXE, ItemType.TUNGSTEN_INGOT, ItemType.AETHER_STICK),
-    PickaxeRecipe(ItemType.RUBY_PICKAXE, ItemType.RUBY, ItemType.AETHER_STICK),
-    PickaxeRecipe(ItemType.SAPPHIRE_PICKAXE, ItemType.SAPPHIRE, ItemType.AETHER_STICK),
-    PickaxeRecipe(ItemType.AETHERIUM_PICKAXE, ItemType.AETHERIUM_INGOT, ItemType.AETHER_STICK),
-    PickaxeRecipe(ItemType.HELL_STONE_PICKAXE, ItemType.HELL_STONE, ItemType.AETHER_STICK),
+    PickaxeRecipe(AETHER_WOODEN_PICKAXE.getItemStack(), AETHER_PLANKS.getItemStack(), AETHER_STICK.getItemStack()),
+    PickaxeRecipe(AETHER_STONE_PICKAXE.getItemStack(), AETHER_STONE.getItemStack(), AETHER_STICK.getItemStack()),
+    PickaxeRecipe(ZANITE_PICKAXE.getItemStack(), ZANITE_STONE.getItemStack(), AETHER_STICK.getItemStack()),
+    PickaxeRecipe(GRAVITITE_PICKAXE.getItemStack(), GRAVITITE_PLATE.getItemStack(), AETHER_STICK.getItemStack()),
+    PickaxeRecipe(ENDER_PICKAXE.getItemStack(), ENDER_PLATE.getItemStack(), AETHER_STICK.getItemStack()),
+    PickaxeRecipe(ENDERITE_PICKAXE.getItemStack(), ENDERITE_PLATE.getItemStack(), AETHER_STICK.getItemStack()),
+    PickaxeRecipe(TUNGSTEN_PICKAXE.getItemStack(), TUNGSTEN_INGOT.getItemStack(), AETHER_STICK.getItemStack()),
+    PickaxeRecipe(RUBY_PICKAXE.getItemStack(), RUBY.getItemStack(), AETHER_STICK.getItemStack()),
+    PickaxeRecipe(SAPPHIRE_PICKAXE.getItemStack(), SAPPHIRE.getItemStack(), AETHER_STICK.getItemStack()),
+    PickaxeRecipe(AETHERIUM_PICKAXE.getItemStack(), AETHERIUM_INGOT.getItemStack(), AETHER_STICK.getItemStack()),
+    PickaxeRecipe(HELL_STONE_PICKAXE.getItemStack(), HELL_STONE.getItemStack(), AETHER_STICK.getItemStack()),
 
     // shovels
-    ShovelRecipe(ItemType.AETHER_WOODEN_SHOVEL, ItemType.AETHER_PLANKS, ItemType.AETHER_STICK),
-    ShovelRecipe(ItemType.AETHER_STONE_SHOVEL, ItemType.AETHER_STONE, ItemType.AETHER_STICK),
-    ShovelRecipe(ItemType.ZANITE_SHOVEL, ItemType.ZANITE_STONE, ItemType.AETHER_STICK),
-    ShovelRecipe(ItemType.GRAVITITE_SHOVEL, ItemType.GRAVITITE_PLATE, ItemType.AETHER_STICK),
-    ShovelRecipe(ItemType.ENDER_SHOVEL, ItemType.ENDER_PLATE, ItemType.AETHER_STICK),
-    ShovelRecipe(ItemType.ENDERITE_SHOVEL, ItemType.ENDERITE_PLATE, ItemType.AETHER_STICK),
-    ShovelRecipe(ItemType.TUNGSTEN_SHOVEL, ItemType.TUNGSTEN_INGOT, ItemType.AETHER_STICK),
-    ShovelRecipe(ItemType.RUBY_SHOVEL, ItemType.RUBY, ItemType.AETHER_STICK),
-    ShovelRecipe(ItemType.SAPPHIRE_SHOVEL, ItemType.SAPPHIRE, ItemType.AETHER_STICK),
-    ShovelRecipe(ItemType.AETHERIUM_SHOVEL, ItemType.AETHERIUM_INGOT, ItemType.AETHER_STICK),
+    ShovelRecipe(AETHER_WOODEN_SHOVEL.getItemStack(), AETHER_PLANKS.getItemStack(), AETHER_STICK.getItemStack()),
+    ShovelRecipe(AETHER_STONE_SHOVEL.getItemStack(), AETHER_STONE.getItemStack(), AETHER_STICK.getItemStack()),
+    ShovelRecipe(ZANITE_SHOVEL.getItemStack(), ZANITE_STONE.getItemStack(), AETHER_STICK.getItemStack()),
+    ShovelRecipe(GRAVITITE_SHOVEL.getItemStack(), GRAVITITE_PLATE.getItemStack(), AETHER_STICK.getItemStack()),
+    ShovelRecipe(ENDER_SHOVEL.getItemStack(), ENDER_PLATE.getItemStack(), AETHER_STICK.getItemStack()),
+    ShovelRecipe(ENDERITE_SHOVEL.getItemStack(), ENDERITE_PLATE.getItemStack(), AETHER_STICK.getItemStack()),
+    ShovelRecipe(TUNGSTEN_SHOVEL.getItemStack(), TUNGSTEN_INGOT.getItemStack(), AETHER_STICK.getItemStack()),
+    ShovelRecipe(RUBY_SHOVEL.getItemStack(), RUBY.getItemStack(), AETHER_STICK.getItemStack()),
+    ShovelRecipe(SAPPHIRE_SHOVEL.getItemStack(), SAPPHIRE.getItemStack(), AETHER_STICK.getItemStack()),
+    ShovelRecipe(AETHERIUM_SHOVEL.getItemStack(), AETHERIUM_INGOT.getItemStack(), AETHER_STICK.getItemStack()),
 
     // axes
-    AxeRecipe(ItemType.AETHER_WOODEN_AXE, ItemType.AETHER_PLANKS, ItemType.AETHER_STICK),
-    AxeRecipe(ItemType.AETHER_STONE_AXE, ItemType.AETHER_STONE, ItemType.AETHER_STICK),
-    AxeRecipe(ItemType.ZANITE_AXE, ItemType.ZANITE_STONE, ItemType.AETHER_STICK),
-    AxeRecipe(ItemType.GRAVITITE_AXE, ItemType.GRAVITITE_PLATE, ItemType.AETHER_STICK),
-    AxeRecipe(ItemType.ENDER_AXE, ItemType.ENDER_PLATE, ItemType.AETHER_STICK),
-    AxeRecipe(ItemType.ENDERITE_AXE, ItemType.ENDERITE_PLATE, ItemType.AETHER_STICK),
-    AxeRecipe(ItemType.TUNGSTEN_AXE, ItemType.TUNGSTEN_INGOT, ItemType.AETHER_STICK),
-    AxeRecipe(ItemType.RUBY_AXE, ItemType.RUBY, ItemType.AETHER_STICK),
-    AxeRecipe(ItemType.SAPPHIRE_AXE, ItemType.SAPPHIRE, ItemType.AETHER_STICK),
-    AxeRecipe(ItemType.AETHERIUM_AXE, ItemType.AETHERIUM_INGOT, ItemType.AETHER_STICK),
+    AxeRecipe(AETHER_WOODEN_AXE.getItemStack(), AETHER_PLANKS.getItemStack(), AETHER_STICK.getItemStack()),
+    AxeRecipe(AETHER_STONE_AXE.getItemStack(), AETHER_STONE.getItemStack(), AETHER_STICK.getItemStack()),
+    AxeRecipe(ZANITE_AXE.getItemStack(), ZANITE_STONE.getItemStack(), AETHER_STICK.getItemStack()),
+    AxeRecipe(GRAVITITE_AXE.getItemStack(), GRAVITITE_PLATE.getItemStack(), AETHER_STICK.getItemStack()),
+    AxeRecipe(ENDER_AXE.getItemStack(), ENDER_PLATE.getItemStack(), AETHER_STICK.getItemStack()),
+    AxeRecipe(ENDERITE_AXE.getItemStack(), ENDERITE_PLATE.getItemStack(), AETHER_STICK.getItemStack()),
+    AxeRecipe(TUNGSTEN_AXE.getItemStack(), TUNGSTEN_INGOT.getItemStack(), AETHER_STICK.getItemStack()),
+    AxeRecipe(RUBY_AXE.getItemStack(), RUBY.getItemStack(), AETHER_STICK.getItemStack()),
+    AxeRecipe(SAPPHIRE_AXE.getItemStack(), SAPPHIRE.getItemStack(), AETHER_STICK.getItemStack()),
+    AxeRecipe(AETHERIUM_AXE.getItemStack(), AETHERIUM_INGOT.getItemStack(), AETHER_STICK.getItemStack()),
 
     // extra swords
-    ShapelessRecipe(ItemType.LIGHTNING_SWORD, 1, listOf(ItemType.ZANITE_SWORD, ItemType.LIGHTNING_ESSENCE)),
-    ShapelessRecipe(ItemType.FIRE_SWORD, 1, listOf(ItemType.ZANITE_SWORD, ItemType.FIRE_ESSENCE)),
-    ShapelessRecipe(ItemType.ICE_SWORD, 1, listOf(ItemType.ZANITE_SWORD, ItemType.ICE_ESSENCE)),
-    ShapelessRecipe(ItemType.SUN_SWORD, 1, listOf(ItemType.FIRE_ESSENCE, ItemType.SUN_STONE, ItemType.FIRE_SWORD))
+    ShapelessRecipe(LIGHTNING_SWORD.getItemStack(), listOf(ZANITE_SWORD.getItemStack(), LIGHTNING_ESSENCE.getItemStack())),
+    ShapelessRecipe(FIRE_SWORD.getItemStack(), listOf(ZANITE_SWORD.getItemStack(), FIRE_ESSENCE.getItemStack())),
+    ShapelessRecipe(ICE_SWORD.getItemStack(), listOf(ZANITE_SWORD.getItemStack(), ICE_ESSENCE.getItemStack())),
+    ShapelessRecipe(SUN_SWORD.getItemStack(), listOf(FIRE_ESSENCE.getItemStack(), SUN_STONE.getItemStack(), FIRE_SWORD.getItemStack()))
 )
 
 private val smeltingRecipeList: List<Recipe> = listOf(
 
     // single recipes per item
-    FurnaceRecipe(ItemType.GRAVITITE_PLATE, ItemType.GRAVITITE_ORE, 50f, 30),
-    FurnaceRecipe(ItemType.ZANITE_STONE, ItemType.ZANITE_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.SILVER_INGOT, ItemType.SILVER_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.TITANIUM_INGOT, ItemType.TITANIUM_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.AMBER_GEM, ItemType.AMBER_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.THALLASIUM_INGOT, ItemType.THALLASIUM_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.AMETRINE_CRYSTAL, ItemType.AMETRINE_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.PENDORITE_INGOT, ItemType.PENDORITE_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.EMERALD_SHARD, ItemType.NETHER_EMERALD_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.NIKOLITE_INGOT, ItemType.NIKOLITE_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.PYRITE_INGOT, ItemType.PYRITE_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.SHELDONITE_INGOT, ItemType.SHELDONITE_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.SODALITE_INGOT, ItemType.SODALITE_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.CINCINNASITE_INGOT, ItemType.CINCINNASITE_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.AETHERIUM_INGOT, ItemType.AETHERIUM_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.TERMINITE_INGOT, ItemType.TERMINITE_ORE, 50f, 20),
+    FurnaceRecipe(GRAVITITE_PLATE.getItemStack(), GRAVITITE_ORE.getItemStack(), 50f, 30),
+    FurnaceRecipe(ZANITE_STONE.getItemStack(), ZANITE_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(SILVER_INGOT.getItemStack(), SILVER_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(TITANIUM_INGOT.getItemStack(), TITANIUM_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(AMBER_GEM.getItemStack(), AMBER_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(THALLASIUM_INGOT.getItemStack(), THALLASIUM_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(AMETRINE_CRYSTAL.getItemStack(), AMETRINE_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(PENDORITE_INGOT.getItemStack(), PENDORITE_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(EMERALD_SHARD.getItemStack(), NETHER_EMERALD_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(NIKOLITE_INGOT.getItemStack(), NIKOLITE_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(PYRITE_INGOT.getItemStack(), PYRITE_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(SHELDONITE_INGOT.getItemStack(), SHELDONITE_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(SODALITE_INGOT.getItemStack(), SODALITE_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(CINCINNASITE_INGOT.getItemStack(), CINCINNASITE_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(AETHERIUM_INGOT.getItemStack(), AETHERIUM_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(TERMINITE_INGOT.getItemStack(), TERMINITE_ORE.getItemStack(), 50f, 20),
 
     //multiple recipes per item
 
     // cinnebar ingot
-    FurnaceRecipe(ItemType.CINNEBAR_INGOT, ItemType.CINNEBAR_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.CINNEBAR_INGOT, ItemType.END_CINNEBAR_ORE, 50f, 20),
+    FurnaceRecipe(CINNEBAR_INGOT.getItemStack(), CINNEBAR_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(CINNEBAR_INGOT.getItemStack(), END_CINNEBAR_ORE.getItemStack(), 50f, 20),
 
     // nikolite ingot
-    FurnaceRecipe(ItemType.NIKOLITE_INGOT, ItemType.DEEPSLATE_NIKOLITE_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.NIKOLITE_INGOT, ItemType.END_NIKOLITE_ORE, 50f, 20),
+    FurnaceRecipe(NIKOLITE_INGOT.getItemStack(), DEEPSLATE_NIKOLITE_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(NIKOLITE_INGOT.getItemStack(), END_NIKOLITE_ORE.getItemStack(), 50f, 20),
 
     // iridium ingot
-    FurnaceRecipe(ItemType.IRIDIUM_INGOT, ItemType.IRIDIUM_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.IRIDIUM_INGOT, ItemType.DEEPSLATE_IRIDIUM_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.IRIDIUM_INGOT, ItemType.END_IRIDIUM_ORE, 50f, 20),
+    FurnaceRecipe(IRIDIUM_INGOT.getItemStack(), IRIDIUM_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(IRIDIUM_INGOT.getItemStack(), DEEPSLATE_IRIDIUM_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(IRIDIUM_INGOT.getItemStack(), END_IRIDIUM_ORE.getItemStack(), 50f, 20),
 
     // tungsten ingot
-    FurnaceRecipe(ItemType.TUNGSTEN_INGOT, ItemType.TUNGSTEN_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.TUNGSTEN_INGOT, ItemType.DEEPSLATE_TUNGSTEN_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.TUNGSTEN_INGOT, ItemType.NETHER_TUNGSTEN_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.TUNGSTEN_INGOT, ItemType.END_TUNGSTEN_ORE, 50f, 20),
+    FurnaceRecipe(TUNGSTEN_INGOT.getItemStack(), TUNGSTEN_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(TUNGSTEN_INGOT.getItemStack(), DEEPSLATE_TUNGSTEN_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(TUNGSTEN_INGOT.getItemStack(), NETHER_TUNGSTEN_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(TUNGSTEN_INGOT.getItemStack(), END_TUNGSTEN_ORE.getItemStack(), 50f, 20),
 
     // enderite ingot
-    FurnaceRecipe(ItemType.ENDERITE_INGOT, ItemType.ENDERITE_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.ENDERITE_INGOT, ItemType.CRACKED_ENDERITE_ORE, 50f, 20),
+    FurnaceRecipe(ENDERITE_INGOT.getItemStack(), ENDERITE_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(ENDERITE_INGOT.getItemStack(), CRACKED_ENDERITE_ORE.getItemStack(), 50f, 20),
 
     // zinc ingot
-    FurnaceRecipe(ItemType.ZINC_INGOT, ItemType.ZINC_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.ZINC_INGOT, ItemType.DEEPSLATE_ZINC_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.ZINC_INGOT, ItemType.NETHER_ZINC_ORE, 50f, 20),
+    FurnaceRecipe(ZINC_INGOT.getItemStack(), ZINC_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(ZINC_INGOT.getItemStack(), DEEPSLATE_ZINC_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(ZINC_INGOT.getItemStack(), NETHER_ZINC_ORE.getItemStack(), 50f, 20),
 
     // tin ingot
-    FurnaceRecipe(ItemType.TIN_INGOT, ItemType.TIN_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.TIN_INGOT, ItemType.DEEPSLATE_TIN_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.TIN_INGOT, ItemType.NETHER_TIN_ORE, 50f, 20),
-    FurnaceRecipe(ItemType.TIN_INGOT, ItemType.END_TIN_ORE, 50f, 20)
+    FurnaceRecipe(TIN_INGOT.getItemStack(), TIN_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(TIN_INGOT.getItemStack(), DEEPSLATE_TIN_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(TIN_INGOT.getItemStack(), NETHER_TIN_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(TIN_INGOT.getItemStack(), END_TIN_ORE.getItemStack(), 50f, 20)
 )
 
 val recipeList: List<Recipe> =

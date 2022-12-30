@@ -17,13 +17,13 @@
 
 package de.danielmaile.mpp.item.recipe
 
-import de.danielmaile.mpp.item.ItemType
 import org.bukkit.inventory.FurnaceRecipe
+import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.RecipeChoice
 
 class FurnaceRecipe(
-    result: ItemType,
-    ingredient: ItemType,
+    result: ItemStack,
+    ingredient: ItemStack,
     xp: Float,
     time: Int
 ) : Recipe() {
@@ -31,8 +31,8 @@ class FurnaceRecipe(
     override val spigotRecipes = listOf(
         FurnaceRecipe(
             getRandomRecipeKey(),
-            result.getItemStack(),
-            RecipeChoice.ExactChoice(ingredient.getItemStack()),
+            result,
+            RecipeChoice.ExactChoice(ingredient),
             xp,
             time
         )
