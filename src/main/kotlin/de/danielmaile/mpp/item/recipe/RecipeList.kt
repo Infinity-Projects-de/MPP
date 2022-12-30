@@ -57,7 +57,7 @@ private val craftingRecipeList: List<Recipe> = listOf(
 
 private val armorRecipeList: List<Recipe> = listOf(
 
-    // Armors - Helmet
+    // helmets
     HelmetRecipe(ItemType.ZANITE_HELMET, ItemType.ZANITE_STONE),
     HelmetRecipe(ItemType.GRAVITITE_HELMET, ItemType.GRAVITITE_PLATE),
     HelmetRecipe(ItemType.OBSIDIAN_HELMET, ItemType.POLISHED_OBSIDIAN),
@@ -76,7 +76,7 @@ private val armorRecipeList: List<Recipe> = listOf(
     HelmetRecipe(ItemType.TERMINITE_HELMET, ItemType.TERMINITE_INGOT),
     HelmetRecipe(ItemType.AURORA_HELMET, ItemType.AURORA_SHARD),
 
-    // Armors - Chestplate
+    // chestplates
     ChestplateRecipe(ItemType.ZANITE_CHESTPLATE, ItemType.ZANITE_STONE),
     ChestplateRecipe(ItemType.GRAVITITE_CHESTPLATE, ItemType.GRAVITITE_PLATE),
     ChestplateRecipe(ItemType.OBSIDIAN_CHESTPLATE, ItemType.SMOOTH_OBSIDIAN),
@@ -95,7 +95,7 @@ private val armorRecipeList: List<Recipe> = listOf(
     ChestplateRecipe(ItemType.TERMINITE_CHESTPLATE, ItemType.TERMINITE_INGOT),
     ChestplateRecipe(ItemType.AURORA_CHESTPLATE, ItemType.AURORA_SHARD),
 
-    //Armors - Leggings
+    // leggings
     LeggingsRecipe(ItemType.ZANITE_LEGGINGS, ItemType.ZANITE_STONE),
     LeggingsRecipe(ItemType.GRAVITITE_LEGGINGS, ItemType.GRAVITITE_PLATE),
     LeggingsRecipe(ItemType.OBSIDIAN_LEGGINGS, ItemType.SMOOTH_OBSIDIAN),
@@ -114,7 +114,7 @@ private val armorRecipeList: List<Recipe> = listOf(
     LeggingsRecipe(ItemType.TERMINITE_LEGGINGS, ItemType.TERMINITE_INGOT),
     LeggingsRecipe(ItemType.AURORA_LEGGINGS, ItemType.AURORA_SHARD),
 
-    // Armors - Boots
+    // boots
     BootsRecipe(ItemType.ZANITE_BOOTS, ItemType.ZANITE_STONE),
     BootsRecipe(ItemType.GRAVITITE_BOOTS, ItemType.GRAVITITE_PLATE),
     BootsRecipe(ItemType.OBSIDIAN_BOOTS, ItemType.SMOOTH_OBSIDIAN),
@@ -138,7 +138,7 @@ private val armorRecipeList: List<Recipe> = listOf(
 
 private val toolRecipeList: List<Recipe> = listOf(
 
-    // Swords
+    // swords
     SwordRecipe(ItemType.AETHER_WOODEN_SWORD, ItemType.AETHER_PLANKS, ItemType.AETHER_STICK),
     SwordRecipe(ItemType.AETHER_STONE_SWORD, ItemType.AETHER_STONE, ItemType.AETHER_STICK),
     SwordRecipe(ItemType.ZANITE_SWORD, ItemType.ZANITE_STONE, ItemType.AETHER_STICK),
@@ -153,7 +153,7 @@ private val toolRecipeList: List<Recipe> = listOf(
     SwordRecipe(ItemType.DEMON_SWORD, ItemType.HELL_DIAMOND, ItemType.AETHER_STICK),
 
 
-    // Hoes
+    // hoes
     HoeRecipe(ItemType.AETHER_WOODEN_HOE, ItemType.AETHER_PLANKS, ItemType.AETHER_STICK),
     HoeRecipe(ItemType.AETHER_STONE_HOE, ItemType.AETHER_STONE, ItemType.AETHER_STICK),
     HoeRecipe(ItemType.ZANITE_HOE, ItemType.ZANITE_STONE, ItemType.AETHER_STICK),
@@ -165,7 +165,7 @@ private val toolRecipeList: List<Recipe> = listOf(
     HoeRecipe(ItemType.SAPPHIRE_HOE, ItemType.SAPPHIRE, ItemType.AETHER_STICK),
     HoeRecipe(ItemType.AETHERIUM_HOE, ItemType.AETHERIUM_INGOT, ItemType.AETHER_STICK),
 
-    // Pickaxes
+    // pickaxes
     PickaxeRecipe(ItemType.AETHER_WOODEN_PICKAXE, ItemType.AETHER_PLANKS, ItemType.AETHER_STICK),
     PickaxeRecipe(ItemType.AETHER_STONE_PICKAXE, ItemType.AETHER_STONE, ItemType.AETHER_STICK),
     PickaxeRecipe(ItemType.ZANITE_PICKAXE, ItemType.ZANITE_STONE, ItemType.AETHER_STICK),
@@ -178,7 +178,7 @@ private val toolRecipeList: List<Recipe> = listOf(
     PickaxeRecipe(ItemType.AETHERIUM_PICKAXE, ItemType.AETHERIUM_INGOT, ItemType.AETHER_STICK),
     PickaxeRecipe(ItemType.HELL_STONE_PICKAXE, ItemType.HELL_STONE, ItemType.AETHER_STICK),
 
-    // Shovels
+    // shovels
     ShovelRecipe(ItemType.AETHER_WOODEN_SHOVEL, ItemType.AETHER_PLANKS, ItemType.AETHER_STICK),
     ShovelRecipe(ItemType.AETHER_STONE_SHOVEL, ItemType.AETHER_STONE, ItemType.AETHER_STICK),
     ShovelRecipe(ItemType.ZANITE_SHOVEL, ItemType.ZANITE_STONE, ItemType.AETHER_STICK),
@@ -190,7 +190,7 @@ private val toolRecipeList: List<Recipe> = listOf(
     ShovelRecipe(ItemType.SAPPHIRE_SHOVEL, ItemType.SAPPHIRE, ItemType.AETHER_STICK),
     ShovelRecipe(ItemType.AETHERIUM_SHOVEL, ItemType.AETHERIUM_INGOT, ItemType.AETHER_STICK),
 
-    // Axes
+    // axes
     AxeRecipe(ItemType.AETHER_WOODEN_AXE, ItemType.AETHER_PLANKS, ItemType.AETHER_STICK),
     AxeRecipe(ItemType.AETHER_STONE_AXE, ItemType.AETHER_STONE, ItemType.AETHER_STICK),
     AxeRecipe(ItemType.ZANITE_AXE, ItemType.ZANITE_STONE, ItemType.AETHER_STICK),
@@ -206,7 +206,7 @@ private val toolRecipeList: List<Recipe> = listOf(
 
 
 
-    // swords
+    // extra swords
     ShapelessRecipe(ItemType.LIGHTNING_SWORD, 1, listOf(ItemType.ZANITE_SWORD, ItemType.LIGHTNING_ESSENCE)),
     ShapelessRecipe(ItemType.FIRE_SWORD, 1, listOf(ItemType.ZANITE_SWORD, ItemType.FIRE_ESSENCE)),
     ShapelessRecipe(ItemType.ICE_SWORD, 1, listOf(ItemType.ZANITE_SWORD, ItemType.ICE_ESSENCE)),
