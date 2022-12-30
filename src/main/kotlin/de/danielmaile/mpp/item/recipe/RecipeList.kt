@@ -30,14 +30,14 @@ typealias PickaxeRecipe = ToolRecipe.PickaxeRecipe
 typealias ShovelRecipe = ToolRecipe.ShovelRecipe
 typealias AxeRecipe = ToolRecipe.AxeRecipe
 
+
 private val craftingRecipeList: List<Recipe> = listOf(
-    ShapedRecipe(
-        ItemType.MAGIC_WAND, 1, listOf(
-            null, ItemType.GRAVITITE_PLATE, null,
-            null, ItemType.GRAVITITE_PLATE, null,
-            null, ItemType.GRAVITITE_PLATE, null
-        )
-    ),
+
+    // other items
+    ShapedRecipe(ItemType.PARACHUTE, 1, listOf(
+        ItemType.CLOUD_SLOW_FALLING, ItemType.CLOUD_SLOW_FALLING, ItemType.CLOUD_SLOW_FALLING,
+        ItemType.CLOUD_SLOW_FALLING, null, ItemType.CLOUD_SLOW_FALLING,
+        ItemType.AIR_LEAVES, ItemType.AIR_LEAVES, ItemType.AIR_LEAVES)),
 
     // planks
     ShapelessRecipe(ItemType.AETHER_PLANKS, 4, listOf(ItemType.AETHER_LOG)),
@@ -202,28 +202,16 @@ private val toolRecipeList: List<Recipe> = listOf(
     AxeRecipe(ItemType.SAPPHIRE_AXE, ItemType.SAPPHIRE, ItemType.AETHER_STICK),
     AxeRecipe(ItemType.AETHERIUM_AXE, ItemType.AETHERIUM_INGOT, ItemType.AETHER_STICK),
 
-
-
-
-
     // extra swords
     ShapelessRecipe(ItemType.LIGHTNING_SWORD, 1, listOf(ItemType.ZANITE_SWORD, ItemType.LIGHTNING_ESSENCE)),
     ShapelessRecipe(ItemType.FIRE_SWORD, 1, listOf(ItemType.ZANITE_SWORD, ItemType.FIRE_ESSENCE)),
     ShapelessRecipe(ItemType.ICE_SWORD, 1, listOf(ItemType.ZANITE_SWORD, ItemType.ICE_ESSENCE)),
-    ShapelessRecipe(
-        ItemType.SUN_SWORD,
-        1,
-        listOf(
-            ItemType.LIGHTNING_ESSENCE,
-            ItemType.FIRE_ESSENCE,
-            ItemType.ICE_ESSENCE,
-            ItemType.SUN_STONE,
-            ItemType.FIRE_SWORD
-        )
-    )
+    ShapelessRecipe(ItemType.SUN_SWORD, 1, listOf(ItemType.FIRE_ESSENCE, ItemType.SUN_STONE, ItemType.FIRE_SWORD))
 )
 
 private val smeltingRecipeList: List<Recipe> = listOf(
+
+    // single recipes per item
     FurnaceRecipe(ItemType.GRAVITITE_PLATE, ItemType.GRAVITITE_ORE, 50f, 30),
     FurnaceRecipe(ItemType.ZANITE_STONE, ItemType.ZANITE_ORE, 50f, 20),
     FurnaceRecipe(ItemType.SILVER_INGOT, ItemType.SILVER_ORE, 50f, 20),
@@ -240,6 +228,8 @@ private val smeltingRecipeList: List<Recipe> = listOf(
     FurnaceRecipe(ItemType.CINCINNASITE_INGOT, ItemType.CINCINNASITE_ORE, 50f, 20),
     FurnaceRecipe(ItemType.AETHERIUM_INGOT, ItemType.AETHERIUM_ORE, 50f, 20),
     FurnaceRecipe(ItemType.TERMINITE_INGOT, ItemType.TERMINITE_ORE, 50f, 20),
+
+    //multiple recipes per item
 
     // cinnebar ingot
     FurnaceRecipe(ItemType.CINNEBAR_INGOT, ItemType.CINNEBAR_ORE, 50f, 20),
