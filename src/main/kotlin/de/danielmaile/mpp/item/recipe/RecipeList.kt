@@ -268,6 +268,7 @@ private val smeltingRecipeList: List<Recipe> = listOf(
     FurnaceRecipe(CINCINNASITE_INGOT.getItemStack(), CINCINNASITE_ORE.getItemStack(), 50f, 20),
     FurnaceRecipe(AETHERIUM_INGOT.getItemStack(), AETHERIUM_ORE.getItemStack(), 50f, 20),
     FurnaceRecipe(TERMINITE_INGOT.getItemStack(), TERMINITE_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(PLATIN_INGOT.getItemStack(), PLATIN_ORE.getItemStack(), 50f, 20),
 
     //multiple recipes per item
 
