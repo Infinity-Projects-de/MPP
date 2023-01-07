@@ -894,9 +894,6 @@ items:
   TERMINITE_ORE:
     name: "Terminite Ore"
     description: ""
-  DEEPSLATE_SILVER_ORE:
-    name: "Deepslate Silver Ore"
-    description: ""
   DEEPSLATE_TUNGSTEN_ORE:
     name: "Deepslate Tungsten Ore"
     description: ""

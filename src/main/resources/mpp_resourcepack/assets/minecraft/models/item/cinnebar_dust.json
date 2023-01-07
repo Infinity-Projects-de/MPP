@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-      "layer0": "item/cinnabar_dust"
+      "layer0": "item/cinnebar_dust"
     }
   }

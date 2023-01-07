@@ -892,9 +892,6 @@ items:
   TERMINITE_ORE:
     name: "Terminiterz"
     description: ""
-  DEEPSLATE_SILVER_ORE:
-    name: "Tiefenschiefer Silvererz"
-    description: ""
   DEEPSLATE_TUNGSTEN_ORE:
     name: "Tiefenschiefer Tungstenerz"
     description: ""
