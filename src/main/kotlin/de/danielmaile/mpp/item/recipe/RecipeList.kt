@@ -300,6 +300,25 @@ private val smeltingRecipeList: List<Recipe> = listOf(
     FurnaceRecipe(ZINC_INGOT.getItemStack(), DEEPSLATE_ZINC_ORE.getItemStack(), 50f, 20),
     FurnaceRecipe(ZINC_INGOT.getItemStack(), NETHER_ZINC_ORE.getItemStack(), 50f, 20),
 
+    // raw lead
+    FurnaceRecipe(RAW_LEAD.getItemStack(), LEAD_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(RAW_LEAD.getItemStack(), DEEPSLATE_LEAD_ORE.getItemStack(), 50f, 20),
+
+    // raw bauxite
+    FurnaceRecipe(RAW_BAUXITE.getItemStack(), BAUXITE_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(RAW_BAUXITE.getItemStack(), NETHER_BAUXITE_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(RAW_BAUXITE.getItemStack(), END_BAUXITE_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(RAW_BAUXITE.getItemStack(), DEEPSLATE_BAUXITE_ORE.getItemStack(), 50f, 20),
+
+    // ruby
+    FurnaceRecipe(RUBY.getItemStack(), RUBY_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(RUBY.getItemStack(), NETHER_RUBY_ORE.getItemStack(), 50f, 20),
+
+    // raw galana
+    FurnaceRecipe(RAW_GALANA.getItemStack(), GALANA_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(RAW_GALANA.getItemStack(), DEEPSLATE_GALANA_ORE.getItemStack(), 50f, 20),
+    FurnaceRecipe(RAW_GALANA.getItemStack(), END_GALANA_ORE.getItemStack(), 50f, 20),
+
     // tin ingot
     FurnaceRecipe(TIN_INGOT.getItemStack(), TIN_ORE.getItemStack(), 50f, 20),
     FurnaceRecipe(TIN_INGOT.getItemStack(), DEEPSLATE_TIN_ORE.getItemStack(), 50f, 20),
