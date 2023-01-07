@@ -458,8 +458,8 @@ items:
   CINNEBAR_DUST:
     name: "Cinnebar Dust"
     description: ""
-  GELANA_DUST:
-    name: "Gelana Dust"
+  GALANA_DUST:
+    name: "Galana Dust"
     description: ""
   IRIDIUM_DUST:
     name: "Iridium Dust"
@@ -521,8 +521,8 @@ items:
   CINNEBAR_NUGGET:
     name: "Cinnebar Nugget"
     description: ""
-  GELANA_NUGGET:
-    name: "Gelana Nugget"
+  GALANA_NUGGET:
+    name: "Galana Nugget"
     description: ""
   IRIDIUM_NUGGET:
     name: "Iridium Nugget"
@@ -563,8 +563,8 @@ items:
   CINNEBAR_PLATE:
     name: "Cinnebar Plate"
     description: ""
-  GELANA_PLATE:
-    name: "Gelana Plate"
+  GALANA_PLATE:
+    name: "Galana Plate"
     description: ""
   IRIDIUM_PLATE:
     name: "Iridium Plate"
@@ -620,8 +620,8 @@ items:
   RAW_CINNEBAR:
     name: "Raw Cinnebar"
     description: ""
-  RAW_GELANA:
-    name: "Raw Gelana"
+  RAW_GALANA:
+    name: "Raw Galana"
     description: ""
   RAW_IRIDIUM:
     name: "Raw Iridium"
