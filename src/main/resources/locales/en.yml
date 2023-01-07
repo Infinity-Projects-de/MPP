@@ -821,7 +821,7 @@ items:
   PENDORITE_ORE:
     name: "Pendorite Ore"
     description: ""
-  NETHER_EMERLAD_ORE:
+  NETHER_EMERALD_ORE:
     name: "Nether Emerald Ore"
     description: ""
   ENDERITE_ORE:
