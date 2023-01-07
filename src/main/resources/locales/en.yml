@@ -35,6 +35,16 @@ dungeons:
   entry:
     title: "<bold><gold>DUNGEON"
     subtitle: "<bold><green>Size: <size> segments"
+gui:
+  item:
+    page_left:
+      name: "<white>Left"
+      description: ""
+    page_right:
+      name: "<white>Right"
+      description: ""
+  title:
+    item_collection: "<aqua>Item Collection"
 items:
   AETHER_LOG:
     name: "Aether Log"
