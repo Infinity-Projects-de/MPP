@@ -146,7 +146,6 @@ enum class ItemType(
     PERIDOT_SHARD(Material.QUARTZ, null, null),
     RUBY(Material.QUARTZ, null, null),
     SAPPHIRE(Material.QUARTZ, null, null),
-    CINCINNASITE(Material.QUARTZ, null, null),
     THALLASIUM_INGOT(Material.IRON_INGOT, null, null),
     PENDORITE_INGOT(Material.IRON_INGOT, null, null),
     ENDERITE_INGOT(Material.IRON_INGOT, null, null),
