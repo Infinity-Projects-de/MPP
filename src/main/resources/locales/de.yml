@@ -35,6 +35,16 @@ dungeons:
   entry:
     title: "<bold><gold>DUNGEON"
     subtitle: "<bold><green>Größe: <size> Segmente"
+gui:
+  item:
+    page_left:
+      name: "<white>Links"
+      description: ""
+    page_right:
+      name: "<white>Rechts"
+      description: ""
+  title:
+    item_collection: "<aqua>Item Sammlung"
 items:
   AETHER_LOG:
     name: "Himmelsstamm"
@@ -363,9 +373,6 @@ items:
   SAPPHIRE:
     name: "Saphier"
     description: ""
-  CINCINNASITE:
-    name: "Cincinnasit"
-    description: ""
   THALLASIUM_INGOT:
     name: "Thallasiumbarren"
     description: ""
@@ -456,8 +463,8 @@ items:
   CINNEBAR_DUST:
     name: "Cinnebarstaub"
     description: ""
-  GELANA_DUST:
-    name: "Gelanastaub"
+  GALANA_DUST:
+    name: "Galanastaub"
     description: ""
   IRIDIUM_DUST:
     name: "Iridiumstaub"
@@ -519,8 +526,8 @@ items:
   CINNEBAR_NUGGET:
     name: "Cinnebarklumpen"
     description: ""
-  GELANA_NUGGET:
-    name: "Gelanaklumpen"
+  GALANA_NUGGET:
+    name: "Galanaklumpen"
     description: ""
   IRIDIUM_NUGGET:
     name: "Iridiumklumpen"
@@ -561,8 +568,8 @@ items:
   CINNEBAR_PLATE:
     name: "Cinnebarplatte"
     description: ""
-  GELANA_PLATE:
-    name: "Gelanaplatte"
+  GALANA_PLATE:
+    name: "Galanaplatte"
     description: ""
   IRIDIUM_PLATE:
     name: "Iridiumplatte"
@@ -618,8 +625,8 @@ items:
   RAW_CINNEBAR:
     name: "Rohes Cinnebar"
     description: ""
-  RAW_GELANA:
-    name: "Rohes Gelana"
+  RAW_GALANA:
+    name: "Rohes Galana"
     description: ""
   RAW_IRIDIUM:
     name: "Rohes Iridium"
@@ -819,7 +826,7 @@ items:
   PENDORITE_ORE:
     name: "Pendoriterz"
     description: ""
-  NETHER_EMERLAD_ORE:
+  NETHER_EMERALD_ORE:
     name: "Nethersmaragterz"
     description: ""
   ENDERITE_ORE:
@@ -884,9 +891,6 @@ items:
     description: ""
   TERMINITE_ORE:
     name: "Terminiterz"
-    description: ""
-  DEEPSLATE_SILVER_ORE:
-    name: "Tiefenschiefer Silvererz"
     description: ""
   DEEPSLATE_TUNGSTEN_ORE:
     name: "Tiefenschiefer Tungstenerz"
@@ -1151,6 +1155,12 @@ items:
     description: ""
   HELL_PLANKS:
     name: "Höllenplanken"
+    description: ""
+  EMERALD_SHARD:
+    name: "Emerald Shard"
+    description: ""
+  AURORA_SHARD:
+    name: "Aurora Scherbe"
     description: ""
 mobs:
   ZOMBIE:

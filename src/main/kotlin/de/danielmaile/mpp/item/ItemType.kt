@@ -146,7 +146,6 @@ enum class ItemType(
     PERIDOT_SHARD(Material.QUARTZ, null, null),
     RUBY(Material.QUARTZ, null, null),
     SAPPHIRE(Material.QUARTZ, null, null),
-    CINCINNASITE(Material.QUARTZ, null, null),
     THALLASIUM_INGOT(Material.IRON_INGOT, null, null),
     PENDORITE_INGOT(Material.IRON_INGOT, null, null),
     ENDERITE_INGOT(Material.IRON_INGOT, null, null),
@@ -177,7 +176,7 @@ enum class ItemType(
     LEAD_DUST(Material.GUNPOWDER, null, null),
     BAUXITE_DUST(Material.GUNPOWDER, null, null),
     CINNEBAR_DUST(Material.GUNPOWDER, null, null),
-    GELANA_DUST(Material.GUNPOWDER, null, null),
+    GALANA_DUST(Material.GUNPOWDER, null, null),
     IRIDIUM_DUST(Material.GUNPOWDER, null, null),
     PERIDOT_DUST(Material.GUNPOWDER, null, null),
     PYRITE_DUST(Material.GUNPOWDER, null, null),
@@ -198,7 +197,7 @@ enum class ItemType(
     LEAD_NUGGET(Material.IRON_NUGGET, null, null),
     BAUXITE_NUGGET(Material.IRON_NUGGET, null, null),
     CINNEBAR_NUGGET(Material.IRON_NUGGET, null, null),
-    GELANA_NUGGET(Material.IRON_NUGGET, null, null),
+    GALANA_NUGGET(Material.IRON_NUGGET, null, null),
     IRIDIUM_NUGGET(Material.IRON_NUGGET, null, null),
     SODALITE_NUGGET(Material.IRON_NUGGET, null, null),
     SPHALERITE_NUGGET(Material.IRON_NUGGET, null, null),
@@ -212,7 +211,7 @@ enum class ItemType(
     LEAD_PLATE(Material.NETHERITE_SCRAP, null, null),
     BAUXITE_PLATE(Material.NETHERITE_SCRAP, null, null),
     CINNEBAR_PLATE(Material.NETHERITE_SCRAP, null, null),
-    GELANA_PLATE(Material.NETHERITE_SCRAP, null, null),
+    GALANA_PLATE(Material.NETHERITE_SCRAP, null, null),
     IRIDIUM_PLATE(Material.NETHERITE_SCRAP, null, null),
     PERIDOT_PLATE(Material.NETHERITE_SCRAP, null, null),
     PYRITE_PLATE(Material.NETHERITE_SCRAP, null, null),
@@ -231,7 +230,7 @@ enum class ItemType(
     RAW_LEAD(Material.RAW_IRON, null, null),
     RAW_BAUXITE(Material.RAW_IRON, null, null),
     RAW_CINNEBAR(Material.RAW_IRON, null, null),
-    RAW_GELANA(Material.RAW_IRON, null, null),
+    RAW_GALANA(Material.RAW_IRON, null, null),
     RAW_IRIDIUM(Material.RAW_IRON, null, null),
     RAW_PYRITE(Material.RAW_IRON, null, null),
     RAW_ZINC(Material.RAW_IRON, null, null),
@@ -320,7 +319,6 @@ enum class ItemType(
     CINCINNASITE_ORE(Material.STONE, null, BlockType.CINCINNASITE_ORE),
     AETHERIUM_ORE(Material.STONE, null, BlockType.AETHERIUM_ORE),
     TERMINITE_ORE(Material.STONE, null, BlockType.TERMINITE_ORE),
-    DEEPSLATE_SILVER_ORE(Material.STONE, null, BlockType.DEEPSLATE_SILVER_ORE),
     DEEPSLATE_TUNGSTEN_ORE(Material.STONE, null, BlockType.DEEPSLATE_TUNGSTEN_ORE),
     DEEPSLATE_LEAD_ORE(Material.STONE, null, BlockType.DEEPSLATE_LEAD_ORE),
     DEEPSLATE_NIKOLITE_ORE(Material.STONE, null, BlockType.DEEPSLATE_NIKOLITE_ORE),
@@ -408,7 +406,9 @@ enum class ItemType(
     HELL_STONE_SWORD(Material.STONE_SWORD, ToolAttribute(6.0, 1.0).toAttributeMap(), null),
     HELL_CROWN(Material.NETHERITE_HELMET, ArmorAttribute(15.0, 1.0, EquipmentSlot.HEAD).toAttributeMap(), null),
     AETHER_LEAVES(Material.STONE, null, BlockType.AETHER_LEAVES),
-    HELL_PLANKS(Material.OAK_PLANKS, null, BlockType.HELL_PLANKS);
+    HELL_PLANKS(Material.OAK_PLANKS, null, BlockType.HELL_PLANKS),
+    EMERALD_SHARD(Material.NETHERITE_SCRAP, null, null),
+    AURORA_SHARD(Material.NETHERITE_SCRAP, null, null);
 
     private val displayName = inst().getLanguageManager().getComponent("items.$name.name")
     private val description = inst().getLanguageManager().getComponentList("items.$name.description")
@@ -422,8 +422,11 @@ enum class ItemType(
     fun getItemStack(amount: Int): ItemStack {
         val itemStack = ItemStack(material)
         val itemMeta = itemStack.itemMeta
+
+        // set item name and remove default italic decoration
         itemMeta.displayName(displayName.decoration(TextDecoration.ITALIC, false))
 
+        // set item lore and remove default italic decoration
         val descriptionList = ArrayList<Component>()
         for (component in description) {
             descriptionList.add(component.decoration(TextDecoration.ITALIC, false))

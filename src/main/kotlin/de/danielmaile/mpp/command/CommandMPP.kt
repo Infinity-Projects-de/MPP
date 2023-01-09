@@ -21,6 +21,7 @@ import de.danielmaile.mpp.aether.world.dungeon.Dungeon
 import de.danielmaile.mpp.aether.world.dungeon.loot.DungeonChest
 import de.danielmaile.mpp.aetherWorld
 import de.danielmaile.mpp.config.LanguageManager
+import de.danielmaile.mpp.gui.ItemCollectionGUI
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.item.ItemType
 import de.danielmaile.mpp.mob.MPPMob
@@ -37,6 +38,7 @@ import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 import java.util.*
 import java.util.stream.Stream
+
 
 class CommandMPP : CommandExecutor, TabCompleter {
 
@@ -58,6 +60,10 @@ class CommandMPP : CommandExecutor, TabCompleter {
                             sender.location.block.getRelative(facing).location,
                             sender.getDirection().oppositeFace
                         )
+                    }
+
+                    "collection" -> {
+                        collectionGUI(sender)
                     }
 
                     "locate" -> {
@@ -106,6 +112,10 @@ class CommandMPP : CommandExecutor, TabCompleter {
             else -> sendHelp(sender, languageManager, cmdPrefix)
         }
         return true
+    }
+
+    private fun collectionGUI(player: Player) {
+        ItemCollectionGUI().open(player)
     }
 
     private fun locateCMD(player: Player, languageManager: LanguageManager, cmdPrefix: Component) {
@@ -212,6 +222,7 @@ class CommandMPP : CommandExecutor, TabCompleter {
 
         if (args.size == 1) {
             tabComplete.add("chest")
+            tabComplete.add("collection")
             tabComplete.add("give")
             tabComplete.add("locate")
             tabComplete.add("reload")

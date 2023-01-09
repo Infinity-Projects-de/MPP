@@ -100,5 +100,12 @@ fun Instrument.toMinecraftName(): String {
         Instrument.BIT -> "bit"
         Instrument.BANJO -> "banjo"
         Instrument.PLING -> "pling"
+        Instrument.ZOMBIE -> "zombie"
+        Instrument.SKELETON -> "skeleton"
+        Instrument.CREEPER -> "creeper"
+        Instrument.DRAGON -> "dragon"
+        Instrument.WITHER_SKELETON -> "wither_skeleton"
+        Instrument.PIGLIN -> "piglin"
+        Instrument.CUSTOM_HEAD -> "custom_head"
     }
 }
