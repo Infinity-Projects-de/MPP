@@ -17,38 +17,30 @@
 
 package de.danielmaile.mpp
 
-import de.danielmaile.mpp.aether.mob.ListenerAetherMobs
-import de.danielmaile.mpp.aether.mob.RideableLlama
-import de.danielmaile.mpp.aether.world.ListenerAetherWorld
-import de.danielmaile.mpp.aether.world.PrefabType
-import de.danielmaile.mpp.aether.world.WorldManager
-import de.danielmaile.mpp.aether.world.dungeon.ListenerDungeon
-import de.danielmaile.mpp.aether.world.portal.ListenerPortal
 import de.danielmaile.mpp.block.BlockBreakingService
 import de.danielmaile.mpp.block.ListenerBlock
-import de.danielmaile.mpp.block.cloud.CloudEffects
+import de.danielmaile.mpp.block.function.CloudEffects
 import de.danielmaile.mpp.command.CommandMPP
-import de.danielmaile.mpp.config.ConfigManager
-import de.danielmaile.mpp.config.LanguageManager
+import de.danielmaile.mpp.data.DataPackManager
 import de.danielmaile.mpp.data.LicenseManager
 import de.danielmaile.mpp.data.ResourcePackBuilder
+import de.danielmaile.mpp.data.config.ConfigManager
+import de.danielmaile.mpp.data.config.LanguageManager
 import de.danielmaile.mpp.demo.ListenerJoinDemo
 import de.danielmaile.mpp.item.ListenerConverter
 import de.danielmaile.mpp.item.ListenerCrafting
-import de.danielmaile.mpp.item.funtion.ListenerArmor
-import de.danielmaile.mpp.item.funtion.ListenerItem
-import de.danielmaile.mpp.item.funtion.magicwand.ListenerMagicWand
-import de.danielmaile.mpp.item.funtion.particle.ListenerParticle
-import de.danielmaile.mpp.item.funtion.particle.ParticleManager
+import de.danielmaile.mpp.item.function.ListenerArmor
+import de.danielmaile.mpp.item.function.ListenerItem
+import de.danielmaile.mpp.item.function.magicwand.ListenerMagicWand
+import de.danielmaile.mpp.item.function.particle.ListenerParticle
+import de.danielmaile.mpp.item.function.particle.ParticleManager
 import de.danielmaile.mpp.item.recipe.recipeList
 import de.danielmaile.mpp.mob.ListenerMPPMobs
 import de.danielmaile.mpp.mob.MPPMobSpawnManager
 import de.danielmaile.mpp.mob.listeners.*
 import de.danielmaile.mpp.util.logError
-import de.danielmaile.mpp.util.logInfo
-import jakarta.persistence.EntityManager
-import jakarta.persistence.EntityManagerFactory
-import jakarta.persistence.Persistence
+import de.danielmaile.mpp.world.WorldManager
+import de.danielmaile.mpp.world.aether.ListenerAether
 import org.bukkit.Bukkit
 import org.bukkit.World
 import org.bukkit.configuration.file.YamlConfiguration
@@ -73,11 +65,6 @@ class MPP : JavaPlugin() {
     lateinit var worldManager: WorldManager
         private set
 
-    private lateinit var entityManagerFactory: EntityManagerFactory
-
-    lateinit var entityManager: EntityManager
-        private set
-
     var validLicense: Boolean = false
         private set
 
@@ -87,9 +74,34 @@ class MPP : JavaPlugin() {
 
     override fun onEnable() {
         instance = this
+        saveDefaultFiles()
 
+        // validate license
+        validLicense = LicenseManager.validateLicense()
+
+        // setup spigot and paper yml
+        checkSpigotYML()
+        checkPaperYML()
+
+        DataPackManager.saveOrUpdateDataPack()
+        ResourcePackBuilder.generateResourcePack()
+
+        // register commands, events and recipes
         Bukkit.getPluginCommand("mpp")?.setExecutor(CommandMPP())
+        registerEvents()
+        registerRecipes()
 
+        worldManager = WorldManager(this)
+        particleManager = ParticleManager()
+
+        // cloud effects
+        CloudEffects()
+
+        // init BlockBreakingService
+        BlockBreakingService.init()
+    }
+
+    private fun saveDefaultFiles() {
         // create data folder
         val dataFolder = File(dataFolder.absolutePath + File.separator + "data")
         if (!dataFolder.exists() && !dataFolder.mkdirs()) {
@@ -108,83 +120,33 @@ class MPP : JavaPlugin() {
             saveResource("locales/de.yml", false)
         if (!File(getDataFolder(), "locales/en.yml").exists())
             saveResource("locales/en.yml", false)
+
         reloadConfig()
-
-        // check license
-        logInfo("Validating license...")
-        validLicense = LicenseManager.validateLicense()
-        if(!validLicense) {
-            logError("License key validation failed! Please check your key in the config and restart the server to try again. If this fails again try updating the plugin. Demo mode gets enabled...")
-        }
-
-        // generate resource pack
-        ResourcePackBuilder()
-
-        // connect to database
-        Thread.currentThread().contextClassLoader = inst().javaClass.classLoader
-        entityManagerFactory = Persistence.createEntityManagerFactory("persistence-unit")
-        entityManager = entityManagerFactory.createEntityManager()
-
-        // recipes
-        registerRecipes()
-
-        // rideable Llama
-        RideableLlama()
-
-        // world Manager
-        worldManager = WorldManager(this)
-
-        // init object manager and prefabs
-        PrefabType.loadPrefabs()
-
-        // particle manager
-        particleManager = ParticleManager()
-
-        // cloud effects
-        CloudEffects()
-
-        // register events
-        registerEvents()
-
-        // setup spigot and paper yml
-        checkSpigotYML()
-        checkPaperYML()
-
-        // init BlockBreakingService
-        BlockBreakingService.init()
     }
 
     private fun registerEvents() {
-        server.pluginManager.registerEvents(ListenerPortal(), this)
+        server.pluginManager.registerEvents(ListenerAether(), this)
         server.pluginManager.registerEvents(ListenerBlock(), this)
         server.pluginManager.registerEvents(ListenerCrafting(), this)
-        server.pluginManager.registerEvents(ListenerDungeon(), this)
-        server.pluginManager.registerEvents(ListenerAetherMobs(), this)
         server.pluginManager.registerEvents(ListenerItem(), this)
         server.pluginManager.registerEvents(ListenerArmor(), this)
         server.pluginManager.registerEvents(ListenerParticle(), this)
         server.pluginManager.registerEvents(ListenerConverter(), this)
         server.pluginManager.registerEvents(ListenerMagicWand(), this)
-        server.pluginManager.registerEvents(ListenerAetherWorld(), this)
         server.pluginManager.registerEvents(ListenerMPPMobs(), this)
         server.pluginManager.registerEvents(MPPMobSpawnManager(), this)
-        server.pluginManager.registerEvents(NecromancerListener(), this)
-        server.pluginManager.registerEvents(KingListener(), this)
-        server.pluginManager.registerEvents(PlagueListener(), this)
-        server.pluginManager.registerEvents(RiftListener(), this)
-        server.pluginManager.registerEvents(HealerListener(), this)
-        server.pluginManager.registerEvents(HitmanListener(), this)
+        server.pluginManager.registerEvents(ListenerNecromancer(), this)
+        server.pluginManager.registerEvents(ListenerKing(), this)
+        server.pluginManager.registerEvents(ListenerPlague(), this)
+        server.pluginManager.registerEvents(ListenerRift(), this)
+        server.pluginManager.registerEvents(ListenerHealer(), this)
+        server.pluginManager.registerEvents(ListenerHitman(), this)
         server.pluginManager.registerEvents(ListenerJoinDemo(), this)
     }
 
-    override fun onDisable() {
-        entityManager.close()
-        entityManagerFactory.close()
-    }
-
     private fun registerRecipes() {
-        for(recipes in recipeList) {
-            for(recipe in recipes.spigotRecipes) {
+        for (recipes in recipeList) {
+            for (recipe in recipes.spigotRecipes) {
                 Bukkit.addRecipe(recipe)
             }
         }
@@ -244,5 +206,5 @@ fun inst(): MPP {
 }
 
 fun aetherWorld(): World {
-    return MPP.instance.worldManager.world
+    return MPP.instance.worldManager.aetherWorld
 }

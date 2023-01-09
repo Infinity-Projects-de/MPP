@@ -18,23 +18,15 @@ messages:
       help_text:
         - "<gradient:#03FB5D:#03FBE1>/mpp chest</gradient> <gradient:#D2FB03:#68FB03>- Spawns a dungeon chest at your position.</gradient>"
         - "<gradient:#03FB5D:#03FBE1>/mpp give <name></gradient> <gradient:#D2FB03:#68FB03>- Gives you an MPP item.</gradient>"
-        - "<gradient:#03FB5D:#03FBE1>/mpp locate</gradient> <gradient:#D2FB03:#68FB03>- Shows you the coordinates of the next dungeon.</gradient>"
         - "<gradient:#03FB5D:#03FBE1>/mpp reload</gradient> <gradient:#D2FB03:#68FB03>- Reloads the config.</gradient>"
         - "<gradient:#03FB5D:#03FBE1>/mpp summon <name> <level></gradient> <gradient:#D2FB03:#68FB03>- Spawns an MPP mob at your location.</gradient>"
         - "<gradient:#03FB5D:#03FBE1>/mpp teleport</gradient> <gradient:#D2FB03:#68FB03>- Teleports you to the aether world.</gradient>"
-      next_dungeon: "<green>The nearest dungeon monument is <distance> blocks away. (<aqua><hover:show_text:'<green>Click to teleport to the monument.</green>'><click:run_command:/tp <location>><location></click></aqua>)"
+        - "<gradient:#03FB5D:#03FBE1>/mpp collection</gradient> <gradient:#D2FB03:#68FB03>- Opens the mpp item collection gui.</gradient>"
     errors:
       only_player_cmd: "<red>MPP commands can only be executed by players!"
       mob_does_not_exist: "<red>This mob does not exist!"
       item_does_not_exist: "<red>This item does not exist!"
       value_no_integer: "<red>The given value is not an integer!"
-      no_dungeon_found: "<red>No dungeon was found!"
-  chat:
-    click_to_dungeon_teleport: "<gradient:#03FB5D:#03FBE1>Click on the block again to teleport into the dungeon.</gradient>"
-dungeons:
-  entry:
-    title: "<bold><gold>DUNGEON"
-    subtitle: "<bold><green>Size: <size> segments"
 gui:
   item:
     page_left:

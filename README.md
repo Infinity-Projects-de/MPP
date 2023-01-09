@@ -8,7 +8,7 @@ You can download the latest development builds from [here](https://github.com/Th
 
 **Please note:**
 - Only the newest version of [Paper](https://papermc.io/) is supported. **Spigot builds will not work!**
-- [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) and [FastAsyncWorldEdit](https://www.spigotmc.org/resources/fastasyncworldedit.13932/) are required.
+- [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) is required.
 - This plugin is still in early development and as such bugs can occur.
 - **You can download and test this plugin for free, but demo mode will be enabled and as such ads about MPP will be shown to players. To use this plugin and disable demo mode you need to buy a license key from [here](https://patreon.com/lamaprojects).**
 

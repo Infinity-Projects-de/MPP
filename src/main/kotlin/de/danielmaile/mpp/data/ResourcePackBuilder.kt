@@ -45,7 +45,7 @@ import java.util.jar.JarEntry
 import java.util.jar.JarFile
 
 
-class ResourcePackBuilder {
+object ResourcePackBuilder {
 
     private val packName =
         "${RandomStringUtils.randomAlphanumeric(32)}.zip"
@@ -55,7 +55,7 @@ class ResourcePackBuilder {
     private val url =
         "http://${inst().configManager.resourcePackHostIP}:${inst().configManager.resourcePackHostPort}/files/$packName"
 
-    init {
+    fun generateResourcePack() {
         logInfo("Generating resource pack...")
         copyAssets()
         generateBlockStatesJson()
@@ -74,7 +74,6 @@ class ResourcePackBuilder {
 
         // register pack listener
         inst().server.pluginManager.registerEvents(ResourcePackListener(url, hash), inst())
-
     }
 
     private fun copyAssets() {

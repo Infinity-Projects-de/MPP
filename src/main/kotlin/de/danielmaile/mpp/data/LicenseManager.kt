@@ -18,6 +18,8 @@
 package de.danielmaile.mpp.data
 
 import de.danielmaile.mpp.inst
+import de.danielmaile.mpp.util.logError
+import de.danielmaile.mpp.util.logInfo
 import org.apache.http.NameValuePair
 import org.apache.http.client.config.RequestConfig
 import org.apache.http.client.entity.UrlEncodedFormEntity
@@ -27,12 +29,15 @@ import org.apache.http.impl.client.HttpClientBuilder
 import org.apache.http.message.BasicNameValuePair
 import org.bukkit.Bukkit
 import java.nio.charset.StandardCharsets
-import java.util.ArrayList
 
 object LicenseManager {
 
+    /**
+     * Validates license given in the config file and returns the result. Logs error if validation fails
+     */
     fun validateLicense(): Boolean {
-        return try {
+        logInfo("Validation license...")
+        try {
             val config = RequestConfig.custom()
                 .setConnectTimeout(10000)
                 .setConnectionRequestTimeout(10000)
@@ -40,13 +45,19 @@ object LicenseManager {
             val client = HttpClientBuilder.create().setDefaultRequestConfig(config).build()
             val httpPost = HttpPost("http://sugmadezz.online:8000/validation")
             val urlParameters = getRequestInformation()
+
             httpPost.entity = UrlEncodedFormEntity(urlParameters, StandardCharsets.UTF_8)
+
             val response = client.execute(httpPost)
             val responseString = BasicResponseHandler().handleResponse(response)
+
             client.close()
             responseString.toBoolean()
+
+            return true
         } catch (e: Exception) {
-            false
+            logError("License key validation failed! Please check your key in the config and restart the server to try again. If this fails again try updating the plugin. Demo mode gets enabled...")
+            return false
         }
     }
 
