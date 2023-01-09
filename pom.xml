@@ -6,7 +6,7 @@
 
     <groupId>de.danielmaile</groupId>
     <artifactId>mpp</artifactId>
-    <version>v0.1</version>
+    <version>v0.2</version>
     <packaging>jar</packaging>
 
     <name>MPP</name>
