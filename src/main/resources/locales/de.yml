@@ -35,6 +35,16 @@ dungeons:
   entry:
     title: "<bold><gold>DUNGEON"
     subtitle: "<bold><green>Größe: <size> Segmente"
+gui:
+  item:
+    page_left:
+      name: "<white>Links"
+      description: ""
+    page_right:
+      name: "<white>Rechts"
+      description: ""
+  title:
+    item_collection: "<aqua>Item Sammlung"
 items:
   AETHER_LOG:
     name: "Himmelsstamm"
@@ -881,9 +891,6 @@ items:
     description: ""
   TERMINITE_ORE:
     name: "Terminiterz"
-    description: ""
-  DEEPSLATE_SILVER_ORE:
-    name: "Tiefenschiefer Silvererz"
     description: ""
   DEEPSLATE_TUNGSTEN_ORE:
     name: "Tiefenschiefer Tungstenerz"

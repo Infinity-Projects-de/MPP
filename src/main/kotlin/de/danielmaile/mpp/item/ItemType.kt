@@ -319,7 +319,6 @@ enum class ItemType(
     CINCINNASITE_ORE(Material.STONE, null, BlockType.CINCINNASITE_ORE),
     AETHERIUM_ORE(Material.STONE, null, BlockType.AETHERIUM_ORE),
     TERMINITE_ORE(Material.STONE, null, BlockType.TERMINITE_ORE),
-    DEEPSLATE_SILVER_ORE(Material.STONE, null, BlockType.DEEPSLATE_SILVER_ORE),
     DEEPSLATE_TUNGSTEN_ORE(Material.STONE, null, BlockType.DEEPSLATE_TUNGSTEN_ORE),
     DEEPSLATE_LEAD_ORE(Material.STONE, null, BlockType.DEEPSLATE_LEAD_ORE),
     DEEPSLATE_NIKOLITE_ORE(Material.STONE, null, BlockType.DEEPSLATE_NIKOLITE_ORE),
@@ -423,8 +422,11 @@ enum class ItemType(
     fun getItemStack(amount: Int): ItemStack {
         val itemStack = ItemStack(material)
         val itemMeta = itemStack.itemMeta
+
+        // set item name and remove default italic decoration
         itemMeta.displayName(displayName.decoration(TextDecoration.ITALIC, false))
 
+        // set item lore and remove default italic decoration
         val descriptionList = ArrayList<Component>()
         for (component in description) {
             descriptionList.add(component.decoration(TextDecoration.ITALIC, false))
