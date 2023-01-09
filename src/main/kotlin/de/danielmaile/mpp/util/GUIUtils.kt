@@ -19,9 +19,11 @@ package de.danielmaile.mpp.util
 
 import de.danielmaile.mpp.inst
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Material
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
+import java.util.ArrayList
 
 fun getFillerItem(): ItemStack {
     return createGUIItem(ItemStack(Material.GRAY_STAINED_GLASS_PANE), Component.empty(), listOf())
@@ -47,12 +49,22 @@ fun getArrowRightItem(): ItemStack {
     )
 }
 
-private fun createGUIItem(itemStack: ItemStack, displayName: Component, lore: List<Component>): ItemStack {
-    val meta = itemStack.itemMeta ?: error("GUIUtils item meta is null")
-    meta.displayName(displayName)
-    meta.lore(lore)
-    meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS)
-    meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-    itemStack.setItemMeta(meta)
+private fun createGUIItem(itemStack: ItemStack, displayName: Component, description: List<Component>): ItemStack {
+    val itemMeta = itemStack.itemMeta ?: error("GUIUtils item meta is null")
+
+    // set item name and remove default italic decoration
+    itemMeta.displayName(displayName.decoration(TextDecoration.ITALIC, false))
+
+    // set item lore and remove default italic decoration
+    val descriptionList = ArrayList<Component>()
+    for (component in description) {
+        descriptionList.add(component.decoration(TextDecoration.ITALIC, false))
+    }
+    itemMeta.lore(descriptionList)
+
+    itemMeta.lore(description)
+    itemMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS)
+    itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+    itemStack.itemMeta = itemMeta
     return itemStack
 }

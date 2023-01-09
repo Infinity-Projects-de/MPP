@@ -422,8 +422,11 @@ enum class ItemType(
     fun getItemStack(amount: Int): ItemStack {
         val itemStack = ItemStack(material)
         val itemMeta = itemStack.itemMeta
+
+        // set item name and remove default italic decoration
         itemMeta.displayName(displayName.decoration(TextDecoration.ITALIC, false))
 
+        // set item lore and remove default italic decoration
         val descriptionList = ArrayList<Component>()
         for (component in description) {
             descriptionList.add(component.decoration(TextDecoration.ITALIC, false))
