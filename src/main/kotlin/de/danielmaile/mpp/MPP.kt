@@ -102,23 +102,17 @@ class MPP : JavaPlugin() {
     }
 
     private fun saveDefaultFiles() {
-        // create data folder
-        val dataFolder = File(dataFolder.absolutePath + File.separator + "data")
-        if (!dataFolder.exists() && !dataFolder.mkdirs()) {
-            logError("Creation of data folder (" + dataFolder.absolutePath + ") failed!")
-        }
-
         // create locales folder
-        val localesFolder = File(getDataFolder().absolutePath + File.separator + "locales")
+        val localesFolder = File(dataFolder.absolutePath + File.separator + "locales")
         if (!localesFolder.exists() && !localesFolder.mkdirs()) {
             logError("Creation of locales folder (" + dataFolder.absolutePath + ") failed!")
         }
 
         // save default files
         saveDefaultConfig()
-        if (!File(getDataFolder(), "locales/de.yml").exists())
+        if (!File(dataFolder, "locales/de.yml").exists())
             saveResource("locales/de.yml", false)
-        if (!File(getDataFolder(), "locales/en.yml").exists())
+        if (!File(dataFolder, "locales/en.yml").exists())
             saveResource("locales/en.yml", false)
 
         reloadConfig()
