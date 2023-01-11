@@ -88,7 +88,7 @@ class DungeonChest(private val random: Random) {
             while (amountLeft > 0) {
                 val addedAmount: Int
                 if (loot.isCustomItem()) {
-                    addedAmount = min(amountLeft, loot.itemType!!.material.maxStackSize)
+                    addedAmount = min(amountLeft, loot.itemType!!.getMaterial().maxStackSize)
                     stacks.add(loot.itemType.getItemStack(addedAmount))
                 } else {
                     addedAmount = min(amountLeft, loot.material!!.maxStackSize)

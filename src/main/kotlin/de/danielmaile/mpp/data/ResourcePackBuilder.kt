@@ -128,7 +128,7 @@ object ResourcePackBuilder {
 
     private fun generateItemModels() {
         val groupedTypes = ItemType.values().groupBy {
-            it.material
+            it.getMaterial()
         }
 
         for ((material, types) in groupedTypes) {
