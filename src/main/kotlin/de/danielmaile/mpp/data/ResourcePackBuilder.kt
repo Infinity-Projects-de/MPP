@@ -266,7 +266,9 @@ object ResourcePackBuilder {
     }
 
     private fun calculateSHA1Hash(): String {
-        return DigestUtils.sha1Hex(FileInputStream(resourcePackZipPath.toFile()))
+        FileInputStream(resourcePackZipPath.toFile()).use {
+            return DigestUtils.sha1Hex(it)
+        }
     }
 
     private fun uploadPack() {
