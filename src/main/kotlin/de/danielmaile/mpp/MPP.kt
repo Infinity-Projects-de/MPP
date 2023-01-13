@@ -115,7 +115,7 @@ class MPP : JavaPlugin() {
      * Send message on first install, might be changed to a better one?
      */
     private fun installMessage(message: String?) {
-        sendMessage(ChatColor.GREEN.toString() + "------------------------------")
+        sendMessage("------------------------------")
         sendMessage("")
         sendMessage("")
         for (s in getLanguageManager().getStringList("messages.errors.first_time_server_shutdown")) {
@@ -127,7 +127,7 @@ class MPP : JavaPlugin() {
             sendMessage("")
         }
         sendMessage("")
-        sendMessage(ChatColor.GREEN.toString() + "------------------------------")
+        sendMessage("------------------------------")
     }
     private fun sendMessage(text: String) {
         val color = ChatColor.GREEN
