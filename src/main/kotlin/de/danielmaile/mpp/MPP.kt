@@ -95,9 +95,9 @@ class MPP : JavaPlugin() {
         registerRecipes()
 
         try {
-            worldManager = WorldManager(this)
+            worldManager = WorldManager()
         } catch(e: Exception){
-            installMessage()
+            installMessage(e.message)
             Bukkit.shutdown()
             return
         }
@@ -114,20 +114,21 @@ class MPP : JavaPlugin() {
     /**
      * Send message on first install, might be changed to a better one?
      */
-    private fun installMessage() {
-        sendMessage("****************************")
+    private fun installMessage(message: String?) {
+        sendMessage(ChatColor.GREEN.toString() + "------------------------------")
         sendMessage("")
         sendMessage("")
-        sendMessage("HI THERE, IT SEEMS THIS IS")
-        sendMessage("YOUR FIRST TIME USING MPP.")
-        sendMessage("IN ORDER TO GENERATE AETHER")
-        sendMessage("WORLD, YOU NEED TO POWER ON")
-        sendMessage("THE SERVER AGAIN. THANK YOU!")
+        for (s in getLanguageManager().getStringList("messages.errors.first_time_server_shutdown")) {
+            sendMessage(ChatColor.GREEN.toString() + s)
+        }
+        if(!message.isNullOrBlank()) {
+            sendMessage(message)
+        } else {
+            sendMessage("")
+        }
         sendMessage("")
-        sendMessage("")
-        sendMessage("****************************")
+        sendMessage(ChatColor.GREEN.toString() + "------------------------------")
     }
-
     private fun sendMessage(text: String) {
         val color = ChatColor.GREEN
         server.consoleSender.sendMessage(color.toString() + text)
