@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:item/handheld",
+  "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "item/phoenix_helmet"
+    "layer0": "item/phoenix_helmet",
+    "layer1": "item/phoenix_helmet"
   }
 }

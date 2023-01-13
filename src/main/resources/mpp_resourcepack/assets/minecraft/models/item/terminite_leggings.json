@@ -1,6 +1,7 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-      "layer0": "item/terminite_leggings"
+      "layer0": "item/terminite_leggings",
+      "layer1": "item/terminite_leggings"
     }
   }

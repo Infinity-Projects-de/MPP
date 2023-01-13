@@ -1,6 +1,7 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-      "layer0": "item/pyrite_chestplate"
+      "layer0": "item/pyrite_chestplate",
+      "layer1": "item/pyrite_chestplate"
     }
   }

@@ -1,6 +1,7 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-      "layer0": "item/thallasium_helmet"
+      "layer0": "item/thallasium_helmet",
+      "layer1": "item/thallasium_helmet"
     }
   }
