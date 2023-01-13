@@ -77,8 +77,7 @@ object ResourcePackBuilder {
         val hash = calculateSHA1Hash()
 
         // delete directory
-        // TODO Remove comment
-        //deleteWorkingDirectory()
+        deleteWorkingDirectory()
 
         // register pack listener
         inst().server.pluginManager.registerEvents(ResourcePackListener(url, hash), inst())
@@ -140,12 +139,11 @@ object ResourcePackBuilder {
 
                 val color = ArmorSet.valueOf(armorName.uppercase()).color.asRGB()
 
-                if(p.fileName.endsWith("1.png")) {
+                if(p.fileName.toString().endsWith("1.png")) {
                     layer1Graphics.drawImage(image, i * 64, 0, null)
                     layer1Graphics.color = java.awt.Color(color)
                     layer1Graphics.drawLine(i*64,0,i*64,0)
                     i++
-                    // FIXME Layers get into layer2 graphics, check if conditon!!!
                 } else {
                     layer2Graphics.drawImage(image, j * 64, 0, null)
                     layer2Graphics.color = java.awt.Color(color)
