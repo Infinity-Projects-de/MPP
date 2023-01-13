@@ -43,6 +43,11 @@ fun getResource(fileName: String): InputStream? {
     return inst().javaClass.classLoader.getResourceAsStream(fileName)
 }
 
+fun getPluginJar(): File {
+    // unescape %20 to spaces to prevent FileNotFoundException if the path contains a space on linux
+    return File(inst().javaClass.protectionDomain.codeSource.location.path.toString().replace("%20", " "))
+}
+
 fun String.isLong(): Boolean {
     return try {
         java.lang.Long.parseLong(this)

@@ -18,6 +18,7 @@
 package de.danielmaile.mpp.data
 
 import de.danielmaile.mpp.inst
+import de.danielmaile.mpp.util.getPluginJar
 import de.danielmaile.mpp.util.logError
 import de.danielmaile.mpp.util.saveResource
 import org.bukkit.Bukkit
@@ -58,7 +59,7 @@ object DataPackManager {
             }
 
         // copy updated data pack from jar
-        val jarFile = File(javaClass.protectionDomain.codeSource.location.path)
+        val jarFile = getPluginJar()
         if (jarFile.isFile) {
             val path = "mpp_datapack"
             val jar = JarFile(jarFile)

@@ -24,10 +24,7 @@ import de.danielmaile.mpp.block.BlockType
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.item.ArmorSet
 import de.danielmaile.mpp.item.ItemType
-import de.danielmaile.mpp.util.logError
-import de.danielmaile.mpp.util.logInfo
-import de.danielmaile.mpp.util.saveResource
-import de.danielmaile.mpp.util.toMinecraftName
+import de.danielmaile.mpp.util.*
 import kong.unirest.Unirest
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry
@@ -85,7 +82,7 @@ object ResourcePackBuilder {
 
     private fun copyAssets() {
         // Copy updated data pack from jar
-        val jarFile = File(javaClass.protectionDomain.codeSource.location.path)
+        val jarFile = getPluginJar()
         if (jarFile.isFile) {
             val path = "mpp_resourcepack"
             val jar = JarFile(jarFile)
