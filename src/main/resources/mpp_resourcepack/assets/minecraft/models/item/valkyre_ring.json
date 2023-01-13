@@ -1,6 +1,7 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-      "layer0": "item/valkyre_ring"
+      "layer0": "item/valkyre_ring",
+      "layer1": "item/valkyre_ring"
     }
   }

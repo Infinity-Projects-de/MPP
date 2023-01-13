@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:item/handheld",
+  "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "item/zanite_leggings"
+    "layer0": "item/zanite_leggings",
+    "layer1": "item/zanite_leggings"
   }
 }

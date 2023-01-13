@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:item/handheld",
+  "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "item/zanite_chestplate"
+    "layer0": "item/zanite_chestplate",
+    "layer1": "item/zanite_chestplate"
   }
 }
