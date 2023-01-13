@@ -22,6 +22,7 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import de.danielmaile.mpp.block.BlockType
 import de.danielmaile.mpp.inst
+import de.danielmaile.mpp.item.ArmorSet
 import de.danielmaile.mpp.item.ItemType
 import de.danielmaile.mpp.util.logError
 import de.danielmaile.mpp.util.logInfo
@@ -37,12 +38,17 @@ import org.apache.commons.lang3.RandomStringUtils
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
+import java.awt.image.BufferedImage
 import java.io.*
 import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.*
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
+import javax.imageio.ImageIO
+import kotlin.io.path.isDirectory
+import kotlin.io.path.name
 
 
 object ResourcePackBuilder {
@@ -60,6 +66,7 @@ object ResourcePackBuilder {
         copyAssets()
         generateBlockStatesJson()
         generateItemModels()
+        generateArmorLayers()
         createZipFile()
         logInfo("Successfully generated resource pack! Uploading...")
 
@@ -70,7 +77,8 @@ object ResourcePackBuilder {
         val hash = calculateSHA1Hash()
 
         // delete directory
-        deleteWorkingDirectory()
+        // TODO Remove comment
+        //deleteWorkingDirectory()
 
         // register pack listener
         inst().server.pluginManager.registerEvents(ResourcePackListener(url, hash), inst())
@@ -95,6 +103,60 @@ object ResourcePackBuilder {
         } else {
             logError("[THIS SHOULD NOT BE REACHED] Failed to generate resource pack.")
         }
+    }
+
+    private fun generateArmorLayers() {
+        val armor_assets: Path = Paths.get(resourcePackFolder.toString(), "assets","minecraft","textures","armor_assets")
+        val armor: Path = Paths.get(resourcePackFolder.toString(), "assets","minecraft","textures","models","armor")
+
+        val armorAmount = (armor_assets.toFile().listFiles()?.size ?: 38) / 2
+
+        val layer1File = File(armor.toFile(), "leather_layer_1.png")
+        val layer2File = File(armor.toFile(), "leather_layer_2.png")
+
+        val layer1Buffer = BufferedImage(armorAmount * 64, 32, BufferedImage.TYPE_INT_ARGB)
+        val layer2Buffer = BufferedImage(armorAmount * 64, 32, BufferedImage.TYPE_INT_ARGB)
+
+        val layer1Graphics = layer1Buffer.graphics
+        val layer2Graphics = layer2Buffer.graphics
+
+        var i = 1
+        var j = 1
+
+        Files.walk(armor_assets).forEach { p ->
+            if(p.isDirectory()) {
+                return@forEach
+            }
+
+            val image = ImageIO.read(p.toFile())
+            val armorName = p.fileName.name.split("_")[0]
+            if(armorName == "vanilla") {
+                if(p.fileName.endsWith("1.png")) {
+                    layer1Graphics.drawImage(image, 0, 0, null)
+                } else {
+                    layer2Graphics.drawImage(image, 0, 0, null)
+                }
+            } else {
+
+                val color = ArmorSet.valueOf(armorName.uppercase()).color.asRGB()
+
+                if(p.fileName.endsWith("1.png")) {
+                    layer1Graphics.drawImage(image, i * 64, 0, null)
+                    layer1Graphics.color = java.awt.Color(color)
+                    layer1Graphics.drawLine(i*64,0,i*64,0)
+                    i++
+                    // FIXME Layers get into layer2 graphics, check if conditon!!!
+                } else {
+                    layer2Graphics.drawImage(image, j * 64, 0, null)
+                    layer2Graphics.color = java.awt.Color(color)
+                    layer2Graphics.drawLine(j*64,0,j*64,0)
+                    j++
+                }
+            }
+        }
+
+        ImageIO.write(layer1Buffer, "PNG", layer1File)
+        ImageIO.write(layer2Buffer, "PNG", layer2File)
     }
 
     private fun generateBlockStatesJson() {
@@ -182,10 +244,13 @@ object ResourcePackBuilder {
 
     private fun createZipFile() {
         ZipArchiveOutputStream(FileOutputStream(resourcePackZipPath.toFile())).use { archive ->
-            Files.walk(resourcePackFolder.toFile().toPath()).forEach { p ->
+            Files.walk(resourcePackFolder).forEach { p ->
                 val file = p.toFile()
 
                 if (!file.isDirectory) {
+                    if(file.parentFile.name == "armor_assets") {
+                        return@forEach
+                    }
                     val entry = ZipArchiveEntry(
                         file,
                         file.toString().substringAfter(resourcePackFolder.toString() + File.separator)
