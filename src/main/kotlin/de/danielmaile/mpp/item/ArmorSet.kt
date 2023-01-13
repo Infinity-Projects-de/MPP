@@ -111,10 +111,7 @@ enum class ArmorSet(val head: ItemType, val chest: ItemType, val legs: ItemType,
         ItemType.PHOENIX_LEGGINGS,
         ItemType.PHOENIX_BOOTS);
 
-    val color: Color
-        get() {
-            return Color.fromRGB(this.ordinal)
-        }
+    val color: Color = Color.fromRGB(this.ordinal)
 
     fun contains(itemType: ItemType?): Boolean {
         return head == itemType || chest == itemType || legs == itemType || feet == itemType
