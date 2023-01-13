@@ -244,7 +244,7 @@ class MPP : JavaPlugin() {
     }
 
     /**
-     * Sets health, speed and damage from paper settings to their desired values of 1.0E100
+     * Sets count all mobs for spawning from paper settings to their desired value of true
      */
     private fun setupPaperConfig(file: File) {
         val paperSettings = YamlConfiguration.loadConfiguration(file)
