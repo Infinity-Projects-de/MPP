@@ -1209,3 +1209,7 @@ mobs:
     name: "<aqua><bold>〈</bold><aqua>Riss<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
   RIFT_ELITE:
     name: "<light_purple><bold>〈Elite〉<aqua><bold>〈</bold><aqua>Riss<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  SNIPER:
+    name: "<aqua><bold>〈</bold><aqua>Scharfschütze<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  SNIPER_ELITE:
+    name: "<light_purple><bold>〈Elite〉<aqua><bold>〈</bold><aqua>Scharfschütze<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
