@@ -22,7 +22,7 @@ import de.danielmaile.mpp.util.logError
 import org.bukkit.Bukkit
 import org.bukkit.World
 
-class WorldManager(mpp: MPP) {
+class WorldManager(mpp: MPP){
 
     val aetherWorld: World
 
@@ -33,8 +33,7 @@ class WorldManager(mpp: MPP) {
         // if aether world is null send message and disable plugin
         if (aetherWorld == null) {
             mpp.getLanguageManager().getString("messages.errors.aether_world_not_generated")?.let { logError(it) }
-            this.aetherWorld = Bukkit.getWorlds()[0]
-            Bukkit.getPluginManager().disablePlugin(mpp)
+            throw Exception()
         } else {
             this.aetherWorld = aetherWorld
         }

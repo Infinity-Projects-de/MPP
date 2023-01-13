@@ -42,6 +42,7 @@ import de.danielmaile.mpp.util.logError
 import de.danielmaile.mpp.world.WorldManager
 import de.danielmaile.mpp.world.aether.ListenerAether
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.World
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
@@ -93,7 +94,14 @@ class MPP : JavaPlugin() {
         registerEvents()
         registerRecipes()
 
-        worldManager = WorldManager(this)
+        try {
+            worldManager = WorldManager(this)
+        } catch(e: Exception){
+            installMessage()
+            Bukkit.shutdown()
+            return
+        }
+
         particleManager = ParticleManager()
 
         // cloud effects
@@ -101,6 +109,28 @@ class MPP : JavaPlugin() {
 
         // init BlockBreakingService
         BlockBreakingService.init()
+    }
+
+    /**
+     * Send message on first install, might be changed to a better one?
+     */
+    private fun installMessage() {
+        sendMessage("****************************")
+        sendMessage("")
+        sendMessage("")
+        sendMessage("HI THERE, IT SEEMS THIS IS")
+        sendMessage("YOUR FIRST TIME USING MPP.")
+        sendMessage("IN ORDER TO GENERATE AETHER")
+        sendMessage("WORLD, YOU NEED TO POWER ON")
+        sendMessage("THE SERVER AGAIN. THANK YOU!")
+        sendMessage("")
+        sendMessage("")
+        sendMessage("****************************")
+    }
+
+    private fun sendMessage(text: String) {
+        val color = ChatColor.GREEN
+        server.consoleSender.sendMessage(color.toString() + text)
     }
 
     private fun saveDefaultFiles() {
@@ -195,7 +225,7 @@ class MPP : JavaPlugin() {
         val paperWorldDefaultsSettingsFile =
             File(dataFolder.parentFile.parentFile, "config" + File.separator + "paper-world-defaults.yml")
 
-        setupPaperConfig(paperWorldDefaultsSettingsFile);
+        setupPaperConfig(paperWorldDefaultsSettingsFile)
 
         val paperWorldDefaultsSettings = YamlConfiguration.loadConfiguration(paperWorldDefaultsSettingsFile)
 
