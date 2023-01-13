@@ -80,8 +80,10 @@ class MPP : JavaPlugin() {
         validLicense = LicenseManager.validateLicense()
 
         // setup spigot and paper yml
-        checkSpigotYML()
-        checkPaperYML()
+        if(!checkSpigotYML() || !checkPaperYML()) {
+            Bukkit.getPluginManager().disablePlugin(this)
+            return
+        }
 
         DataPackManager.saveOrUpdateDataPack()
         ResourcePackBuilder.generateResourcePack()
@@ -150,9 +152,12 @@ class MPP : JavaPlugin() {
      * Checks if settings in spigot.yml are correct.
      * If not disable the plugin.
      */
-    private fun checkSpigotYML() {
+    private fun checkSpigotYML(): Boolean {
         val maxValue = 1E100
         val spigotSettingsFile = File(dataFolder.parentFile.parentFile, "spigot.yml")
+
+        setupSpigotConfig(spigotSettingsFile)
+
         val spigotSettings = YamlConfiguration.loadConfiguration(spigotSettingsFile)
 
         val maxHealthSetting = spigotSettings.get("settings.attribute.maxHealth.max") as Double
@@ -164,17 +169,34 @@ class MPP : JavaPlugin() {
             for (string in getLanguageManager().getStringList("messages.errors.wrong_spigot_yml_settings")) {
                 logError(string)
             }
-            Bukkit.getPluginManager().disablePlugin(this)
+            return false
         }
+        return true
+    }
+
+    /**
+     * Sets health, speed and damage from spigot settings to their desired values of 1.0E100
+     */
+    private fun setupSpigotConfig(file: File) {
+        val spigotSettings = YamlConfiguration.loadConfiguration(file)
+
+        spigotSettings.set("settings.attribute.maxHealth.max", 1.0E100)
+        spigotSettings.set("settings.attribute.movementSpeed.max", 1.0E100)
+        spigotSettings.set("settings.attribute.attackDamage.max", 1.0E100)
+
+        spigotSettings.save(file)
     }
 
     /**
      * Checks if settings in paper-world-defaults.yml are correct.
      * If not disable the plugin.
      */
-    private fun checkPaperYML() {
+    private fun checkPaperYML(): Boolean {
         val paperWorldDefaultsSettingsFile =
             File(dataFolder.parentFile.parentFile, "config" + File.separator + "paper-world-defaults.yml")
+
+        setupPaperConfig(paperWorldDefaultsSettingsFile);
+
         val paperWorldDefaultsSettings = YamlConfiguration.loadConfiguration(paperWorldDefaultsSettingsFile)
 
         val countAllMobsForSpawning =
@@ -185,9 +207,22 @@ class MPP : JavaPlugin() {
             for (string in getLanguageManager().getStringList("messages.errors.wrong_paper_world_defaults_yml_settings")) {
                 logError(string)
             }
-            Bukkit.getPluginManager().disablePlugin(this)
+            return false
         }
+        return true
     }
+
+    /**
+     * Sets health, speed and damage from paper settings to their desired values of 1.0E100
+     */
+    private fun setupPaperConfig(file: File) {
+        val paperSettings = YamlConfiguration.loadConfiguration(file)
+
+        paperSettings.set("entities.spawning.count-all-mobs-for-spawning",true)
+
+        paperSettings.save(file)
+    }
+
 
     override fun reloadConfig() {
         super.reloadConfig()
