@@ -127,7 +127,7 @@ object ResourcePackBuilder {
             val image = ImageIO.read(p.toFile())
             val armorName = p.fileName.name.split("_")[0]
             if(armorName == "vanilla") {
-                if(p.fileName.endsWith("1.png")) {
+                if(p.fileName.toString().endsWith("1.png")) {
                     layer1Graphics.drawImage(image, 0, 0, null)
                 } else {
                     layer2Graphics.drawImage(image, 0, 0, null)
