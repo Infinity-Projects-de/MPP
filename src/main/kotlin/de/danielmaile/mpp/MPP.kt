@@ -122,7 +122,7 @@ class MPP : JavaPlugin() {
             sendMessage(ChatColor.GREEN.toString() + s)
         }
         if(!message.isNullOrBlank()) {
-            sendMessage(message)
+            sendMessage("Caused by: $message")
         } else {
             sendMessage("")
         }

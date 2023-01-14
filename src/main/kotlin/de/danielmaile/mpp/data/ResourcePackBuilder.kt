@@ -26,11 +26,6 @@ import de.danielmaile.mpp.item.ArmorSet
 import de.danielmaile.mpp.item.ItemType
 import de.danielmaile.mpp.util.*
 import kong.unirest.Unirest
-import org.apache.commons.codec.digest.DigestUtils
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry
-import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream
-import org.apache.commons.io.FileUtils
-import org.apache.commons.io.IOUtils
 import org.apache.commons.lang3.RandomStringUtils
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -41,8 +36,6 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.*
-import java.util.jar.JarEntry
-import java.util.jar.JarFile
 import javax.imageio.ImageIO
 import kotlin.io.path.isDirectory
 import kotlin.io.path.name
@@ -50,9 +43,8 @@ import kotlin.io.path.name
 
 object ResourcePackBuilder {
 
-    private val packName =
-        "${RandomStringUtils.randomAlphanumeric(32)}.zip"
-    private val resourcePackFolder = Paths.get(inst().dataFolder.absolutePath, "mpp_resourcepack")
+    private val packName = "${RandomStringUtils.randomAlphanumeric(32)}.zip"
+    private val resourcePackWorkingDirectory = Paths.get(inst().dataFolder.absolutePath, "mpp_resourcepack")
     private val resourcePackZipPath = Paths.get(inst().dataFolder.absolutePath, packName)
 
     private val url =
@@ -60,50 +52,26 @@ object ResourcePackBuilder {
 
     fun generateResourcePack() {
         logInfo("Generating resource pack...")
-        copyAssets()
+        copyAssetsFromJar("mpp_resourcepack", resourcePackWorkingDirectory)
         generateBlockStatesJson()
         generateItemModels()
         generateArmorLayers()
-        createZipFile()
+        createZipFile(resourcePackZipPath.toFile(), resourcePackWorkingDirectory, { it.parentFile.name != "armor_assets" },true)
         logInfo("Successfully generated resource pack! Uploading...")
 
         // upload pack to hosting server
         uploadPack()
 
         // calculate hash
-        val hash = calculateSHA1Hash()
-
-        // delete directory
-        deleteWorkingDirectory()
+        val hash = calculateSHA1Hash(resourcePackZipPath.toFile())
 
         // register pack listener
         inst().server.pluginManager.registerEvents(ResourcePackListener(url, hash), inst())
     }
 
-    private fun copyAssets() {
-        // Copy updated data pack from jar
-        val jarFile = getPluginJar()
-        if (jarFile.isFile) {
-            val path = "mpp_resourcepack"
-            val jar = JarFile(jarFile)
-            val entries: Enumeration<JarEntry> = jar.entries()
-            while (entries.hasMoreElements()) {
-                val jarEntry = entries.nextElement()
-                val name: String = jarEntry.name
-                if (name.startsWith("$path/")) {
-                    if (name.endsWith('/')) continue
-                    saveResource(name, Paths.get(inst().dataFolder.absolutePath, name))
-                }
-            }
-            jar.close()
-        } else {
-            logError("[THIS SHOULD NOT BE REACHED] Failed to generate resource pack.")
-        }
-    }
-
     private fun generateArmorLayers() {
-        val armor_assets: Path = Paths.get(resourcePackFolder.toString(), "assets","minecraft","textures","armor_assets")
-        val armor: Path = Paths.get(resourcePackFolder.toString(), "assets","minecraft","textures","models","armor")
+        val armor_assets: Path = Paths.get(resourcePackWorkingDirectory.toString(), "assets","minecraft","textures","armor_assets")
+        val armor: Path = Paths.get(resourcePackWorkingDirectory.toString(), "assets","minecraft","textures","models","armor")
 
         val armorAmount = (armor_assets.toFile().listFiles()?.size ?: 38) / 2
 
@@ -234,40 +202,6 @@ object ResourcePackBuilder {
             gson.toJson(jsonObject, fileWriter)
             fileWriter.flush()
             fileWriter.close()
-        }
-    }
-
-    private fun createZipFile() {
-        ZipArchiveOutputStream(FileOutputStream(resourcePackZipPath.toFile())).use { archive ->
-            Files.walk(resourcePackFolder).forEach { p ->
-                val file = p.toFile()
-
-                if (!file.isDirectory) {
-                    if(file.parentFile.name == "armor_assets") {
-                        return@forEach
-                    }
-                    val entry = ZipArchiveEntry(
-                        file,
-                        file.toString().substringAfter(resourcePackFolder.toString() + File.separator)
-                    )
-                    FileInputStream(file).use { fis ->
-                        archive.putArchiveEntry(entry)
-                        IOUtils.copy(fis, archive)
-                        archive.closeArchiveEntry()
-                    }
-                }
-            }
-            archive.finish()
-        }
-    }
-
-    private fun deleteWorkingDirectory() {
-        FileUtils.deleteDirectory(resourcePackFolder.toFile())
-    }
-
-    private fun calculateSHA1Hash(): String {
-        FileInputStream(resourcePackZipPath.toFile()).use {
-            return DigestUtils.sha1Hex(it)
         }
     }
 
