@@ -11,7 +11,12 @@ messages:
       - "1. Gehe in die config/paper-world-defaults.yml und suche nach \"count-all-mobs-for-spawning:\""
       - "2. Ändere den Wert von false auf true"
       - "3. Starte den Server neu"
-    aether_world_not_generated: "Die Aether Welt wurde noch nicht erstellt. Bitte starte den Server neu!"
+    first_time_server_shutdown:
+      - "HALLO, ES SCHEINT SO, ALS"
+      - "WÜRDEST DU MPP ZU ERSTEN MAL"
+      - "BENUTZEN.UM DIE NEUEN WELTEN ZU"
+      - "GENERIEREN, MUSST DU DEN SERVER"
+      - "NOCHMAL STARTEN. DANKE!"
   cmd:
     info:
       reloaded_config: "<green>Die Config wurde neu geladen!"
