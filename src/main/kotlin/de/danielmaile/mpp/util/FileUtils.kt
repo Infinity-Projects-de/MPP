@@ -24,12 +24,12 @@ import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
 import java.io.*
+import java.net.URL
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.*
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
-import kotlin.collections.ArrayList
 
 /**
  * Creates a zip file from the contents INSIDE the [inputFolder]
@@ -38,6 +38,7 @@ import kotlin.collections.ArrayList
  * Provide a [filter] method, that decides if a file should
  * be included or not.
  */
+@Deprecated("Deprecated in favour of ZipArchive")
 fun createZipFile(outputFile: File, inputFolder: Path, filter: (File) -> Boolean, deleteInputFolder: Boolean) {
     ZipArchiveOutputStream(FileOutputStream(outputFile)).use { archive ->
         Files.walk(inputFolder).forEach { p ->
@@ -68,15 +69,44 @@ fun createZipFile(outputFile: File, inputFolder: Path, filter: (File) -> Boolean
     }
 }
 
+class ZipArchive : Closeable {
+    private val baos = ByteArrayOutputStream()
+    private val zipArchiveOut = ZipArchiveOutputStream(baos)
+
+    /**
+     * Stores a file into the ZipArchive
+     * @param url URL of the file given by FileUtils#getAssetsFromJar
+     */
+    fun storeFile(url: URL) {
+        val entry = ZipArchiveEntry(File(url.toURI()), url.path)
+        zipArchiveOut.putArchiveEntry(entry)
+        url.openStream().use { it.copyTo(zipArchiveOut) }
+        zipArchiveOut.closeArchiveEntry()
+    }
+
+    /**
+     * Gets the InputStream representing the Zip Archive
+     */
+    fun getInputStream(): InputStream {
+        val fileInBytes = baos.toByteArray()
+        return ByteArrayInputStream(fileInBytes)
+    }
+    override fun close() {
+        baos.close()
+        zipArchiveOut.close()
+    }
+}
+
 /**
  * Copies assets from the plugin jar file to the
  * given [outputFolder]. Only includes assets located
  * in the folder specified in [relativeFolder].
  */
+@Deprecated("Changing to a method that doesn't require saving anything", ReplaceWith("assetsFromJar","relativeFolder"))
 fun copyAssetsFromJar(relativeFolder: String, outputFolder: Path) {
     val jarFile = getPluginJar()
 
-    if (jarFile.isFile) {
+    if (jarFile.isFile) { // Might this be redundant?
         val jar = JarFile(jarFile)
         val entries: Enumeration<JarEntry> = jar.entries()
 
@@ -98,6 +128,14 @@ fun copyAssetsFromJar(relativeFolder: String, outputFolder: Path) {
     }
 }
 
+/**
+ * Gets the elements in the specified folder into an Enumeration
+ */
+fun getAssetsFromJar(relativeFolder: Path): Enumeration<URL> {
+    return inst().javaClass.classLoader.getResources(relativeFolder.toString())
+}
+
+@Deprecated("Deprecated in favor of non file-creating methods")
 @Throws(IOException::class)
 fun saveResource(resourcePath: String, outputFile: File) {
     val inputStream = inst().javaClass.classLoader.getResourceAsStream(resourcePath) ?: throw IllegalArgumentException()
@@ -123,6 +161,7 @@ fun saveResource(resourcePath: String, outputFile: File) {
 }
 
 @Throws(IOException::class)
+@Deprecated("Deprecated in favor of the Enumeration-returning method")
 fun getResource(fileName: String): InputStream? {
     return inst().javaClass.classLoader.getResourceAsStream(fileName)
 }
