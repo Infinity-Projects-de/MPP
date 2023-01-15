@@ -87,7 +87,7 @@ class MPP : JavaPlugin() {
         }
 
         DataPackManager.saveOrUpdateDataPack()
-        ResourcePackBuilder.generateResourcePack()
+        ResourcePackBuilder.generateResourcePackOld()
 
         // register commands, events and recipes
         Bukkit.getPluginCommand("mpp")?.setExecutor(CommandMPP())
@@ -119,7 +119,7 @@ class MPP : JavaPlugin() {
         sendMessage("")
         sendMessage("")
         for (s in getLanguageManager().getStringList("messages.errors.first_time_server_shutdown")) {
-            sendMessage(ChatColor.GREEN.toString() + s)
+            sendMessage(s)
         }
         if(!message.isNullOrBlank()) {
             sendMessage("Caused by: $message")
