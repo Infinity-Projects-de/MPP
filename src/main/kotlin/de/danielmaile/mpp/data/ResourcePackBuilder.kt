@@ -32,6 +32,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import java.awt.image.BufferedImage
 import java.io.*
+import java.net.URL
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -44,15 +45,18 @@ import kotlin.io.path.name
 object ResourcePackBuilder {
 
     private val packName = "${RandomStringUtils.randomAlphanumeric(32)}.zip"
+
+    @Deprecated("Saving won't be necessary")
     private val resourcePackWorkingDirectory = Paths.get(inst().dataFolder.absolutePath, "mpp_resourcepack")
+
     private val resourcePackZipPath = Paths.get(inst().dataFolder.absolutePath, packName)
 
     private val url =
         "http://${inst().configManager.resourcePackHostIP}:${inst().configManager.resourcePackHostPort}/files/$packName"
 
-    fun generateResourcePack() {
+    @Deprecated("Deprecated in favor of non file-saving methods")
+    fun generateResourcePackOld() {
         logInfo("Generating resource pack...")
-        copyAssetsFromJar("mpp_resourcepack", resourcePackWorkingDirectory)
         generateBlockStatesJson()
         generateItemModels()
         generateArmorLayers()
@@ -69,6 +73,91 @@ object ResourcePackBuilder {
         inst().server.pluginManager.registerEvents(ResourcePackListener(url, hash), inst())
     }
 
+    fun generateResourcePack() {
+        val resourcePack = getAssetsFromJar(Path.of("mpp_resourcepack","assets"))
+
+        val layer1 = getArmorAssets(true)
+        val layer2 = getArmorAssets(false)
+
+        for (url in resourcePack) {
+            if(isDirectory(url)) {
+                continue
+            }
+            url.openStream().use {
+
+            }
+        }
+
+    }
+
+    private fun getArmorAssets(layer1: Boolean): InputStream {
+        val armorAssets = getAssetsFromJar(Path.of("mpp_resourcepack", "parseable","armor"))
+        val armorCount = armorAssets.asSequence().count() / 2
+        val layer = ArmorManager(armorCount)
+
+        for (url in armorAssets) {
+            if(isDirectory(url)) { // I'm quite sure I don't need this foolproof check
+                continue
+            }
+            url.openStream().use {
+                if (layer1 && url.file.endsWith("1.png") || !layer1 && url.file.endsWith("2.png")) {
+                    layer.drawTexture(url, it)
+                }
+            }
+        }
+        return layer.write()
+    }
+
+    private fun isDirectory(url: URL): Boolean {
+        if(File(url.toURI()).isDirectory) {
+            return true
+        }
+        return false
+    }
+
+    private class ArmorManager(private val armorAmount: Int) {
+        private val buff: BufferedImage = BufferedImage(armorAmount * 64, 32, BufferedImage.TYPE_INT_ARGB)
+        private val graphics = buff.graphics
+
+        private var latest = 1
+
+        fun drawTexture(url: URL, inputStream: InputStream) {
+            val name = url.file.split("_")[0].uppercase()
+            if(name == "VANILLA") {
+                drawDefaultTexture(inputStream)
+            } else {
+                drawNormalTexture(inputStream, ArmorSet.valueOf(name))
+            }
+        }
+        private fun drawDefaultTexture(texture: InputStream) {
+            val image = ImageIO.read(texture)
+            graphics.drawImage(image,0,0, null)
+        }
+
+        private fun drawNormalTexture(texture: InputStream, armorSet: ArmorSet) {
+            if(latest >= armorAmount) {
+                throw ArrayIndexOutOfBoundsException()
+            }
+
+            val image = ImageIO.read(texture)
+            val color = armorSet.color.asRGB()
+
+            graphics.drawImage(image, latest * 64, 0, null)
+            graphics.color = java.awt.Color(color)
+            graphics.drawLine(latest*64,0,latest*64,0)
+            latest++
+        }
+
+        fun write(): InputStream {
+            val baos = ByteArrayOutputStream()
+            ImageIO.write(buff, "png", baos)
+            val imageInByte = baos.toByteArray()
+            return ByteArrayInputStream(imageInByte)
+        }
+
+    }
+
+    @Deprecated("Deprecated")
     private fun generateArmorLayers() {
         val armor_assets: Path = Paths.get(resourcePackWorkingDirectory.toString(), "assets","minecraft","textures","armor_assets")
         val armor: Path = Paths.get(resourcePackWorkingDirectory.toString(), "assets","minecraft","textures","models","armor")
