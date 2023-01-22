@@ -17,80 +17,108 @@
 
 package de.danielmaile.mpp.util
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
 import de.danielmaile.mpp.inst
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream
 import org.apache.commons.io.FileUtils
-import org.apache.commons.io.IOUtils
 import java.io.*
 import java.net.URL
-import java.nio.file.Files
 import java.nio.file.Path
 import java.util.*
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
 
+val gson: Gson = GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create()
+
 /**
- * Creates a zip file from the contents INSIDE the [inputFolder]
- * and saves it to the [outputFile]. If [deleteInputFolder] is
- * set to true, the input folder gets deleted afterwards.
- * Provide a [filter] method, that decides if a file should
- * be included or not.
+ * Creates a pseudo-file from a [jsonObject] and sets its relative path to [relativePath]
+ * @param jsonObject JSON Object to be stored
+ * @param relativePath Relative path to be set to
+ * @return A [MemoryFile] containing the json Object pseudo-file
  */
-@Deprecated("Deprecated in favour of ZipArchive")
-fun createZipFile(outputFile: File, inputFolder: Path, filter: (File) -> Boolean, deleteInputFolder: Boolean) {
-    ZipArchiveOutputStream(FileOutputStream(outputFile)).use { archive ->
-        Files.walk(inputFolder).forEach { p ->
-            val file = p.toFile()
+fun memoryFileFromJSON(jsonObject: JsonObject, relativePath: Path): MemoryFile {
+    ByteArrayOutputStream().use { baos ->
+        OutputStreamWriter(baos).use {out ->
+            gson.toJson(jsonObject, out)
+            val fileInBytes = baos.toByteArray()
+            val inputStream = ByteArrayInputStream(fileInBytes)
 
-            if (!file.isDirectory) {
-                if(!filter(file)) {
-                    return@forEach
-                }
-
-                val entry = ZipArchiveEntry(
-                    file,
-                    file.toString().substringAfter(inputFolder.toString() + File.separator)
-                )
-
-                FileInputStream(file).use { fis ->
-                    archive.putArchiveEntry(entry)
-                    IOUtils.copy(fis, archive)
-                    archive.closeArchiveEntry()
-                }
-            }
+            return MemoryFile(relativePath.toString(), inputStream)
         }
-        archive.finish()
     }
 
-    if(deleteInputFolder) {
-        FileUtils.deleteDirectory(inputFolder.toFile())
+}
+
+/**
+ * Pseudo-file that consists of an [inputStream] and a (preferably) relative [path].
+ * @param path Relative path of the file
+ * @param inputStream Data of the file
+ * @constructor Creates the pseudo-file with a path and an input stream
+ * @see Closeable
+ */
+class MemoryFile(val path: String, val inputStream: InputStream) : Closeable {
+    /**
+     * Converts the inputStream into a temporary file. Path is NOT considered
+     * @return Temporary file containing the input stream data
+     */
+    val file: File
+        get() {
+            val tmp = File.createTempFile("tmp",null)
+            FileUtils.copyInputStreamToFile(inputStream, tmp)
+            return tmp
+        }
+    override fun close() {
+        inputStream.close()
     }
 }
 
+/**
+ * Class that helps creating a zip archive easily in memory
+ * @see Closeable
+ */
 class ZipArchive : Closeable {
     private val baos = ByteArrayOutputStream()
     private val zipArchiveOut = ZipArchiveOutputStream(baos)
 
     /**
-     * Stores a file into the ZipArchive
+     * Stores a file from [url] into the [ZipArchive]
      * @param url URL of the file given by FileUtils#getAssetsFromJar
+     * @param relativePath Relative path of where to put the file
      */
-    fun storeFile(url: URL) {
-        val entry = ZipArchiveEntry(File(url.toURI()), url.path)
+    fun storeFile(url: URL, relativePath: String) {
+        val entry = ZipArchiveEntry(File(url.toURI()), relativePath)
         zipArchiveOut.putArchiveEntry(entry)
         url.openStream().use { it.copyTo(zipArchiveOut) }
         zipArchiveOut.closeArchiveEntry()
     }
 
     /**
-     * Gets the InputStream representing the Zip Archive
+     * Stores the [file] into the [ZipArchive]
+     * @param file Pseudo-file to be stored
      */
-    fun getInputStream(): InputStream {
-        val fileInBytes = baos.toByteArray()
-        return ByteArrayInputStream(fileInBytes)
+    fun storeFile(file: MemoryFile) {
+        file.use {
+            val entry = ZipArchiveEntry(file.file, file.path)
+            zipArchiveOut.putArchiveEntry(entry)
+            file.inputStream.copyTo(zipArchiveOut)
+            zipArchiveOut.closeArchiveEntry()
+        }
     }
+
+    /**
+     * Gets the InputStream representing the zip archive
+     * @return InputStream containing the zip archive data
+     */
+    val inputStream: InputStream
+        get() {
+            val fileInBytes = baos.toByteArray()
+            return ByteArrayInputStream(fileInBytes)
+        }
+
     override fun close() {
         baos.close()
         zipArchiveOut.close()
@@ -129,7 +157,8 @@ fun copyAssetsFromJar(relativeFolder: String, outputFolder: Path) {
 }
 
 /**
- * Gets the elements in the specified folder into an Enumeration
+ * Gets the elements in the specified [relativeFolder] into an [Enumeration]
+ * @return [Enumeration] of type [URL] of the resources
  */
 fun getAssetsFromJar(relativeFolder: Path): Enumeration<URL> {
     return inst().javaClass.classLoader.getResources(relativeFolder.toString())
@@ -161,7 +190,9 @@ fun saveResource(resourcePath: String, outputFile: File) {
 }
 
 @Throws(IOException::class)
-@Deprecated("Deprecated in favor of the Enumeration-returning method")
+@Deprecated("Deprecated in favor of the Enumeration-returning method?",
+    ReplaceWith("inst().javaClass.classLoader.getResourceAsStream(fileName)", "de.danielmaile.mpp.inst")
+)
 fun getResource(fileName: String): InputStream? {
     return inst().javaClass.classLoader.getResourceAsStream(fileName)
 }
@@ -177,6 +208,8 @@ fun getPluginJar(): File {
  * does not exist, the returned String
  * will be empty
  */
+
+// TODO NO need of probably?
 fun calculateSHA1Hash(file: File): String {
     if(file.isDirectory || !file.exists()) {
         return ""
@@ -185,6 +218,10 @@ fun calculateSHA1Hash(file: File): String {
     FileInputStream(file).use {
         return DigestUtils.sha1Hex(it)
     }
+}
+
+fun calculateSHA1Hash(inputStream: InputStream): String {
+    return DigestUtils.sha1Hex(inputStream)
 }
 
 /**
