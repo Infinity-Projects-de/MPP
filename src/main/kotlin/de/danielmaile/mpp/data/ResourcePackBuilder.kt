@@ -17,7 +17,6 @@
 
 package de.danielmaile.mpp.data
 
-import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import de.danielmaile.mpp.block.BlockType
@@ -33,65 +32,63 @@ import org.bukkit.event.player.PlayerJoinEvent
 import java.awt.image.BufferedImage
 import java.io.*
 import java.net.URL
-import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.*
 import javax.imageio.ImageIO
-import kotlin.io.path.isDirectory
-import kotlin.io.path.name
 
 
 object ResourcePackBuilder {
 
     private val packName = "${RandomStringUtils.randomAlphanumeric(32)}.zip"
 
-    @Deprecated("Saving won't be necessary")
-    private val resourcePackWorkingDirectory = Paths.get(inst().dataFolder.absolutePath, "mpp_resourcepack")
-
-    private val resourcePackZipPath = Paths.get(inst().dataFolder.absolutePath, packName)
-
     private val url =
         "http://${inst().configManager.resourcePackHostIP}:${inst().configManager.resourcePackHostPort}/files/$packName"
 
-    @Deprecated("Deprecated in favor of non file-saving methods")
-    fun generateResourcePackOld() {
-        logInfo("Generating resource pack...")
-        generateBlockStatesJson()
-        generateItemModels()
-        generateArmorLayers()
-        createZipFile(resourcePackZipPath.toFile(), resourcePackWorkingDirectory, { it.parentFile.name != "armor_assets" },true)
-        logInfo("Successfully generated resource pack! Uploading...")
-
-        // upload pack to hosting server
-        uploadPack()
-
-        // calculate hash
-        val hash = calculateSHA1Hash(resourcePackZipPath.toFile())
-
-        // register pack listener
-        inst().server.pluginManager.registerEvents(ResourcePackListener(url, hash), inst())
-    }
-
     fun generateResourcePack() {
+        logInfo("Generating resource pack...")
+
         val resourcePack = getAssetsFromJar(Path.of("mpp_resourcepack","assets"))
+       ZipArchive().use {zipArchive ->
+            val layer1 = getArmorAssets(true)
+            val layer2 = getArmorAssets(false)
 
-        val layer1 = getArmorAssets(true)
-        val layer2 = getArmorAssets(false)
+            zipArchive.storeFile(layer1)
+            zipArchive.storeFile(layer2)
 
-        for (url in resourcePack) {
-            if(isDirectory(url)) {
-                continue
+            zipArchive.storeFile(generateBlockStatesJson())
+
+            generateItemModels().forEach {
+                zipArchive.storeFile(it)
             }
-            url.openStream().use {
 
+
+            for (url in resourcePack) {
+                if(isDirectory(url)) {
+                    continue
+                }
+                url.openStream().use {
+                    val path = url.path.split("mpp_resourcepack")[1]
+                    zipArchive.storeFile(url, path)
+                }
             }
+            logInfo("Successfully generated resource pack! Uploading...")
+
+            uploadPack(zipArchive.inputStream)
+
+           val hash = calculateSHA1Hash(zipArchive.inputStream) //TODO Maybe we can implement a method ZipArchive#hash
+           // register pack listener
+           inst().server.pluginManager.registerEvents(ResourcePackListener(url, hash), inst())
         }
-
     }
 
-    private fun getArmorAssets(layer1: Boolean): InputStream {
+    private fun getArmorAssets(layer1: Boolean): MemoryFile {
         val armorAssets = getAssetsFromJar(Path.of("mpp_resourcepack", "parseable","armor"))
+        val relArmorPath = Paths.get( "assets","minecraft","textures","models","armor")
+        var layerNum = 1
+        if(!layer1) layerNum = 2
+        val armorFile = File(relArmorPath.toFile(), "leather_layer_$layerNum.png")
+
         val armorCount = armorAssets.asSequence().count() / 2
         val layer = ArmorManager(armorCount)
 
@@ -100,12 +97,13 @@ object ResourcePackBuilder {
                 continue
             }
             url.openStream().use {
-                if (layer1 && url.file.endsWith("1.png") || !layer1 && url.file.endsWith("2.png")) {
-                    layer.drawTexture(url, it)
+                if ((layer1 && url.file.endsWith("1.png")) || (!layer1 && url.file.endsWith("2.png"))) {
+                    layer.drawTexture(url, it) //TODO is the url relative or absolute??
                 }
             }
         }
-        return layer.write()
+
+        return MemoryFile(armorFile.path, layer.write())
     }
 
     private fun isDirectory(url: URL): Boolean {
@@ -115,25 +113,45 @@ object ResourcePackBuilder {
         return false
     }
 
+    /**
+     * A simple class that helps drawing the armor textures into layers
+     * @param armorAmount Amount of custom armors
+     */
     private class ArmorManager(private val armorAmount: Int) {
         private val buff: BufferedImage = BufferedImage(armorAmount * 64, 32, BufferedImage.TYPE_INT_ARGB)
         private val graphics = buff.graphics
 
         private var latest = 1
 
-        fun drawTexture(url: URL, inputStream: InputStream) {
+        /**
+         * Draws the given [texture]. Also reads the [url] name to know which color to use
+         * @param texture Texture to draw
+         * @param url Url to read the name from
+         */
+        fun drawTexture(url: URL, texture: InputStream) {
             val name = url.file.split("_")[0].uppercase()
             if(name == "VANILLA") {
-                drawDefaultTexture(inputStream)
+                drawDefaultTexture(texture)
             } else {
-                drawNormalTexture(inputStream, ArmorSet.valueOf(name))
+                drawNormalTexture(texture, ArmorSet.valueOf(name))
             }
         }
+
+
+        /**
+         * Draws the default white [texture] into the layer
+         * @param texture Texture of the vanilla white armor
+         */
         private fun drawDefaultTexture(texture: InputStream) {
             val image = ImageIO.read(texture)
             graphics.drawImage(image,0,0, null)
         }
 
+        /**
+         * Draws the [texture] with its respective color from [armorSet]
+         * @param texture Texture of the armor
+         * @param armorSet Armor Set that corresponds to the armor
+         */
         private fun drawNormalTexture(texture: InputStream, armorSet: ArmorSet) {
             if(latest >= armorAmount) {
                 throw ArrayIndexOutOfBoundsException()
@@ -148,6 +166,10 @@ object ResourcePackBuilder {
             latest++
         }
 
+        /**
+         * Writes the layer into an input stream
+         * @return Input stream containing the layer data
+         */
         fun write(): InputStream {
             val baos = ByteArrayOutputStream()
             ImageIO.write(buff, "png", baos)
@@ -157,61 +179,12 @@ object ResourcePackBuilder {
 
     }
 
-    @Deprecated("Deprecated")
-    private fun generateArmorLayers() {
-        val armor_assets: Path = Paths.get(resourcePackWorkingDirectory.toString(), "assets","minecraft","textures","armor_assets")
-        val armor: Path = Paths.get(resourcePackWorkingDirectory.toString(), "assets","minecraft","textures","models","armor")
-
-        val armorAmount = (armor_assets.toFile().listFiles()?.size ?: 38) / 2
-
-        val layer1File = File(armor.toFile(), "leather_layer_1.png")
-        val layer2File = File(armor.toFile(), "leather_layer_2.png")
-
-        val layer1Buffer = BufferedImage(armorAmount * 64, 32, BufferedImage.TYPE_INT_ARGB)
-        val layer2Buffer = BufferedImage(armorAmount * 64, 32, BufferedImage.TYPE_INT_ARGB)
-
-        val layer1Graphics = layer1Buffer.graphics
-        val layer2Graphics = layer2Buffer.graphics
-
-        var i = 1
-        var j = 1
-
-        Files.walk(armor_assets).forEach { p ->
-            if(p.isDirectory()) {
-                return@forEach
-            }
-
-            val image = ImageIO.read(p.toFile())
-            val armorName = p.fileName.name.split("_")[0]
-            if(armorName == "vanilla") {
-                if(p.fileName.toString().endsWith("1.png")) {
-                    layer1Graphics.drawImage(image, 0, 0, null)
-                } else {
-                    layer2Graphics.drawImage(image, 0, 0, null)
-                }
-            } else {
-
-                val color = ArmorSet.valueOf(armorName.uppercase()).color.asRGB()
-
-                if(p.fileName.toString().endsWith("1.png")) {
-                    layer1Graphics.drawImage(image, i * 64, 0, null)
-                    layer1Graphics.color = java.awt.Color(color)
-                    layer1Graphics.drawLine(i*64,0,i*64,0)
-                    i++
-                } else {
-                    layer2Graphics.drawImage(image, j * 64, 0, null)
-                    layer2Graphics.color = java.awt.Color(color)
-                    layer2Graphics.drawLine(j*64,0,j*64,0)
-                    j++
-                }
-            }
-        }
-
-        ImageIO.write(layer1Buffer, "PNG", layer1File)
-        ImageIO.write(layer2Buffer, "PNG", layer2File)
-    }
-
-    private fun generateBlockStatesJson() {
+    /**
+     * Generates block states JSON into a pseudo-file in memory
+     *
+     * @return A pseudo-file containing the block states json
+     */
+    private fun generateBlockStatesJson(): MemoryFile {
         val jsonObject = JsonObject()
 
         val variants = JsonObject()
@@ -222,25 +195,24 @@ object ResourcePackBuilder {
         }
 
         jsonObject.add("variants", variants)
-        val gson = GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create()
-        val outputFile = File(
-            Paths.get(
-                inst().dataFolder.absolutePath,
-                "mpp_resourcepack",
-                "assets",
-                "minecraft",
-                "blockstates",
-                "note_block.json"
-            ).toString()
-        )
-        outputFile.parentFile.mkdirs()
-        val fileWriter = FileWriter(outputFile)
-        gson.toJson(jsonObject, fileWriter)
-        fileWriter.flush()
-        fileWriter.close()
+
+       return memoryFileFromJSON(jsonObject, Paths.get(
+           "mpp_resourcepack",
+           "assets",
+           "minecraft",
+           "blockstates",
+           "note_block.json"
+       ))
+
     }
 
-    private fun generateItemModels() {
+    /**
+     * Generates the item models and stores them into pseudo-files
+     */
+    // todo Note: Not going to be a problem but this will open many input streams (for a very tiny bit of time though)
+    private fun generateItemModels(): Array<MemoryFile> {
+        val memoryFiles = ArrayList<MemoryFile>()
+
         val groupedTypes = ItemType.values().groupBy {
             it.getMaterial()
         }
@@ -273,40 +245,30 @@ object ResourcePackBuilder {
             }
 
             jsonObject.add("overrides", overrides)
-
-            val gson = GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create()
-            val outputFile = File(
-                Paths.get(
-                    inst().dataFolder.absolutePath,
-                    "mpp_resourcepack",
-                    "assets",
-                    "minecraft",
-                    "models",
-                    "item",
-                    material.name.lowercase() + ".json"
-                ).toString()
-            )
-            outputFile.parentFile.mkdirs()
-            val fileWriter = FileWriter(outputFile)
-            gson.toJson(jsonObject, fileWriter)
-            fileWriter.flush()
-            fileWriter.close()
+            memoryFiles.add(memoryFileFromJSON(jsonObject, Paths.get(
+                "mpp_resourcepack",
+                "assets",
+                "minecraft",
+                "models",
+                "item",
+                material.name.lowercase() + ".json"
+            )))
         }
+
+        return memoryFiles.toTypedArray()
     }
 
-    private fun uploadPack() {
+    /**
+     * Uploads a zip input stream (essentially the resource pack's zip archive) into the cloud storage
+     * @param inputStream zip archive containing the resource pack
+     */
+    private fun uploadPack(inputStream: InputStream) {
         Unirest
             .post("http://${inst().configManager.resourcePackHostIP}:${inst().configManager.resourcePackHostPort}/upload")
-            .field("file", resourcePackZipPath.toFile())
+            .field("file", inputStream, packName)
             .asStringAsync {
                 logInfo("Successfully uploaded resource pack!")
-                deleteZip()
             }
-
-    }
-
-    private fun deleteZip() {
-        Files.delete(resourcePackZipPath)
     }
 
     /*
