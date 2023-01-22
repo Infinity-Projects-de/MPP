@@ -87,7 +87,7 @@ class MPP : JavaPlugin() {
         }
 
         DataPackManager.saveOrUpdateDataPack()
-        ResourcePackBuilder.generateResourcePackOld()
+        ResourcePackBuilder.generateResourcePack()
 
         // register commands, events and recipes
         Bukkit.getPluginCommand("mpp")?.setExecutor(CommandMPP())
