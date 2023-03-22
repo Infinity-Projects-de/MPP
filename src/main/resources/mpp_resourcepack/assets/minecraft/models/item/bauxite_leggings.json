@@ -1,6 +1,7 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-      "layer0": "item/bauxite_leggings"
+      "layer0": "item/bauxite_leggings",
+      "layer1": "item/bauxite_leggings"
     }
   }

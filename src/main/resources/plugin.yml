@@ -4,14 +4,10 @@ main: de.danielmaile.mpp.MPP
 api-version: 1.19
 authors: [ Daniel Maile and others ]
 website: daniel-maile.com
-depend: [ ProtocolLib, FastAsyncWorldEdit ]
+depend: [ ProtocolLib ]
 libraries:
   - org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin.version}
-  - org.hibernate.orm:hibernate-core:6.1.6.Final
-  - org.hibernate.orm:hibernate-community-dialects:6.1.6.Final
-  - org.xerial:sqlite-jdbc:3.40.0.0
   - org.apache.commons:commons-compress:1.21
-  - commons-codec:commons-codec:1.15
   - com.konghq:unirest-java:3.13.13
 
 commands:

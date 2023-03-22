@@ -11,30 +11,27 @@ messages:
       - "1. Gehe in die config/paper-world-defaults.yml und suche nach \"count-all-mobs-for-spawning:\""
       - "2. Ändere den Wert von false auf true"
       - "3. Starte den Server neu"
-    aether_world_not_generated: "Die Aether Welt wurde noch nicht erstellt. Bitte starte den Server neu!"
+    first_time_server_shutdown:
+      - "HALLO, ES SCHEINT SO, ALS"
+      - "WÜRDEST DU MPP ZU ERSTEN MAL"
+      - "BENUTZEN.UM DIE NEUEN WELTEN ZU"
+      - "GENERIEREN, MUSST DU DEN SERVER"
+      - "NOCHMAL STARTEN. DANKE!"
   cmd:
     info:
       reloaded_config: "<green>Die Config wurde neu geladen!"
       help_text:
         - "<gradient:#03FB5D:#03FBE1>/mpp chest</gradient> <gradient:#D2FB03:#68FB03>- Spawnt eine Dungeon-Kiste an deiner Position.</gradient>"
         - "<gradient:#03FB5D:#03FBE1>/mpp give <name></gradient> <gradient:#D2FB03:#68FB03>- Gibt dir ein MPP Item.</gradient>"
-        - "<gradient:#03FB5D:#03FBE1>/mpp locate</gradient> <gradient:#D2FB03:#68FB03>- Zeigt dir die Koordinaten des nächsten Dungeon an.</gradient>"
         - "<gradient:#03FB5D:#03FBE1>/mpp reload</gradient> <gradient:#D2FB03:#68FB03>- Läd die Config neu.</gradient>"
         - "<gradient:#03FB5D:#03FBE1>/mpp summon <name> <level></gradient> <gradient:#D2FB03:#68FB03>- Spawnt ein MPP Mob an deiner Position.</gradient>"
         - "<gradient:#03FB5D:#03FBE1>/mpp teleport</gradient> <gradient:#D2FB03:#68FB03>- Teleportiert dich in die Aether-Welt.</gradient>"
-      next_dungeon: "<green>Das nächste Dungeon Monument ist <distance> Blöcke entfernt. (<aqua><hover:show_text:'<green>Klicke um dich zum Monument zu teleportieren.</green>'><click:run_command:/tp <location>><location></click></aqua>)"
+        - "<gradient:#03FB5D:#03FBE1>/mpp collection</gradient> <gradient:#D2FB03:#68FB03>- Öffnet die MPP Item Sammlung.</gradient>"
     errors:
       only_player_cmd: "<red>MPP-Befehle können nur von Spielern ausgeführt werden!"
       mob_does_not_exist: "<red>Dieser Mob existiert nicht!"
       item_does_not_exist: "<red>Dieses Item existiert nicht!"
       value_no_integer: "<red>Der angegebene Wert ist keine ganze Zahl!"
-      no_dungeon_found: "<red>Es wurde kein Dungeon gefunden!"
-  chat:
-    click_to_dungeon_teleport: "<gradient:#03FB5D:#03FBE1>Klicke nochmals auf den Block um dich in den Dungeon zu teleportieren.</gradient>"
-dungeons:
-  entry:
-    title: "<bold><gold>DUNGEON"
-    subtitle: "<bold><green>Größe: <size> Segmente"
 gui:
   item:
     page_left:
@@ -1217,3 +1214,7 @@ mobs:
     name: "<aqua><bold>〈</bold><aqua>Riss<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
   RIFT_ELITE:
     name: "<light_purple><bold>〈Elite〉<aqua><bold>〈</bold><aqua>Riss<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  SNIPER:
+    name: "<aqua><bold>〈</bold><aqua>Scharfschütze<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"
+  SNIPER_ELITE:
+    name: "<light_purple><bold>〈Elite〉<aqua><bold>〈</bold><aqua>Scharfschütze<aqua><bold>〉</bold> <red><health>❤ <white><bold>⋅</bold> <gold><bold>〈</bold>Level <level><bold>〉</bold>"

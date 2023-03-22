@@ -25,22 +25,25 @@ import de.danielmaile.mpp.util.getDataString
 import de.danielmaile.mpp.util.setDataString
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextDecoration
+import org.bukkit.Color
 import org.bukkit.Material
 import org.bukkit.attribute.Attribute
 import org.bukkit.attribute.AttributeModifier
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.LeatherArmorMeta
 import java.util.*
 
 const val MPP_ITEM_TAG_KEY = "mpp_item"
 
 // don't change this, otherwise existing items will break
-private const val modelIdOffset = 1000
+private const val MODEL_ID_OFFSET = 1000
 
 enum class ItemType(
-    val material: Material,
+    private val material: Material?,
     private val attributeModifiers: Multimap<Attribute, AttributeModifier>?,
-    val placeBlockType: BlockType?
+    val placeBlockType: BlockType?,
+    private val color: Color?
 ) {
 
     // don't change order because existing items will break
@@ -84,11 +87,11 @@ enum class ItemType(
     FIRE_ESSENCE(Material.ORANGE_DYE, null, null),
     FIRE_SWORD(Material.DIAMOND_SWORD, ToolAttribute(9.0, 1.6).toAttributeMap(), null),
     GRAVITITE_AXE(Material.NETHERITE_AXE, null, null),
-    GRAVITITE_BOOTS(Material.NETHERITE_BOOTS, ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
-    GRAVITITE_CHESTPLATE(Material.NETHERITE_CHESTPLATE, ArmorAttribute(10.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    GRAVITITE_HELMET(Material.NETHERITE_HELMET, ArmorAttribute(5.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
+    GRAVITITE_BOOTS(ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.GRAVITITE.color),
+    GRAVITITE_CHESTPLATE(ArmorAttribute(10.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.GRAVITITE.color),
+    GRAVITITE_HELMET(ArmorAttribute(5.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.GRAVITITE.color),
     GRAVITITE_HOE(Material.NETHERITE_HOE, null, null),
-    GRAVITITE_LEGGINGS(Material.NETHERITE_LEGGINGS, ArmorAttribute(8.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
+    GRAVITITE_LEGGINGS(ArmorAttribute(8.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.GRAVITITE.color),
     GRAVITITE_PICKAXE(Material.NETHERITE_PICKAXE, null, null),
     GRAVITITE_PLATE(Material.NETHERITE_SCRAP, null, null),
     GRAVITITE_SHOVEL(Material.NETHERITE_SHOVEL, null, null),
@@ -100,17 +103,17 @@ enum class ItemType(
     SUN_STONE(Material.NETHER_STAR, null, null),
     SUN_SWORD(Material.NETHERITE_SWORD, ToolAttribute(12.0, 1.6).toAttributeMap(), null),
     VALKYRE_AXE(Material.IRON_AXE, null, null),
-    VALKYRE_BOOTS(Material.IRON_BOOTS, ArmorAttribute(3.0, 1.0, EquipmentSlot.FEET).toAttributeMap(), null),
-    VALKYRE_LEGGINGS(Material.IRON_LEGGINGS, ArmorAttribute(7.5, 1.0, EquipmentSlot.LEGS).toAttributeMap(), null),
-    VALKYRE_RING(Material.IRON_HELMET, ArmorAttribute(3.0, 1.0, EquipmentSlot.HEAD).toAttributeMap(), null),
+    VALKYRE_BOOTS(ArmorAttribute(3.0, 1.0, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.VALKYRIE.color),
+    VALKYRE_LEGGINGS(ArmorAttribute(7.5, 1.0, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.VALKYRIE.color),
+    VALKYRE_RING(ArmorAttribute(3.0, 1.0, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.VALKYRIE.color),
     VALKYRE_SWORD(Material.IRON_SWORD, ToolAttribute(13.0, 1.6).toAttributeMap(), null),
-    VALKYRE_WINGS(Material.ELYTRA, ArmorAttribute(9.0, 1.0, EquipmentSlot.CHEST).toAttributeMap(), null),
+    VALKYRE_WINGS(ArmorAttribute(9.0, 1.0, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.VALKYRIE.color),
     ZANITE_AXE(Material.DIAMOND_AXE, null, null),
-    ZANITE_BOOTS(Material.DIAMOND_BOOTS, ArmorAttribute(4.0, 2.3, EquipmentSlot.FEET).toAttributeMap(), null),
-    ZANITE_CHESTPLATE(Material.DIAMOND_CHESTPLATE, ArmorAttribute(9.0, 2.3, EquipmentSlot.CHEST).toAttributeMap(), null),
-    ZANITE_HELMET(Material.DIAMOND_HELMET, ArmorAttribute(4.0, 2.3, EquipmentSlot.HEAD).toAttributeMap(), null),
+    ZANITE_BOOTS(ArmorAttribute(4.0, 2.3, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.ZANITE.color),
+    ZANITE_CHESTPLATE(ArmorAttribute(9.0, 2.3, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.ZANITE.color),
+    ZANITE_HELMET(ArmorAttribute(4.0, 2.3, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.ZANITE.color),
     ZANITE_HOE(Material.DIAMOND_HOE, null, null),
-    ZANITE_LEGGINGS(Material.DIAMOND_LEGGINGS, ArmorAttribute(7.0, 2.3, EquipmentSlot.LEGS).toAttributeMap(), null),
+    ZANITE_LEGGINGS(ArmorAttribute(7.0, 2.3, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.ZANITE.color),
     ZANITE_PICKAXE(Material.DIAMOND_PICKAXE, null, null),
     ZANITE_SHOVEL(Material.DIAMOND_SHOVEL, null, null),
     ZANITE_STONE(Material.DIAMOND, null, null),
@@ -120,17 +123,17 @@ enum class ItemType(
     WATER_LEAVES(Material.OAK_LEAVES, null, BlockType.WATER_LEAVES),
     AIR_LEAVES(Material.OAK_LEAVES, null, BlockType.AIR_LEAVES),
     EARTH_LEAVES(Material.OAK_LEAVES, null, BlockType.EARTH_LEAVES),
-    OBSIDIAN_BOOTS(Material.NETHERITE_BOOTS, ArmorAttribute(6.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
-    OBSIDIAN_CHESTPLATE(Material.NETHERITE_CHESTPLATE, ArmorAttribute(11.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    OBSIDIAN_HELMET(Material.NETHERITE_HELMET, ArmorAttribute(6.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
-    OBSIDIAN_LEGGINGS(Material.NETHERITE_LEGGINGS, ArmorAttribute(9.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
+    OBSIDIAN_BOOTS( ArmorAttribute(6.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.OBSIDIAN.color),
+    OBSIDIAN_CHESTPLATE(ArmorAttribute(11.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.OBSIDIAN.color),
+    OBSIDIAN_HELMET(ArmorAttribute(6.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.OBSIDIAN.color),
+    OBSIDIAN_LEGGINGS(ArmorAttribute(9.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.OBSIDIAN.color),
     SILVER_INGOT(Material.IRON_INGOT, null, null),
     TITANIUM_INGOT(Material.IRON_INGOT, null, null),
     CRYSTAL_SHARD(Material.QUARTZ, null, null),
-    PHOENIX_HELMET(Material.GOLDEN_HELMET, ArmorAttribute(7.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
-    PHOENIX_CHESTPLATE(Material.GOLDEN_CHESTPLATE, ArmorAttribute(12.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    PHOENIX_LEGGINGS(Material.GOLDEN_LEGGINGS, ArmorAttribute(7.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
-    PHOENIX_BOOTS(Material.GOLDEN_BOOTS, ArmorAttribute(10.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
+    PHOENIX_HELMET(ArmorAttribute(7.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.PHOENIX.color),
+    PHOENIX_CHESTPLATE(ArmorAttribute(12.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.PHOENIX.color),
+    PHOENIX_LEGGINGS(ArmorAttribute(7.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.PHOENIX.color),
+    PHOENIX_BOOTS(ArmorAttribute(10.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.PHOENIX.color),
     DEMON_SWORD(Material.DIAMOND_SWORD, ToolAttribute(14.0, 3.0).toAttributeMap(), null),
     CHERRY(Material.APPLE, null, null),
     STONE_OF_HEALING(Material.CLOCK, null, null),
@@ -234,58 +237,58 @@ enum class ItemType(
     RAW_IRIDIUM(Material.RAW_IRON, null, null),
     RAW_PYRITE(Material.RAW_IRON, null, null),
     RAW_ZINC(Material.RAW_IRON, null, null),
-    THALLASIUM_HELMET(Material.GOLDEN_HELMET, ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
-    THALLASIUM_CHESTPLATE(Material.GOLDEN_CHESTPLATE, ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    THALLASIUM_LEGGINGS(Material.GOLDEN_LEGGINGS, ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
-    THALLASIUM_BOOTS(Material.GOLDEN_BOOTS, ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
-    PENDORITE_HELMET(Material.GOLDEN_HELMET, ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
-    PENDORITE_CHESTPLATE(Material.GOLDEN_CHESTPLATE, ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    PENDORITE_LEGGINGS(Material.GOLDEN_LEGGINGS, ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
-    PENDORITE_BOOTS(Material.GOLDEN_BOOTS, ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
-    LEAD_HELMET(Material.GOLDEN_HELMET, ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
-    LEAD_CHESTPLATE(Material.GOLDEN_CHESTPLATE, ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    LEAD_LEGGINGS(Material.GOLDEN_LEGGINGS, ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
-    LEAD_BOOTS(Material.GOLDEN_BOOTS, ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
-    BAUXITE_HELMET(Material.GOLDEN_HELMET, ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
-    BAUXITE_CHESTPLATE(Material.GOLDEN_CHESTPLATE, ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    BAUXITE_LEGGINGS(Material.GOLDEN_LEGGINGS, ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
-    BAUXITE_BOOTS(Material.GOLDEN_BOOTS, ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
-    RUBY_HELMET(Material.GOLDEN_HELMET, ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
-    RUBY_CHESTPLATE(Material.GOLDEN_CHESTPLATE, ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    RUBY_LEGGINGS(Material.GOLDEN_LEGGINGS, ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
-    RUBY_BOOTS(Material.GOLDEN_BOOTS, ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
-    AETHERIUM_HELMET(Material.GOLDEN_HELMET, ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
-    AETHERIUM_CHESTPLATE(Material.GOLDEN_CHESTPLATE, ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    AETHERIUM_LEGGINGS(Material.GOLDEN_LEGGINGS, ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
-    AETHERIUM_BOOTS(Material.GOLDEN_BOOTS, ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
-    TERMINITE_HELMET(Material.GOLDEN_HELMET, ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
-    TERMINITE_CHESTPLATE(Material.GOLDEN_CHESTPLATE, ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    TERMINITE_LEGGINGS(Material.GOLDEN_LEGGINGS, ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
-    TERMINITE_BOOTS(Material.GOLDEN_BOOTS, ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
-    ENDERITE_HELMET(Material.GOLDEN_HELMET, ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
-    ENDERITE_CHESTPLATE(Material.GOLDEN_CHESTPLATE, ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    ENDERITE_LEGGINGS(Material.GOLDEN_LEGGINGS, ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
-    ENDERITE_BOOTS(Material.GOLDEN_BOOTS, ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
-    PYRITE_HELMET(Material.GOLDEN_HELMET, ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
-    PYRITE_CHESTPLATE(Material.GOLDEN_CHESTPLATE, ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    PYRITE_LEGGINGS(Material.GOLDEN_LEGGINGS, ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
-    PYRITE_BOOTS(Material.GOLDEN_BOOTS, ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
-    SODALITE_HELMET(Material.GOLDEN_HELMET, ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
-    SODALITE_CHESTPLATE(Material.GOLDEN_CHESTPLATE, ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    SODALITE_LEGGINGS(Material.GOLDEN_LEGGINGS, ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
-    SODALITE_BOOTS(Material.GOLDEN_BOOTS, ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
-    TIN_HELMET(Material.GOLDEN_HELMET, ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
-    TIN_CHESTPLATE(Material.GOLDEN_CHESTPLATE, ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    TIN_LEGGINGS(Material.GOLDEN_LEGGINGS, ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
-    TIN_BOOTS(Material.GOLDEN_BOOTS, ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
-    CINNEBAR_HELMET(Material.GOLDEN_HELMET, ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
-    CINNEBAR_CHESTPLATE(Material.GOLDEN_CHESTPLATE, ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    CINNEBAR_LEGGINGS(Material.GOLDEN_LEGGINGS, ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
-    CINNEBAR_BOOTS(Material.GOLDEN_BOOTS, ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
-    AURORA_HELMET(Material.GOLDEN_HELMET, ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), null),
-    AURORA_CHESTPLATE(Material.GOLDEN_CHESTPLATE, ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), null),
-    AURORA_LEGGINGS(Material.GOLDEN_LEGGINGS, ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), null),
-    AURORA_BOOTS(Material.GOLDEN_BOOTS, ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), null),
+    THALLASIUM_HELMET(ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.THALLASIUM.color),
+    THALLASIUM_CHESTPLATE(ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.THALLASIUM.color),
+    THALLASIUM_LEGGINGS(ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.THALLASIUM.color),
+    THALLASIUM_BOOTS(ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.THALLASIUM.color),
+    PENDORITE_HELMET(ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.PENDORITE.color),
+    PENDORITE_CHESTPLATE(ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.PENDORITE.color),
+    PENDORITE_LEGGINGS(ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.PENDORITE.color),
+    PENDORITE_BOOTS(ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.PENDORITE.color),
+    LEAD_HELMET(ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.LEAD.color),
+    LEAD_CHESTPLATE(ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.LEAD.color),
+    LEAD_LEGGINGS(ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.LEAD.color),
+    LEAD_BOOTS( ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.LEAD.color),
+    BAUXITE_HELMET(ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.BAUXITE.color),
+    BAUXITE_CHESTPLATE(ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.BAUXITE.color),
+    BAUXITE_LEGGINGS(ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.BAUXITE.color),
+    BAUXITE_BOOTS(ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.BAUXITE.color),
+    RUBY_HELMET(ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.RUBY.color),
+    RUBY_CHESTPLATE(ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.RUBY.color),
+    RUBY_LEGGINGS(ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.RUBY.color),
+    RUBY_BOOTS(ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.RUBY.color),
+    AETHERIUM_HELMET(ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.AETHERIUM.color),
+    AETHERIUM_CHESTPLATE(ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.AETHERIUM.color),
+    AETHERIUM_LEGGINGS(ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.AETHERIUM.color),
+    AETHERIUM_BOOTS(ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.AETHERIUM.color),
+    TERMINITE_HELMET(ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.TERMINITE.color),
+    TERMINITE_CHESTPLATE(ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.TERMINITE.color),
+    TERMINITE_LEGGINGS(ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.TERMINITE.color),
+    TERMINITE_BOOTS(ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.TERMINITE.color),
+    ENDERITE_HELMET(ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.ENDERITE.color),
+    ENDERITE_CHESTPLATE(ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.ENDERITE.color),
+    ENDERITE_LEGGINGS(ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.ENDERITE.color),
+    ENDERITE_BOOTS(ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.ENDERITE.color),
+    PYRITE_HELMET(ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.PYRITE.color),
+    PYRITE_CHESTPLATE(ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.PYRITE.color),
+    PYRITE_LEGGINGS(ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.PYRITE.color),
+    PYRITE_BOOTS(ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.PYRITE.color),
+    SODALITE_HELMET(ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.SODALITE.color),
+    SODALITE_CHESTPLATE(ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.SODALITE.color),
+    SODALITE_LEGGINGS(ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.SODALITE.color),
+    SODALITE_BOOTS(ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.SODALITE.color),
+    TIN_HELMET(ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.TIN.color),
+    TIN_CHESTPLATE(ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.TIN.color),
+    TIN_LEGGINGS(ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.TIN.color),
+    TIN_BOOTS(ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.TIN.color),
+    CINNEBAR_HELMET(ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.CINNEBAR.color),
+    CINNEBAR_CHESTPLATE(ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.CINNEBAR.color),
+    CINNEBAR_LEGGINGS(ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.CINNEBAR.color),
+    CINNEBAR_BOOTS(ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.CINNEBAR.color),
+    AURORA_HELMET(ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.AURORA.color),
+    AURORA_CHESTPLATE(ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.AURORA.color),
+    AURORA_LEGGINGS(ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.AURORA.color),
+    AURORA_BOOTS(ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.AURORA.color),
     ENDER_SWORD(Material.IRON_SWORD, ToolAttribute(7.0, 1.0).toAttributeMap(), null),
     ENDERITE_SWORD(Material.IRON_SWORD, ToolAttribute(10.0, 1.0).toAttributeMap(), null),
     TUNGSTEN_SWORD(Material.IRON_SWORD, ToolAttribute(9.0, 1.0).toAttributeMap(), null),
@@ -350,8 +353,8 @@ enum class ItemType(
     GRAVITITE_BLOCK(Material.STONE, null, BlockType.GRAVITITE_BLOCK),
     CHISELED_AETHER_STONE_BRICKS(Material.STONE, null, BlockType.CHISELED_AETHER_STONE_BRICKS),
     AETHER_THIN_QUARTZ_PILLAR(Material.STONE, null, BlockType.AETHER_THIN_QUARTZ_PILLAR),
-    VALKYRE_CHESTPLATE(Material.IRON_CHESTPLATE, ArmorAttribute(10.0, 1.0, EquipmentSlot.CHEST).toAttributeMap(), null),
-    VALKYRE_HELMET(Material.IRON_HELMET, ArmorAttribute(5.0, 1.0, EquipmentSlot.HEAD).toAttributeMap(), null),
+    VALKYRE_CHESTPLATE(ArmorAttribute(10.0, 1.0, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.VALKYRIE.color),
+    VALKYRE_HELMET(ArmorAttribute(5.0, 1.0, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.VALKYRIE.color),
     POLISHED_OBSIDIAN(Material.STONE, null, BlockType.POLISHED_OBSIDIAN),
     SMOOTH_OBSIDIAN(Material.STONE, null, BlockType.SMOOTH_OBSIDIAN),
     PYROPE_PLATE(Material.NETHERITE_SCRAP, null, null),
@@ -413,14 +416,46 @@ enum class ItemType(
     private val displayName = inst().getLanguageManager().getComponent("items.$name.name")
     private val description = inst().getLanguageManager().getComponentList("items.$name.description")
 
-    val modelID = this.ordinal + modelIdOffset
+    val modelID = this.ordinal + MODEL_ID_OFFSET
+
+    // constructors for items and custom armor
+    constructor(material: Material, attributeModifiers: Multimap<Attribute, AttributeModifier>?, placeBlockType: BlockType?):
+            this(material, attributeModifiers, placeBlockType, null)
+    constructor(attributeModifiers: Multimap<Attribute, AttributeModifier>?, color: Color):
+            this(null, attributeModifiers, null, color)
+
+    fun getMaterial(): Material {
+        if(material != null) {
+            return material
+        }
+
+        // if no material is given custom item has to be an armor item
+        // return the correct armor piece depending on equipment slot
+        if(attributeModifiers == null) {
+            throw IllegalArgumentException("Item ${this.name} has no material assigned but isn't an armor piece!")
+        }
+
+        val genericArmor = attributeModifiers.get(Attribute.GENERIC_ARMOR)
+        if(genericArmor.isEmpty()) {
+            throw IllegalArgumentException("Item ${this.name} has no material assigned but isn't an armor piece!")
+        }
+
+        val armorModifier= genericArmor.first() as AttributeModifier
+        return when(armorModifier.slot) {
+            EquipmentSlot.HEAD -> Material.LEATHER_HELMET
+            EquipmentSlot.CHEST -> Material.LEATHER_CHESTPLATE
+            EquipmentSlot.LEGS -> Material.LEATHER_LEGGINGS
+            EquipmentSlot.FEET -> Material.LEATHER_BOOTS
+            else -> throw IllegalArgumentException("Armor item ${this.name} has an invalid equipment slot: ${armorModifier.slot}!")
+        }
+    }
 
     fun getItemStack(): ItemStack {
         return getItemStack(1)
     }
 
     fun getItemStack(amount: Int): ItemStack {
-        val itemStack = ItemStack(material)
+        val itemStack = ItemStack(getMaterial())
         val itemMeta = itemStack.itemMeta
 
         // set item name and remove default italic decoration
@@ -438,6 +473,14 @@ enum class ItemType(
             itemMeta.attributeModifiers = attributeModifiers
         }
         itemStack.itemMeta = itemMeta
+
+        // assume that item type is armor, when color is present
+        if(color != null) {
+            val armorMeta = itemMeta as LeatherArmorMeta
+            armorMeta.setColor(color)
+            itemStack.itemMeta = armorMeta
+        }
+
         itemStack.amount = amount
 
         itemStack.setDataString(MPP_ITEM_TAG_KEY, name)

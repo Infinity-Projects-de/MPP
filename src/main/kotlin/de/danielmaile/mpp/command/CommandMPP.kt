@@ -17,19 +17,16 @@
 
 package de.danielmaile.mpp.command
 
-import de.danielmaile.mpp.aether.world.dungeon.Dungeon
-import de.danielmaile.mpp.aether.world.dungeon.loot.DungeonChest
 import de.danielmaile.mpp.aetherWorld
-import de.danielmaile.mpp.config.LanguageManager
+import de.danielmaile.mpp.data.config.LanguageManager
 import de.danielmaile.mpp.gui.ItemCollectionGUI
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.item.ItemType
 import de.danielmaile.mpp.mob.MPPMob
 import de.danielmaile.mpp.util.getDirection
 import de.danielmaile.mpp.util.isLong
+import de.danielmaile.mpp.world.dungeon.DungeonChest
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -64,10 +61,6 @@ class CommandMPP : CommandExecutor, TabCompleter {
 
                     "collection" -> {
                         collectionGUI(sender)
-                    }
-
-                    "locate" -> {
-                        locateCMD(sender, languageManager, cmdPrefix)
                     }
 
                     "reload" -> {
@@ -116,38 +109,6 @@ class CommandMPP : CommandExecutor, TabCompleter {
 
     private fun collectionGUI(player: Player) {
         ItemCollectionGUI().open(player)
-    }
-
-    private fun locateCMD(player: Player, languageManager: LanguageManager, cmdPrefix: Component) {
-        val dungeons: List<Dungeon> = inst().worldManager.objectManager.getDungeons()
-        var smallestDistance = Double.MAX_VALUE
-        var nearestDungeon: Dungeon? = null
-        for (dungeon in dungeons) {
-            val distance: Double = player.location.distance(dungeon.monumentLocation!!)
-            if (distance < smallestDistance) {
-                smallestDistance = distance
-                nearestDungeon = dungeon
-            }
-        }
-
-        if (player.world == aetherWorld() && nearestDungeon != null) {
-            val targetLocation = nearestDungeon.monumentLocation!!.clone().add(0.0, 5.0, 0.0)
-            val locationString =
-                targetLocation.blockX.toString() + " " + targetLocation.blockY + " " + targetLocation.blockZ
-            val tagResolver = TagResolver.resolver(
-                Placeholder.parsed("location", locationString),
-                Placeholder.parsed("distance", smallestDistance.toInt().toString())
-            )
-            val message = cmdPrefix.append(
-                languageManager.getComponent(
-                    "messages.cmd.info.next_dungeon",
-                    tagResolver
-                )
-            )
-            player.sendMessage(message)
-        } else {
-            player.sendMessage(cmdPrefix.append(languageManager.getComponent("messages.cmd.errors.no_dungeon_found")))
-        }
     }
 
     private fun summonCMD(
@@ -224,7 +185,6 @@ class CommandMPP : CommandExecutor, TabCompleter {
             tabComplete.add("chest")
             tabComplete.add("collection")
             tabComplete.add("give")
-            tabComplete.add("locate")
             tabComplete.add("reload")
             tabComplete.add("summon")
             tabComplete.add("teleport")

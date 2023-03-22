@@ -63,7 +63,6 @@ private fun createGUIItem(itemStack: ItemStack, displayName: Component, descript
     itemMeta.lore(descriptionList)
 
     itemMeta.lore(description)
-    itemMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS)
     itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
     itemStack.itemMeta = itemMeta
     return itemStack

@@ -17,6 +17,8 @@
 
 package de.danielmaile.mpp.item
 
+import org.bukkit.Color
+
 enum class ArmorSet(val head: ItemType, val chest: ItemType, val legs: ItemType, val feet: ItemType) {
     VALKYRIE(
         ItemType.VALKYRE_RING,
@@ -108,6 +110,8 @@ enum class ArmorSet(val head: ItemType, val chest: ItemType, val legs: ItemType,
         ItemType.PHOENIX_CHESTPLATE,
         ItemType.PHOENIX_LEGGINGS,
         ItemType.PHOENIX_BOOTS);
+
+    val color: Color = Color.fromRGB(this.ordinal)
 
     fun contains(itemType: ItemType?): Boolean {
         return head == itemType || chest == itemType || legs == itemType || feet == itemType

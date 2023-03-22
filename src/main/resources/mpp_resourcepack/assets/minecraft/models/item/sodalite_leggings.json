@@ -1,6 +1,7 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-      "layer0": "item/sodalite_leggings"
+      "layer0": "item/sodalite_leggings",
+      "layer1": "item/sodalite_leggings"
     }
   }

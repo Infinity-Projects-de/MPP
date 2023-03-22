@@ -1,6 +1,7 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-      "layer0": "item/enderite_boots"
+      "layer0": "item/enderite_boots",
+      "layer1": "item/enderite_boots"
     }
   }

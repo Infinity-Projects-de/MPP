@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:item/handheld",
+  "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "item/gravitite_boots"
+    "layer0": "item/gravitite_boots",
+    "layer1": "item/gravitite_boots"
   }
 }

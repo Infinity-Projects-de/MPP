@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "item/valkyre_wings"
+    "layer0": "item/valkyre_wings",
+    "layer1": "item/valkyre_wings"
   }
 }

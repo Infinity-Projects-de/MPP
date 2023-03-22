@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:item/handheld",
+  "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "item/obsidian_helmet"
+    "layer0": "item/obsidian_helmet",
+    "layer1": "item/obsidian_helmet"
   }
 }
