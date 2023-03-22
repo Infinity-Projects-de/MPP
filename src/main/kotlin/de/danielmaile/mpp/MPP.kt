@@ -22,7 +22,6 @@ import de.danielmaile.mpp.block.ListenerBlock
 import de.danielmaile.mpp.block.function.CloudEffects
 import de.danielmaile.mpp.command.CommandMPP
 import de.danielmaile.mpp.data.DataPackManager
-import de.danielmaile.mpp.data.LicenseManager
 import de.danielmaile.mpp.data.ResourcePackBuilder
 import de.danielmaile.mpp.data.config.ConfigManager
 import de.danielmaile.mpp.data.config.LanguageManager
@@ -76,9 +75,6 @@ class MPP : JavaPlugin() {
     override fun onEnable() {
         instance = this
         saveDefaultFiles()
-
-        // validate license
-        validLicense = LicenseManager.validateLicense()
 
         // setup spigot and paper yml
         if(!checkSpigotYML() || !checkPaperYML()) {

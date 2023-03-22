@@ -4,16 +4,15 @@
 MPP is a Paper plugin that adds custom items, blocks, much more to your Minecraft server! 
 
 ## 📥 Download
-You can download the latest development builds from [here](https://github.com/TheRealKabo/MPP/releases/tag/latest-dev-build).
+You can download the latest development builds from [here](https://github.com/dm432/MPP/releases/tag/latest-dev-build).
 
 **Please note:**
 - Only the newest version of [Paper](https://papermc.io/) is supported. **Spigot builds will not work!**
 - [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) is required.
 - This plugin is still in early development and as such bugs can occur.
-- **You can download and test this plugin for free, but demo mode will be enabled and as such ads about MPP will be shown to players. To use this plugin and disable demo mode you need to buy a license key from [here](https://patreon.com/lamaprojects).**
 
 ## :bug: Report bugs or other issues
-If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://github.com/TheRealKabo/MPP/issues). When doing so, make sure to use one of the provided templates and fill out all the requested information. Make sure to keep your issue's description clear and concise. Your issue's title should also be easy to digest, giving our developers and reporters a good idea of what's wrong without including too many details.
+If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://github.com/dm432/MPP/issues). When doing so, make sure to use one of the provided templates and fill out all the requested information. Make sure to keep your issue's description clear and concise. Your issue's title should also be easy to digest, giving our developers and reporters a good idea of what's wrong without including too many details.
 
 ## :wrench: Contribute
 If you want to contribute by fixing an issue or adding new content to the project, you are more than welcome to do so. For major changes or new content, please open an issue first to discuss what you would like to change/add. If you can't add new things on your own but have any content suggestions, you can create an issue too. Please note the following Contributor License Agreement (CLA) before getting started:
