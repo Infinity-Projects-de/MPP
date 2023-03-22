@@ -25,7 +25,6 @@ import de.danielmaile.mpp.data.DataPackManager
 import de.danielmaile.mpp.data.ResourcePackBuilder
 import de.danielmaile.mpp.data.config.ConfigManager
 import de.danielmaile.mpp.data.config.LanguageManager
-import de.danielmaile.mpp.demo.ListenerJoinDemo
 import de.danielmaile.mpp.item.ListenerConverter
 import de.danielmaile.mpp.item.ListenerCrafting
 import de.danielmaile.mpp.item.function.ListenerArmor
@@ -164,7 +163,6 @@ class MPP : JavaPlugin() {
         server.pluginManager.registerEvents(ListenerRift(), this)
         server.pluginManager.registerEvents(ListenerHealer(), this)
         server.pluginManager.registerEvents(ListenerHitman(), this)
-        server.pluginManager.registerEvents(ListenerJoinDemo(), this)
     }
 
     private fun registerRecipes() {

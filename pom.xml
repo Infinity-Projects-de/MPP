@@ -18,7 +18,7 @@
         <kotlin.version>1.7.22</kotlin.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <minecraft.version>1.19.3</minecraft.version>
+        <minecraft.version>1.19.4</minecraft.version>
         <minecraft.revision>R0.1-SNAPSHOT</minecraft.revision> <!-- It's probably not going to change much -->
     </properties>
     <url>daniel-maile.com</url>
