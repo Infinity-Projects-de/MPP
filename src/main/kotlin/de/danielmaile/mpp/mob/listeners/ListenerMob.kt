@@ -35,5 +35,4 @@ abstract class ListenerMob(private vararg val mobs: MPPMob) : Listener {
         if (mob == null) return false
         return mobs.contains(mob)
     }
-
 }

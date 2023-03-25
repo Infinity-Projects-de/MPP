@@ -17,8 +17,234 @@
 
 package de.danielmaile.mpp.item.recipe
 
-import de.danielmaile.mpp.item.ItemType.*
-import org.bukkit.Material.*
+import de.danielmaile.mpp.item.ItemType.AETHERIUM_AXE
+import de.danielmaile.mpp.item.ItemType.AETHERIUM_BOOTS
+import de.danielmaile.mpp.item.ItemType.AETHERIUM_CHESTPLATE
+import de.danielmaile.mpp.item.ItemType.AETHERIUM_HELMET
+import de.danielmaile.mpp.item.ItemType.AETHERIUM_HOE
+import de.danielmaile.mpp.item.ItemType.AETHERIUM_INGOT
+import de.danielmaile.mpp.item.ItemType.AETHERIUM_LEGGINGS
+import de.danielmaile.mpp.item.ItemType.AETHERIUM_ORE
+import de.danielmaile.mpp.item.ItemType.AETHERIUM_PICKAXE
+import de.danielmaile.mpp.item.ItemType.AETHERIUM_SHOVEL
+import de.danielmaile.mpp.item.ItemType.AETHERIUM_SWORD
+import de.danielmaile.mpp.item.ItemType.AETHER_LOG
+import de.danielmaile.mpp.item.ItemType.AETHER_PLANKS
+import de.danielmaile.mpp.item.ItemType.AETHER_STICK
+import de.danielmaile.mpp.item.ItemType.AETHER_STONE
+import de.danielmaile.mpp.item.ItemType.AETHER_STONE_AXE
+import de.danielmaile.mpp.item.ItemType.AETHER_STONE_HOE
+import de.danielmaile.mpp.item.ItemType.AETHER_STONE_PICKAXE
+import de.danielmaile.mpp.item.ItemType.AETHER_STONE_SHOVEL
+import de.danielmaile.mpp.item.ItemType.AETHER_STONE_SWORD
+import de.danielmaile.mpp.item.ItemType.AETHER_WOODEN_AXE
+import de.danielmaile.mpp.item.ItemType.AETHER_WOODEN_HOE
+import de.danielmaile.mpp.item.ItemType.AETHER_WOODEN_PICKAXE
+import de.danielmaile.mpp.item.ItemType.AETHER_WOODEN_SHOVEL
+import de.danielmaile.mpp.item.ItemType.AETHER_WOODEN_SWORD
+import de.danielmaile.mpp.item.ItemType.AIR_LEAVES
+import de.danielmaile.mpp.item.ItemType.AIR_LOG
+import de.danielmaile.mpp.item.ItemType.AIR_PLANKS
+import de.danielmaile.mpp.item.ItemType.AMBER_GEM
+import de.danielmaile.mpp.item.ItemType.AMBER_ORE
+import de.danielmaile.mpp.item.ItemType.AMETRINE_CRYSTAL
+import de.danielmaile.mpp.item.ItemType.AMETRINE_ORE
+import de.danielmaile.mpp.item.ItemType.AURORA_BOOTS
+import de.danielmaile.mpp.item.ItemType.AURORA_CHESTPLATE
+import de.danielmaile.mpp.item.ItemType.AURORA_HELMET
+import de.danielmaile.mpp.item.ItemType.AURORA_LEGGINGS
+import de.danielmaile.mpp.item.ItemType.AURORA_SHARD
+import de.danielmaile.mpp.item.ItemType.BAUXITE_BOOTS
+import de.danielmaile.mpp.item.ItemType.BAUXITE_CHESTPLATE
+import de.danielmaile.mpp.item.ItemType.BAUXITE_HELMET
+import de.danielmaile.mpp.item.ItemType.BAUXITE_LEGGINGS
+import de.danielmaile.mpp.item.ItemType.BAUXITE_ORE
+import de.danielmaile.mpp.item.ItemType.BAUXITE_PLATE
+import de.danielmaile.mpp.item.ItemType.CINCINNASITE_INGOT
+import de.danielmaile.mpp.item.ItemType.CINCINNASITE_ORE
+import de.danielmaile.mpp.item.ItemType.CINNEBAR_BOOTS
+import de.danielmaile.mpp.item.ItemType.CINNEBAR_CHESTPLATE
+import de.danielmaile.mpp.item.ItemType.CINNEBAR_HELMET
+import de.danielmaile.mpp.item.ItemType.CINNEBAR_INGOT
+import de.danielmaile.mpp.item.ItemType.CINNEBAR_LEGGINGS
+import de.danielmaile.mpp.item.ItemType.CINNEBAR_ORE
+import de.danielmaile.mpp.item.ItemType.CLOUD_SLOW_FALLING
+import de.danielmaile.mpp.item.ItemType.CRACKED_ENDERITE_ORE
+import de.danielmaile.mpp.item.ItemType.DEEPSLATE_BAUXITE_ORE
+import de.danielmaile.mpp.item.ItemType.DEEPSLATE_GALANA_ORE
+import de.danielmaile.mpp.item.ItemType.DEEPSLATE_IRIDIUM_ORE
+import de.danielmaile.mpp.item.ItemType.DEEPSLATE_LEAD_ORE
+import de.danielmaile.mpp.item.ItemType.DEEPSLATE_NIKOLITE_ORE
+import de.danielmaile.mpp.item.ItemType.DEEPSLATE_TIN_ORE
+import de.danielmaile.mpp.item.ItemType.DEEPSLATE_TUNGSTEN_ORE
+import de.danielmaile.mpp.item.ItemType.DEEPSLATE_ZINC_ORE
+import de.danielmaile.mpp.item.ItemType.DEMON_SWORD
+import de.danielmaile.mpp.item.ItemType.EARTH_LOG
+import de.danielmaile.mpp.item.ItemType.EARTH_PLANKS
+import de.danielmaile.mpp.item.ItemType.EMERALD_SHARD
+import de.danielmaile.mpp.item.ItemType.ENDERITE_AXE
+import de.danielmaile.mpp.item.ItemType.ENDERITE_BOOTS
+import de.danielmaile.mpp.item.ItemType.ENDERITE_CHESTPLATE
+import de.danielmaile.mpp.item.ItemType.ENDERITE_HELMET
+import de.danielmaile.mpp.item.ItemType.ENDERITE_HOE
+import de.danielmaile.mpp.item.ItemType.ENDERITE_INGOT
+import de.danielmaile.mpp.item.ItemType.ENDERITE_LEGGINGS
+import de.danielmaile.mpp.item.ItemType.ENDERITE_ORE
+import de.danielmaile.mpp.item.ItemType.ENDERITE_PICKAXE
+import de.danielmaile.mpp.item.ItemType.ENDERITE_PLATE
+import de.danielmaile.mpp.item.ItemType.ENDERITE_SHOVEL
+import de.danielmaile.mpp.item.ItemType.ENDERITE_SWORD
+import de.danielmaile.mpp.item.ItemType.ENDER_AXE
+import de.danielmaile.mpp.item.ItemType.ENDER_HOE
+import de.danielmaile.mpp.item.ItemType.ENDER_PICKAXE
+import de.danielmaile.mpp.item.ItemType.ENDER_PLATE
+import de.danielmaile.mpp.item.ItemType.ENDER_SHOVEL
+import de.danielmaile.mpp.item.ItemType.ENDER_SWORD
+import de.danielmaile.mpp.item.ItemType.END_BAUXITE_ORE
+import de.danielmaile.mpp.item.ItemType.END_CINNEBAR_ORE
+import de.danielmaile.mpp.item.ItemType.END_GALANA_ORE
+import de.danielmaile.mpp.item.ItemType.END_IRIDIUM_ORE
+import de.danielmaile.mpp.item.ItemType.END_NIKOLITE_ORE
+import de.danielmaile.mpp.item.ItemType.END_TIN_ORE
+import de.danielmaile.mpp.item.ItemType.END_TUNGSTEN_ORE
+import de.danielmaile.mpp.item.ItemType.FIRE_ESSENCE
+import de.danielmaile.mpp.item.ItemType.FIRE_LOG
+import de.danielmaile.mpp.item.ItemType.FIRE_PLANKS
+import de.danielmaile.mpp.item.ItemType.FIRE_SWORD
+import de.danielmaile.mpp.item.ItemType.GALANA_ORE
+import de.danielmaile.mpp.item.ItemType.GRAVITITE_AXE
+import de.danielmaile.mpp.item.ItemType.GRAVITITE_BOOTS
+import de.danielmaile.mpp.item.ItemType.GRAVITITE_CHESTPLATE
+import de.danielmaile.mpp.item.ItemType.GRAVITITE_HELMET
+import de.danielmaile.mpp.item.ItemType.GRAVITITE_HOE
+import de.danielmaile.mpp.item.ItemType.GRAVITITE_LEGGINGS
+import de.danielmaile.mpp.item.ItemType.GRAVITITE_ORE
+import de.danielmaile.mpp.item.ItemType.GRAVITITE_PICKAXE
+import de.danielmaile.mpp.item.ItemType.GRAVITITE_PLATE
+import de.danielmaile.mpp.item.ItemType.GRAVITITE_SHOVEL
+import de.danielmaile.mpp.item.ItemType.GRAVITITE_SWORD
+import de.danielmaile.mpp.item.ItemType.HELL_DIAMOND
+import de.danielmaile.mpp.item.ItemType.HELL_LOG
+import de.danielmaile.mpp.item.ItemType.HELL_PLANKS
+import de.danielmaile.mpp.item.ItemType.HELL_STONE
+import de.danielmaile.mpp.item.ItemType.HELL_STONE_PICKAXE
+import de.danielmaile.mpp.item.ItemType.HELL_STONE_SWORD
+import de.danielmaile.mpp.item.ItemType.ICE_ESSENCE
+import de.danielmaile.mpp.item.ItemType.ICE_SWORD
+import de.danielmaile.mpp.item.ItemType.IRIDIUM_INGOT
+import de.danielmaile.mpp.item.ItemType.IRIDIUM_ORE
+import de.danielmaile.mpp.item.ItemType.LEAD_BOOTS
+import de.danielmaile.mpp.item.ItemType.LEAD_CHESTPLATE
+import de.danielmaile.mpp.item.ItemType.LEAD_HELMET
+import de.danielmaile.mpp.item.ItemType.LEAD_LEGGINGS
+import de.danielmaile.mpp.item.ItemType.LEAD_ORE
+import de.danielmaile.mpp.item.ItemType.LEAD_PLATE
+import de.danielmaile.mpp.item.ItemType.LIGHTNING_ESSENCE
+import de.danielmaile.mpp.item.ItemType.LIGHTNING_SWORD
+import de.danielmaile.mpp.item.ItemType.NETHER_BAUXITE_ORE
+import de.danielmaile.mpp.item.ItemType.NETHER_EMERALD_ORE
+import de.danielmaile.mpp.item.ItemType.NETHER_RUBY_ORE
+import de.danielmaile.mpp.item.ItemType.NETHER_TIN_ORE
+import de.danielmaile.mpp.item.ItemType.NETHER_TUNGSTEN_ORE
+import de.danielmaile.mpp.item.ItemType.NETHER_ZINC_ORE
+import de.danielmaile.mpp.item.ItemType.NIKOLITE_INGOT
+import de.danielmaile.mpp.item.ItemType.NIKOLITE_ORE
+import de.danielmaile.mpp.item.ItemType.OBSIDIAN_BOOTS
+import de.danielmaile.mpp.item.ItemType.OBSIDIAN_CHESTPLATE
+import de.danielmaile.mpp.item.ItemType.OBSIDIAN_HELMET
+import de.danielmaile.mpp.item.ItemType.OBSIDIAN_LEGGINGS
+import de.danielmaile.mpp.item.ItemType.PARACHUTE
+import de.danielmaile.mpp.item.ItemType.PENDORITE_BOOTS
+import de.danielmaile.mpp.item.ItemType.PENDORITE_CHESTPLATE
+import de.danielmaile.mpp.item.ItemType.PENDORITE_HELMET
+import de.danielmaile.mpp.item.ItemType.PENDORITE_INGOT
+import de.danielmaile.mpp.item.ItemType.PENDORITE_LEGGINGS
+import de.danielmaile.mpp.item.ItemType.PENDORITE_ORE
+import de.danielmaile.mpp.item.ItemType.PLATIN_INGOT
+import de.danielmaile.mpp.item.ItemType.PLATIN_ORE
+import de.danielmaile.mpp.item.ItemType.POLISHED_OBSIDIAN
+import de.danielmaile.mpp.item.ItemType.PYRITE_BOOTS
+import de.danielmaile.mpp.item.ItemType.PYRITE_CHESTPLATE
+import de.danielmaile.mpp.item.ItemType.PYRITE_HELMET
+import de.danielmaile.mpp.item.ItemType.PYRITE_INGOT
+import de.danielmaile.mpp.item.ItemType.PYRITE_LEGGINGS
+import de.danielmaile.mpp.item.ItemType.PYRITE_ORE
+import de.danielmaile.mpp.item.ItemType.RAW_BAUXITE
+import de.danielmaile.mpp.item.ItemType.RAW_GALANA
+import de.danielmaile.mpp.item.ItemType.RAW_LEAD
+import de.danielmaile.mpp.item.ItemType.RUBY
+import de.danielmaile.mpp.item.ItemType.RUBY_AXE
+import de.danielmaile.mpp.item.ItemType.RUBY_BOOTS
+import de.danielmaile.mpp.item.ItemType.RUBY_CHESTPLATE
+import de.danielmaile.mpp.item.ItemType.RUBY_HELMET
+import de.danielmaile.mpp.item.ItemType.RUBY_HOE
+import de.danielmaile.mpp.item.ItemType.RUBY_LEGGINGS
+import de.danielmaile.mpp.item.ItemType.RUBY_ORE
+import de.danielmaile.mpp.item.ItemType.RUBY_PICKAXE
+import de.danielmaile.mpp.item.ItemType.RUBY_SHOVEL
+import de.danielmaile.mpp.item.ItemType.RUBY_SWORD
+import de.danielmaile.mpp.item.ItemType.SAPPHIRE
+import de.danielmaile.mpp.item.ItemType.SAPPHIRE_AXE
+import de.danielmaile.mpp.item.ItemType.SAPPHIRE_HOE
+import de.danielmaile.mpp.item.ItemType.SAPPHIRE_PICKAXE
+import de.danielmaile.mpp.item.ItemType.SAPPHIRE_SHOVEL
+import de.danielmaile.mpp.item.ItemType.SAPPHIRE_SWORD
+import de.danielmaile.mpp.item.ItemType.SHELDONITE_INGOT
+import de.danielmaile.mpp.item.ItemType.SHELDONITE_ORE
+import de.danielmaile.mpp.item.ItemType.SILVER_INGOT
+import de.danielmaile.mpp.item.ItemType.SILVER_ORE
+import de.danielmaile.mpp.item.ItemType.SMOOTH_OBSIDIAN
+import de.danielmaile.mpp.item.ItemType.SODALITE_BOOTS
+import de.danielmaile.mpp.item.ItemType.SODALITE_CHESTPLATE
+import de.danielmaile.mpp.item.ItemType.SODALITE_HELMET
+import de.danielmaile.mpp.item.ItemType.SODALITE_INGOT
+import de.danielmaile.mpp.item.ItemType.SODALITE_LEGGINGS
+import de.danielmaile.mpp.item.ItemType.SODALITE_ORE
+import de.danielmaile.mpp.item.ItemType.SUN_STONE
+import de.danielmaile.mpp.item.ItemType.SUN_SWORD
+import de.danielmaile.mpp.item.ItemType.TERMINITE_BOOTS
+import de.danielmaile.mpp.item.ItemType.TERMINITE_CHESTPLATE
+import de.danielmaile.mpp.item.ItemType.TERMINITE_HELMET
+import de.danielmaile.mpp.item.ItemType.TERMINITE_INGOT
+import de.danielmaile.mpp.item.ItemType.TERMINITE_LEGGINGS
+import de.danielmaile.mpp.item.ItemType.TERMINITE_ORE
+import de.danielmaile.mpp.item.ItemType.THALLASIUM_BOOTS
+import de.danielmaile.mpp.item.ItemType.THALLASIUM_CHESTPLATE
+import de.danielmaile.mpp.item.ItemType.THALLASIUM_HELMET
+import de.danielmaile.mpp.item.ItemType.THALLASIUM_INGOT
+import de.danielmaile.mpp.item.ItemType.THALLASIUM_LEGGINGS
+import de.danielmaile.mpp.item.ItemType.THALLASIUM_ORE
+import de.danielmaile.mpp.item.ItemType.TIN_BOOTS
+import de.danielmaile.mpp.item.ItemType.TIN_CHESTPLATE
+import de.danielmaile.mpp.item.ItemType.TIN_HELMET
+import de.danielmaile.mpp.item.ItemType.TIN_INGOT
+import de.danielmaile.mpp.item.ItemType.TIN_LEGGINGS
+import de.danielmaile.mpp.item.ItemType.TIN_ORE
+import de.danielmaile.mpp.item.ItemType.TITANIUM_INGOT
+import de.danielmaile.mpp.item.ItemType.TITANIUM_ORE
+import de.danielmaile.mpp.item.ItemType.TUNGSTEN_AXE
+import de.danielmaile.mpp.item.ItemType.TUNGSTEN_HOE
+import de.danielmaile.mpp.item.ItemType.TUNGSTEN_INGOT
+import de.danielmaile.mpp.item.ItemType.TUNGSTEN_ORE
+import de.danielmaile.mpp.item.ItemType.TUNGSTEN_PICKAXE
+import de.danielmaile.mpp.item.ItemType.TUNGSTEN_SHOVEL
+import de.danielmaile.mpp.item.ItemType.TUNGSTEN_SWORD
+import de.danielmaile.mpp.item.ItemType.WATER_LOG
+import de.danielmaile.mpp.item.ItemType.WATER_PLANKS
+import de.danielmaile.mpp.item.ItemType.ZANITE_AXE
+import de.danielmaile.mpp.item.ItemType.ZANITE_BOOTS
+import de.danielmaile.mpp.item.ItemType.ZANITE_CHESTPLATE
+import de.danielmaile.mpp.item.ItemType.ZANITE_HELMET
+import de.danielmaile.mpp.item.ItemType.ZANITE_HOE
+import de.danielmaile.mpp.item.ItemType.ZANITE_LEGGINGS
+import de.danielmaile.mpp.item.ItemType.ZANITE_ORE
+import de.danielmaile.mpp.item.ItemType.ZANITE_PICKAXE
+import de.danielmaile.mpp.item.ItemType.ZANITE_SHOVEL
+import de.danielmaile.mpp.item.ItemType.ZANITE_STONE
+import de.danielmaile.mpp.item.ItemType.ZANITE_SWORD
+import de.danielmaile.mpp.item.ItemType.ZINC_INGOT
+import de.danielmaile.mpp.item.ItemType.ZINC_ORE
+import org.bukkit.Material.STICK
 import org.bukkit.inventory.ItemStack
 
 typealias HelmetRecipe = ArmorRecipe.HelmetRecipe
@@ -35,11 +261,14 @@ typealias AxeRecipe = ToolRecipe.AxeRecipe
 private val craftingRecipeList: List<Recipe> = listOf(
 
     // other items
-    ShapedRecipe(PARACHUTE.getItemStack(), listOf(
-        CLOUD_SLOW_FALLING.getItemStack(), CLOUD_SLOW_FALLING.getItemStack(), CLOUD_SLOW_FALLING.getItemStack(),
-        CLOUD_SLOW_FALLING.getItemStack(), null, CLOUD_SLOW_FALLING.getItemStack(),
-        AIR_LEAVES.getItemStack(), AIR_LEAVES.getItemStack(), AIR_LEAVES.getItemStack()
-    )),
+    ShapedRecipe(
+        PARACHUTE.getItemStack(),
+        listOf(
+            CLOUD_SLOW_FALLING.getItemStack(), CLOUD_SLOW_FALLING.getItemStack(), CLOUD_SLOW_FALLING.getItemStack(),
+            CLOUD_SLOW_FALLING.getItemStack(), null, CLOUD_SLOW_FALLING.getItemStack(),
+            AIR_LEAVES.getItemStack(), AIR_LEAVES.getItemStack(), AIR_LEAVES.getItemStack()
+        )
+    ),
 
     // planks
     ShapelessRecipe(AETHER_PLANKS.getItemStack(4), listOf(AETHER_LOG.getItemStack())),
@@ -133,8 +362,7 @@ private val armorRecipeList: List<Recipe> = listOf(
     BootsRecipe(SODALITE_BOOTS.getItemStack(), SODALITE_INGOT.getItemStack()),
     BootsRecipe(AETHERIUM_BOOTS.getItemStack(), AETHERIUM_INGOT.getItemStack()),
     BootsRecipe(TERMINITE_BOOTS.getItemStack(), TERMINITE_INGOT.getItemStack()),
-    BootsRecipe(AURORA_BOOTS.getItemStack(), AURORA_SHARD.getItemStack()),
-
+    BootsRecipe(AURORA_BOOTS.getItemStack(), AURORA_SHARD.getItemStack())
 
 )
 
@@ -163,13 +391,12 @@ private val toolRecipeList: List<Recipe> = listOf(
     SwordRecipe(AETHERIUM_SWORD.getItemStack(), AETHERIUM_INGOT.getItemStack(), AETHER_STICK.getItemStack()),
     SwordRecipe(DEMON_SWORD.getItemStack(), HELL_DIAMOND.getItemStack(), AETHER_STICK.getItemStack()),
 
-    //hoes - normal stick
+    // hoes - normal stick
     HoeRecipe(ENDER_HOE.getItemStack(), ENDER_PLATE.getItemStack(), ItemStack(STICK)),
     HoeRecipe(ENDERITE_HOE.getItemStack(), ENDERITE_PLATE.getItemStack(), ItemStack(STICK)),
     HoeRecipe(TUNGSTEN_HOE.getItemStack(), TUNGSTEN_INGOT.getItemStack(), ItemStack(STICK)),
     HoeRecipe(RUBY_HOE.getItemStack(), RUBY.getItemStack(), ItemStack(STICK)),
     HoeRecipe(SAPPHIRE_HOE.getItemStack(), SAPPHIRE.getItemStack(), ItemStack(STICK)),
-
 
     // hoes - aether stick
     HoeRecipe(AETHER_WOODEN_HOE.getItemStack(), AETHER_PLANKS.getItemStack(), AETHER_STICK.getItemStack()),
@@ -243,10 +470,16 @@ private val toolRecipeList: List<Recipe> = listOf(
     AxeRecipe(AETHERIUM_AXE.getItemStack(), AETHERIUM_INGOT.getItemStack(), AETHER_STICK.getItemStack()),
 
     // extra swords
-    ShapelessRecipe(LIGHTNING_SWORD.getItemStack(), listOf(ZANITE_SWORD.getItemStack(), LIGHTNING_ESSENCE.getItemStack())),
+    ShapelessRecipe(
+        LIGHTNING_SWORD.getItemStack(),
+        listOf(ZANITE_SWORD.getItemStack(), LIGHTNING_ESSENCE.getItemStack())
+    ),
     ShapelessRecipe(FIRE_SWORD.getItemStack(), listOf(ZANITE_SWORD.getItemStack(), FIRE_ESSENCE.getItemStack())),
     ShapelessRecipe(ICE_SWORD.getItemStack(), listOf(ZANITE_SWORD.getItemStack(), ICE_ESSENCE.getItemStack())),
-    ShapelessRecipe(SUN_SWORD.getItemStack(), listOf(FIRE_ESSENCE.getItemStack(), SUN_STONE.getItemStack(), FIRE_SWORD.getItemStack()))
+    ShapelessRecipe(
+        SUN_SWORD.getItemStack(),
+        listOf(FIRE_ESSENCE.getItemStack(), SUN_STONE.getItemStack(), FIRE_SWORD.getItemStack())
+    )
 )
 
 private val smeltingRecipeList: List<Recipe> = listOf(
@@ -270,7 +503,7 @@ private val smeltingRecipeList: List<Recipe> = listOf(
     FurnaceRecipe(TERMINITE_INGOT.getItemStack(), TERMINITE_ORE.getItemStack(), 50f, 20),
     FurnaceRecipe(PLATIN_INGOT.getItemStack(), PLATIN_ORE.getItemStack(), 50f, 20),
 
-    //multiple recipes per item
+    // multiple recipes per item
 
     // cinnebar ingot
     FurnaceRecipe(CINNEBAR_INGOT.getItemStack(), CINNEBAR_ORE.getItemStack(), 50f, 20),

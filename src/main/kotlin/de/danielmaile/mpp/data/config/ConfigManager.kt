@@ -35,14 +35,16 @@ class ConfigManager {
 
     init {
         var file = File(
-            inst().dataFolder.absolutePath + File.separator
-                    + "locales" + File.separator + inst().config.getString("language_file") + ".yml"
+            inst().dataFolder.absolutePath + File.separator +
+                "locales" + File.separator + inst().config.getString("language_file") + ".yml"
         )
         if (!file.exists()) {
             logError("Language file " + inst().config.getString("language_file") + ".yml was not found!")
             file = File(
-                (inst().dataFolder.absolutePath + File.separator
-                        + "locales" + File.separator + "en.yml")
+                (
+                    inst().dataFolder.absolutePath + File.separator +
+                        "locales" + File.separator + "en.yml"
+                    )
             )
         }
 
@@ -50,8 +52,10 @@ class ConfigManager {
 
         // use locale files included in the plugin as fallback file
         // if the plugin doesn't include the language file provided in the config use the english file
-        val fallBackLanguageFileStream = getResource("locales/${inst().config.getString("language_file")}.yml") ?: getResource("locales/en.yml")!!
-        val fallBackLanguageFile = YamlConfiguration.loadConfiguration(InputStreamReader(fallBackLanguageFileStream, Charsets.UTF_8))
+        val fallBackLanguageFileStream =
+            getResource("locales/${inst().config.getString("language_file")}.yml") ?: getResource("locales/en.yml")!!
+        val fallBackLanguageFile =
+            YamlConfiguration.loadConfiguration(InputStreamReader(fallBackLanguageFileStream, Charsets.UTF_8))
         languageFile.setDefaults(fallBackLanguageFile)
         languageManager = LanguageManager(languageFile)
 

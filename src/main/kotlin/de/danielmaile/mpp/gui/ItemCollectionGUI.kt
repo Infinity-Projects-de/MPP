@@ -47,11 +47,13 @@ class ItemCollectionGUI {
         gui.setItem(6, 8, GuiItem(getArrowRightItem()) { gui.next() })
 
         // items
-        gui.addItem(*ItemType.values().map { it ->
-            GuiItem(it.getItemStack()) {
-                event -> event.whoClicked.inventory.addItem(it.getItemStack())
-            }
-        }.toTypedArray())
+        gui.addItem(
+            *ItemType.values().map { it ->
+                GuiItem(it.getItemStack()) { event ->
+                    event.whoClicked.inventory.addItem(it.getItemStack())
+                }
+            }.toTypedArray()
+        )
     }
 
     fun open(player: Player) {

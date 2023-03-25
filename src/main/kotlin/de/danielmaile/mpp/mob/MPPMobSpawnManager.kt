@@ -30,16 +30,16 @@ class MPPMobSpawnManager : Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     fun onEntitySpawn(event: CreatureSpawnEvent) {
         // only affect mobs not spawned by plugins to avoid infinity loop
-        if(event.spawnReason == CreatureSpawnEvent.SpawnReason.CUSTOM) return
+        if (event.spawnReason == CreatureSpawnEvent.SpawnReason.CUSTOM) return
 
         val location = event.location
 
         // check for entity type and replace with custom mob
         // if entity type is zombie there is a chance for a pack to spawn
-        when(event.entityType) {
+        when (event.entityType) {
             EntityType.ZOMBIE -> {
                 // spawn pack
-                if(Random.nextDouble() < calculatePackSpawnChance(location)) {
+                if (Random.nextDouble() < calculatePackSpawnChance(location)) {
                     val packSize = Random.nextInt(1, calculateMaxPackSize(location) + 1)
                     val mobPack = MPPMobPack(packSize, calculatePackBaseLevel(location), 0.25)
                     mobPack.summon(location)
@@ -47,6 +47,7 @@ class MPPMobSpawnManager : Listener {
                     MPPMob.ZOMBIE.summon(location, calculatePackBaseLevel(location))
                 }
             }
+
             EntityType.SKELETON -> MPPMob.SKELETON.summon(location, calculatePackBaseLevel(location))
             EntityType.CREEPER -> MPPMob.CREEPER.summon(location, calculatePackBaseLevel(location))
             EntityType.SPIDER -> MPPMob.SPIDER.summon(location, calculatePackBaseLevel(location))
@@ -58,7 +59,7 @@ class MPPMobSpawnManager : Listener {
 
     // calculate Pack spawn chance depending on distance to spawn
     private fun calculatePackSpawnChance(location: Location): Double {
-        return when(location.distance(location.world.spawnLocation).toLong()) {
+        return when (location.distance(location.world.spawnLocation).toLong()) {
             in 0..100 -> 0.05
             in 101..300 -> 0.1
             in 301..500 -> 0.21
@@ -73,7 +74,7 @@ class MPPMobSpawnManager : Listener {
 
     // calculate Pack size depending on distance to spawn
     private fun calculateMaxPackSize(location: Location): Int {
-        return when(location.distance(location.world.spawnLocation).toLong()) {
+        return when (location.distance(location.world.spawnLocation).toLong()) {
             in 0..100 -> 3
             in 101..300 -> 5
             in 301..500 -> 8

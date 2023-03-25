@@ -35,7 +35,12 @@ import de.danielmaile.mpp.item.function.particle.ParticleManager
 import de.danielmaile.mpp.item.recipe.recipeList
 import de.danielmaile.mpp.mob.ListenerMPPMobs
 import de.danielmaile.mpp.mob.MPPMobSpawnManager
-import de.danielmaile.mpp.mob.listeners.*
+import de.danielmaile.mpp.mob.listeners.ListenerHealer
+import de.danielmaile.mpp.mob.listeners.ListenerHitman
+import de.danielmaile.mpp.mob.listeners.ListenerKing
+import de.danielmaile.mpp.mob.listeners.ListenerNecromancer
+import de.danielmaile.mpp.mob.listeners.ListenerPlague
+import de.danielmaile.mpp.mob.listeners.ListenerRift
 import de.danielmaile.mpp.util.logError
 import de.danielmaile.mpp.world.WorldManager
 import de.danielmaile.mpp.world.aether.ListenerAether
@@ -45,7 +50,6 @@ import org.bukkit.World
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
-
 
 class MPP : JavaPlugin() {
 
@@ -76,7 +80,7 @@ class MPP : JavaPlugin() {
         saveDefaultFiles()
 
         // setup spigot and paper yml
-        if(!checkSpigotYML() || !checkPaperYML()) {
+        if (!checkSpigotYML() || !checkPaperYML()) {
             Bukkit.getPluginManager().disablePlugin(this)
             return
         }
@@ -91,7 +95,7 @@ class MPP : JavaPlugin() {
 
         try {
             worldManager = WorldManager()
-        } catch(e: Exception){
+        } catch (e: Exception) {
             installMessage(e.message)
             Bukkit.shutdown()
             return
@@ -116,7 +120,7 @@ class MPP : JavaPlugin() {
         for (s in getLanguageManager().getStringList("messages.errors.first_time_server_shutdown")) {
             sendMessage(ChatColor.GREEN.toString() + s)
         }
-        if(!message.isNullOrBlank()) {
+        if (!message.isNullOrBlank()) {
             sendMessage(message)
         } else {
             sendMessage("")
@@ -124,6 +128,7 @@ class MPP : JavaPlugin() {
         sendMessage("")
         sendMessage("------------------------------")
     }
+
     private fun sendMessage(text: String) {
         val color = ChatColor.GREEN
         server.consoleSender.sendMessage(color.toString() + text)
@@ -138,10 +143,12 @@ class MPP : JavaPlugin() {
 
         // save default files
         saveDefaultConfig()
-        if (!File(dataFolder, "locales/de.yml").exists())
+        if (!File(dataFolder, "locales/de.yml").exists()) {
             saveResource("locales/de.yml", false)
-        if (!File(dataFolder, "locales/en.yml").exists())
+        }
+        if (!File(dataFolder, "locales/en.yml").exists()) {
             saveResource("locales/en.yml", false)
+        }
 
         reloadConfig()
     }
@@ -243,11 +250,10 @@ class MPP : JavaPlugin() {
     private fun setupPaperConfig(file: File) {
         val paperSettings = YamlConfiguration.loadConfiguration(file)
 
-        paperSettings.set("entities.spawning.count-all-mobs-for-spawning",true)
+        paperSettings.set("entities.spawning.count-all-mobs-for-spawning", true)
 
         paperSettings.save(file)
     }
-
 
     override fun reloadConfig() {
         super.reloadConfig()

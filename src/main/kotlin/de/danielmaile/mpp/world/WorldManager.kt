@@ -20,7 +20,7 @@ package de.danielmaile.mpp.world
 import org.bukkit.Bukkit
 import org.bukkit.World
 
-class WorldManager(){
+class WorldManager() {
 
     val aetherWorld: World
 

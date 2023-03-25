@@ -22,17 +22,26 @@ import de.danielmaile.mpp.item.MPP_ITEM_TAG_KEY
 import de.danielmaile.mpp.util.centerLocation
 import de.danielmaile.mpp.util.doesKeyExist
 import de.danielmaile.mpp.util.isCustom
-import org.bukkit.*
+import org.bukkit.Bukkit
+import org.bukkit.GameMode
+import org.bukkit.Instrument
+import org.bukkit.Material
+import org.bukkit.Note
 import org.bukkit.block.BlockFace
 import org.bukkit.block.data.type.NoteBlock
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
-import org.bukkit.event.block.*
+import org.bukkit.event.block.Action
+import org.bukkit.event.block.BlockBreakEvent
+import org.bukkit.event.block.BlockPhysicsEvent
+import org.bukkit.event.block.BlockPistonExtendEvent
+import org.bukkit.event.block.BlockPistonRetractEvent
+import org.bukkit.event.block.BlockPlaceEvent
+import org.bukkit.event.block.NotePlayEvent
 import org.bukkit.event.entity.EntityExplodeEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.EquipmentSlot
-
 
 class ListenerBlock : Listener {
 
@@ -107,36 +116,37 @@ class ListenerBlock : Listener {
         event.isCancelled = true
 
         // return if clicked block is no custom block
-        if(!clickedBlock.isCustom()) {
+        if (!clickedBlock.isCustom()) {
             return
         }
 
         // player is not trying to place a block
         val item = event.item ?: return
-        if(!item.type.isBlock) {
+        if (!item.type.isBlock) {
             return
         }
 
         val placeBlock = clickedBlock.getRelative(event.blockFace)
         // can't place block because there is already another block
-        if(placeBlock.type != Material.AIR) {
+        if (placeBlock.type != Material.AIR) {
             return
         }
 
         // can't place block because there are entities inside the block
-        if(!placeBlock.world.getNearbyLivingEntities(placeBlock.centerLocation, 0.8, 0.5, 0.8).isEmpty()) {
+        if (!placeBlock.world.getNearbyLivingEntities(placeBlock.centerLocation, 0.8, 0.5, 0.8).isEmpty()) {
             return
         }
 
         // call BlockPlaceEvent and return if it's cancelled
-        val blockPlaceEvent = BlockPlaceEvent(placeBlock,  placeBlock.state, clickedBlock, item, event.player, true, EquipmentSlot.HAND)
+        val blockPlaceEvent =
+            BlockPlaceEvent(placeBlock, placeBlock.state, clickedBlock, item, event.player, true, EquipmentSlot.HAND)
         Bukkit.getPluginManager().callEvent(blockPlaceEvent)
-        if(blockPlaceEvent.isCancelled) {
+        if (blockPlaceEvent.isCancelled) {
             return
         }
 
         val itemType = ItemType.fromTag(item)
-        if(itemType == null) {
+        if (itemType == null) {
             // place block if it's a non-custom block
             placeBlock.type = item.type
         } else {
@@ -156,7 +166,7 @@ class ListenerBlock : Listener {
         }
 
         // remove item from inventory
-        if(event.player.gameMode != GameMode.CREATIVE) {
+        if (event.player.gameMode != GameMode.CREATIVE) {
             item.amount--
         }
     }
