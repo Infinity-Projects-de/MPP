@@ -44,6 +44,7 @@ class ParticleManager {
                             val location = player.location.clone().add(0.0, 2.2, 0.0)
                             spawnCircle(location, 0.5, 30, Color.YELLOW)
                         }
+
                         ParticleType.VALKYRE_WINGS -> {
                             val location = player.location.clone().add(0.0, 1.0, 0.0)
                             spawnWings(location, Color.YELLOW)

@@ -17,8 +17,8 @@
 
 package de.danielmaile.mpp.item.function
 
-import de.danielmaile.mpp.item.MPP_ITEM_TAG_KEY
 import de.danielmaile.mpp.item.ItemType
+import de.danielmaile.mpp.item.MPP_ITEM_TAG_KEY
 import de.danielmaile.mpp.util.doesKeyExist
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
@@ -51,13 +51,16 @@ class ListenerItem : Listener {
             ItemType.LIGHTNING_SWORD -> {
                 victim.world.strikeLightning(victim.location)
             }
+
             ItemType.FIRE_SWORD, ItemType.SUN_SWORD -> {
                 victim.fireTicks = 300
             }
+
             ItemType.ICE_SWORD -> {
                 victim.freezeTicks = 40
                 victim.addPotionEffect(PotionEffect(PotionEffectType.SLOW, 40, 4, false, false))
             }
+
             else -> {}
         }
     }

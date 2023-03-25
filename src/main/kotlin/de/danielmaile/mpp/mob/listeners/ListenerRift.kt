@@ -25,7 +25,7 @@ import org.bukkit.entity.LivingEntity
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.entity.EntityDamageByEntityEvent
-import java.util.*
+import java.util.Random
 
 class ListenerRift : ListenerMob(MPPMob.RIFT, MPPMob.RIFT_ELITE) {
 
@@ -47,12 +47,11 @@ class ListenerRift : ListenerMob(MPPMob.RIFT, MPPMob.RIFT_ELITE) {
                 }
             }
         }
-
     }
 
     private fun canTeleport(block: Block): Boolean {
-        return block.isPassable && block.getRelative(BlockFace.DOWN).isSolid
-                && block.getRelative(BlockFace.UP).isPassable
+        return block.isPassable && block.getRelative(BlockFace.DOWN).isSolid &&
+            block.getRelative(BlockFace.UP).isPassable
     }
 
     private fun getRandomLocationPlateau(location: Location): Location {

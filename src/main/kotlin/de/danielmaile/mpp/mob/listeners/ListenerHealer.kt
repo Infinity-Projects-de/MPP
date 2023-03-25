@@ -77,7 +77,10 @@ class ListenerHealer : ListenerMob(MPPMob.HEALER, MPPMob.HEALER_ELITE) {
             override fun run() {
                 val vibration = Vibration(Vibration.Destination.EntityDestination(target), beamTime)
                 location.world.spawnParticle(
-                    Particle.VIBRATION, location.clone().add(0.0, 1.6, 0.0), 1, vibration
+                    Particle.VIBRATION,
+                    location.clone().add(0.0, 1.6, 0.0),
+                    1,
+                    vibration
                 )
 
                 if (count++ == 5) {

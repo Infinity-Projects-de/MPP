@@ -33,9 +33,9 @@ import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
-import java.util.*
+import java.util.Locale
+import java.util.Random
 import java.util.stream.Stream
-
 
 class CommandMPP : CommandExecutor, TabCompleter {
 

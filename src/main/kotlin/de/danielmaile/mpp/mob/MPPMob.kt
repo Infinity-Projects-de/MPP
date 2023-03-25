@@ -28,7 +28,10 @@ import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.attribute.Attribute
 import org.bukkit.enchantments.Enchantment
-import org.bukkit.entity.*
+import org.bukkit.entity.Ageable
+import org.bukkit.entity.Breedable
+import org.bukkit.entity.EntityType
+import org.bukkit.entity.LivingEntity
 import org.bukkit.event.entity.CreatureSpawnEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType

@@ -29,7 +29,8 @@ abstract class ToolRecipe : CraftingRecipe() {
     ) : ToolRecipe() {
 
         private val swordLeft = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 ingotMaterial, null, null,
                 ingotMaterial, null, null,
                 stickMaterial, null, null
@@ -37,7 +38,8 @@ abstract class ToolRecipe : CraftingRecipe() {
         ).spigotRecipes
 
         private val swordMiddle = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 null, ingotMaterial, null,
                 null, ingotMaterial, null,
                 null, stickMaterial, null
@@ -45,7 +47,8 @@ abstract class ToolRecipe : CraftingRecipe() {
         ).spigotRecipes
 
         private val swordRight = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 null, null, ingotMaterial,
                 null, null, ingotMaterial,
                 null, null, stickMaterial
@@ -64,7 +67,8 @@ abstract class ToolRecipe : CraftingRecipe() {
 
         override val spigotRecipes: List<Recipe>
             get() = ShapedRecipe(
-                result, listOf(
+                result,
+                listOf(
                     ingotMaterial, ingotMaterial, ingotMaterial,
                     null, stickMaterial, null,
                     null, stickMaterial, null
@@ -79,7 +83,8 @@ abstract class ToolRecipe : CraftingRecipe() {
     ) : ToolRecipe() {
 
         private val axeLeft = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 ingotMaterial, ingotMaterial, null,
                 ingotMaterial, stickMaterial, null,
                 null, stickMaterial, null
@@ -87,7 +92,8 @@ abstract class ToolRecipe : CraftingRecipe() {
         ).spigotRecipes
 
         private val axeRight = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 null, ingotMaterial, ingotMaterial,
                 null, stickMaterial, ingotMaterial,
                 null, stickMaterial, null
@@ -105,7 +111,8 @@ abstract class ToolRecipe : CraftingRecipe() {
     ) : ToolRecipe() {
 
         private val shovelLeft = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 ingotMaterial, null, null,
                 stickMaterial, null, null,
                 stickMaterial, null, null
@@ -113,7 +120,8 @@ abstract class ToolRecipe : CraftingRecipe() {
         ).spigotRecipes
 
         private val shovelMiddle = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 null, ingotMaterial, null,
                 null, stickMaterial, null,
                 null, stickMaterial, null
@@ -121,7 +129,8 @@ abstract class ToolRecipe : CraftingRecipe() {
         ).spigotRecipes
 
         private val shovelRight = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 null, null, ingotMaterial,
                 null, null, stickMaterial,
                 null, null, stickMaterial
@@ -139,7 +148,8 @@ abstract class ToolRecipe : CraftingRecipe() {
     ) : ToolRecipe() {
 
         private val hoeLeft = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 ingotMaterial, ingotMaterial, null,
                 stickMaterial, null, null,
                 stickMaterial, null, null
@@ -147,7 +157,8 @@ abstract class ToolRecipe : CraftingRecipe() {
         ).spigotRecipes
 
         private val hoeMiddleLeft = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 ingotMaterial, ingotMaterial, null,
                 null, stickMaterial, null,
                 null, stickMaterial, null
@@ -155,7 +166,8 @@ abstract class ToolRecipe : CraftingRecipe() {
         ).spigotRecipes
 
         private val hoeMiddleRight = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 null, ingotMaterial, ingotMaterial,
                 null, stickMaterial, null,
                 null, stickMaterial, null
@@ -163,7 +175,8 @@ abstract class ToolRecipe : CraftingRecipe() {
         ).spigotRecipes
 
         private val hoeRight = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 null, ingotMaterial, ingotMaterial,
                 null, null, stickMaterial,
                 null, null, stickMaterial

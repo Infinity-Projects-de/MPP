@@ -27,18 +27,18 @@ import org.bukkit.event.entity.EntityDeathEvent
 class ListenerMPPMobs : Listener {
 
     // handle health and update display name
-    @EventHandler (priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     fun onEntityDamage(event: EntityDamageEvent) {
-        if(event.entity !is LivingEntity) return
+        if (event.entity !is LivingEntity) return
         val entity = event.entity as LivingEntity
 
         // update display name
         updateDisplayName(entity, entity.health - event.damage)
     }
 
-    @EventHandler (priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     fun onCustomMobDeath(event: EntityDeathEvent) {
-        if(!event.entity.persistentDataContainer.has(getMPPMobNameKey())) return
+        if (!event.entity.persistentDataContainer.has(getMPPMobNameKey())) return
 
         // remove custom name before death to prevent console spamming
         event.entity.customName(null)
@@ -46,8 +46,8 @@ class ListenerMPPMobs : Listener {
         val mppMob = getFromEntity(event.entity)
         val level = getLevelFromEntity(event.entity)
 
-        if(mppMob == MPPMob.MOTHER || mppMob == MPPMob.MOTHER_ELITE) {
-            for(i in 1..3) {
+        if (mppMob == MPPMob.MOTHER || mppMob == MPPMob.MOTHER_ELITE) {
+            for (i in 1..3) {
                 MPPMob.CHILD.summon(event.entity.location, level)
             }
         }

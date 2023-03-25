@@ -46,8 +46,9 @@ class ListenerHitman : ListenerMob(MPPMob.HITMAN, MPPMob.HITMAN_ELITE) {
     fun onJoin(event: PlayerJoinEvent) {
         for (world in inst().server.worlds)
             for (entity in world.livingEntities) {
-                if (hidden.contains(entity.entityId))
+                if (hidden.contains(entity.entityId)) {
                     event.player.hideEntity(inst(), entity)
+                }
             }
     }
 

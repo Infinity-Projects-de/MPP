@@ -27,7 +27,7 @@ import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.scheduler.BukkitRunnable
 
 class ListenerNecromancer : ListenerMob(MPPMob.NECROMANCER, MPPMob.NECROMANCER_ELITE) {
-    
+
     @EventHandler
     fun onDeath(event: EntityDeathEvent) {
         val died = getFromEntity(event.entity) ?: return

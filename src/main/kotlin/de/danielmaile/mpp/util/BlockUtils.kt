@@ -53,12 +53,15 @@ fun Block.sendDestructionStagePacket(stage: Int) {
         .write(1, stage)
 
     // run at next tick to ensure it's not async
-    Bukkit.getScheduler().runTask(inst(), Runnable {
-        this.location.getNearbyEntitiesByType(Player::class.java, 16.0)
-            .forEach {
-                ProtocolLibrary.getProtocolManager().sendServerPacket(it, packetContainer)
-            }
-    })
+    Bukkit.getScheduler().runTask(
+        inst(),
+        Runnable {
+            this.location.getNearbyEntitiesByType(Player::class.java, 16.0)
+                .forEach {
+                    ProtocolLibrary.getProtocolManager().sendServerPacket(it, packetContainer)
+                }
+        }
+    )
 }
 
 fun Block.getEntityID(): Int {

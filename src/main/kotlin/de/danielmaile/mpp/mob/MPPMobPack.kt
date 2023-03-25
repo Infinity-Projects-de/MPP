@@ -23,11 +23,11 @@ import kotlin.random.Random
 class MPPMobPack(
     private val size: Int,
     private val baseLevel: Long,
-    private val levelVariance: Double,
+    private val levelVariance: Double
 ) {
 
     fun summon(location: Location) {
-        for(i in 1 ..size) {
+        for (i in 1..size) {
             getRandomMob(null).summon(location, getRandomMobLevel())
         }
     }
