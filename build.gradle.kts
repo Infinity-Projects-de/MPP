@@ -18,7 +18,7 @@ plugins {
 }
 
 bukkit {
-    load = BukkitPluginDescription.PluginLoadOrder.STARTUP
+    load = BukkitPluginDescription.PluginLoadOrder.POSTWORLD
     main = "de.danielmaile.mpp.MPP"
     apiVersion = "1.19"
     authors = listOf("Daniel Maile and others")
@@ -84,6 +84,7 @@ tasks {
                 overwrite(false)
             }
         }
+        jvmArgs("-Dcom.mojang.eula.agree=true")
         pluginJars(File(buildDir, "ProtocolLib.jar"))
         minecraftVersion(minecraftVersion)
     }
