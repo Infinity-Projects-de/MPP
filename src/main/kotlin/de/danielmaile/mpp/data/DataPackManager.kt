@@ -39,10 +39,10 @@ object DataPackManager {
         copyAssetsFromJar("mpp_datapack", dataPackWorkingDirectory)
 
         // determine if newer version differs from existing one
-        val differentVersion = !directoryEquals(dataPackWorldPath.toFile(), dataPackWorkingDirectory.toFile())
+       // val differentVersion = !directoryEquals(dataPackWorldPath.toFile(), dataPackWorkingDirectory.toFile())
 
         // if new version is available, delete old version and copy new one
-        if(differentVersion) {
+        if(true) {
 
             // disable pack in order to delete it
             Bukkit.getDatapackManager().packs.find { it.name == "file/mpp_datapack.zip" }?.let {
