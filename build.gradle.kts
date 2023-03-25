@@ -14,6 +14,7 @@ plugins {
     id("net.minecrell.plugin-yml.bukkit") version "0.5.3"
     id("com.github.johnrengelman.shadow") version "7.0.0"
     id("org.jlleitschuh.gradle.ktlint") version "11.3.1"
+    id("de.undercouch.download") version "5.4.0"
 }
 
 bukkit {
@@ -76,6 +77,14 @@ tasks {
     }
 
     runServer {
+        doFirst {
+            download.run {
+                src("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/target/ProtocolLib.jar")
+                dest(buildDir)
+                overwrite(false)
+            }
+        }
+        pluginJars(File(buildDir, "ProtocolLib.jar"))
         minecraftVersion(minecraftVersion)
     }
 }
