@@ -30,4 +30,4 @@ jobs:
           prerelease: true
           title: "MPP Development Build"
           files: |
-            /home/runner/work/MPP/MPP/build/libs/MPP-*.jar
+            /home/runner/work/MPP/MPP/build/libs/MPP-v+([0-9.]).jar
