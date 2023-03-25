@@ -22,8 +22,6 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import de.danielmaile.mpp.inst
 import org.apache.commons.codec.digest.DigestUtils
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry
-import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream
 import org.apache.commons.io.FileUtils
 import java.io.*
 import java.net.URL
@@ -31,6 +29,9 @@ import java.nio.file.Path
 import java.util.*
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
+
 
 val gson: Gson = GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create()
 
@@ -82,7 +83,7 @@ class MemoryFile(val path: String, val inputStream: InputStream) : Closeable {
  */
 class ZipArchive : Closeable {
     private val baos = ByteArrayOutputStream()
-    private val zipArchiveOut = ZipArchiveOutputStream(baos)
+    private val zipArchiveOut = ZipOutputStream(baos)
 
     /**
      * Stores a file from [url] into the [ZipArchive]
@@ -90,10 +91,10 @@ class ZipArchive : Closeable {
      * @param relativePath Relative path of where to put the file
      */
     fun storeFile(url: URL, relativePath: String) {
-        val entry = ZipArchiveEntry(File(url.toURI()), relativePath)
-        zipArchiveOut.putArchiveEntry(entry)
+        val entry = ZipEntry(relativePath)
+        zipArchiveOut.putNextEntry(entry)
         url.openStream().use { it.copyTo(zipArchiveOut) }
-        zipArchiveOut.closeArchiveEntry()
+        zipArchiveOut.closeEntry()
     }
 
     /**
@@ -101,12 +102,16 @@ class ZipArchive : Closeable {
      * @param file Pseudo-file to be stored
      */
     fun storeFile(file: MemoryFile) {
-        file.use {
-            val entry = ZipArchiveEntry(file.file, file.path)
-            zipArchiveOut.putArchiveEntry(entry)
-            file.inputStream.copyTo(zipArchiveOut)
-            zipArchiveOut.closeArchiveEntry()
+        val entry = ZipEntry(file.path)
+        zipArchiveOut.putNextEntry(entry)
+
+        val buffer = ByteArray(1024)
+        var bytesRead: Int
+        while (file.inputStream.read(buffer).also { bytesRead = it } != -1) {
+            zipArchiveOut.write(buffer, 0, bytesRead)
         }
+
+        zipArchiveOut.closeEntry()
     }
 
     /**
@@ -120,15 +125,18 @@ class ZipArchive : Closeable {
         }
 
     override fun close() {
-        baos.close()
         zipArchiveOut.close()
+        baos.close()
+
     }
 }
 
 /**
  * Copies assets from the plugin jar file to the
  * given [outputFolder]. Only includes assets located
- * in the folder specified in [relativeFolder].
+ * in the folder specified in [relativeFolder]. This method is
+ * deprecated as well because no more files are going to
+ * be saved from now on.
  */
 @Deprecated("Changing to a method that doesn't require saving anything", ReplaceWith("assetsFromJar","relativeFolder"))
 fun copyAssetsFromJar(relativeFolder: String, outputFolder: Path) {
@@ -157,13 +165,54 @@ fun copyAssetsFromJar(relativeFolder: String, outputFolder: Path) {
 }
 
 /**
- * Gets the elements in the specified [relativeFolder] into an [Enumeration]
- * @return [Enumeration] of type [URL] of the resources
+ * Saves the elements in the specified [relativeFolder] into [MemoryFile]s
+ * @param relativeFolder Relative folder that should contain the resources
+ * @return [Array] of type [MemoryFile] of the resources
  */
-fun getAssetsFromJar(relativeFolder: Path): Enumeration<URL> {
-    return inst().javaClass.classLoader.getResources(relativeFolder.toString())
+fun getAssetsFromJar(relativeFolder: String, vararg exclude: String): Array<MemoryFile> {
+    val files = arrayListOf<MemoryFile>()
+
+    val jarFile = getPluginJar()
+
+    if (jarFile.isFile) {  // Run with JAR file
+        val jar = JarFile(jarFile)
+        val entries: Enumeration<JarEntry> = jar.entries() //gives ALL entries in jar
+        while (entries.hasMoreElements()) {
+            val jarEntry = entries.nextElement()
+            val name = jarEntry.name
+
+            if (name.startsWith("$relativeFolder/")) { //filter according to the path
+
+                val parentLess = name.split("/").drop(1).joinToString("/")
+                for (excluded in exclude) {
+                    if (parentLess.startsWith("/$excluded")) continue
+                }
+
+                if (name.endsWith('/')) continue
+                files.add(resourceToMemoryFile(name))
+            }
+        }
+        jar.close()
+    } else {
+        throw IOException("Couldn't find jar file")
+    }
+
+    return files.toTypedArray()
 }
 
+/**
+ * Gets the specified resource and saves it into a [MemoryFile]
+ * @param resourcePath Path containing the resource
+ * @return [MemoryFile] containing the resource
+ */
+fun resourceToMemoryFile(resourcePath: String): MemoryFile {
+    val inputStream = inst().javaClass.classLoader.getResourceAsStream(resourcePath) ?: throw java.lang.IllegalArgumentException()
+    return MemoryFile(resourcePath, inputStream)
+}
+
+/**
+ * This method saves the specified resource into the specified [outputFile]. No more files should be saved anymore so I deprecated it.
+ */
 @Deprecated("Deprecated in favor of non file-creating methods")
 @Throws(IOException::class)
 fun saveResource(resourcePath: String, outputFile: File) {

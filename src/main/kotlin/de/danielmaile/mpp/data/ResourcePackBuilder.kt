@@ -48,57 +48,57 @@ object ResourcePackBuilder {
     fun generateResourcePack() {
         logInfo("Generating resource pack...")
 
-        val resourcePack = getAssetsFromJar(Path.of("mpp_resourcepack","assets"))
-       ZipArchive().use {zipArchive ->
+        val resourcePack = getAssetsFromJar("mpp_resourcepack", "parseable")
+        val zipArchive = ZipArchive()
+
             val layer1 = getArmorAssets(true)
             val layer2 = getArmorAssets(false)
 
             zipArchive.storeFile(layer1)
             zipArchive.storeFile(layer2)
+           generateBlockStatesJson().use {
+            zipArchive.storeFile(it)
+           }
 
-            zipArchive.storeFile(generateBlockStatesJson())
-
-            generateItemModels().forEach {
-                zipArchive.storeFile(it)
-            }
-
-
-            for (url in resourcePack) {
-                if(isDirectory(url)) {
-                    continue
-                }
-                url.openStream().use {
-                    val path = url.path.split("mpp_resourcepack")[1]
-                    zipArchive.storeFile(url, path)
+            generateItemModels().forEach {file ->
+                file.use {
+                    zipArchive.storeFile(it)
                 }
             }
+
+            for (memoryFile in resourcePack) {
+                zipArchive.storeFile(memoryFile)
+                memoryFile.close()
+            }
+
             logInfo("Successfully generated resource pack! Uploading...")
 
-            uploadPack(zipArchive.inputStream)
+           val inputStream = zipArchive.inputStream
+            uploadPack(inputStream)
 
-           val hash = calculateSHA1Hash(zipArchive.inputStream) //TODO Maybe we can implement a method ZipArchive#hash
+           val hash = calculateSHA1Hash(inputStream) //TODO Maybe we can implement a method ZipArchive#hash
            // register pack listener
            inst().server.pluginManager.registerEvents(ResourcePackListener(url, hash), inst())
-        }
+        println(url) // TODO delete
+
+
+        zipArchive.close()
     }
 
     private fun getArmorAssets(layer1: Boolean): MemoryFile {
-        val armorAssets = getAssetsFromJar(Path.of("mpp_resourcepack", "parseable","armor"))
+        val armorAssets = getAssetsFromJar("mpp_resourcepack/parseable/armor")
         val relArmorPath = Paths.get( "assets","minecraft","textures","models","armor")
         var layerNum = 1
         if(!layer1) layerNum = 2
         val armorFile = File(relArmorPath.toFile(), "leather_layer_$layerNum.png")
 
-        val armorCount = armorAssets.asSequence().count() / 2
+         val armorCount = armorAssets.size / 2
         val layer = ArmorManager(armorCount)
 
-        for (url in armorAssets) {
-            if(isDirectory(url)) { // I'm quite sure I don't need this foolproof check
-                continue
-            }
-            url.openStream().use {
-                if ((layer1 && url.file.endsWith("1.png")) || (!layer1 && url.file.endsWith("2.png"))) {
-                    layer.drawTexture(url, it) //TODO is the url relative or absolute??
+        for (memoryFile in armorAssets) {
+            memoryFile.use {
+                if ((layer1 && memoryFile.path.endsWith("1.png")) || (!layer1 && memoryFile.path.endsWith("2.png"))) {
+                    layer.drawTexture(memoryFile)
                 }
             }
         }
@@ -128,12 +128,14 @@ object ResourcePackBuilder {
          * @param texture Texture to draw
          * @param url Url to read the name from
          */
-        fun drawTexture(url: URL, texture: InputStream) {
-            val name = url.file.split("_")[0].uppercase()
+        fun drawTexture(memoryFile: MemoryFile) {
+            val path = memoryFile.path.split("/")
+            val file = path.last()
+            val name = file.split("_")[0].uppercase()
             if(name == "VANILLA") {
-                drawDefaultTexture(texture)
+                drawDefaultTexture(memoryFile.inputStream)
             } else {
-                drawNormalTexture(texture, ArmorSet.valueOf(name))
+                drawNormalTexture(memoryFile.inputStream, ArmorSet.valueOf(name))
             }
         }
 
@@ -269,6 +271,7 @@ object ResourcePackBuilder {
             .asStringAsync {
                 logInfo("Successfully uploaded resource pack!")
             }
+
     }
 
     /*
