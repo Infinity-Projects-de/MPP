@@ -21,7 +21,7 @@ jobs:
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
-          arguments: build
+          arguments: clean build
       - name: Create Release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
@@ -29,5 +29,5 @@ jobs:
           automatic_release_tag: "latest-dev-build"
           prerelease: true
           title: "MPP Development Build"
-          files: |
-            /home/runner/work/MPP/MPP/build/libs/MPP-v+([0-9.]).jar
+          files: | # Glob string that matches the versioning defined in the build.gradle.kts file. -dev and -dev-all jars are excluded
+            /home/runner/work/MPP/MPP/build/libs/MPP-+([0-9.]).+([0-9])-+([0-9.])-+([A-Z]).jar
