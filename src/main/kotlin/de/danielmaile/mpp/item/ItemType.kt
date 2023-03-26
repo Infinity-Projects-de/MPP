@@ -32,7 +32,7 @@ import org.bukkit.attribute.AttributeModifier
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.LeatherArmorMeta
-import java.util.*
+import java.util.UUID
 
 const val MPP_ITEM_TAG_KEY = "mpp_item"
 
@@ -123,7 +123,7 @@ enum class ItemType(
     WATER_LEAVES(Material.OAK_LEAVES, null, BlockType.WATER_LEAVES),
     AIR_LEAVES(Material.OAK_LEAVES, null, BlockType.AIR_LEAVES),
     EARTH_LEAVES(Material.OAK_LEAVES, null, BlockType.EARTH_LEAVES),
-    OBSIDIAN_BOOTS( ArmorAttribute(6.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.OBSIDIAN.color),
+    OBSIDIAN_BOOTS(ArmorAttribute(6.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.OBSIDIAN.color),
     OBSIDIAN_CHESTPLATE(ArmorAttribute(11.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.OBSIDIAN.color),
     OBSIDIAN_HELMET(ArmorAttribute(6.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.OBSIDIAN.color),
     OBSIDIAN_LEGGINGS(ArmorAttribute(9.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.OBSIDIAN.color),
@@ -248,7 +248,7 @@ enum class ItemType(
     LEAD_HELMET(ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.LEAD.color),
     LEAD_CHESTPLATE(ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.LEAD.color),
     LEAD_LEGGINGS(ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.LEAD.color),
-    LEAD_BOOTS( ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.LEAD.color),
+    LEAD_BOOTS(ArmorAttribute(5.0, 3.9, EquipmentSlot.FEET).toAttributeMap(), ArmorSet.LEAD.color),
     BAUXITE_HELMET(ArmorAttribute(3.0, 3.9, EquipmentSlot.HEAD).toAttributeMap(), ArmorSet.BAUXITE.color),
     BAUXITE_CHESTPLATE(ArmorAttribute(8.0, 3.9, EquipmentSlot.CHEST).toAttributeMap(), ArmorSet.BAUXITE.color),
     BAUXITE_LEGGINGS(ArmorAttribute(3.0, 3.9, EquipmentSlot.LEGS).toAttributeMap(), ArmorSet.BAUXITE.color),
@@ -419,29 +419,34 @@ enum class ItemType(
     val modelID = this.ordinal + MODEL_ID_OFFSET
 
     // constructors for items and custom armor
-    constructor(material: Material, attributeModifiers: Multimap<Attribute, AttributeModifier>?, placeBlockType: BlockType?):
-            this(material, attributeModifiers, placeBlockType, null)
-    constructor(attributeModifiers: Multimap<Attribute, AttributeModifier>?, color: Color):
-            this(null, attributeModifiers, null, color)
+    constructor(
+        material: Material,
+        attributeModifiers: Multimap<Attribute, AttributeModifier>?,
+        placeBlockType: BlockType?
+    ) :
+        this(material, attributeModifiers, placeBlockType, null)
+
+    constructor(attributeModifiers: Multimap<Attribute, AttributeModifier>?, color: Color) :
+        this(null, attributeModifiers, null, color)
 
     fun getMaterial(): Material {
-        if(material != null) {
+        if (material != null) {
             return material
         }
 
         // if no material is given custom item has to be an armor item
         // return the correct armor piece depending on equipment slot
-        if(attributeModifiers == null) {
+        if (attributeModifiers == null) {
             throw IllegalArgumentException("Item ${this.name} has no material assigned but isn't an armor piece!")
         }
 
         val genericArmor = attributeModifiers.get(Attribute.GENERIC_ARMOR)
-        if(genericArmor.isEmpty()) {
+        if (genericArmor.isEmpty()) {
             throw IllegalArgumentException("Item ${this.name} has no material assigned but isn't an armor piece!")
         }
 
-        val armorModifier= genericArmor.first() as AttributeModifier
-        return when(armorModifier.slot) {
+        val armorModifier = genericArmor.first() as AttributeModifier
+        return when (armorModifier.slot) {
             EquipmentSlot.HEAD -> Material.LEATHER_HELMET
             EquipmentSlot.CHEST -> Material.LEATHER_CHESTPLATE
             EquipmentSlot.LEGS -> Material.LEATHER_LEGGINGS
@@ -475,7 +480,7 @@ enum class ItemType(
         itemStack.itemMeta = itemMeta
 
         // assume that item type is armor, when color is present
-        if(color != null) {
+        if (color != null) {
             val armorMeta = itemMeta as LeatherArmorMeta
             armorMeta.setColor(color)
             itemStack.itemMeta = armorMeta
@@ -510,8 +515,12 @@ enum class ItemType(
 
     private abstract class CustomAttribute {
         fun toAttributeMap(
-            attribute1: Attribute, value1: Double, slot1: EquipmentSlot,
-            attribute2: Attribute, value2: Double, slot2: EquipmentSlot,
+            attribute1: Attribute,
+            value1: Double,
+            slot1: EquipmentSlot,
+            attribute2: Attribute,
+            value2: Double,
+            slot2: EquipmentSlot
         ): Multimap<Attribute, AttributeModifier> {
             val attributeMap: Multimap<Attribute, AttributeModifier> = ArrayListMultimap.create()
             attributeMap.put(
@@ -542,8 +551,12 @@ enum class ItemType(
 
         fun toAttributeMap(): Multimap<Attribute, AttributeModifier> {
             return toAttributeMap(
-                Attribute.GENERIC_ATTACK_DAMAGE, attackDamage, EquipmentSlot.HAND,
-                Attribute.GENERIC_ATTACK_SPEED, attackSpeed, EquipmentSlot.HAND
+                Attribute.GENERIC_ATTACK_DAMAGE,
+                attackDamage,
+                EquipmentSlot.HAND,
+                Attribute.GENERIC_ATTACK_SPEED,
+                attackSpeed,
+                EquipmentSlot.HAND
             )
         }
     }
@@ -553,8 +566,12 @@ enum class ItemType(
 
         fun toAttributeMap(): Multimap<Attribute, AttributeModifier> {
             return toAttributeMap(
-                Attribute.GENERIC_ARMOR, armor, slot,
-                Attribute.GENERIC_ARMOR_TOUGHNESS, armorToughness, slot
+                Attribute.GENERIC_ARMOR,
+                armor,
+                slot,
+                Attribute.GENERIC_ARMOR_TOUGHNESS,
+                armorToughness,
+                slot
             )
         }
     }

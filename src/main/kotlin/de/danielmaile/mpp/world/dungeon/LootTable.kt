@@ -19,7 +19,7 @@ package de.danielmaile.mpp.world.dungeon
 
 import de.danielmaile.mpp.item.ItemType
 import org.bukkit.Material
-import java.util.*
+import java.util.Random
 
 enum class LootTable(
     val weight: Double,

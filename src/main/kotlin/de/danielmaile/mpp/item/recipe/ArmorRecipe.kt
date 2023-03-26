@@ -28,7 +28,8 @@ abstract class ArmorRecipe : CraftingRecipe() {
     ) : ArmorRecipe() {
 
         private val helmetTop = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 ingotMaterial, ingotMaterial, ingotMaterial,
                 ingotMaterial, null, ingotMaterial,
                 null, null, null
@@ -36,7 +37,8 @@ abstract class ArmorRecipe : CraftingRecipe() {
         ).spigotRecipes
 
         private val helmetBottom = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 null, null, null,
                 ingotMaterial, ingotMaterial, ingotMaterial,
                 ingotMaterial, null, ingotMaterial
@@ -54,7 +56,8 @@ abstract class ArmorRecipe : CraftingRecipe() {
 
         override val spigotRecipes: List<Recipe>
             get() = ShapedRecipe(
-                result, listOf(
+                result,
+                listOf(
                     ingotMaterial, null, ingotMaterial,
                     ingotMaterial, ingotMaterial, ingotMaterial,
                     ingotMaterial, ingotMaterial, ingotMaterial
@@ -69,7 +72,8 @@ abstract class ArmorRecipe : CraftingRecipe() {
 
         override val spigotRecipes: List<Recipe>
             get() = ShapedRecipe(
-                result, listOf(
+                result,
+                listOf(
                     ingotMaterial, ingotMaterial, ingotMaterial,
                     ingotMaterial, null, ingotMaterial,
                     ingotMaterial, null, ingotMaterial
@@ -83,7 +87,8 @@ abstract class ArmorRecipe : CraftingRecipe() {
     ) : ArmorRecipe() {
 
         private val bootsTop = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 ingotMaterial, null, ingotMaterial,
                 ingotMaterial, null, ingotMaterial,
                 null, null, null
@@ -91,7 +96,8 @@ abstract class ArmorRecipe : CraftingRecipe() {
         ).spigotRecipes
 
         private val bootsBottom = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 null, null, null,
                 ingotMaterial, null, ingotMaterial,
                 ingotMaterial, null, ingotMaterial

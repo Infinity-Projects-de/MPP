@@ -20,7 +20,11 @@ package de.danielmaile.mpp.item.function.magicwand
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.util.getNearestObjectInSight
 import de.danielmaile.mpp.util.setDataString
-import org.bukkit.*
+import org.bukkit.Bukkit
+import org.bukkit.Color
+import org.bukkit.Location
+import org.bukkit.Particle
+import org.bukkit.Sound
 import org.bukkit.block.Block
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.LivingEntity
@@ -84,16 +88,19 @@ class MagicWand(itemStack: ItemStack) {
         when (currentSpell) {
             Spell.SOUND_BEAM -> {
                 playSound(
-                    getEyeLocation(), soundBeamSounds[Random.nextInt(soundBeamSounds.size)],
-                    1f, Random.nextDouble(0.85, 1.15).toFloat()
+                    getEyeLocation(),
+                    soundBeamSounds[Random.nextInt(soundBeamSounds.size)],
+                    1f,
+                    Random.nextDouble(0.85, 1.15).toFloat()
                 )
             }
+
             Spell.YEET_SPELL -> {
                 velocity = velocity.add(player.location.direction.clone().add(Vector(0.0, 2.0, 0.0)))
             }
+
             else -> {}
         }
-
     }
 
     private fun Block.hit() {

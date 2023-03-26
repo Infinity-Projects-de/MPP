@@ -34,7 +34,12 @@ import com.comphenix.protocol.events.PacketEvent
 import com.comphenix.protocol.wrappers.EnumWrappers
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.item.ItemType
-import de.danielmaile.mpp.util.*
+import de.danielmaile.mpp.util.ToolType
+import de.danielmaile.mpp.util.getPotionEffectLevel
+import de.danielmaile.mpp.util.isCustom
+import de.danielmaile.mpp.util.isGrounded
+import de.danielmaile.mpp.util.sendDestructionStagePacket
+import de.danielmaile.mpp.util.sendPackets
 import net.minecraft.network.protocol.game.ClientboundBlockChangedAckPacket
 import net.minecraft.network.protocol.game.ClientboundRemoveMobEffectPacket
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket
@@ -57,33 +62,32 @@ import kotlin.math.pow
 import kotlin.math.round
 import kotlin.random.Random
 
-private val MINING_FATIGUE = MobEffectInstance(MobEffect.byId(4), Integer.MAX_VALUE, 255, false, false, false)
+private val MINING_FATIGUE = MobEffectInstance(MobEffect.byId(4)!!, Integer.MAX_VALUE, 255, false, false, false)
 
 object BlockBreakingService {
 
     fun init() {
         // listen to player action packets
         ProtocolLibrary.getProtocolManager().addPacketListener(object :
-            PacketAdapter(inst(), ListenerPriority.NORMAL, PacketType.Play.Client.BLOCK_DIG) {
-            override fun onPacketReceiving(event: PacketEvent) {
+                PacketAdapter(inst(), ListenerPriority.NORMAL, PacketType.Play.Client.BLOCK_DIG) {
+                override fun onPacketReceiving(event: PacketEvent) {
+                    val sequence = event.packet.integers.read(0)
+                    val blockPosition = event.packet.blockPositionModifier.values[0]
+                    val digType = event.packet.playerDigTypes.values[0]
 
-                val sequence = event.packet.integers.read(0)
-                val blockPosition = event.packet.blockPositionModifier.values[0]
-                val digType = event.packet.playerDigTypes.values[0]
+                    if (digType == EnumWrappers.PlayerDigType.START_DESTROY_BLOCK) {
+                        val block = event.player.world.getBlockAt(blockPosition.x, blockPosition.y, blockPosition.z)
+                        if (block.isCustom()) {
+                            damageBlock(block, event.player, sequence)
+                        }
+                    }
 
-                if (digType == EnumWrappers.PlayerDigType.START_DESTROY_BLOCK) {
-                    val block = event.player.world.getBlockAt(blockPosition.x, blockPosition.y, blockPosition.z)
-                    if (block.isCustom()) {
-                        damageBlock(block, event.player, sequence)
+                    if (digType == EnumWrappers.PlayerDigType.STOP_DESTROY_BLOCK || digType == EnumWrappers.PlayerDigType.ABORT_DESTROY_BLOCK) {
+                        val block = event.player.world.getBlockAt(blockPosition.x, blockPosition.y, blockPosition.z)
+                        stopDamaging(block)
                     }
                 }
-
-                if (digType == EnumWrappers.PlayerDigType.STOP_DESTROY_BLOCK || digType == EnumWrappers.PlayerDigType.ABORT_DESTROY_BLOCK) {
-                    val block = event.player.world.getBlockAt(blockPosition.x, blockPosition.y, blockPosition.z)
-                    stopDamaging(block)
-                }
-            }
-        })
+            })
 
         // handle ticks
         Bukkit.getScheduler().scheduleSyncRepeatingTask(inst(), {
@@ -106,9 +110,12 @@ object BlockBreakingService {
         // break block instant if player is in creative mode
         if (player.gameMode == GameMode.CREATIVE) {
             // run at next tick to ensure it's not async
-            Bukkit.getScheduler().runTask(inst(), Runnable {
-                block.type = Material.AIR
-            })
+            Bukkit.getScheduler().runTask(
+                inst(),
+                Runnable {
+                    block.type = Material.AIR
+                }
+            )
             return
         }
 
@@ -147,9 +154,12 @@ object BlockBreakingService {
             // break block and stop
             if (ticksPassed >= breakTime) {
                 // run at next tick to ensure it's not async
-                Bukkit.getScheduler().runTask(inst(), Runnable {
-                    block.type = Material.AIR
-                })
+                Bukkit.getScheduler().runTask(
+                    inst(),
+                    Runnable {
+                        block.type = Material.AIR
+                    }
+                )
 
                 playBreakSound()
                 dropItem()
@@ -171,9 +181,12 @@ object BlockBreakingService {
                 // the player might actually have mining fatigue.
                 // in this case, it is important to copy the hasIcon value to prevent it from disappearing.
                 val effectInstance = MobEffectInstance(
-                    MobEffect.byId(4),
-                    Int.MAX_VALUE, 255,
-                    effect.isAmbient, effect.hasParticles(), effect.hasIcon()
+                    MobEffect.byId(4)!!,
+                    Int.MAX_VALUE,
+                    255,
+                    effect.isAmbient,
+                    effect.hasParticles(),
+                    effect.hasIcon()
                 )
                 ClientboundUpdateMobEffectPacket(player.entityId, effectInstance)
             } else {
@@ -194,14 +207,17 @@ object BlockBreakingService {
             val packet = if (effect != null) {
                 // if the player actually has mining fatigue, send the correct effect again
                 val effectInstance = MobEffectInstance(
-                    MobEffect.byId(4),
-                    effect.duration, effect.amplifier,
-                    effect.isAmbient, effect.hasParticles(), effect.hasIcon()
+                    MobEffect.byId(4)!!,
+                    effect.duration,
+                    effect.amplifier,
+                    effect.isAmbient,
+                    effect.hasParticles(),
+                    effect.hasIcon()
                 )
                 ClientboundUpdateMobEffectPacket(player.entityId, effectInstance)
             } else {
                 // remove the effect
-                ClientboundRemoveMobEffectPacket(player.entityId, MobEffect.byId(4))
+                ClientboundRemoveMobEffectPacket(player.entityId, MobEffect.byId(4)!!)
             }
             player.sendPackets(packet)
 

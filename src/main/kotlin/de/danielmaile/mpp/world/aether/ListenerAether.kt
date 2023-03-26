@@ -51,44 +51,44 @@ class ListenerAether : Listener {
      */
     private fun initLlamaListener() {
         ProtocolLibrary.getProtocolManager().addPacketListener(object :
-            PacketAdapter(inst(), ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE) {
-            override fun onPacketReceiving(event: PacketEvent) {
-                val packetContainer = event.packet
-                val player = event.player
-                val llama = player.vehicle ?: return
+                PacketAdapter(inst(), ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE) {
+                override fun onPacketReceiving(event: PacketEvent) {
+                    val packetContainer = event.packet
+                    val player = event.player
+                    val llama = player.vehicle ?: return
 
-                if (llama !is Llama) return
-                if (llama.location.world != aetherWorld()) return
-                if (llama.inventory.decor == null) return
+                    if (llama !is Llama) return
+                    if (llama.location.world != aetherWorld()) return
+                    if (llama.inventory.decor == null) return
 
-                // jumping
-                val jump = packetContainer.booleans.read(0)
-                if (jump && llama.isOnGround()) {
-                    llama.velocity = llama.velocity.clone().add(Vector(0.0, inst().configManager.llamaJumpHeight, 0.0))
+                    // jumping
+                    val jump = packetContainer.booleans.read(0)
+                    if (jump && llama.isOnGround()) {
+                        llama.velocity = llama.velocity.clone().add(Vector(0.0, inst().configManager.llamaJumpHeight, 0.0))
+                    }
+
+                    // calculate velocity
+                    val leftRight = packetContainer.float.read(0)
+                    val forwardBackward = packetContainer.float.read(1)
+
+                    val horizontal = Vector(-forwardBackward.toDouble(), 0.0, leftRight.toDouble())
+                    if (horizontal.length() > 0) {
+                        // turn to face of vector in direction which the player is facing
+                        horizontal.rotateAroundY(Math.toRadians((-player.location.yaw + 90f).toDouble()))
+
+                        // scale vector
+                        horizontal.normalize().multiply(inst().configManager.llamaSpeed)
+                    }
+
+                    val vertical = llama.getVelocity()
+                    vertical.setX(0)
+                    vertical.setZ(0)
+                    llama.setVelocity(horizontal.add(vertical))
+
+                    // rotation
+                    llama.setRotation(player.eyeLocation.yaw, player.eyeLocation.pitch)
                 }
-
-                // calculate velocity
-                val leftRight = packetContainer.float.read(0)
-                val forwardBackward = packetContainer.float.read(1)
-
-                val horizontal = Vector(-forwardBackward.toDouble(), 0.0, leftRight.toDouble())
-                if (horizontal.length() > 0) {
-                    // turn to face of vector in direction which the player is facing
-                    horizontal.rotateAroundY(Math.toRadians((-player.location.yaw + 90f).toDouble()))
-
-                    // scale vector
-                    horizontal.normalize().multiply(inst().configManager.llamaSpeed)
-                }
-
-                val vertical = llama.getVelocity()
-                vertical.setX(0)
-                vertical.setZ(0)
-                llama.setVelocity(horizontal.add(vertical))
-
-                // rotation
-                llama.setRotation(player.eyeLocation.yaw, player.eyeLocation.pitch)
-            }
-        })
+            })
     }
 
     /**

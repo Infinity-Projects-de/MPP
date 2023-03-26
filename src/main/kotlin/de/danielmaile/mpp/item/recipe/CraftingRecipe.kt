@@ -27,7 +27,8 @@ abstract class CraftingRecipe : Recipe() {
     ) : ToolRecipe() {
 
         private val stickTopLeft = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 woodMaterial, null, null,
                 woodMaterial, null, null,
                 null, null, null
@@ -35,7 +36,8 @@ abstract class CraftingRecipe : Recipe() {
         ).spigotRecipes
 
         private val stickTopMiddle = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 null, woodMaterial, null,
                 null, woodMaterial, null,
                 null, null, null
@@ -43,7 +45,8 @@ abstract class CraftingRecipe : Recipe() {
         ).spigotRecipes
 
         private val stickTopRight = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 null, null, woodMaterial,
                 null, null, woodMaterial,
                 null, null, null
@@ -51,7 +54,8 @@ abstract class CraftingRecipe : Recipe() {
         ).spigotRecipes
 
         private val stickBottomLeft = ShapedRecipe(
-            result, listOf(
+            result,
+            listOf(
                 null, null, null,
                 woodMaterial, null, null,
                 woodMaterial, null, null
@@ -59,7 +63,8 @@ abstract class CraftingRecipe : Recipe() {
         ).spigotRecipes
 
         private val stickBottomMiddle = ShapedRecipe(
-            result,  listOf(
+            result,
+            listOf(
                 null, null, null,
                 null, woodMaterial, null,
                 null, woodMaterial, null
@@ -67,7 +72,8 @@ abstract class CraftingRecipe : Recipe() {
         ).spigotRecipes
 
         private val stickBottomRight = ShapedRecipe(
-            result,  listOf(
+            result,
+            listOf(
                 null, null, null,
                 null, null, woodMaterial,
                 null, null, woodMaterial

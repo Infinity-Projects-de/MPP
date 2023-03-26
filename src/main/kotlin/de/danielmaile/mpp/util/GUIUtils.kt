@@ -23,7 +23,6 @@ import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Material
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
-import java.util.ArrayList
 
 fun getFillerItem(): ItemStack {
     return createGUIItem(ItemStack(Material.GRAY_STAINED_GLASS_PANE), Component.empty(), listOf())
@@ -34,7 +33,8 @@ fun getArrowLeftItem(): ItemStack {
         "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmQ2OWUwNmU1ZGFkZmQ4NGU1ZjNkMWMyMTA2M2YyNTUzYjJmYTk0NWVlMWQ0ZDcxNTJmZGM1NDI1YmMxMmE5In19fQ=="
     val skull = SkullFactory.fromBase64(base64)
     return createGUIItem(
-        skull, inst().getLanguageManager().getComponent("gui.item.page_left.name"),
+        skull,
+        inst().getLanguageManager().getComponent("gui.item.page_left.name"),
         inst().getLanguageManager().getComponentList("gui.item.page_left.description")
     )
 }
@@ -44,7 +44,8 @@ fun getArrowRightItem(): ItemStack {
         "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTliZjMyOTJlMTI2YTEwNWI1NGViYTcxM2FhMWIxNTJkNTQxYTFkODkzODgyOWM1NjM2NGQxNzhlZDIyYmYifX19"
     val skull = SkullFactory.fromBase64(base64)
     return createGUIItem(
-        skull, inst().getLanguageManager().getComponent("gui.item.page_right.name"),
+        skull,
+        inst().getLanguageManager().getComponent("gui.item.page_right.name"),
         inst().getLanguageManager().getComponentList("gui.item.page_right.description")
     )
 }

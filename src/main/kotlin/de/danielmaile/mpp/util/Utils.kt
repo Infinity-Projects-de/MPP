@@ -19,12 +19,15 @@ package de.danielmaile.mpp.util
 
 import de.danielmaile.mpp.inst
 import org.bukkit.Instrument
-import java.io.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 import java.nio.file.Path
 import java.text.CompactNumberFormat
 import java.text.NumberFormat
-import java.util.*
-
+import java.util.Locale
 
 fun logInfo(message: String) {
     inst().logger.info(message)
@@ -88,7 +91,7 @@ fun saveResource(resourcePath: String, outputPath: Path) {
 }
 
 fun Instrument.toMinecraftName(): String {
-    return when(this) {
+    return when (this) {
         Instrument.PIANO -> "harp"
         Instrument.BASS_DRUM -> "basedrum"
         Instrument.SNARE_DRUM -> "snare"

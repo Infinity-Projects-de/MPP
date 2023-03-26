@@ -33,11 +33,15 @@ class LanguageManager(private val languageFile: FileConfiguration) {
 
     fun getComponent(path: String, tagResolver: TagResolver?): Component {
         val string = getString(path)
-        if(string == null || string == "") {
+        if (string == null || string == "") {
             return Component.empty()
         }
-        return if (tagResolver != null) MiniMessage.miniMessage()
-            .deserialize(string, tagResolver) else MiniMessage.miniMessage().deserialize(string)
+        return if (tagResolver != null) {
+            MiniMessage.miniMessage()
+                .deserialize(string, tagResolver)
+        } else {
+            MiniMessage.miniMessage().deserialize(string)
+        }
     }
 
     fun getComponentList(path: String): List<Component> {
@@ -48,8 +52,7 @@ class LanguageManager(private val languageFile: FileConfiguration) {
 
         val componentList = ArrayList<Component>()
         for (string in stringList) {
-            if(string == "")
-            {
+            if (string == "") {
                 componentList.add(Component.empty())
             } else {
                 componentList.add(MiniMessage.miniMessage().deserialize(string))
@@ -73,7 +76,7 @@ class LanguageManager(private val languageFile: FileConfiguration) {
      * If key does not exist and a warning about this key wasn't printed already, print a warning to the console
      */
     private fun checkIfLanguageFileContainsPath(path: String) {
-        if(!languageFile.contains(path, true) && !hasWarnedPaths.contains(path)) {
+        if (!languageFile.contains(path, true) && !hasWarnedPaths.contains(path)) {
             hasWarnedPaths.add(path)
             logWarning("$path was not found in the language file set in the config! Using fallback file.")
         }

@@ -27,8 +27,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.persistence.PersistentDataType
 import org.bukkit.scheduler.BukkitRunnable
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.UUID
 
 class ListenerKing : ListenerMob(MPPMob.KING, MPPMob.KING_ELITE) {
 
@@ -46,13 +45,14 @@ class ListenerKing : ListenerMob(MPPMob.KING, MPPMob.KING_ELITE) {
                         if (slaves == null || slaves.split('\n').size < 5) {
                             // spawn slave
                             val slave =
-                                if (getFromEntity(king as LivingEntity) == MPPMob.KING_ELITE)
+                                if (getFromEntity(king as LivingEntity) == MPPMob.KING_ELITE) {
                                     MPPMob.SLAVE_ELITE.summon(
                                         king.location,
                                         getLevelFromEntity(king)
                                     )
-                                else
+                                } else {
                                     MPPMob.SLAVE.summon(king.location, getLevelFromEntity(king))
+                                }
                             // add slave to kings slaves list
                             king.persistentDataContainer.set(
                                 kingSlavesListKey,
@@ -97,16 +97,16 @@ class ListenerKing : ListenerMob(MPPMob.KING, MPPMob.KING_ELITE) {
                 for (uuid in slaveUUIDS)
                     if (uuid != slave.uniqueId.toString()) slaveUUIDSNew.add(uuid)
 
-                if (slaveUUIDSNew.isEmpty())
+                if (slaveUUIDSNew.isEmpty()) {
                     king.persistentDataContainer.remove(kingSlavesListKey)
-                else
+                } else {
                     king.persistentDataContainer.set(
                         kingSlavesListKey,
                         PersistentDataType.STRING,
                         slaveUUIDSNew.joinToString("\n")
                     )
+                }
             }
         }
     }
-
 }

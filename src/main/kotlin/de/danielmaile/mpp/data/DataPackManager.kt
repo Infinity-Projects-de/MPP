@@ -22,11 +22,14 @@ import de.danielmaile.mpp.util.getPluginJar
 import de.danielmaile.mpp.util.logError
 import de.danielmaile.mpp.util.saveResource
 import org.bukkit.Bukkit
-import java.io.*
+import java.io.File
+import java.io.FileInputStream
+import java.io.IOException
+import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
-import java.util.*
+import java.util.Enumeration
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
 import kotlin.io.path.exists
@@ -46,17 +49,19 @@ object DataPackManager {
         val dataPackPath = Bukkit.getWorldContainer()
             .toString() + File.separator + Bukkit.getWorlds()[0].name + File.separator + "datapacks" + File.separator + "mpp_datapack"
         val versionFilePath = dataPackPath + File.separator + "version.txt"
-        if (File(versionFilePath).exists() && versionJar <= getVersion(FileInputStream(versionFilePath)))
+        if (File(versionFilePath).exists() && versionJar <= getVersion(FileInputStream(versionFilePath))) {
             return
+        }
 
         // delete old data pack files
-        if (Paths.get(dataPackPath).exists())
+        if (Paths.get(dataPackPath).exists()) {
             Files.walk(Paths.get(dataPackPath)).use { dirStream ->
                 dirStream
                     .map(Path::toFile)
                     .sorted(Comparator.reverseOrder())
                     .forEach(File::delete)
             }
+        }
 
         // copy updated data pack from jar
         val jarFile = getPluginJar()
@@ -82,15 +87,17 @@ object DataPackManager {
         val versionFileContents = String(versionFileStream.readAllBytes())
         var version = -1
         for (line in versionFileContents.split('\n'))
-            if (line.startsWith("version: "))
+            if (line.startsWith("version: ")) {
                 version = Integer.parseInt(line.replace("version: ", "").trim())
+            }
         versionFileStream.close()
         return version
     }
 
     @Throws(IOException::class)
     private fun saveResourceToWorldFolder(resourcePath: String) {
-        val outputPath = Paths.get(Bukkit.getWorldContainer().toString(), Bukkit.getWorlds()[0].name, "datapacks", resourcePath)
+        val outputPath =
+            Paths.get(Bukkit.getWorldContainer().toString(), Bukkit.getWorlds()[0].name, "datapacks", resourcePath)
         saveResource(resourcePath, outputPath)
     }
 }

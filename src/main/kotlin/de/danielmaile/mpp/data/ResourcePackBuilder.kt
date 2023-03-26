@@ -24,7 +24,11 @@ import de.danielmaile.mpp.block.BlockType
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.item.ArmorSet
 import de.danielmaile.mpp.item.ItemType
-import de.danielmaile.mpp.util.*
+import de.danielmaile.mpp.util.getPluginJar
+import de.danielmaile.mpp.util.logError
+import de.danielmaile.mpp.util.logInfo
+import de.danielmaile.mpp.util.saveResource
+import de.danielmaile.mpp.util.toMinecraftName
 import kong.unirest.Unirest
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry
@@ -36,17 +40,20 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import java.awt.image.BufferedImage
-import java.io.*
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.FileWriter
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
-import java.util.*
+import java.util.Enumeration
+import java.util.Locale
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
 import javax.imageio.ImageIO
 import kotlin.io.path.isDirectory
 import kotlin.io.path.name
-
 
 object ResourcePackBuilder {
 
@@ -102,8 +109,9 @@ object ResourcePackBuilder {
     }
 
     private fun generateArmorLayers() {
-        val armor_assets: Path = Paths.get(resourcePackFolder.toString(), "assets","minecraft","textures","armor_assets")
-        val armor: Path = Paths.get(resourcePackFolder.toString(), "assets","minecraft","textures","models","armor")
+        val armor_assets: Path =
+            Paths.get(resourcePackFolder.toString(), "assets", "minecraft", "textures", "armor_assets")
+        val armor: Path = Paths.get(resourcePackFolder.toString(), "assets", "minecraft", "textures", "models", "armor")
 
         val armorAmount = (armor_assets.toFile().listFiles()?.size ?: 38) / 2
 
@@ -120,31 +128,30 @@ object ResourcePackBuilder {
         var j = 1
 
         Files.walk(armor_assets).forEach { p ->
-            if(p.isDirectory()) {
+            if (p.isDirectory()) {
                 return@forEach
             }
 
             val image = ImageIO.read(p.toFile())
             val armorName = p.fileName.name.split("_")[0]
-            if(armorName == "vanilla") {
-                if(p.fileName.toString().endsWith("1.png")) {
+            if (armorName == "vanilla") {
+                if (p.fileName.toString().endsWith("1.png")) {
                     layer1Graphics.drawImage(image, 0, 0, null)
                 } else {
                     layer2Graphics.drawImage(image, 0, 0, null)
                 }
             } else {
-
                 val color = ArmorSet.valueOf(armorName.uppercase()).color.asRGB()
 
-                if(p.fileName.toString().endsWith("1.png")) {
+                if (p.fileName.toString().endsWith("1.png")) {
                     layer1Graphics.drawImage(image, i * 64, 0, null)
                     layer1Graphics.color = java.awt.Color(color)
-                    layer1Graphics.drawLine(i*64,0,i*64,0)
+                    layer1Graphics.drawLine(i * 64, 0, i * 64, 0)
                     i++
                 } else {
                     layer2Graphics.drawImage(image, j * 64, 0, null)
                     layer2Graphics.color = java.awt.Color(color)
-                    layer2Graphics.drawLine(j*64,0,j*64,0)
+                    layer2Graphics.drawLine(j * 64, 0, j * 64, 0)
                     j++
                 }
             }
@@ -195,7 +202,6 @@ object ResourcePackBuilder {
             if (material.isBlock) {
                 jsonObject.addProperty("parent", "minecraft:block/cube_all")
                 textures.addProperty("all", "minecraft:block/" + material.name.lowercase())
-
             } else {
                 jsonObject.addProperty("parent", "minecraft:item/handheld")
                 textures.addProperty("layer0", "minecraft:item/" + material.name.lowercase())
@@ -243,7 +249,7 @@ object ResourcePackBuilder {
                 val file = p.toFile()
 
                 if (!file.isDirectory) {
-                    if(file.parentFile.name == "armor_assets") {
+                    if (file.parentFile.name == "armor_assets") {
                         return@forEach
                     }
                     val entry = ZipArchiveEntry(
@@ -279,7 +285,6 @@ object ResourcePackBuilder {
                 logInfo("Successfully uploaded resource pack!")
                 deleteZip()
             }
-
     }
 
     private fun deleteZip() {

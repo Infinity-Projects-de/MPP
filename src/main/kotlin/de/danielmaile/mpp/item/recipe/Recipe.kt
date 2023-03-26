@@ -20,7 +20,7 @@ package de.danielmaile.mpp.item.recipe
 import de.danielmaile.mpp.inst
 import org.bukkit.NamespacedKey
 import org.bukkit.inventory.Recipe
-import java.util.*
+import java.util.UUID
 
 abstract class Recipe {
 

@@ -28,7 +28,7 @@ import org.bukkit.block.data.Directional
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import java.lang.Integer.min
-import java.util.*
+import java.util.Random
 
 class DungeonChest(private val random: Random) {
 
@@ -48,7 +48,8 @@ class DungeonChest(private val random: Random) {
         val chest = block.state as Chest
         Bukkit.getScheduler().runTaskAsynchronously(
             inst(),
-            Runnable { addItems(random, chest.blockInventory, generateItemStacks()) })
+            Runnable { addItems(random, chest.blockInventory, generateItemStacks()) }
+        )
     }
 
     /**
