@@ -52,6 +52,7 @@ dependencies {
         exclude(group = "net.kyori", module = "adventure-text-serializer-legacy")
         exclude(group = "net.kyori", module = "adventure-text-serializer-gson")
     }
+    implementation("org.bstats:bstats-bukkit:3.0.0")
     compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0-SNAPSHOT")
     compileOnly("org.apache.commons:commons-compress:1.21")
     compileOnly("com.konghq:unirest-java:3.13.13")
@@ -68,6 +69,7 @@ tasks {
     }
     shadowJar {
         relocate("dev.triumphteam.gui", "de.danielmaile.libs.gui")
+        relocate("org.bstats", "de.danielmaile.libs.bStats")
     }
     javadoc {
         options.encoding = Charsets.UTF_8.name()
