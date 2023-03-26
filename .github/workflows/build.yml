@@ -1,7 +1,9 @@
 name: MPP CI
 
 on:
-  - push
+  push:
+    branches-ignore:
+      - master
 
 jobs:
   build:
