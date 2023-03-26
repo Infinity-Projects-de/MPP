@@ -44,6 +44,7 @@ import de.danielmaile.mpp.mob.listeners.ListenerRift
 import de.danielmaile.mpp.util.logError
 import de.danielmaile.mpp.world.WorldManager
 import de.danielmaile.mpp.world.aether.ListenerAether
+import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.World
@@ -66,9 +67,6 @@ class MPP : JavaPlugin() {
         private set
 
     lateinit var worldManager: WorldManager
-        private set
-
-    var validLicense: Boolean = false
         private set
 
     fun getLanguageManager(): LanguageManager {
@@ -108,6 +106,8 @@ class MPP : JavaPlugin() {
 
         // init BlockBreakingService
         BlockBreakingService.init()
+
+        Metrics(this, 18055)
     }
 
     /**
