@@ -1,10 +1,33 @@
 import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
+import java.io.BufferedReader
 
 val javaVersion = 17
 val minecraftVersion = "1.19.4"
 
+fun runCommand(command: Array<String>) = Runtime
+    .getRuntime()
+    .exec(command)
+    .let { process ->
+        process.waitFor()
+        val output = process.inputStream.use {
+            it.bufferedReader().use(BufferedReader::readText)
+        }
+        process.destroy()
+        output.trim()
+    }
+
+// example version number: MPP-0.1.302-1.19.4-SNAPSHOT
+// when changing version be sure to only use the chars mentioned in the comments
+// otherwise you have to change the regex in the workflows
+fun getPluginVersion(): String {
+    val baseVersion = "0.1" // only 0-9. not empty
+    val versionSuffix = "SNAPSHOT" // only A-Z not empty
+    val commitCount = runCommand(arrayOf("git", "rev-list", "--count", "HEAD")).trim() // only 0-9 not empty
+    return "$baseVersion.$commitCount-$minecraftVersion-$versionSuffix"
+}
+
 group = "de.danielmaile.mpp"
-version = "v0.2"
+version = getPluginVersion()
 
 plugins {
     `java-library`
