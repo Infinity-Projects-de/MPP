@@ -4,7 +4,7 @@
 MPP is a Paper plugin that adds custom items, blocks, much more to your Minecraft server! 
 
 ## 📥 Download
-You can download the latest development builds from [here](https://github.com/dm432/MPP/releases/tag/latest-dev-build).
+You can download the latest development builds from [here](https://github.com/dm432/MPP/releases).
 
 **Please note:**
 - Only the newest version of [Paper](https://papermc.io/) is supported. **Spigot builds will not work!**
