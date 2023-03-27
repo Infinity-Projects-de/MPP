@@ -101,7 +101,12 @@ tasks {
         filteringCharset = Charsets.UTF_8.name()
     }
 
+    build {
+        finalizedBy("buildResourcePack")
+    }
+
     runServer {
+        dependsOn("runResourcePackServer")
         doFirst {
             download.run {
                 src("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/target/ProtocolLib.jar")
@@ -113,4 +118,44 @@ tasks {
         pluginJars(File(buildDir, "ProtocolLib.jar"))
         minecraftVersion(minecraftVersion)
     }
+
+    // region group often used tasks for convenience
+    clean {
+        group = "mpp"
+    }
+    build {
+        group = "mpp"
+    }
+    ktlintCheck {
+        group = "mpp"
+    }
+    runServer {
+        group = "mpp"
+    }
+    // endregion
 }
+
+// region custom gradle tasks
+abstract class BuildResourcePack : DefaultTask() {
+
+    @TaskAction
+    fun buildResourcePack() {
+        println("hello world")
+    }
+}
+
+abstract class RunResourcePackServer : DefaultTask() {
+
+    @TaskAction
+    fun runResourcePackServer() {
+        println("hello world")
+    }
+}
+
+tasks.register<BuildResourcePack>("buildResourcePack") {
+    group = "mpp"
+}
+tasks.register<RunResourcePackServer>("runResourcePackServer") {
+    group = "mpp"
+}
+// endregion
