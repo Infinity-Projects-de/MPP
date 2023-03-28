@@ -145,8 +145,9 @@ class MPP : JavaPlugin() {
         val locales = arrayOf("de","en")
 
         for (locale in locales) {
-            if (!File(dataFolder, "locales/$locale.yml").exists()) {
-                saveResource("locales/$locale.yml", false)
+            val localeFile = File(localesFolder, "$locale.yml")
+            if (!localeFile.exists()) {
+                saveResource(localeFile.path, false)
             }
         }
 
