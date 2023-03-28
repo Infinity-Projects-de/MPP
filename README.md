@@ -11,13 +11,13 @@ You can download the latest development builds from [here](https://github.com/dm
 - [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) is required.
 - This plugin is still in early development and as such bugs can occur.
 
-## :bug: Report bugs or other issues
+## 🐛 Report bugs or other issues
 If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://github.com/dm432/MPP/issues). When doing so, make sure to use one of the provided templates and fill out all the requested information. Make sure to keep your issue's description clear and concise. Your issue's title should also be easy to digest, giving our developers and reporters a good idea of what's wrong without including too many details.
 
-## :wrench: Contribute
+## 🔧 Contribute
 If you want to contribute please take a look at our [Contribution Guide](https://github.com/dm432/MPP/blob/master/CONTRIBUTING.md).
 
-## :scroll: License information
+## 📜 License information
 [![Asset license (Unlicensed)](https://img.shields.io/badge/assets%20license-All%20Rights%20Reserved-red.svg?style=flat-square)](https://en.wikipedia.org/wiki/All_rights_reserved)
 [![Code license (GPL v3.0)](https://img.shields.io/badge/code%20license-GPL%20v3.0-green.svg?style=flat-square)](https://github.com/TheRealKabo/MPP/blob/master/LICENSE)
 
