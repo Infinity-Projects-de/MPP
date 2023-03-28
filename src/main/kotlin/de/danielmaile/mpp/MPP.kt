@@ -49,6 +49,7 @@ import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.World
 import org.bukkit.configuration.file.YamlConfiguration
+import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 
@@ -78,7 +79,7 @@ class MPP : JavaPlugin() {
         saveDefaultFiles()
 
         // setup spigot and paper yml
-        if (!checkSpigotYML() || !checkPaperYML()) {
+        if (!updateSpigotSettings() || !updatePaperWorldSettings()) {
             Bukkit.getPluginManager().disablePlugin(this)
             return
         }
@@ -94,17 +95,14 @@ class MPP : JavaPlugin() {
         try {
             worldManager = WorldManager()
         } catch (e: Exception) {
-            installMessage(e.message)
+            sendFirstShutdownMessage(e.message)
             Bukkit.shutdown()
             return
         }
 
         particleManager = ParticleManager()
 
-        // cloud effects
         CloudEffects()
-
-        // init BlockBreakingService
         BlockBreakingService.init()
 
         Metrics(this, 18055)
@@ -113,7 +111,7 @@ class MPP : JavaPlugin() {
     /**
      * Send message on first install, might be changed to a better one?
      */
-    private fun installMessage(message: String?) {
+    private fun sendFirstShutdownMessage(message: String?) {
         sendMessage("------------------------------")
         sendMessage("")
         sendMessage("")
@@ -136,42 +134,41 @@ class MPP : JavaPlugin() {
 
     private fun saveDefaultFiles() {
         // create locales folder
-        val localesFolder = File(dataFolder.absolutePath + File.separator + "locales")
+        val localesFolder = File(dataFolder, "locales")
         if (!localesFolder.exists() && !localesFolder.mkdirs()) {
             logError("Creation of locales folder (" + dataFolder.absolutePath + ") failed!")
         }
 
         // save default files
         saveDefaultConfig()
-        if (!File(dataFolder, "locales/de.yml").exists()) {
-            saveResource("locales/de.yml", false)
-        }
-        if (!File(dataFolder, "locales/en.yml").exists()) {
-            saveResource("locales/en.yml", false)
-        }
+        saveResource("locales/de.yml", false)
+        saveResource("locales/en.yml", false)
 
         reloadConfig()
     }
 
     private fun registerEvents() {
-        server.pluginManager.registerEvents(ListenerAether(), this)
-        server.pluginManager.registerEvents(ListenerBlock(), this)
-        server.pluginManager.registerEvents(ListenerCrafting(), this)
-        server.pluginManager.registerEvents(ListenerItem(), this)
-        server.pluginManager.registerEvents(ListenerArmor(), this)
-        server.pluginManager.registerEvents(ListenerParticle(), this)
-        server.pluginManager.registerEvents(ListenerConverter(), this)
-        server.pluginManager.registerEvents(ListenerMagicWand(), this)
-        server.pluginManager.registerEvents(ListenerMPPMobs(), this)
-        server.pluginManager.registerEvents(MPPMobSpawnManager(), this)
-        server.pluginManager.registerEvents(ListenerNecromancer(), this)
-        server.pluginManager.registerEvents(ListenerKing(), this)
-        server.pluginManager.registerEvents(ListenerPlague(), this)
-        server.pluginManager.registerEvents(ListenerRift(), this)
-        server.pluginManager.registerEvents(ListenerHealer(), this)
-        server.pluginManager.registerEvents(ListenerHitman(), this)
+        registerListener(ListenerAether())
+        registerListener(ListenerBlock())
+        registerListener(ListenerCrafting())
+        registerListener(ListenerItem())
+        registerListener(ListenerArmor())
+        registerListener(ListenerParticle())
+        registerListener(ListenerConverter())
+        registerListener(ListenerMagicWand())
+        registerListener(ListenerMPPMobs())
+        registerListener(MPPMobSpawnManager())
+        registerListener(ListenerNecromancer())
+        registerListener(ListenerKing())
+        registerListener(ListenerPlague())
+        registerListener(ListenerRift())
+        registerListener(ListenerHealer())
+        registerListener(ListenerHitman())
     }
 
+    private fun registerListener(listener: Listener) {
+        server.pluginManager.registerEvents(listener, this)
+    }
     private fun registerRecipes() {
         for (recipes in recipeList) {
             for (recipe in recipes.spigotRecipes) {
@@ -184,11 +181,11 @@ class MPP : JavaPlugin() {
      * Checks if settings in spigot.yml are correct.
      * If not disable the plugin.
      */
-    private fun checkSpigotYML(): Boolean {
+    private fun updateSpigotSettings(): Boolean {
         val maxValue = 1E100
         val spigotSettingsFile = File(dataFolder.parentFile.parentFile, "spigot.yml")
 
-        setupSpigotConfig(spigotSettingsFile)
+        setSpigotSettings(spigotSettingsFile)
 
         val spigotSettings = YamlConfiguration.loadConfiguration(spigotSettingsFile)
 
@@ -209,7 +206,7 @@ class MPP : JavaPlugin() {
     /**
      * Sets health, speed and damage from spigot settings to their desired values of 1.0E100
      */
-    private fun setupSpigotConfig(file: File) {
+    private fun setSpigotSettings(file: File) {
         val spigotSettings = YamlConfiguration.loadConfiguration(file)
 
         spigotSettings.set("settings.attribute.maxHealth.max", 1.0E100)
@@ -223,11 +220,11 @@ class MPP : JavaPlugin() {
      * Checks if settings in paper-world-defaults.yml are correct.
      * If not disable the plugin.
      */
-    private fun checkPaperYML(): Boolean {
+    private fun updatePaperWorldSettings(): Boolean {
         val paperWorldDefaultsSettingsFile =
             File(dataFolder.parentFile.parentFile, "config" + File.separator + "paper-world-defaults.yml")
 
-        setupPaperConfig(paperWorldDefaultsSettingsFile)
+        setPaperWorldSettings(paperWorldDefaultsSettingsFile)
 
         val paperWorldDefaultsSettings = YamlConfiguration.loadConfiguration(paperWorldDefaultsSettingsFile)
 
@@ -247,7 +244,7 @@ class MPP : JavaPlugin() {
     /**
      * Sets count all mobs for spawning from paper settings to their desired value of true
      */
-    private fun setupPaperConfig(file: File) {
+    private fun setPaperWorldSettings(file: File) {
         val paperSettings = YamlConfiguration.loadConfiguration(file)
 
         paperSettings.set("entities.spawning.count-all-mobs-for-spawning", true)
