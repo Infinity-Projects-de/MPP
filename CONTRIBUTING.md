@@ -1,4 +1,4 @@
-# :wrench: Contributing
+# 🔧 Contributing
 If you want to contribute by fixing an issue or adding new content to the project, you are more than welcome to do so. For major changes or new content, please open an issue first to discuss what you would like to change/add. If you can't add new things on your own but have any content suggestions, you can create an issue too. Please note the following Contributor License Agreement (CLA) before getting started:
 
 ## Contributor License Agreement
