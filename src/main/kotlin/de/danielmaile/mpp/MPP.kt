@@ -142,7 +142,7 @@ class MPP : JavaPlugin() {
         // save default files
         saveDefaultConfig()
 
-        val locales = arrayOf("de","en")
+        val locales = arrayOf("de", "en")
 
         for (locale in locales) {
             val localeFile = File(localesFolder, "$locale.yml")
