@@ -21,18 +21,5 @@ import org.bukkit.Bukkit
 import org.bukkit.World
 
 class WorldManager() {
-
-    val aetherWorld: World
-
-    init {
-        // try to get aether world
-        val aetherWorld = Bukkit.getWorld("world_aether_aether")
-
-        // if aether world is null send message and disable plugin
-        if (aetherWorld == null) {
-            throw Exception("Aether world not found")
-        } else {
-            this.aetherWorld = aetherWorld
-        }
-    }
+    val aetherWorld: World = Bukkit.getWorld("world_aether_aether") ?: throw Exception("Aether not found")
 }
