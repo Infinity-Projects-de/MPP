@@ -30,8 +30,7 @@ class ConfigManager {
     val itemConverterEnabled: Boolean
     val llamaJumpHeight: Double
     val llamaSpeed: Float
-    val resourcePackHostIP: String
-    val resourcePackHostPort: Int
+    val resourcePackForce: Boolean
 
     init {
         var file = File(
@@ -63,7 +62,6 @@ class ConfigManager {
         llamaJumpHeight = inst().config.getDouble("entities.llama.jump_height")
         llamaSpeed = inst().config.getDouble("entities.llama.speed").toFloat()
 
-        resourcePackHostIP = inst().config.getString("resource_pack.host.ip")!!
-        resourcePackHostPort = inst().config.getInt("resource_pack.host.port")
+        resourcePackForce = inst().config.getBoolean("resource_pack.force")
     }
 }

@@ -22,6 +22,7 @@ import de.danielmaile.mpp.block.ListenerBlock
 import de.danielmaile.mpp.block.function.CloudEffects
 import de.danielmaile.mpp.command.CommandMPP
 import de.danielmaile.mpp.data.DataPackManager
+import de.danielmaile.mpp.data.ResourcePackManager
 import de.danielmaile.mpp.data.config.ConfigManager
 import de.danielmaile.mpp.data.config.LanguageManager
 import de.danielmaile.mpp.item.ListenerConverter
@@ -168,6 +169,7 @@ class MPP : JavaPlugin() {
         server.pluginManager.registerEvents(ListenerRift(), this)
         server.pluginManager.registerEvents(ListenerHealer(), this)
         server.pluginManager.registerEvents(ListenerHitman(), this)
+        server.pluginManager.registerEvents(ResourcePackManager(), this)
     }
 
     private fun registerRecipes() {

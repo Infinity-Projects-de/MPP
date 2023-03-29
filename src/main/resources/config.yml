@@ -8,8 +8,6 @@ entities:
     speed: 0.25           # Requires restart
     jump_height: 0.5      # Requires restart
 
-# Don't change these values unless you know what you are doing!
 resource_pack:
-  host:
-    ip: "mpp.lamahost.de"
-    port: 8050
+  # If enabled and a player declines the custom mpp texture pack, he will get kicked
+  force: true
