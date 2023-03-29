@@ -32,7 +32,7 @@ import org.bukkit.attribute.AttributeModifier
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.LeatherArmorMeta
-import java.util.UUID
+import java.util.*
 
 const val MPP_ITEM_TAG_KEY = "mpp_item"
 
@@ -413,8 +413,10 @@ enum class ItemType(
     EMERALD_SHARD(Material.NETHERITE_SCRAP, null, null),
     AURORA_SHARD(Material.NETHERITE_SCRAP, null, null);
 
-    private val displayName = inst().getLanguageManager().getComponent("items.$name.name")
-    private val description = inst().getLanguageManager().getComponentList("items.$name.description")
+    private val displayName: Component
+        get() = inst().getLanguageManager().getComponent("items.$name.name")
+    private val description: List<Component>
+        get() = inst().getLanguageManager().getComponentList("items.$name.description")
 
     val modelID = this.ordinal + MODEL_ID_OFFSET
 
@@ -423,11 +425,9 @@ enum class ItemType(
         material: Material,
         attributeModifiers: Multimap<Attribute, AttributeModifier>?,
         placeBlockType: BlockType?
-    ) :
-        this(material, attributeModifiers, placeBlockType, null)
+    ) : this(material, attributeModifiers, placeBlockType, null)
 
-    constructor(attributeModifiers: Multimap<Attribute, AttributeModifier>?, color: Color) :
-        this(null, attributeModifiers, null, color)
+    constructor(attributeModifiers: Multimap<Attribute, AttributeModifier>?, color: Color) : this(null, attributeModifiers, null, color)
 
     fun getMaterial(): Material {
         if (material != null) {

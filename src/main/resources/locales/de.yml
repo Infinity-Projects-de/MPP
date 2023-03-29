@@ -17,6 +17,8 @@ messages:
       - "BENUTZEN.UM DIE NEUEN WELTEN ZU"
       - "GENERIEREN, MUSST DU DEN SERVER"
       - "NOCHMAL STARTEN. DANKE!"
+    kick_resource_pack_declined:
+      - "<red>Dieser Server verwendet MPP und erfordert, dass alle Spieler das MPP Resource Pack verwenden! Bitte stelle sicher, dass Server Resource Packs für diesen Server aktiviert sind."
   cmd:
     info:
       reloaded_config: "<green>Die Config wurde neu geladen!"

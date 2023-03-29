@@ -101,7 +101,12 @@ tasks {
         filteringCharset = Charsets.UTF_8.name()
     }
 
+    build {
+        finalizedBy("buildResourcePack")
+    }
+
     runServer {
+        dependsOn("runResourcePackServer")
         doFirst {
             download.run {
                 src("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/target/ProtocolLib.jar")
@@ -113,4 +118,37 @@ tasks {
         pluginJars(File(buildDir, "ProtocolLib.jar"))
         minecraftVersion(minecraftVersion)
     }
+
+    // region group often used tasks for convenience
+    clean {
+        group = "mpp"
+    }
+    build {
+        group = "mpp"
+    }
+    ktlintCheck {
+        group = "mpp"
+    }
+    runServer {
+        group = "mpp"
+    }
+    // endregion
+}
+
+abstract class RunResourcePackServer : DefaultTask() {
+
+    @TaskAction
+    fun runResourcePackServer() {
+        println("hello world")
+    }
+}
+
+tasks.register<JavaExec>("buildResourcePack") {
+    mainClass.set("de.danielmaile.resourcepack.PackBuilderKt")
+    classpath(sourceSets["main"].runtimeClasspath, configurations.compileClasspath)
+    group = "mpp"
+    args = listOf(getPluginVersion(), project.projectDir.absolutePath)
+}
+tasks.register<RunResourcePackServer>("runResourcePackServer") {
+    group = "mpp"
 }
