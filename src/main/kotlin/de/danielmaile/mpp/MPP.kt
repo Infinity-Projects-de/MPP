@@ -42,7 +42,6 @@ import de.danielmaile.mpp.mob.listeners.ListenerNecromancer
 import de.danielmaile.mpp.mob.listeners.ListenerPlague
 import de.danielmaile.mpp.mob.listeners.ListenerRift
 import de.danielmaile.mpp.util.logError
-import de.danielmaile.mpp.world.WorldManager
 import de.danielmaile.mpp.world.aether.ListenerAether
 import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
@@ -67,7 +66,7 @@ class MPP : JavaPlugin() {
     lateinit var particleManager: ParticleManager
         private set
 
-    lateinit var worldManager: WorldManager
+    lateinit var aetherWorld: World
         private set
 
     fun getLanguageManager(): LanguageManager {
@@ -93,7 +92,7 @@ class MPP : JavaPlugin() {
         registerRecipes()
 
         try {
-            worldManager = WorldManager()
+            aetherWorld = Bukkit.getWorld("world_aether_aether") ?: throw Exception("Aether not found")
         } catch (e: Exception) {
             sendFirstShutdownMessage(e.message)
             Bukkit.shutdown()
@@ -270,5 +269,5 @@ fun inst(): MPP {
 }
 
 fun aetherWorld(): World {
-    return MPP.instance.worldManager.aetherWorld
+    return MPP.instance.aetherWorld
 }
