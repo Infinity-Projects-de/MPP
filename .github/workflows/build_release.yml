@@ -36,4 +36,4 @@ jobs:
           prerelease: true
           files: |
             /home/runner/work/MPP/MPP/build/libs/${{ steps.version.outputs.VERSION_TAG }}.jar
-            /home/runner/work/MPP/MPP/build/libs/${{ steps.version.outputs.VERSION_TAG }}.zip
+            /home/runner/work/MPP/MPP/build/resourcepack/${{ steps.version.outputs.VERSION_TAG }}.zip
