@@ -135,15 +135,6 @@ tasks {
     // endregion
 }
 
-// region custom gradle tasks
-abstract class BuildResourcePack : DefaultTask() {
-
-    @TaskAction
-    fun buildResourcePack() {
-        println("hello world")
-    }
-}
-
 abstract class RunResourcePackServer : DefaultTask() {
 
     @TaskAction
@@ -152,10 +143,12 @@ abstract class RunResourcePackServer : DefaultTask() {
     }
 }
 
-tasks.register<BuildResourcePack>("buildResourcePack") {
+tasks.register<JavaExec>("buildResourcePack") {
+    mainClass.set("de.danielmaile.resourcepack.PackBuilderKt")
+    classpath(sourceSets["main"].runtimeClasspath, configurations.compileClasspath)
     group = "mpp"
+    args = listOf(getPluginVersion())
 }
 tasks.register<RunResourcePackServer>("runResourcePackServer") {
     group = "mpp"
 }
-// endregion
