@@ -17,35 +17,27 @@
 
 package de.danielmaile.mpp.util
 
-import com.mojang.authlib.GameProfile
-import com.mojang.authlib.properties.Property
+import com.destroystokyo.paper.profile.CraftPlayerProfile
 import org.bukkit.Material
 import org.bukkit.OfflinePlayer
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
-import java.lang.reflect.Field
+import java.net.URL
 import java.util.UUID
 
 object SkullFactory {
 
-    fun fromBase64(base64: String): ItemStack {
+    fun fromTexture(texture: String): ItemStack {
         val skull = ItemStack(Material.PLAYER_HEAD)
-        if (base64.isEmpty()) return skull
 
         val skullMeta = skull.itemMeta as SkullMeta
 
-        val profile = GameProfile(UUID.randomUUID(), null)
-        profile.properties.put("textures", Property("textures", base64))
-        val profileField: Field
+        val profile = CraftPlayerProfile(UUID.randomUUID(), null)
+        val textures = profile.textures
+        textures.skin = URL("https://textures.minecraft.net/texture/$texture")
+        profile.setTextures(textures)
 
-        try {
-            profileField = skullMeta.javaClass.getDeclaredField("profile")
-            profileField.isAccessible = true
-            profileField.set(skullMeta, profile)
-        } catch (exception: Exception) {
-            return skull
-        }
-
+        skullMeta.playerProfile = profile
         skull.itemMeta = skullMeta
         return skull
     }
