@@ -29,9 +29,7 @@ fun getFillerItem(): ItemStack {
 }
 
 fun getArrowLeftItem(): ItemStack {
-    val base64 =
-        "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmQ2OWUwNmU1ZGFkZmQ4NGU1ZjNkMWMyMTA2M2YyNTUzYjJmYTk0NWVlMWQ0ZDcxNTJmZGM1NDI1YmMxMmE5In19fQ=="
-    val skull = SkullFactory.fromBase64(base64)
+    val skull = SkullFactory.fromTexture("bd69e06e5dadfd84e5f3d1c21063f2553b2fa945ee1d4d7152fdc5425bc12a9")
     return createGUIItem(
         skull,
         inst().getLanguageManager().getComponent("gui.item.page_left.name"),
@@ -40,9 +38,7 @@ fun getArrowLeftItem(): ItemStack {
 }
 
 fun getArrowRightItem(): ItemStack {
-    val base64 =
-        "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTliZjMyOTJlMTI2YTEwNWI1NGViYTcxM2FhMWIxNTJkNTQxYTFkODkzODgyOWM1NjM2NGQxNzhlZDIyYmYifX19"
-    val skull = SkullFactory.fromBase64(base64)
+    val skull = SkullFactory.fromTexture("19bf3292e126a105b54eba713aa1b152d541a1d8938829c56364d178ed22bf")
     return createGUIItem(
         skull,
         inst().getLanguageManager().getComponent("gui.item.page_right.name"),
