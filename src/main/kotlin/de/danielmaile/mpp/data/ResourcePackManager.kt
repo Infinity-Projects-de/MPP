@@ -19,40 +19,118 @@ package de.danielmaile.mpp.data
 
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.util.logError
+import de.danielmaile.mpp.util.logInfo
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import org.apache.commons.codec.digest.DigestUtils
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerResourcePackStatusEvent
-import java.net.HttpURLConnection
+import java.io.File
+import java.io.FileInputStream
+import java.net.InetAddress
 import java.net.URL
+import java.util.concurrent.TimeUnit
 
 class ResourcePackManager : Listener {
 
-    private val githubPackLink: String
-    private val packEnabled: Boolean
+    private val httpClient = OkHttpClient.Builder()
+        .callTimeout(5, TimeUnit.SECONDS)
+        .connectTimeout(5, TimeUnit.SECONDS)
+        .build()
+
+    private val pluginVersion = "MPP-${inst().pluginMeta.version}"
+    private val ipAddress = InetAddress.getLocalHost().hostAddress
+    private val localPackLink = "http://$ipAddress:8080/$pluginVersion.zip"
+    private val githubPackLink = "https://github.com/dm432/MPP/releases/download/$pluginVersion/$pluginVersion.zip"
+
+    private val resourcePackLink: String?
+    private val packHash: String?
 
     init {
-        val pluginVersion = "MPP-${inst().pluginMeta.version}"
-        githubPackLink = "https://github.com/dm432/MPP/releases/download/$pluginVersion/$pluginVersion.zip"
+        val localPackExists = doesPackExist(URL(localPackLink))
+        val githubPackExists = doesPackExist(URL(githubPackLink))
 
-        packEnabled = doesPackExist(URL(githubPackLink))
-        if (!packEnabled) {
-            logError("The MPP Resource Pack was not found on Github! Please make sure to download the latest official Release from https://github.com/dm432/MPP/releases")
+        resourcePackLink = when {
+            localPackExists -> {
+                logInfo("Using local hosted mpp resource pack.")
+                localPackLink
+            }
+
+            githubPackExists -> {
+                logInfo("Using remote hosted mpp resource pack.")
+                githubPackLink
+            }
+
+            else -> {
+                logError(
+                    "No mpp resource pack found! Make sure that you are using the latest plugin version. " +
+                        "If you're running the plugin in a development environment make sure that the local " +
+                        "ResourcePackHostingServer is running."
+                )
+                null
+            }
+        }
+
+        // Download pack
+        val request = Request.Builder()
+            .url(resourcePackLink ?: "")
+            .build()
+
+        val packFile = File(inst().dataFolder, "$pluginVersion.zip")
+        try {
+            val response = httpClient.newCall(request).execute()
+            if (response.isSuccessful && response.body != null) {
+                response.body!!.byteStream().use { input ->
+                    packFile.outputStream().use { output ->
+                        input.copyTo(output)
+                    }
+                }
+            } else {
+                logError("Error while downloading mpp resource pack to calculate the hash! Please restart the server to try again.")
+            }
+        } catch (e: Exception) {
+            logError("Error while downloading mpp resource pack to calculate the hash! Please restart the server to try again.")
+        }
+
+        packHash = calculateSHA1Hash(packFile)
+        if (packHash != null) {
+            logInfo("Resource pack hash is $packHash")
+        }
+
+        packFile.delete()
+    }
+
+    // Checks if the resource pack exists at the given link
+    private fun doesPackExist(url: URL): Boolean {
+        val request = Request.Builder()
+            .head()
+            .url(url)
+            .build()
+
+        return try {
+            val response = httpClient.newCall(request).execute()
+            val exists = response.code == 200
+            response.close()
+            return exists
+        } catch (e: Exception) {
+            false
         }
     }
 
-    // Checks if the resource pack exits at the given link
-    private fun doesPackExist(url: URL): Boolean {
-        val connection = url.openConnection() as HttpURLConnection
-        connection.requestMethod = "HEAD"
-        return connection.responseCode == HttpURLConnection.HTTP_OK
+    // calculates and returns the sha1 hash of a given File or null if the file does not exist
+    private fun calculateSHA1Hash(file: File): String? {
+        if (!file.exists()) return null
+        FileInputStream(file).use {
+            return DigestUtils.sha1Hex(it)
+        }
     }
 
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
-        if (!packEnabled) return
-        // TODO use pack hash
-        event.player.setResourcePack(githubPackLink)
+        if (resourcePackLink == null || packHash == null) return
+        event.player.setResourcePack(resourcePackLink, packHash, true)
     }
 
     // kick players when they decline the mpp resource pack and

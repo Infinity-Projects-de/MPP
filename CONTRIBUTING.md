@@ -15,7 +15,14 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 
 1. Fork the repo and create your branch from `master`. You don't need to run BuildTools or any other setup, everything is setup using Gradle tasks.
 2. Make your changes.
-3. Make sure to build and test the plugin extensively. You can run the `runServer` Gradle Task, which builds the plugin and starts a local test server for you.
+3. Make sure to build and test the plugin extensively. You can run the `runServer` Gradle Task, which builds the plugin and starts a local test server for you. Be sure to use the local resource pack hosting server. See [below](#how-we-handle-the-custom-resource-pack) for more information
 4. We use [ktlint](https://github.com/pinterest/ktlint) to enforce the kotlin code styleguides. Please run the `ktlintFormat` Gradle task to check your code.
 5. Please use [Conventional Commit Messages](https://www.conventionalcommits.org/en/v1.0.0/) for your Commits.
 6. Issue your pull request!
+
+## How we handle the custom Resource Pack
+MPP uses a custom Resource Pack that needed for the custom blocks and items. You can generate this pack by running the `buildResourcePack` Gradle Task.
+
+The plugin first checks for a Resource Pack with the correct version locally and then on Github Releases. If no pack is found an error is logged. The plugin version is calculated from the commit amount on the current branch.
+
+If you are in a development or testing environment you should run the local Resource Pack hosting server with the `runResourcePackServer` Gradle Task. This is to make sure that the plugin always finds and uses the matching Resource Pack.
