@@ -21,7 +21,6 @@ import de.danielmaile.mpp.block.BlockBreakingService
 import de.danielmaile.mpp.block.ListenerBlock
 import de.danielmaile.mpp.block.function.CloudEffects
 import de.danielmaile.mpp.command.CommandMPP
-import de.danielmaile.mpp.data.DataPackManager
 import de.danielmaile.mpp.data.ResourcePackManager
 import de.danielmaile.mpp.data.config.ConfigManager
 import de.danielmaile.mpp.data.config.LanguageManager
@@ -35,19 +34,17 @@ import de.danielmaile.mpp.item.function.particle.ParticleManager
 import de.danielmaile.mpp.item.recipe.recipeList
 import de.danielmaile.mpp.mob.ListenerMPPMobs
 import de.danielmaile.mpp.mob.MPPMobSpawnManager
-import de.danielmaile.mpp.mob.listeners.ListenerHealer
-import de.danielmaile.mpp.mob.listeners.ListenerHitman
-import de.danielmaile.mpp.mob.listeners.ListenerKing
-import de.danielmaile.mpp.mob.listeners.ListenerNecromancer
-import de.danielmaile.mpp.mob.listeners.ListenerPlague
-import de.danielmaile.mpp.mob.listeners.ListenerRift
+import de.danielmaile.mpp.mob.listeners.*
 import de.danielmaile.mpp.util.logError
+import de.danielmaile.mpp.world.WorldGenerator
 import de.danielmaile.mpp.world.WorldManager
 import de.danielmaile.mpp.world.aether.ListenerAether
+import org.apache.commons.io.FileUtils
 import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.World
+import org.bukkit.WorldCreator
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
@@ -83,17 +80,21 @@ class MPP : JavaPlugin() {
             return
         }
 
-        DataPackManager.saveOrUpdateDataPack()
+        //DataPackManager.saveOrUpdateDataPack()
 
         // register commands, events and recipes
         Bukkit.getPluginCommand("mpp")?.setExecutor(CommandMPP())
         registerEvents()
         registerRecipes()
 
+        val worldCreator = WorldCreator("world_aether_aether")
+        worldCreator.generator(WorldGenerator())
+        worldCreator.createWorld()
+
         try {
             worldManager = WorldManager()
         } catch (e: Exception) {
-            installMessage(e.message)
+            //installMessage(e.message)
             Bukkit.shutdown()
             return
         }
@@ -109,9 +110,22 @@ class MPP : JavaPlugin() {
         Metrics(this, 18055)
     }
 
+    // TODO: Remove, just for dev purposes
+    override fun onDisable() {
+        val oldWorld = Bukkit.getWorld("aether")
+
+        if (oldWorld != null) {
+            oldWorld.isAutoSave = false
+            val folder = oldWorld.worldFolder
+            FileUtils.deleteDirectory(folder)
+            Bukkit.getWorlds().remove(oldWorld)
+        }
+    }
+
     /**
      * Send message on first install, might be changed to a better one?
      */
+    @Deprecated("To be removed")
     private fun installMessage(message: String?) {
         sendMessage("------------------------------")
         sendMessage("")
