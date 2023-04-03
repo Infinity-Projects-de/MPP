@@ -49,7 +49,7 @@ class GrassPopulator: BlockPopulator() {
             var y = worldInfo.maxHeight-1
             while (!limitedRegion.getBlockData(x, y, z).matches(aetherGrass) && y > worldInfo.minHeight) y--
 
-            if (limitedRegion.getBlockData(x, y, z).matches(aetherGrass)) {
+            if (limitedRegion.getBlockData(x, y, z).matches(aetherGrass) && limitedRegion.getType(x,y+2,z).isAir) {
                 if (limitedRegion.isInRegion(x,y+1,z)) {
                     limitedRegion.setType(x, y + 1, z, Material.GRASS)
                 }
