@@ -131,15 +131,16 @@ class MPP : JavaPlugin() {
     }
 
     private fun saveDefaultFiles() {
-        // create locales folder
+        saveLocales()
+        saveDefaultConfig()
+
+        reloadConfig()
+    }
+    private fun saveLocales() {
         val localesFolder = File(dataFolder, "locales")
         if (!localesFolder.exists() && !localesFolder.mkdirs()) {
             logError("Creation of locales folder ($dataFolder) failed!")
         }
-
-        // save default files
-        saveDefaultConfig()
-
         val locales = arrayOf("de", "en")
 
         for (locale in locales) {
@@ -148,12 +149,10 @@ class MPP : JavaPlugin() {
                 saveResource(localeFile.path, false)
             }
         }
-
-        reloadConfig()
     }
-
     private fun registerEvents() {
         registerListener(ListenerAether())
+
         registerListener(ListenerBlock())
         registerListener(ListenerCrafting())
         registerListener(ListenerItem())
@@ -161,6 +160,13 @@ class MPP : JavaPlugin() {
         registerListener(ListenerParticle())
         registerListener(ListenerConverter())
         registerListener(ListenerMagicWand())
+
+        registerMobListeners()
+
+        registerListener(ResourcePackManager())
+    }
+
+    private fun registerMobListeners() {
         registerListener(ListenerMPPMobs())
         registerListener(MPPMobSpawnManager())
         registerListener(ListenerNecromancer())
@@ -169,7 +175,6 @@ class MPP : JavaPlugin() {
         registerListener(ListenerRift())
         registerListener(ListenerHealer())
         registerListener(ListenerHitman())
-        registerListener(ResourcePackManager())
     }
 
     private fun registerListener(listener: Listener) {
