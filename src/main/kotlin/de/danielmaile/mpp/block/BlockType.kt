@@ -152,7 +152,7 @@ enum class BlockType(
     val isPowered: Boolean
     val blockData: BlockData
         get() = Material.NOTE_BLOCK.createBlockData().apply {
-            (this@apply as NoteBlock)
+            this as NoteBlock
             note = this@BlockType.note
             isPowered = this@BlockType.isPowered
             instrument = this@BlockType.instrument
