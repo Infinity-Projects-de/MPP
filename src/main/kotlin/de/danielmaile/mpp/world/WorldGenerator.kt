@@ -18,7 +18,6 @@
 package de.danielmaile.mpp.world
 
 import de.danielmaile.mpp.block.BlockType
-import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.World
 import org.bukkit.block.data.type.NoteBlock
@@ -51,6 +50,43 @@ class WorldGenerator : ChunkGenerator() {
         data.isPowered = block.isPowered
         data.instrument = block.instrument
     }
+    private val clouds1 = Material.NOTE_BLOCK.createBlockData() { data ->
+        val block = BlockType.CLOUD_HEAL
+        (data as NoteBlock).note = block.note
+        data.isPowered = block.isPowered
+        data.instrument = block.instrument
+    }
+    private val clouds2 = Material.NOTE_BLOCK.createBlockData() { data ->
+        val block = BlockType.CLOUD_HEAL2
+        (data as NoteBlock).note = block.note
+        data.isPowered = block.isPowered
+        data.instrument = block.instrument
+    }
+    private val clouds3 = Material.NOTE_BLOCK.createBlockData() { data ->
+        val block = BlockType.CLOUD_JUMP
+        (data as NoteBlock).note = block.note
+        data.isPowered = block.isPowered
+        data.instrument = block.instrument
+    }
+    private val clouds4 = Material.NOTE_BLOCK.createBlockData() { data ->
+        val block = BlockType.CLOUD_SPEED
+        (data as NoteBlock).note = block.note
+        data.isPowered = block.isPowered
+        data.instrument = block.instrument
+    }
+    private val clouds5 = Material.NOTE_BLOCK.createBlockData() { data ->
+        val block = BlockType.CLOUD_JUMP2
+        (data as NoteBlock).note = block.note
+        data.isPowered = block.isPowered
+        data.instrument = block.instrument
+    }
+    private val clouds6 = Material.NOTE_BLOCK.createBlockData() { data ->
+        val block = BlockType.CLOUD_SPEED2
+        (data as NoteBlock).note = block.note
+        data.isPowered = block.isPowered
+        data.instrument = block.instrument
+    }
+
     private val aetherGrass = Material.NOTE_BLOCK.createBlockData() { data ->
         val block = BlockType.AETHER_GRASS_BLOCK
         (data as NoteBlock).note = block.note
@@ -102,7 +138,7 @@ class WorldGenerator : ChunkGenerator() {
         }
     }
 
-    override fun getDefaultBiomeProvider(worldInfo: WorldInfo): BiomeProvider? {
+    override fun getDefaultBiomeProvider(worldInfo: WorldInfo): BiomeProvider {
         return AetherBiomeProvider()
     }
 
@@ -116,7 +152,6 @@ class WorldGenerator : ChunkGenerator() {
         val minHeight = worldInfo.minHeight
         val maxHeight = worldInfo.maxHeight
         val maxDistance = max(middleHeight - maxHeight, middleHeight - minHeight)
-        val cloudHeight = random.nextInt(minHeight,maxHeight)
 
         for (relativeX in 0..15) {
             val x = relativeX + startingX
@@ -145,13 +180,13 @@ class WorldGenerator : ChunkGenerator() {
                 }
 
                 for (y in maxHeight downTo minHeight) {
-                    var cloudFrequency = 1f / cloudSize
-                    val distance = cloudHeight - y
+                    val cloudFrequency = 1f / cloudSize
+                    val distance = middleHeight - y
                     val density =
-                        exp(-abs(distance) / maxDistance * densityAggressiveness) // the higher the distance, the more faded will the value be
+                        exp(-abs(distance) / maxDistance * densityAggressiveness / 2) // the higher the distance, the more faded will the value be
 
-                    val noise = SimplexNoise.noise(x * cloudFrequency, y * cloudFrequency * 10, z * cloudFrequency)
-                    if (noise * density > 0.75) {
+                    val noise = SimplexNoise.noise(x * cloudFrequency, y * cloudFrequency * 2, z * cloudFrequency)
+                    if (noise * density > 0.90) {
                         chunkData.setBlock(relativeX, y, relativeZ, clouds)
                     }
                 }
