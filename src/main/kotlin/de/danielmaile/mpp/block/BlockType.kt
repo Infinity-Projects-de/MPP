@@ -19,8 +19,10 @@ package de.danielmaile.mpp.block
 
 import de.danielmaile.mpp.util.ToolType
 import org.bukkit.Instrument
+import org.bukkit.Material
 import org.bukkit.Note
 import org.bukkit.Sound
+import org.bukkit.block.data.BlockData
 import org.bukkit.block.data.type.NoteBlock
 
 enum class BlockType(
@@ -148,6 +150,13 @@ enum class BlockType(
     val instrument: Instrument
     val note: Note
     val isPowered: Boolean
+    val blockData: BlockData
+        get() = Material.NOTE_BLOCK.createBlockData().apply {
+            this as NoteBlock
+            note = this@BlockType.note
+            isPowered = this@BlockType.isPowered
+            instrument = this@BlockType.instrument
+        }
 
     init {
         instrument = calculateInstrument()
