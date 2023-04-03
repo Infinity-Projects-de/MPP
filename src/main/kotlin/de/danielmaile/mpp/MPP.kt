@@ -22,7 +22,7 @@ import de.danielmaile.mpp.block.ListenerBlock
 import de.danielmaile.mpp.block.function.CloudEffects
 import de.danielmaile.mpp.command.CommandMPP
 import de.danielmaile.mpp.data.DataPackManager
-import de.danielmaile.mpp.data.ResourcePackBuilder
+import de.danielmaile.mpp.data.ResourcePackManager
 import de.danielmaile.mpp.data.config.ConfigManager
 import de.danielmaile.mpp.data.config.LanguageManager
 import de.danielmaile.mpp.item.ListenerConverter
@@ -84,7 +84,6 @@ class MPP : JavaPlugin() {
         }
 
         DataPackManager.saveOrUpdateDataPack()
-        ResourcePackBuilder.generateResourcePack()
 
         // register commands, events and recipes
         Bukkit.getPluginCommand("mpp")?.setExecutor(CommandMPP())
@@ -170,6 +169,7 @@ class MPP : JavaPlugin() {
         registerListener(ListenerRift())
         registerListener(ListenerHealer())
         registerListener(ListenerHitman())
+        registerListener(ResourcePackManager())
     }
 
     private fun registerListener(listener: Listener) {

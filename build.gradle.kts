@@ -1,5 +1,6 @@
 import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
 import java.io.BufferedReader
+import java.nio.file.Paths
 
 val javaVersion = 17
 val minecraftVersion = "1.19.4"
@@ -49,7 +50,8 @@ bukkit {
     libraries = listOf(
         "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$embeddedKotlinVersion",
         "org.apache.commons:commons-compress:1.21",
-        "com.konghq:unirest-java:3.13.13"
+        "com.konghq:unirest-java:3.13.13",
+        "com.squareup.okhttp3:okhttp:4.9.1"
     )
     commands {
         register("mpp") {
@@ -79,6 +81,7 @@ dependencies {
     compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0-SNAPSHOT")
     compileOnly("org.apache.commons:commons-compress:1.21")
     compileOnly("com.konghq:unirest-java:3.13.13")
+    compileOnly("com.squareup.okhttp3:okhttp:4.9.1")
 }
 
 tasks {
@@ -101,6 +104,10 @@ tasks {
         filteringCharset = Charsets.UTF_8.name()
     }
 
+    build {
+        finalizedBy("buildResourcePack")
+    }
+
     runServer {
         doFirst {
             download.run {
@@ -113,4 +120,35 @@ tasks {
         pluginJars(File(buildDir, "ProtocolLib.jar"))
         minecraftVersion(minecraftVersion)
     }
+
+    // region group often used tasks for convenience
+    clean {
+        group = "mpp"
+    }
+    build {
+        group = "mpp"
+    }
+    ktlintCheck {
+        group = "mpp"
+    }
+    runServer {
+        group = "mpp"
+    }
+    // endregion
+}
+
+tasks.register<JavaExec>("buildResourcePack") {
+    mainClass.set("de.danielmaile.resourcepack.PackBuilderKt")
+    classpath(sourceSets["main"].runtimeClasspath, configurations.compileClasspath)
+    group = "mpp"
+    args = listOf(getPluginVersion(), project.projectDir.absolutePath)
+}
+tasks.register<RunResourcePackServer>("runResourcePackServer") {
+    dependsOn("buildResourcePack")
+    group = "mpp"
+    port = 8080
+    resourcePackZip = File(
+        projectDir.toPath().resolve(Paths.get("build", "resourcepack")).toFile(),
+        "MPP-${getPluginVersion()}.zip"
+    )
 }

@@ -17,6 +17,8 @@ messages:
       - "IN ORDER TO GENERATE THE NEW"
       - "WORLDS, YOU NEED TO POWER ON"
       - "THE SERVER AGAIN. THANK YOU!"
+    kick_resource_pack_declined:
+      - "<red>This server uses MPP and requires all players to use the MPP Resource Pack! Please make sure that you have Server Resource Packs enabled for this server."
   cmd:
     info:
       reloaded_config: "<green>The config was reloaded!"
