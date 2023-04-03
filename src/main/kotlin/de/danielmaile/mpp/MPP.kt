@@ -84,6 +84,10 @@ class MPP : JavaPlugin() {
             return
         }
 
+        val worldCreator = WorldCreator("world_aether_aether")
+        worldCreator.generator(WorldGenerator())
+        worldCreator.createWorld()
+
         // DataPackManager.saveOrUpdateDataPack()
 
         // register commands, events and recipes
@@ -91,9 +95,7 @@ class MPP : JavaPlugin() {
         registerEvents()
         registerRecipes()
 
-        val worldCreator = WorldCreator("world_aether_aether")
-        worldCreator.generator(WorldGenerator())
-        worldCreator.createWorld()
+
 
         try {
             worldManager = WorldManager()
