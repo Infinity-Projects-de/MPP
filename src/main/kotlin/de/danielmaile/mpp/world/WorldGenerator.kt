@@ -25,7 +25,7 @@ import org.bukkit.generator.BiomeProvider
 import org.bukkit.generator.BlockPopulator
 import org.bukkit.generator.ChunkGenerator
 import org.bukkit.generator.WorldInfo
-import org.joml.SimplexNoise
+import org.bukkit.util.noise.SimplexNoiseGenerator
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.exp
@@ -37,12 +37,14 @@ class WorldGenerator : ChunkGenerator() {
     private val octaves = 4 // Number of noise layers
     private val persistence =
         0.5 // amplitude multiplier between noise layers, making it higher makes the terrain less regular
-    private val lacunarity = 2f // frequency multiplier between noise layers, should help smoothing out a little bit
+    private val lacunarity = 2 // frequency multiplier between noise layers, should help smoothing out a little bit
     private val threshold =
         0.25 // after what value to generate islands ([-1,+1]), the lower, the more terrain is generated
     private val densityAggressiveness = 7 // 0 to 10, how much aggressive is the density
 
     private val cloudSize = 50
+
+    private val simplex = SimplexNoiseGenerator(0)
 
     private val clouds = Material.NOTE_BLOCK.createBlockData() { data ->
         val block = BlockType.CLOUD_SLOW_FALLING
@@ -158,7 +160,7 @@ class WorldGenerator : ChunkGenerator() {
             for (relativeZ in 0..15) {
                 val z = relativeZ + startingZ
                 for (y in maxHeight downTo minHeight) {
-                    var frequency = 1f / islandSize
+                    var frequency = 1.0 / islandSize
 
                     val distance = middleHeight - y
 
@@ -169,7 +171,7 @@ class WorldGenerator : ChunkGenerator() {
                     var amplitude = 1.0 // how much will the current layer affect the noise
 
                     for (i in 0..octaves) {
-                        val value = SimplexNoise.noise(x * frequency, y * frequency, z * frequency)
+                        val value = simplex.noise(x * frequency, y * frequency, z * frequency)
                         noise += value * amplitude
                         amplitude *= persistence
                         frequency *= lacunarity
@@ -180,12 +182,12 @@ class WorldGenerator : ChunkGenerator() {
                 }
 
                 for (y in maxHeight downTo minHeight) {
-                    val cloudFrequency = 1f / cloudSize
+                    val cloudFrequency = 1.0 / cloudSize
                     val distance = middleHeight - y
                     val density =
                         exp(-abs(distance) / maxDistance * densityAggressiveness / 2) // the higher the distance, the more faded will the value be
 
-                    val noise = SimplexNoise.noise(x * cloudFrequency, y * cloudFrequency * 2, z * cloudFrequency)
+                    val noise = simplex.noise(x * cloudFrequency, y * cloudFrequency * 2, z * cloudFrequency)
                     if (noise * density > 0.90) {
                         chunkData.setBlock(relativeX, y, relativeZ, clouds)
                     }
