@@ -45,7 +45,7 @@ fun logError(message: String) {
 fun getResource(fileName: String): InputStream? {
     return inst().javaClass.classLoader.getResourceAsStream(fileName)
 }
-
+@Deprecated("Unrelated to branch, expected to be unused")
 fun getPluginJar(): File {
     // unescape %20 to spaces to prevent FileNotFoundException if the path contains a space on linux
     return File(inst().javaClass.protectionDomain.codeSource.location.path.toString().replace("%20", " "))
@@ -67,6 +67,7 @@ fun Long.abbreviateNumber(): String {
 }
 
 @Throws(IOException::class)
+@Deprecated("Unrelated to branch, expected to be unused")
 fun saveResource(resourcePath: String, outputPath: Path) {
     val inputStream = inst().javaClass.classLoader.getResourceAsStream(resourcePath) ?: throw IllegalArgumentException()
     val directory = outputPath.toString().substringBeforeLast(File.separator)

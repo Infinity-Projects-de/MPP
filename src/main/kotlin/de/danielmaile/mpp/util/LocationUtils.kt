@@ -20,5 +20,6 @@ package de.danielmaile.mpp.util
 import net.minecraft.core.BlockPos
 import org.bukkit.Location
 
+@Deprecated("Not used")
 val Location.blockPos: BlockPos
     get() = BlockPos(blockX, blockY, blockZ)
