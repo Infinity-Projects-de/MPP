@@ -30,6 +30,7 @@ import org.bukkit.inventory.ItemStack
 import java.lang.Integer.min
 import java.util.Random
 
+@Deprecated("Only used as a test method")
 class DungeonChest(private val random: Random) {
 
     /**

@@ -21,6 +21,7 @@ import de.danielmaile.mpp.item.ItemType
 import org.bukkit.Material
 import java.util.Random
 
+@Deprecated("Only used as a test method")
 enum class LootTable(
     val weight: Double,
     val minItemStacks: Int,
