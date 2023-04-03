@@ -95,8 +95,6 @@ class MPP : JavaPlugin() {
         registerEvents()
         registerRecipes()
 
-
-
         try {
             worldManager = WorldManager()
         } catch (e: Exception) {
@@ -236,7 +234,6 @@ class MPP : JavaPlugin() {
             }
             return false
         }
-
 
         return true
     }

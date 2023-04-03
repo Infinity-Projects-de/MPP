@@ -25,7 +25,7 @@ import org.bukkit.generator.LimitedRegion
 import org.bukkit.generator.WorldInfo
 import java.util.*
 
-class GrassPopulator: BlockPopulator() {
+class GrassPopulator : BlockPopulator() {
 
     // CREDITS TO https://www.spigotmc.org/members/cooljwb.154564/
 
@@ -46,11 +46,11 @@ class GrassPopulator: BlockPopulator() {
         for (iteration in 0 until 10) {
             val x = random.nextInt(16) + chunkX * 16
             val z = random.nextInt(16) + chunkZ * 16
-            var y = worldInfo.maxHeight-1
+            var y = worldInfo.maxHeight - 1
             while (!limitedRegion.getBlockData(x, y, z).matches(aetherGrass) && y > worldInfo.minHeight) y--
 
-            if (limitedRegion.getBlockData(x, y, z).matches(aetherGrass) && limitedRegion.getType(x,y+2,z).isAir) {
-                if (limitedRegion.isInRegion(x,y+1,z)) {
+            if (limitedRegion.getBlockData(x, y, z).matches(aetherGrass) && limitedRegion.getType(x, y + 2, z).isAir) {
+                if (limitedRegion.isInRegion(x, y + 1, z)) {
                     limitedRegion.setType(x, y + 1, z, Material.GRASS)
                 }
             }
