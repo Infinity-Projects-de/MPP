@@ -45,6 +45,7 @@ fun logError(message: String) {
 fun getResource(fileName: String): InputStream? {
     return inst().javaClass.classLoader.getResourceAsStream(fileName)
 }
+
 @Deprecated("Unrelated to branch, expected to be unused")
 fun getPluginJar(): File {
     // unescape %20 to spaces to prevent FileNotFoundException if the path contains a space on linux
