@@ -64,9 +64,9 @@ class WorldGenerator : ChunkGenerator() {
         val minHeight = worldInfo.minHeight
         val maxHeight = worldInfo.maxHeight
         val maxDistance = max(middleHeight - maxHeight, middleHeight - minHeight)
-        for (relativeX in 0 .. 15) {
+        for (relativeX in 0..15) {
             val x = relativeX + startingX
-            for (relativeZ in 0 .. 15) {
+            for (relativeZ in 0..15) {
                 val z = relativeZ + startingZ
                 var highestBlock = 0
                 for (y in maxHeight downTo minHeight) {
@@ -75,12 +75,12 @@ class WorldGenerator : ChunkGenerator() {
                     val distance = middleHeight - y
 
                     val densityAggressiveness = 3 // 0 to 10, how much aggressive is the density
-                    val density = exp(-abs(distance)/maxDistance * densityAggressiveness) // the higher the distance, the more faded will the value be
+                    val density = exp(-abs(distance) / maxDistance * densityAggressiveness) // the higher the distance, the more faded will the value be
 
                     var noise = 0.0 // do not modify this
                     var amplitude = 1.0 // how much will the current layer affect the noise
 
-                    for (i in 0 .. octaves) {
+                    for (i in 0..octaves) {
                         val value = SimplexNoise.noise(x * frequency, y * frequency, z * frequency)
                         noise += value * amplitude
                         amplitude *= persistence
@@ -98,7 +98,6 @@ class WorldGenerator : ChunkGenerator() {
                                 chunkData.setBlock(relativeX, y, relativeZ, aetherStone)
                             }
                         }
-
                     }
                 }
             }

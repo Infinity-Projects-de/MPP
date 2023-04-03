@@ -80,7 +80,7 @@ class MPP : JavaPlugin() {
             return
         }
 
-        //DataPackManager.saveOrUpdateDataPack()
+        // DataPackManager.saveOrUpdateDataPack()
 
         // register commands, events and recipes
         Bukkit.getPluginCommand("mpp")?.setExecutor(CommandMPP())
@@ -94,7 +94,7 @@ class MPP : JavaPlugin() {
         try {
             worldManager = WorldManager()
         } catch (e: Exception) {
-            //installMessage(e.message)
+            // installMessage(e.message)
             Bukkit.shutdown()
             return
         }
