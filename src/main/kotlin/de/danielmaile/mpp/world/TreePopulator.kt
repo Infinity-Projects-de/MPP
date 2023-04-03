@@ -18,12 +18,8 @@
 package de.danielmaile.mpp.world
 
 import de.danielmaile.mpp.block.BlockType
-import org.bukkit.Bukkit
-import org.bukkit.Chunk
-import org.bukkit.Location
 import org.bukkit.Material
-import org.bukkit.TreeType
-import org.bukkit.World
+import org.bukkit.block.data.type.Leaves
 import org.bukkit.block.data.type.NoteBlock
 import org.bukkit.generator.BlockPopulator
 import org.bukkit.generator.LimitedRegion
@@ -62,7 +58,7 @@ class TreePopulator: BlockPopulator() {
         var y = worldInfo.maxHeight -1
         while (!limitedRegion.getBlockData(x, y, z).matches(aetherGrass) && y > worldInfo.minHeight) y--
 
-        if (limitedRegion.getType(x, y, z).isSolid) {
+        if (limitedRegion.getBlockData(x, y, z).matches(aetherGrass)) {
             if (!canGenerateTree(limitedRegion,x,y+1,z)) {
                 return
             }
@@ -73,7 +69,7 @@ class TreePopulator: BlockPopulator() {
     private fun canGenerateTree(limitedRegion: LimitedRegion, x: Int, y: Int, z: Int): Boolean {
         for (nx in -2 .. 2) {
             for (nz in -2 .. 2) {
-                for (ny in -1 .. 6) {
+                for (ny in 0 .. 6) {
                     if (!limitedRegion.isInRegion(x+nx,y+ny,z+nz)) {
                         return false
                     }
@@ -99,7 +95,9 @@ class TreePopulator: BlockPopulator() {
             for (nz in -2 .. 2) {
                 for (ny in 3 .. 6) {
                     if (limitedRegion.getType(x+nx, y+ny, z+nz).isAir) {
-                        limitedRegion.setBlockData(x+nx,y+ny,z+nz,aetherLeaves)
+                        limitedRegion.setBlockData(x+nx,y+ny,z+nz,Material.OAK_LEAVES.createBlockData().apply {
+                            (this as Leaves).isPersistent = true
+                        })
                     }
                 }
             }
