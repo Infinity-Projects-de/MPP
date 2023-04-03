@@ -41,10 +41,9 @@ import de.danielmaile.mpp.mob.listeners.ListenerNecromancer
 import de.danielmaile.mpp.mob.listeners.ListenerPlague
 import de.danielmaile.mpp.mob.listeners.ListenerRift
 import de.danielmaile.mpp.util.logError
-import de.danielmaile.mpp.world.WorldGenerator
+import de.danielmaile.mpp.world.aether.AetherWorldGenerator
 import de.danielmaile.mpp.world.WorldManager
 import de.danielmaile.mpp.world.aether.ListenerAether
-import org.apache.commons.io.FileUtils
 import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
 import org.bukkit.World
@@ -85,7 +84,7 @@ class MPP : JavaPlugin() {
         }
 
         val worldCreator = WorldCreator("world_aether_aether")
-        worldCreator.generator(WorldGenerator())
+        worldCreator.generator(AetherWorldGenerator())
         worldCreator.createWorld()
 
         // DataPackManager.saveOrUpdateDataPack()
@@ -112,18 +111,6 @@ class MPP : JavaPlugin() {
         BlockBreakingService.init()
 
         Metrics(this, 18055)
-    }
-
-    // TODO: Remove, just for dev purposes
-    override fun onDisable() {
-        val oldWorld = Bukkit.getWorld("aether")
-
-        if (oldWorld != null) {
-            oldWorld.isAutoSave = false
-            val folder = oldWorld.worldFolder
-            FileUtils.deleteDirectory(folder)
-            Bukkit.getWorlds().remove(oldWorld)
-        }
     }
 
     private fun saveDefaultFiles() {

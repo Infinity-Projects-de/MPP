@@ -15,7 +15,7 @@
  * along with MPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.danielmaile.mpp.world
+package de.danielmaile.mpp.world.aether.populators
 
 import de.danielmaile.mpp.block.BlockType
 import org.bukkit.Material

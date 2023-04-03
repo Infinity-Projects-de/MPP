@@ -15,7 +15,7 @@
  * along with MPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.danielmaile.mpp.world
+package de.danielmaile.mpp.world.aether
 
 import org.bukkit.block.Biome
 import org.bukkit.generator.BiomeProvider
