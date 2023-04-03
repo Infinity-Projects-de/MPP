@@ -34,6 +34,7 @@ import kotlin.math.max
 class WorldGenerator : ChunkGenerator() {
     private val islandSize = 150 // Island size, is not relative to anything, the bigger the size the bigger the island
     private val middleHeight = 215f // Middle height of the map, where the center of the islands is normally placed
+
     private val octaves = 4 // Number of noise layers
     private val persistence =
         0.5 // amplitude multiplier between noise layers, making it higher makes the terrain less regular
@@ -48,42 +49,6 @@ class WorldGenerator : ChunkGenerator() {
 
     private val clouds = Material.NOTE_BLOCK.createBlockData() { data ->
         val block = BlockType.CLOUD_SLOW_FALLING
-        (data as NoteBlock).note = block.note
-        data.isPowered = block.isPowered
-        data.instrument = block.instrument
-    }
-    private val clouds1 = Material.NOTE_BLOCK.createBlockData() { data ->
-        val block = BlockType.CLOUD_HEAL
-        (data as NoteBlock).note = block.note
-        data.isPowered = block.isPowered
-        data.instrument = block.instrument
-    }
-    private val clouds2 = Material.NOTE_BLOCK.createBlockData() { data ->
-        val block = BlockType.CLOUD_HEAL2
-        (data as NoteBlock).note = block.note
-        data.isPowered = block.isPowered
-        data.instrument = block.instrument
-    }
-    private val clouds3 = Material.NOTE_BLOCK.createBlockData() { data ->
-        val block = BlockType.CLOUD_JUMP
-        (data as NoteBlock).note = block.note
-        data.isPowered = block.isPowered
-        data.instrument = block.instrument
-    }
-    private val clouds4 = Material.NOTE_BLOCK.createBlockData() { data ->
-        val block = BlockType.CLOUD_SPEED
-        (data as NoteBlock).note = block.note
-        data.isPowered = block.isPowered
-        data.instrument = block.instrument
-    }
-    private val clouds5 = Material.NOTE_BLOCK.createBlockData() { data ->
-        val block = BlockType.CLOUD_JUMP2
-        (data as NoteBlock).note = block.note
-        data.isPowered = block.isPowered
-        data.instrument = block.instrument
-    }
-    private val clouds6 = Material.NOTE_BLOCK.createBlockData() { data ->
-        val block = BlockType.CLOUD_SPEED2
         (data as NoteBlock).note = block.note
         data.isPowered = block.isPowered
         data.instrument = block.instrument
@@ -148,22 +113,18 @@ class WorldGenerator : ChunkGenerator() {
         return mutableListOf(TreePopulator(), GrassPopulator())
     }
 
-    override fun generateNoise(worldInfo: WorldInfo, random: Random, chunkX: Int, chunkZ: Int, chunkData: ChunkData) {
-        val startingX = chunkX * 16
-        val startingZ = chunkZ * 16
-        val minHeight = worldInfo.minHeight
-        val maxHeight = worldInfo.maxHeight
+    private fun generateTerrain(chunkX: Int, chunkZ: Int, chunkData: ChunkData) {
+        val maxHeight = chunkData.maxHeight
+        val minHeight = chunkData.minHeight
         val maxDistance = max(middleHeight - maxHeight, middleHeight - minHeight)
-
-        for (relativeX in 0..15) {
-            val x = relativeX + startingX
-            for (relativeZ in 0..15) {
-                val z = relativeZ + startingZ
-                for (y in maxHeight downTo minHeight) {
+        for (relX in 0..15) {
+            val x = relX + chunkX * 16
+            for (relZ in 0..15) {
+                val z = relZ + chunkZ * 16
+                for (y in minHeight until maxHeight) {
                     var frequency = 1.0 / islandSize
 
                     val distance = middleHeight - y
-
                     val density =
                         exp(-abs(distance) / maxDistance * densityAggressiveness) // the higher the distance, the more faded will the value be
 
@@ -171,34 +132,48 @@ class WorldGenerator : ChunkGenerator() {
                     var amplitude = 1.0 // how much will the current layer affect the noise
 
                     for (i in 0..octaves) {
-                        val value = simplex.noise(x * frequency, y * frequency, z * frequency)
+                        val value = simplex.noise(x * frequency, y * frequency * 2, z * frequency)
                         noise += value * amplitude
                         amplitude *= persistence
                         frequency *= lacunarity
                     }
+
                     if (noise * density > threshold) {
-                        chunkData.setBlock(relativeX, y, relativeZ, Material.STONE)
+                        chunkData.setBlock(relX, y, relZ, Material.STONE)
                     }
                 }
+            }
+        }
+    }
 
-                for (y in maxHeight downTo minHeight) {
+    private fun generateClouds(chunkX: Int, chunkZ: Int, chunkData: ChunkData) {
+        val maxHeight = chunkData.maxHeight
+        val minHeight = chunkData.minHeight
+        val maxDistance = max(middleHeight - maxHeight, middleHeight - minHeight)
+
+        for (relX in 0..15) {
+            val x = relX + chunkX * 16
+            for (relZ in 0..15) {
+                val z = relZ + chunkZ * 16
+                for (y in minHeight until maxHeight) {
                     val cloudFrequency = 1.0 / cloudSize
+
                     val distance = middleHeight - y
                     val density =
                         exp(-abs(distance) / maxDistance * densityAggressiveness / 2) // the higher the distance, the more faded will the value be
 
                     val noise = simplex.noise(x * cloudFrequency, y * cloudFrequency * 2, z * cloudFrequency)
-                    if (noise * density > 0.90) {
-                        chunkData.setBlock(relativeX, y, relativeZ, clouds)
+
+                    if (noise * density > 0.80) {
+                        chunkData.setBlock(relX, y, relZ, clouds)
                     }
                 }
-
-
-
             }
         }
+    }
 
-
-
+    override fun generateNoise(worldInfo: WorldInfo, random: Random, chunkX: Int, chunkZ: Int, chunkData: ChunkData) {
+        generateTerrain(chunkX, chunkZ, chunkData)
+        generateClouds(chunkX, chunkZ, chunkData)
     }
 }
