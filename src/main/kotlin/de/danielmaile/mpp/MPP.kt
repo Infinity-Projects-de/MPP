@@ -34,7 +34,12 @@ import de.danielmaile.mpp.item.function.particle.ParticleManager
 import de.danielmaile.mpp.item.recipe.recipeList
 import de.danielmaile.mpp.mob.ListenerMPPMobs
 import de.danielmaile.mpp.mob.MPPMobSpawnManager
-import de.danielmaile.mpp.mob.listeners.*
+import de.danielmaile.mpp.mob.listeners.ListenerHealer
+import de.danielmaile.mpp.mob.listeners.ListenerHitman
+import de.danielmaile.mpp.mob.listeners.ListenerKing
+import de.danielmaile.mpp.mob.listeners.ListenerNecromancer
+import de.danielmaile.mpp.mob.listeners.ListenerPlague
+import de.danielmaile.mpp.mob.listeners.ListenerRift
 import de.danielmaile.mpp.util.logError
 import de.danielmaile.mpp.world.WorldGenerator
 import de.danielmaile.mpp.world.WorldManager
@@ -42,7 +47,6 @@ import de.danielmaile.mpp.world.aether.ListenerAether
 import org.apache.commons.io.FileUtils
 import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.configuration.file.YamlConfiguration
@@ -120,31 +124,6 @@ class MPP : JavaPlugin() {
             FileUtils.deleteDirectory(folder)
             Bukkit.getWorlds().remove(oldWorld)
         }
-    }
-
-    /**
-     * Send message on first install, might be changed to a better one?
-     */
-    @Deprecated("To be removed")
-    private fun installMessage(message: String?) {
-        sendMessage("------------------------------")
-        sendMessage("")
-        sendMessage("")
-        for (s in getLanguageManager().getStringList("messages.errors.first_time_server_shutdown")) {
-            sendMessage(ChatColor.GREEN.toString() + s)
-        }
-        if (!message.isNullOrBlank()) {
-            sendMessage(message)
-        } else {
-            sendMessage("")
-        }
-        sendMessage("")
-        sendMessage("------------------------------")
-    }
-
-    private fun sendMessage(text: String) {
-        val color = ChatColor.GREEN
-        server.consoleSender.sendMessage(color.toString() + text)
     }
 
     private fun saveDefaultFiles() {
@@ -255,6 +234,8 @@ class MPP : JavaPlugin() {
             }
             return false
         }
+
+
         return true
     }
 
