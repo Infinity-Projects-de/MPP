@@ -20,31 +20,15 @@ package de.danielmaile.mpp.world
 import de.danielmaile.mpp.block.BlockType
 import org.bukkit.Material
 import org.bukkit.block.data.type.Leaves
-import org.bukkit.block.data.type.NoteBlock
 import org.bukkit.generator.BlockPopulator
 import org.bukkit.generator.LimitedRegion
 import org.bukkit.generator.WorldInfo
 import java.util.*
 
 class TreePopulator : BlockPopulator() {
-    private val aetherGrass = Material.NOTE_BLOCK.createBlockData() { data ->
-        val block = BlockType.AETHER_GRASS_BLOCK
-        (data as NoteBlock).note = block.note
-        data.isPowered = block.isPowered
-        data.instrument = block.instrument
-    }
-    val aetherLog = Material.NOTE_BLOCK.createBlockData() { data ->
-        val block = BlockType.AETHER_LOG
-        (data as NoteBlock).note = block.note
-        data.isPowered = block.isPowered
-        data.instrument = block.instrument
-    }
-    val aetherLeaves = Material.NOTE_BLOCK.createBlockData() { data ->
-        val block = BlockType.AETHER_LEAVES
-        (data as NoteBlock).note = block.note
-        data.isPowered = block.isPowered
-        data.instrument = block.instrument
-    }
+    private val aetherGrass = BlockType.AETHER_GRASS_BLOCK.blockData
+    private val aetherLog = BlockType.AETHER_LOG.blockData
+
     override fun populate(
         worldInfo: WorldInfo,
         random: Random,

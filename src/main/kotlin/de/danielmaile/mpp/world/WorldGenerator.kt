@@ -20,7 +20,6 @@ package de.danielmaile.mpp.world
 import de.danielmaile.mpp.block.BlockType
 import org.bukkit.Material
 import org.bukkit.World
-import org.bukkit.block.data.type.NoteBlock
 import org.bukkit.generator.BiomeProvider
 import org.bukkit.generator.BlockPopulator
 import org.bukkit.generator.ChunkGenerator
@@ -32,51 +31,28 @@ import kotlin.math.exp
 import kotlin.math.max
 
 class WorldGenerator : ChunkGenerator() {
-    private val islandSize = 150 // Island size, is not relative to anything, the bigger the size the bigger the island
+
+    /* TERRAIN DATA */
     private val middleHeight = 215f // Middle height of the map, where the center of the islands is normally placed
-
-    private val octaves = 4 // Number of noise layers
-    private val persistence =
-        0.5 // amplitude multiplier between noise layers, making it higher makes the terrain less regular
-    private val lacunarity = 2 // frequency multiplier between noise layers, should help smoothing out a little bit
-    private val threshold =
-        0.25 // after what value to generate islands ([-1,+1]), the lower, the more terrain is generated
-    private val densityAggressiveness = 7 // 0 to 10, how much aggressive is the density
-
+    private val islandSize = 150 // Island size, is not relative to anything, the bigger the size the bigger the island
     private val cloudSize = 50
 
+    /* NOISE SETTINGS */
     private val simplex = SimplexNoiseGenerator(0)
 
-    private val clouds = Material.NOTE_BLOCK.createBlockData() { data ->
-        val block = BlockType.CLOUD_SLOW_FALLING
-        (data as NoteBlock).note = block.note
-        data.isPowered = block.isPowered
-        data.instrument = block.instrument
-    }
+    private val octaves = 4 // Number of noise layers
+    private val persistence = 0.5 // amplitude multiplier between noise layers, making it higher makes the terrain less regular
+    private val lacunarity = 2 // frequency multiplier between noise layers, should help smoothing out a little bit
+    private val threshold = 0.25 // after what value to generate islands ([-1,+1]), the lower, the more terrain is generated
+    private val densityAggressiveness = 7 // 0 to 10, how much aggressive is the density
 
-    private val aetherGrass = Material.NOTE_BLOCK.createBlockData() { data ->
-        val block = BlockType.AETHER_GRASS_BLOCK
-        (data as NoteBlock).note = block.note
-        data.isPowered = block.isPowered
-        data.instrument = block.instrument
-    }
+    /* USED BLOCKS */
+    private val aetherGrass = BlockType.AETHER_GRASS_BLOCK.blockData
+    private val aetherDirt = BlockType.AETHER_DIRT.blockData
+    private val aetherStone = BlockType.AETHER_STONE.blockData
 
 
-    val aetherDirt = Material.NOTE_BLOCK.createBlockData() { data ->
-        val block = BlockType.AETHER_DIRT
-        (data as NoteBlock).note = block.note
-        data.isPowered = block.isPowered
-        data.instrument = block.instrument
-    }
-
-    val aetherStone = Material.NOTE_BLOCK.createBlockData() { data ->
-        val block = BlockType.AETHER_STONE
-        (data as NoteBlock).note = block.note
-        data.isPowered = block.isPowered
-        data.instrument = block.instrument
-    }
-
-    //TODO: To be improved
+    // TODO: To be improved
     override fun generateSurface(worldInfo: WorldInfo, random: Random, chunkX: Int, chunkZ: Int, chunkData: ChunkData) {
         val minHeight = worldInfo.minHeight
         val maxHeight = worldInfo.maxHeight
@@ -165,7 +141,7 @@ class WorldGenerator : ChunkGenerator() {
                     val noise = simplex.noise(x * cloudFrequency, y * cloudFrequency * 2, z * cloudFrequency)
 
                     if (noise * density > 0.80) {
-                        chunkData.setBlock(relX, y, relZ, clouds)
+                        chunkData.setBlock(relX, y, relZ, BlockType.CLOUD_SLOW_FALLING.blockData)
                     }
                 }
             }
