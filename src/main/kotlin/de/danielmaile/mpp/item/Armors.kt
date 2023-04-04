@@ -41,7 +41,5 @@ enum class Armors(
             else -> { throw NoSuchFieldException() }
         }
 
-    override fun register() {
-        ItemRegistry.registerItem("mpp:$name", this)
-    }
+
 }

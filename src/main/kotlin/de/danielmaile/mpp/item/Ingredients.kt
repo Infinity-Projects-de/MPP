@@ -26,7 +26,5 @@ enum class Ingredients(
     ZANITE_STONE(Material.DIAMOND),
     GRAVITITE_PLATE(Material.NETHERITE_SCRAP);
 
-    override fun register() {
-        ItemRegistry.registerItem("mpp:$name", this)
-    }
+
 }

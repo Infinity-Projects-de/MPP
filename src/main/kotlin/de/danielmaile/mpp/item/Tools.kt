@@ -40,7 +40,5 @@ enum class Tools(
     ZANITE_HOE(Material.DIAMOND_HOE, ToolTier.ZANITE, ToolType.HOE),
     ZANITE_PICKAXE(Material.DIAMOND_PICKAXE, ToolTier.ZANITE, ToolType.PICKAXE),
     ZANITE_SHOVEL(Material.DIAMOND_SHOVEL, ToolTier.ZANITE, ToolType.SHOVEL);
-    override fun register() {
-        ItemRegistry.registerItem("mpp:$name", this)
-    }
+
 }

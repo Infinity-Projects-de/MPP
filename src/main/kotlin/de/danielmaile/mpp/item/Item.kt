@@ -20,6 +20,9 @@ package de.danielmaile.mpp.item
 import org.bukkit.Material
 
 interface Item {
+    val name: String
     val material: Material
-    fun register();
+    fun register() {
+        ItemRegistry.registerItem(this)
+    }
 }

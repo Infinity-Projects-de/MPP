@@ -26,6 +26,10 @@ object ItemRegistry {
             item.register()
         }
     }
+    fun registerItem(item: Item) {
+        val id = "mpp:${item.name}"
+        registerItem(id, item)
+    }
     fun registerItem(id: String, item: Item) {
         if (items.containsKey(id) || items.containsValue(item)) {
             throw IllegalArgumentException("Item with id: $id is already registered")

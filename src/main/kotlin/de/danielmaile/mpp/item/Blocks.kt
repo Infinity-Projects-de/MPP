@@ -34,7 +34,5 @@ enum class Blocks(
     ZANITE_ORE(Material.STONE, BlockType.ZANITE_ORE),
     GRAVITITE_ORE(Material.STONE, BlockType.GRAVITITE_ORE);
 
-    override fun register() {
-        ItemRegistry.registerItem("mpp:$name", this)
-    }
+
 }
