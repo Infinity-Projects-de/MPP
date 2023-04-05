@@ -42,21 +42,23 @@ interface Item {
 
     val modelID: Int
         get() = name.hashCode() // FIXME: Method has not been tested 
-        
-    val itemStack: ItemStack
-        get() {
-            val itemStack = ItemStack(material)
-            val itemMeta = itemStack.itemMeta
 
-            itemMeta.displayName(displayName)
-            itemMeta.lore(description)
-            itemMeta.setCustomModelData(modelID)
-
-            modifySpecialItemMeta(itemMeta)
-            itemStack.itemMeta = itemMeta
-            itemStack.setDataString(MPP_ITEM_TAG_KEY, name)
-            return itemStack
+    val itemStack: (Int) -> ItemStack
+        get() = {
+            ItemStack(material).apply {
+                itemMeta = itemMeta.apply {
+                    displayName(this@Item.displayName)
+                    lore(description)
+                    setCustomModelData(modelID)
+                    modifySpecialItemMeta(this)
+                }
+                setDataString(MPP_ITEM_TAG_KEY, name)
+                amount = it
+            }
         }
+
+
+
 
     fun modifySpecialItemMeta(itemMeta: ItemMeta) {
     }
