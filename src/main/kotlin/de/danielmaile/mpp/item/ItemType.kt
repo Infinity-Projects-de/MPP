@@ -1,6 +1,6 @@
 /*
  * This file is part of MPP.
- * Copyright (c) 2022 by it's authors. All rights reserved.
+ * Copyright (c) 2022-2023 by it's authors. All rights reserved.
  * MPP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -34,11 +34,10 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.LeatherArmorMeta
 import java.util.*
 
-const val MPP_ITEM_TAG_KEY = "mpp_item"
 
 // don't change this, otherwise existing items will break
 private const val MODEL_ID_OFFSET = 1000
-
+@Deprecated("Deleting")
 enum class ItemType(
     private val material: Material?,
     private val attributeModifiers: Multimap<Attribute, AttributeModifier>?,

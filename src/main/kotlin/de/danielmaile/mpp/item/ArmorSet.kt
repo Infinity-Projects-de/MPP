@@ -19,6 +19,7 @@ package de.danielmaile.mpp.item
 
 import org.bukkit.Color
 
+@Deprecated("Deleting")
 enum class ArmorSet(val head: ItemType, val chest: ItemType, val legs: ItemType, val feet: ItemType) {
     VALKYRIE(
         ItemType.VALKYRE_RING,
