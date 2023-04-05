@@ -23,10 +23,18 @@ enum class ToolTier(
     val itemDurability: Int,
     val miningSpeed: Float,
     val attackDamage: Float, // Minecraft uses this and another value on top, do they sum or what?
-    val enchantability: Int // Not really sure about this
+    val enchantability: Int, // Not really sure about this
+    val toolIngredients: ToolIngredients
 ) {
-    AETHER_WOOD(0, 59, 2.0F, 0.0F, 15),
-    AETHER_STONE(1, 131, 4.0F, 1.0F, 5),
-    ZANITE(3, 1561, 8.0F, 3.0F, 10),
-    GRAVITITE(4, 2031, 9.0F, 4.0F, 15)
+    AETHER_WOOD(0, 59, 2.0F, 0.0F, 15,
+        ToolIngredients(Ingredients.AETHER_STICK, Blocks.AETHER_PLANKS)),
+    AETHER_STONE(1, 131, 4.0F, 1.0F, 5,
+        ToolIngredients(Ingredients.AETHER_STICK, Blocks.AETHER_STONE)),
+    ZANITE(3, 1561, 8.0F, 3.0F, 10,
+        ToolIngredients(Ingredients.AETHER_STICK, Ingredients.ZANITE_STONE)),
+    GRAVITITE(4, 2031, 9.0F, 4.0F, 15,
+        ToolIngredients(Ingredients.AETHER_STICK, Ingredients.GRAVITITE_PLATE));
+
+    class ToolIngredients(val stickIngredient: Ingredients?, // Might not be needed, but we might have tools with normal sticks right?
+                          vararg material: Item)
 }
