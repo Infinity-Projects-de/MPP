@@ -18,7 +18,7 @@
 package de.danielmaile.mpp.item.function.magicwand
 
 import de.danielmaile.mpp.inst
-import de.danielmaile.mpp.item.ItemType
+import de.danielmaile.mpp.item.ItemRegistry
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerInteractEvent
@@ -29,7 +29,7 @@ class ListenerMagicWand : Listener {
     @EventHandler
     fun onItemUse(event: PlayerInteractEvent) {
         if (event.hand != EquipmentSlot.HAND) return
-        if (ItemType.fromTag(event.item) != ItemType.MAGIC_WAND) return
+        if (event.item?.let { ItemRegistry.getItemFromItemstack(it) } != null /* ItemRegistry.MAGIC_WAND*/) return
         event.isCancelled = true
 
         val wand = MagicWand(event.item!!)

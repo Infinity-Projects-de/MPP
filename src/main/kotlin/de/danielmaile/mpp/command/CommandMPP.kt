@@ -21,11 +21,11 @@ import de.danielmaile.mpp.aetherWorld
 import de.danielmaile.mpp.data.config.LanguageManager
 import de.danielmaile.mpp.gui.ItemCollectionGUI
 import de.danielmaile.mpp.inst
-import de.danielmaile.mpp.item.ItemType
+import de.danielmaile.mpp.item.Item
+import de.danielmaile.mpp.item.ItemRegistry
+import de.danielmaile.mpp.item.MPP_ITEM_PREFIX
 import de.danielmaile.mpp.mob.MPPMob
-import de.danielmaile.mpp.util.getDirection
 import de.danielmaile.mpp.util.isLong
-import de.danielmaile.mpp.world.dungeon.DungeonChest
 import net.kyori.adventure.text.Component
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -34,7 +34,6 @@ import org.bukkit.command.TabCompleter
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 import java.util.Locale
-import java.util.Random
 import java.util.stream.Stream
 
 class CommandMPP : CommandExecutor, TabCompleter {
@@ -51,14 +50,6 @@ class CommandMPP : CommandExecutor, TabCompleter {
         when (args.size) {
             1 -> {
                 when (args[0].lowercase()) {
-                    "chest" -> {
-                        val facing = sender.getDirection()
-                        DungeonChest(Random()).instantiate(
-                            sender.location.block.getRelative(facing).location,
-                            sender.getDirection().oppositeFace
-                        )
-                    }
-
                     "collection" -> {
                         collectionGUI(sender)
                     }
@@ -152,8 +143,8 @@ class CommandMPP : CommandExecutor, TabCompleter {
         cmdPrefix: Component
     ) {
         try {
-            val item = ItemType.valueOf(args[1].uppercase(Locale.getDefault()))
-            player.inventory.addItem(item.getItemStack())
+            val item = ItemRegistry.getItemByID("$MPP_ITEM_PREFIX:${args[1].lowercase(Locale.getDefault())}")
+            player.inventory.addItem(item.itemStack(1))
         } catch (exception: IllegalArgumentException) {
             player.sendMessage(
                 cmdPrefix
@@ -193,7 +184,7 @@ class CommandMPP : CommandExecutor, TabCompleter {
 
         if (args.size == 2 && args[0].equals("give", ignoreCase = true)) {
             // get item names from enum
-            val itemNames = Stream.of(*ItemType.values()).map { obj: ItemType -> obj.name }
+            val itemNames = Stream.of(*ItemRegistry.getAllItems()).map { obj: Item -> obj.name }
                 .toList()
             tabComplete.addAll(itemNames)
             StringUtil.copyPartialMatches(args[1], tabComplete, completions)

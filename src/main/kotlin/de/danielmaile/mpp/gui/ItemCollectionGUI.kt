@@ -18,7 +18,7 @@
 package de.danielmaile.mpp.gui
 
 import de.danielmaile.mpp.inst
-import de.danielmaile.mpp.item.ItemType
+import de.danielmaile.mpp.item.ItemRegistry
 import de.danielmaile.mpp.util.getArrowLeftItem
 import de.danielmaile.mpp.util.getArrowRightItem
 import de.danielmaile.mpp.util.getFillerItem
@@ -48,9 +48,9 @@ class ItemCollectionGUI {
 
         // items
         gui.addItem(
-            *ItemType.values().map { it ->
-                GuiItem(it.getItemStack()) { event ->
-                    event.whoClicked.inventory.addItem(it.getItemStack())
+            *ItemRegistry.getAllItems().map { it ->
+                GuiItem(it.itemStack(1)) { event ->
+                    event.whoClicked.inventory.addItem(it.itemStack(1))
                 }
             }.toTypedArray()
         )

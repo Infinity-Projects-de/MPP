@@ -47,8 +47,7 @@ class ListenerConverter : Listener {
         for (i in content.indices) {
             val inventoryItemStack = content[i] ?: continue
             val item = ItemRegistry.getItemFromItemstack(inventoryItemStack) ?: continue
-            val itemStack = item.itemStack
-            itemStack.amount = inventoryItemStack.amount
+            val itemStack = item.itemStack(inventoryItemStack.amount)
 
             if (inventoryItemStack == itemStack) continue // Probably not happening
             inventory.setItem(i, itemStack)

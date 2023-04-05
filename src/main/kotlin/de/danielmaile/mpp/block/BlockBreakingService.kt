@@ -33,7 +33,7 @@ import com.comphenix.protocol.events.PacketAdapter
 import com.comphenix.protocol.events.PacketEvent
 import com.comphenix.protocol.wrappers.EnumWrappers
 import de.danielmaile.mpp.inst
-import de.danielmaile.mpp.item.ItemType
+import de.danielmaile.mpp.item.Blocks
 import de.danielmaile.mpp.util.ToolType
 import de.danielmaile.mpp.util.getPotionEffectLevel
 import de.danielmaile.mpp.util.isCustom
@@ -231,8 +231,8 @@ object BlockBreakingService {
 
         // drop item corresponding to the broken block
         private fun dropItem() {
-            val itemType = ItemType.fromPlaceBlockType(blockType) ?: return
-            block.world.dropItemNaturally(block.location, itemType.getItemStack(1))
+            val itemType = Blocks.getBlockDrop(blockType) ?: return
+            block.world.dropItemNaturally(block.location, itemType.itemStack(1))
         }
 
         /**
