@@ -76,8 +76,11 @@ object ItemRegistry {
         throw NoSuchElementException("Item has not been registered") // Maybe create a more suitable Exception
     }
 
+    fun getItemByID(id: String): Item {
+        return items[id] ?: throw NoSuchElementException()
+    }
 
-    /* No real use tbh for neither of both methods */
+    // No real use tbh
     private fun getItemByNumericID(id: Int): Item {
         for (entry in items.entries) {
             if (entry.key.hashCode() == id) return entry.value
@@ -85,8 +88,6 @@ object ItemRegistry {
         throw NoSuchElementException()
     }
 
-    private fun getItemByID(id: String): Item {
-        return items[id] ?: throw NoSuchElementException()
-    }
+
 
 }
