@@ -20,8 +20,8 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import de.danielmaile.mpp.block.BlockType
-import de.danielmaile.mpp.item.ArmorSet
-import de.danielmaile.mpp.item.ItemType
+import de.danielmaile.mpp.item.ArmorMaterial
+import de.danielmaile.mpp.item.ItemRegistry
 import de.danielmaile.mpp.util.toMinecraftName
 import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
@@ -31,7 +31,7 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
-import java.util.Locale
+import java.util.*
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 import javax.imageio.ImageIO
@@ -115,11 +115,11 @@ class PackBuilder(
     }
 
     private fun generateItemModels(zipOutputStream: ZipOutputStream) {
-        val groupedTypes = ItemType.values().groupBy {
-            it.getMaterial()
+        val groupedTypes = ItemRegistry.getAllItems().groupBy {
+            it.material
         }
 
-        for ((material, types) in groupedTypes) {
+        for ((material, items) in groupedTypes) {
             val jsonObject = JsonObject()
 
             val textures = JsonObject()
@@ -133,14 +133,14 @@ class PackBuilder(
             jsonObject.add("textures", textures)
 
             val overrides = JsonArray()
-            for (type in types) {
+            for (item in items) {
                 val entry = JsonObject()
 
                 val predicate = JsonObject()
-                predicate.addProperty("custom_model_data", type.modelID)
+                predicate.addProperty("custom_model_data", item.modelID)
                 entry.add("predicate", predicate)
 
-                entry.addProperty("model", "item/" + type.name.lowercase())
+                entry.addProperty("model", "item/" + item.name.lowercase())
 
                 overrides.add(entry)
             }
@@ -202,19 +202,24 @@ class PackBuilder(
                         layer2Graphics.drawImage(image, 0, 0, null)
                     }
                 } else {
-                    val color = ArmorSet.valueOf(armorName.uppercase()).color.asRGB()
-
-                    if (it.name.endsWith("1.png")) {
-                        layer1Graphics.drawImage(image, i * 64, 0, null)
-                        layer1Graphics.color = java.awt.Color(color)
-                        layer1Graphics.drawLine(i * 64, 0, i * 64, 0)
-                        i++
-                    } else {
-                        layer2Graphics.drawImage(image, j * 64, 0, null)
-                        layer2Graphics.color = java.awt.Color(color)
-                        layer2Graphics.drawLine(j * 64, 0, j * 64, 0)
-                        j++
+                    try {
+                        val color = ArmorMaterial.valueOf(armorName.uppercase()).color.asRGB()
+                        if (it.name.endsWith("1.png")) {
+                            layer1Graphics.drawImage(image, i * 64, 0, null)
+                            layer1Graphics.color = java.awt.Color(color)
+                            layer1Graphics.drawLine(i * 64, 0, i * 64, 0)
+                            i++
+                        } else {
+                            layer2Graphics.drawImage(image, j * 64, 0, null)
+                            layer2Graphics.color = java.awt.Color(color)
+                            layer2Graphics.drawLine(j * 64, 0, j * 64, 0)
+                            j++
+                        }
+                    } catch (e: IllegalArgumentException) {
+                        e.printStackTrace() // This would mean a texture is in the RP but is not in ArmorMaterial.kt
                     }
+
+
                 }
             }
 
