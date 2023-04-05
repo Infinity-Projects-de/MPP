@@ -32,12 +32,10 @@ import de.danielmaile.mpp.item.ItemRegistry
 import de.danielmaile.mpp.item.ListenerConverter
 import de.danielmaile.mpp.item.ListenerCrafting
 import de.danielmaile.mpp.item.Tools
-import de.danielmaile.mpp.item.function.ListenerArmor
+import de.danielmaile.mpp.item.function.ArmorListener
 import de.danielmaile.mpp.item.function.ListenerItem
-import de.danielmaile.mpp.item.function.magicwand.ListenerMagicWand
 import de.danielmaile.mpp.item.function.particle.ListenerParticle
 import de.danielmaile.mpp.item.function.particle.ParticleManager
-import de.danielmaile.mpp.item.recipe.recipeList
 import de.danielmaile.mpp.mob.ListenerMPPMobs
 import de.danielmaile.mpp.mob.MPPMobSpawnManager
 import de.danielmaile.mpp.mob.listeners.ListenerHealer
@@ -94,7 +92,7 @@ class MPP : JavaPlugin() {
         Bukkit.getPluginCommand("mpp")?.setExecutor(CommandMPP())
         registerItems()
         registerEvents()
-        registerRecipes()
+        registerNewEvents()
 
         try {
             worldManager = WorldManager()
@@ -165,15 +163,17 @@ class MPP : JavaPlugin() {
         reloadConfig()
     }
 
+    private fun registerNewEvents() {
+        server.pluginManager.registerEvents(ArmorListener(), this)
+    }
+
     private fun registerEvents() {
         server.pluginManager.registerEvents(ListenerAether(), this)
         server.pluginManager.registerEvents(ListenerBlock(), this)
         server.pluginManager.registerEvents(ListenerCrafting(), this)
         server.pluginManager.registerEvents(ListenerItem(), this)
-        server.pluginManager.registerEvents(ListenerArmor(), this)
         server.pluginManager.registerEvents(ListenerParticle(), this)
         server.pluginManager.registerEvents(ListenerConverter(), this)
-        server.pluginManager.registerEvents(ListenerMagicWand(), this)
         server.pluginManager.registerEvents(ListenerMPPMobs(), this)
         server.pluginManager.registerEvents(MPPMobSpawnManager(), this)
         server.pluginManager.registerEvents(ListenerNecromancer(), this)
@@ -186,11 +186,11 @@ class MPP : JavaPlugin() {
     }
 
     private fun registerRecipes() {
-        for (recipes in recipeList) {
+        /*for (recipes in recipeList) {
             for (recipe in recipes.spigotRecipes) {
                 Bukkit.addRecipe(recipe)
             }
-        }
+        }*/
     }
 
     /**
