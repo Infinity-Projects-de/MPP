@@ -28,5 +28,5 @@ enum class ToolTier(
     AETHER_WOOD(0, 59, 2.0F, 0.0F, 15),
     AETHER_STONE(1, 131, 4.0F, 1.0F, 5),
     ZANITE(3, 1561, 8.0F, 3.0F, 10),
-    GRAVITIE(4, 2031, 9.0F, 4.0F, 15)
+    GRAVITITE(4, 2031, 9.0F, 4.0F, 15)
 }
