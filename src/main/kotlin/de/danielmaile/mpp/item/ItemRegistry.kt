@@ -17,19 +17,26 @@
 
 package de.danielmaile.mpp.item
 
+import de.danielmaile.mpp.util.getDataString
+import org.bukkit.inventory.ItemStack
+
+const val MPP_ITEM_TAG_KEY = "mpp_item"
+const val MPP_ITEM_PREFIX = "mpp"
+
 object ItemRegistry {
     // id (mpp:name) to Item
     private val items = HashMap<String,Item>()
 
-    fun registerItems(items: Array<Item>) {
+    fun registerItems(items: Array<out Item>) {
         for (item in items) {
             item.register()
         }
     }
     fun registerItem(item: Item) {
-        val id = "mpp:${item.name}"
+        val id = "$MPP_ITEM_PREFIX:${item.name.lowercase()}"
         registerItem(id, item)
     }
+
     fun registerItem(id: String, item: Item) {
         if (items.containsKey(id) || items.containsValue(item)) {
             throw IllegalArgumentException("Item with id: $id is already registered")
@@ -38,12 +45,23 @@ object ItemRegistry {
         items[id] = item
     }
 
-    private fun getNumericID(id: String): Int {
-        return id.hashCode()
+    fun getIdFromItemstack(itemStack: ItemStack): String? {
+        val itemTag = itemStack.getDataString(MPP_ITEM_TAG_KEY)?: return null
+        return "$MPP_ITEM_PREFIX:${itemTag.lowercase()}"
+    }
+    fun getItemFromItemstack(itemStack: ItemStack): Item? {
+        try {
+            val id = getIdFromItemstack(itemStack)?: return null
+            return getItemByID(id)
+        } catch (ignore: NoSuchElementException) {
+            return null
+        }
     }
 
-    private fun getItemNumericID(item: Item): Int {
-        return getNumericID(getItemID(item))
+
+
+    private fun getModelID(id: String): Int {
+        return getItemByID(id).modelID
     }
 
     private fun getItemID(item: Item): String {
