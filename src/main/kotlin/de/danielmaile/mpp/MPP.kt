@@ -25,8 +25,13 @@ import de.danielmaile.mpp.data.DataPackManager
 import de.danielmaile.mpp.data.ResourcePackManager
 import de.danielmaile.mpp.data.config.ConfigManager
 import de.danielmaile.mpp.data.config.LanguageManager
+import de.danielmaile.mpp.item.Armors
+import de.danielmaile.mpp.item.Blocks
+import de.danielmaile.mpp.item.Ingredients
+import de.danielmaile.mpp.item.ItemRegistry
 import de.danielmaile.mpp.item.ListenerConverter
 import de.danielmaile.mpp.item.ListenerCrafting
+import de.danielmaile.mpp.item.Tools
 import de.danielmaile.mpp.item.function.ListenerArmor
 import de.danielmaile.mpp.item.function.ListenerItem
 import de.danielmaile.mpp.item.function.magicwand.ListenerMagicWand
@@ -87,6 +92,7 @@ class MPP : JavaPlugin() {
 
         // register commands, events and recipes
         Bukkit.getPluginCommand("mpp")?.setExecutor(CommandMPP())
+        registerItems()
         registerEvents()
         registerRecipes()
 
@@ -107,6 +113,13 @@ class MPP : JavaPlugin() {
         BlockBreakingService.init()
 
         Metrics(this, 18055)
+    }
+
+    private fun registerItems() {
+        ItemRegistry.registerItems(Armors.values())
+        ItemRegistry.registerItems(Blocks.values())
+        ItemRegistry.registerItems(Ingredients.values())
+        ItemRegistry.registerItems(Tools.values())
     }
 
     /**
