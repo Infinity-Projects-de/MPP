@@ -21,7 +21,6 @@ import de.danielmaile.mpp.block.BlockBreakingService
 import de.danielmaile.mpp.block.ListenerBlock
 import de.danielmaile.mpp.block.function.CloudEffects
 import de.danielmaile.mpp.command.CommandMPP
-import de.danielmaile.mpp.data.DataPackManager
 import de.danielmaile.mpp.data.ResourcePackManager
 import de.danielmaile.mpp.data.config.ConfigManager
 import de.danielmaile.mpp.data.config.LanguageManager
@@ -86,21 +85,22 @@ class MPP : JavaPlugin() {
             return
         }
 
-        DataPackManager.saveOrUpdateDataPack()
+//        DataPackManager.saveOrUpdateDataPack()
 
         // register commands, events and recipes
         Bukkit.getPluginCommand("mpp")?.setExecutor(CommandMPP())
         registerItems()
-        registerEvents()
+//        registerEvents()
         registerNewEvents()
 
-        try {
+        /*try {
             worldManager = WorldManager()
         } catch (e: Exception) {
             installMessage(e.message)
             Bukkit.shutdown()
             return
         }
+*/
 
         particleManager = ParticleManager()
 
@@ -113,12 +113,7 @@ class MPP : JavaPlugin() {
         Metrics(this, 18055)
     }
 
-    private fun registerItems() {
-        ItemRegistry.registerItems(Armors.values())
-        ItemRegistry.registerItems(Blocks.values())
-        ItemRegistry.registerItems(Ingredients.values())
-        ItemRegistry.registerItems(Tools.values())
-    }
+
 
     /**
      * Send message on first install, might be changed to a better one?
@@ -165,6 +160,8 @@ class MPP : JavaPlugin() {
 
     private fun registerNewEvents() {
         server.pluginManager.registerEvents(ArmorListener(), this)
+        server.pluginManager.registerEvents(ResourcePackManager(), this)
+
     }
 
     private fun registerEvents() {
@@ -182,7 +179,6 @@ class MPP : JavaPlugin() {
         server.pluginManager.registerEvents(ListenerRift(), this)
         server.pluginManager.registerEvents(ListenerHealer(), this)
         server.pluginManager.registerEvents(ListenerHitman(), this)
-        server.pluginManager.registerEvents(ResourcePackManager(), this)
     }
 
     private fun registerRecipes() {
@@ -280,4 +276,12 @@ fun inst(): MPP {
 
 fun aetherWorld(): World {
     return MPP.instance.worldManager.aetherWorld
+}
+
+// FIXME: I don't really like this here it's quite unintuitive, but I need it for the resource pack builder
+fun registerItems() {
+    ItemRegistry.registerItems(Armors.values())
+    ItemRegistry.registerItems(Blocks.values())
+    ItemRegistry.registerItems(Ingredients.values())
+    ItemRegistry.registerItems(Tools.values())
 }

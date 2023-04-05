@@ -22,6 +22,7 @@ import com.google.gson.JsonObject
 import de.danielmaile.mpp.block.BlockType
 import de.danielmaile.mpp.item.ArmorMaterial
 import de.danielmaile.mpp.item.ItemRegistry
+import de.danielmaile.mpp.registerItems
 import de.danielmaile.mpp.util.toMinecraftName
 import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
@@ -68,7 +69,7 @@ class PackBuilder(
 
         val outputStream = ByteArrayOutputStream()
         val zipOutputStream = ZipOutputStream(outputStream)
-
+        registerItems()
         copyBasePack(zipOutputStream)
         generateBlockStatesJson(zipOutputStream)
         generateItemModels(zipOutputStream)
