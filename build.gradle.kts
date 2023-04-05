@@ -138,7 +138,7 @@ tasks {
 }
 
 tasks.register<JavaExec>("buildResourcePack") {
-    mainClass.set("de.danielmaile.resourcepack.PackBuilderKt")
+    mainClass.set("de.danielmaile.resourcepack.ResourcePackBuilderKt")
     classpath(sourceSets["main"].runtimeClasspath, configurations.compileClasspath)
     group = "mpp"
     args = listOf(getPluginVersion(), project.projectDir.absolutePath)
