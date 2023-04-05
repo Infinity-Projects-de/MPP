@@ -34,5 +34,12 @@ enum class Blocks(
     ZANITE_ORE(Material.STONE, BlockType.ZANITE_ORE),
     GRAVITITE_ORE(Material.STONE, BlockType.GRAVITITE_ORE);
 
-
+    companion object {
+        fun getBlockDrop(blockType: BlockType): Item? {
+            for (block in values()) {
+                if (block.blockType == blockType) return block
+            }
+            return null
+        }
+    }
 }
