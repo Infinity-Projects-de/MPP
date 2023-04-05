@@ -17,12 +17,47 @@
 
 package de.danielmaile.mpp.item
 
+import de.danielmaile.mpp.inst
+import de.danielmaile.mpp.util.setDataString
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Material
+import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.ItemMeta
 
 interface Item {
     val name: String
     val material: Material
     fun register() {
         ItemRegistry.registerItem(this)
+    }
+
+    private val displayName: Component
+        get() = inst().getLanguageManager().getComponent("items.$name.name")
+            .decoration(TextDecoration.ITALIC, false)
+
+    private val description: List<Component>
+        get() = inst().getLanguageManager().getComponentList("items.$name.description")
+            .map { it -> it.decoration(TextDecoration.ITALIC, false) }
+
+    val modelID: Int
+        get() = name.hashCode() // FIXME: Method has not been tested 
+        
+    val itemStack: ItemStack
+        get() {
+            val itemStack = ItemStack(material)
+            val itemMeta = itemStack.itemMeta
+
+            itemMeta.displayName(displayName)
+            itemMeta.lore(description)
+            itemMeta.setCustomModelData(modelID)
+
+            modifySpecialItemMeta(itemMeta)
+            itemStack.itemMeta = itemMeta
+            itemStack.setDataString(MPP_ITEM_TAG_KEY, name)
+            return itemStack
+        }
+
+    fun modifySpecialItemMeta(itemMeta: ItemMeta) {
     }
 }
