@@ -19,18 +19,22 @@ package de.danielmaile.mpp.item
 
 import org.bukkit.Material
 import org.bukkit.inventory.EquipmentSlot
+import org.bukkit.inventory.meta.ItemMeta
+import org.bukkit.inventory.meta.LeatherArmorMeta
 
 enum class Armors(
+    val armorMaterial: ArmorMaterial,
     val slot: EquipmentSlot // Should we use this or create an enum like before
+
 ): Item {
-    ZANITE_CHESTPLATE(EquipmentSlot.CHEST),
-    ZANITE_LEGGINGS(EquipmentSlot.LEGS),
-    ZANITE_HELMET(EquipmentSlot.HEAD),
-    ZANITE_BOOTS(EquipmentSlot.FEET),
-    GRAVITITE_CHESTPLATE(EquipmentSlot.CHEST),
-    GRAVITITE_LEGGINGS(EquipmentSlot.LEGS),
-    GRAVITITE_HELMET(EquipmentSlot.HEAD),
-    GRAVITITE_BOOTS(EquipmentSlot.FEET);
+    ZANITE_CHESTPLATE(ArmorMaterial.ZANITE, EquipmentSlot.CHEST),
+    ZANITE_LEGGINGS(ArmorMaterial.ZANITE, EquipmentSlot.LEGS),
+    ZANITE_HELMET(ArmorMaterial.ZANITE, EquipmentSlot.HEAD),
+    ZANITE_BOOTS(ArmorMaterial.ZANITE, EquipmentSlot.FEET),
+    GRAVITITE_CHESTPLATE(ArmorMaterial.GRAVITITE, EquipmentSlot.CHEST),
+    GRAVITITE_LEGGINGS(ArmorMaterial.GRAVITITE, EquipmentSlot.LEGS),
+    GRAVITITE_HELMET(ArmorMaterial.GRAVITITE, EquipmentSlot.HEAD),
+    GRAVITITE_BOOTS(ArmorMaterial.GRAVITITE, EquipmentSlot.FEET);
 
     override val material: Material
         get() = when(slot) {
@@ -40,6 +44,8 @@ enum class Armors(
             EquipmentSlot.FEET -> Material.LEATHER_BOOTS
             else -> { throw NoSuchFieldException() }
         }
-
-
+    override fun modifySpecialItemMeta(itemMeta: ItemMeta) {
+        itemMeta as LeatherArmorMeta
+        itemMeta.setColor(armorMaterial.color)
+    }
 }
