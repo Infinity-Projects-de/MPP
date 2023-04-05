@@ -21,26 +21,27 @@ import org.bukkit.Color
 import org.bukkit.Sound
 
 enum class ArmorMaterial(
-    private val armorProtection: ArmorProtection,
+    val armor: ArmorProtection,
     private val enchantability: Int,
     private val equipmentSound: Sound?,
-    private val knockbackResistance: Float,
+    val knockbackResistance: Float,
+    val armorToughness: Float,
     private val ingredient: Ingredients
 ) {
     ZANITE(
         ArmorProtection(1,1, 1, 1),
-        15, null, 0.0F,
+        15, null, 0.0F, 0.0F,
         Ingredients.ZANITE_STONE),
     GRAVITITE(
         ArmorProtection(1, 1, 1, 1),
-        15, null, 0.0F,
+        15, null, 0.0F, 0.0F,
         Ingredients.GRAVITITE_PLATE);
 
     val color: Color = Color.fromRGB(ordinal) // FIXME: This enum can't be reordered!!!
-    private class ArmorProtection(
-        private val boots: Int,
-        private val leggings: Int,
-        private val chestPlate: Int,
-        private val helmet: Int
+    class ArmorProtection(
+        val boots: Int,
+        val leggings: Int,
+        val chestPlate: Int,
+        val helmet: Int
     )
 }
