@@ -90,7 +90,7 @@ class ShapedRecipe(
 
                 if (!emptyCol) {
                     for (row in 0 until size.height) {
-                        reducedRecipe.add(reducedRowRecipe[row * size.width + col])
+                        reducedRecipe.add(reducedRowRecipe[row * 3 + col])
                     }
                 }
             }
