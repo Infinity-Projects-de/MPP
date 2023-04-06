@@ -30,7 +30,7 @@ abstract class ToolRecipe : CraftingRecipe() {
 
         private val swordLeft = ShapedRecipe(
             result,
-            listOf(
+            arrayOf(
                 ingotMaterial, null, null,
                 ingotMaterial, null, null,
                 stickMaterial, null, null
@@ -39,7 +39,7 @@ abstract class ToolRecipe : CraftingRecipe() {
 
         private val swordMiddle = ShapedRecipe(
             result,
-            listOf(
+            arrayOf(
                 null, ingotMaterial, null,
                 null, ingotMaterial, null,
                 null, stickMaterial, null
@@ -48,7 +48,7 @@ abstract class ToolRecipe : CraftingRecipe() {
 
         private val swordRight = ShapedRecipe(
             result,
-            listOf(
+            arrayOf(
                 null, null, ingotMaterial,
                 null, null, ingotMaterial,
                 null, null, stickMaterial
@@ -68,7 +68,7 @@ abstract class ToolRecipe : CraftingRecipe() {
         override val spigotRecipes: List<Recipe>
             get() = ShapedRecipe(
                 result,
-                listOf(
+                arrayOf(
                     ingotMaterial, ingotMaterial, ingotMaterial,
                     null, stickMaterial, null,
                     null, stickMaterial, null
@@ -84,7 +84,7 @@ abstract class ToolRecipe : CraftingRecipe() {
 
         private val axeLeft = ShapedRecipe(
             result,
-            listOf(
+            arrayOf(
                 ingotMaterial, ingotMaterial, null,
                 ingotMaterial, stickMaterial, null,
                 null, stickMaterial, null
@@ -93,7 +93,7 @@ abstract class ToolRecipe : CraftingRecipe() {
 
         private val axeRight = ShapedRecipe(
             result,
-            listOf(
+            arrayOf(
                 null, ingotMaterial, ingotMaterial,
                 null, stickMaterial, ingotMaterial,
                 null, stickMaterial, null
@@ -112,7 +112,7 @@ abstract class ToolRecipe : CraftingRecipe() {
 
         private val shovelLeft = ShapedRecipe(
             result,
-            listOf(
+            arrayOf(
                 ingotMaterial, null, null,
                 stickMaterial, null, null,
                 stickMaterial, null, null
@@ -121,7 +121,7 @@ abstract class ToolRecipe : CraftingRecipe() {
 
         private val shovelMiddle = ShapedRecipe(
             result,
-            listOf(
+            arrayOf(
                 null, ingotMaterial, null,
                 null, stickMaterial, null,
                 null, stickMaterial, null
@@ -130,7 +130,7 @@ abstract class ToolRecipe : CraftingRecipe() {
 
         private val shovelRight = ShapedRecipe(
             result,
-            listOf(
+            arrayOf(
                 null, null, ingotMaterial,
                 null, null, stickMaterial,
                 null, null, stickMaterial
@@ -149,7 +149,7 @@ abstract class ToolRecipe : CraftingRecipe() {
 
         private val hoeLeft = ShapedRecipe(
             result,
-            listOf(
+            arrayOf(
                 ingotMaterial, ingotMaterial, null,
                 stickMaterial, null, null,
                 stickMaterial, null, null
@@ -158,7 +158,7 @@ abstract class ToolRecipe : CraftingRecipe() {
 
         private val hoeMiddleLeft = ShapedRecipe(
             result,
-            listOf(
+            arrayOf(
                 ingotMaterial, ingotMaterial, null,
                 null, stickMaterial, null,
                 null, stickMaterial, null
@@ -167,7 +167,7 @@ abstract class ToolRecipe : CraftingRecipe() {
 
         private val hoeMiddleRight = ShapedRecipe(
             result,
-            listOf(
+            arrayOf(
                 null, ingotMaterial, ingotMaterial,
                 null, stickMaterial, null,
                 null, stickMaterial, null
@@ -176,7 +176,7 @@ abstract class ToolRecipe : CraftingRecipe() {
 
         private val hoeRight = ShapedRecipe(
             result,
-            listOf(
+            arrayOf(
                 null, ingotMaterial, ingotMaterial,
                 null, null, stickMaterial,
                 null, null, stickMaterial

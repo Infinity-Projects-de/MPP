@@ -28,7 +28,7 @@ abstract class CraftingRecipe : Recipe() {
 
         private val stickTopLeft = ShapedRecipe(
             result,
-            listOf(
+            arrayOf(
                 woodMaterial, null, null,
                 woodMaterial, null, null,
                 null, null, null
@@ -37,7 +37,7 @@ abstract class CraftingRecipe : Recipe() {
 
         private val stickTopMiddle = ShapedRecipe(
             result,
-            listOf(
+            arrayOf(
                 null, woodMaterial, null,
                 null, woodMaterial, null,
                 null, null, null
@@ -46,7 +46,7 @@ abstract class CraftingRecipe : Recipe() {
 
         private val stickTopRight = ShapedRecipe(
             result,
-            listOf(
+            arrayOf(
                 null, null, woodMaterial,
                 null, null, woodMaterial,
                 null, null, null
@@ -55,7 +55,7 @@ abstract class CraftingRecipe : Recipe() {
 
         private val stickBottomLeft = ShapedRecipe(
             result,
-            listOf(
+            arrayOf(
                 null, null, null,
                 woodMaterial, null, null,
                 woodMaterial, null, null
@@ -64,7 +64,7 @@ abstract class CraftingRecipe : Recipe() {
 
         private val stickBottomMiddle = ShapedRecipe(
             result,
-            listOf(
+            arrayOf(
                 null, null, null,
                 null, woodMaterial, null,
                 null, woodMaterial, null
@@ -73,7 +73,7 @@ abstract class CraftingRecipe : Recipe() {
 
         private val stickBottomRight = ShapedRecipe(
             result,
-            listOf(
+            arrayOf(
                 null, null, null,
                 null, null, woodMaterial,
                 null, null, woodMaterial
