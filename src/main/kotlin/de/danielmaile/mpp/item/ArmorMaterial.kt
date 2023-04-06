@@ -29,13 +29,21 @@ enum class ArmorMaterial(
     private val ingredient: Ingredients
 ) {
     ZANITE(
-        ArmorProtection(1,1, 1, 1),
-        15, null, 0.0F, 0.0F,
-        Ingredients.ZANITE_STONE),
+        ArmorProtection(1, 1, 1, 1),
+        15,
+        null,
+        0.0F,
+        0.0F,
+        Ingredients.ZANITE_STONE
+    ),
     GRAVITITE(
         ArmorProtection(1, 1, 1, 1),
-        15, null, 0.0F, 0.0F,
-        Ingredients.GRAVITITE_PLATE);
+        15,
+        null,
+        0.0F,
+        0.0F,
+        Ingredients.GRAVITITE_PLATE
+    );
 
     val color: Color = Color.fromRGB(ordinal) // FIXME: This enum can't be reordered!!!
     class ArmorProtection(

@@ -21,10 +21,8 @@ import org.bukkit.Material
 
 enum class Ingredients(
     override val material: Material
-): Item {
+) : Item {
     AETHER_STICK(Material.STICK),
     ZANITE_STONE(Material.DIAMOND),
     GRAVITITE_PLATE(Material.NETHERITE_SCRAP);
-
-
 }

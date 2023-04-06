@@ -25,7 +25,7 @@ const val MPP_ITEM_PREFIX = "mpp"
 
 object ItemRegistry {
     // id (mpp:name) to Item
-    private val items = HashMap<String,Item>()
+    private val items = HashMap<String, Item>()
 
     fun registerItems(items: Array<out Item>) {
         for (item in items) {
@@ -51,19 +51,17 @@ object ItemRegistry {
     }
 
     fun getIdFromItemstack(itemStack: ItemStack): String? {
-        val itemTag = itemStack.getDataString(MPP_ITEM_TAG_KEY)?: return null
+        val itemTag = itemStack.getDataString(MPP_ITEM_TAG_KEY) ?: return null
         return "$MPP_ITEM_PREFIX:${itemTag.lowercase()}"
     }
     fun getItemFromItemstack(itemStack: ItemStack): Item? {
         try {
-            val id = getIdFromItemstack(itemStack)?: return null
+            val id = getIdFromItemstack(itemStack) ?: return null
             return getItemByID(id)
         } catch (ignore: NoSuchElementException) {
             return null
         }
     }
-
-
 
     private fun getModelID(id: String): Int {
         return getItemByID(id).modelID
@@ -87,7 +85,4 @@ object ItemRegistry {
         }
         throw NoSuchElementException()
     }
-
-
-
 }

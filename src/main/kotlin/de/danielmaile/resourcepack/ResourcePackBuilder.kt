@@ -219,8 +219,6 @@ class PackBuilder(
                     } catch (e: IllegalArgumentException) {
                         e.printStackTrace() // This would mean a texture is in the RP but is not in ArmorMaterial.kt
                     }
-
-
                 }
             }
 

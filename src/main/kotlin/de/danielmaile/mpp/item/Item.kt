@@ -41,7 +41,7 @@ interface Item {
             .map { it -> it.decoration(TextDecoration.ITALIC, false) }
 
     val modelID: Int
-        get() = name.hashCode() // FIXME: Method has not been tested 
+        get() = name.hashCode() // FIXME: Method has not been tested
 
     val itemStack: (Int) -> ItemStack
         get() = {
@@ -56,9 +56,6 @@ interface Item {
                 amount = it
             }
         }
-
-
-
 
     fun modifySpecialItemMeta(itemMeta: ItemMeta) {
     }

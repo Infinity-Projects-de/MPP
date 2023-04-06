@@ -113,8 +113,6 @@ class MPP : JavaPlugin() {
         Metrics(this, 18055)
     }
 
-
-
     /**
      * Send message on first install, might be changed to a better one?
      */
@@ -161,7 +159,6 @@ class MPP : JavaPlugin() {
     private fun registerNewEvents() {
         server.pluginManager.registerEvents(ArmorListener(), this)
         server.pluginManager.registerEvents(ResourcePackManager(), this)
-
     }
 
     private fun registerEvents() {

@@ -23,7 +23,7 @@ import org.bukkit.Material
 enum class Blocks(
     override val material: Material,
     val blockType: BlockType
-): Item {
+) : Item {
     AETHER_LOG(Material.OAK_LOG, BlockType.AETHER_LOG),
     AETHER_PLANKS(Material.OAK_PLANKS, BlockType.AETHER_PLANKS),
     AETHER_LEAVES(Material.STONE, BlockType.AETHER_LEAVES),

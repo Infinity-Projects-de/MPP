@@ -33,7 +33,7 @@ import org.bukkit.event.entity.ProjectileHitEvent
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.meta.ItemMeta
 
-class ArmorListener: Listener {
+class ArmorListener : Listener {
 
     // FIXME: Is this event called on dropper armor equip?
     // This method is planned for subsequent updates
@@ -90,7 +90,6 @@ class ArmorListener: Listener {
             event.isCancelled = true
         }
     }
-
 
     fun ItemMeta.setAttributeModifier(attribute: Attribute, value: Double) {
         removeAttributeModifier(attribute)

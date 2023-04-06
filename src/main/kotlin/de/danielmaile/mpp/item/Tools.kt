@@ -22,7 +22,7 @@ import org.bukkit.Material
 enum class Tools(
     val toolTier: ToolTier,
     val toolType: ToolType
-): Item {
+) : Item {
     AETHER_WOODEN_AXE(ToolTier.AETHER_WOOD, ToolType.AXE),
     AETHER_WOODEN_HOE(ToolTier.AETHER_WOOD, ToolType.HOE),
     AETHER_WOODEN_PICKAXE(ToolTier.AETHER_WOOD, ToolType.PICKAXE),
@@ -41,7 +41,7 @@ enum class Tools(
     ZANITE_SHOVEL(ToolTier.ZANITE, ToolType.SHOVEL);
 
     override val material: Material
-        get() = when(toolType) {
+        get() = when (toolType) {
             ToolType.AXE -> Material.WOODEN_AXE
             ToolType.PICKAXE -> Material.WOODEN_PICKAXE
             ToolType.HOE -> Material.WOODEN_HOE

@@ -26,7 +26,7 @@ enum class Armors(
     val armorMaterial: ArmorMaterial,
     val slot: EquipmentSlot // Should we use this or create an enum like before
 
-): Item {
+) : Item {
     ZANITE_CHESTPLATE(ArmorMaterial.ZANITE, EquipmentSlot.CHEST),
     ZANITE_LEGGINGS(ArmorMaterial.ZANITE, EquipmentSlot.LEGS),
     ZANITE_HELMET(ArmorMaterial.ZANITE, EquipmentSlot.HEAD),
@@ -37,7 +37,7 @@ enum class Armors(
     GRAVITITE_BOOTS(ArmorMaterial.GRAVITITE, EquipmentSlot.FEET);
 
     override val material: Material
-        get() = when(slot) {
+        get() = when (slot) {
             EquipmentSlot.CHEST -> Material.LEATHER_CHESTPLATE
             EquipmentSlot.HEAD -> Material.LEATHER_HELMET
             EquipmentSlot.LEGS -> Material.LEATHER_LEGGINGS

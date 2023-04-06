@@ -21,5 +21,5 @@ enum class ToolType {
     AXE,
     PICKAXE,
     SHOVEL,
-    HOE,
+    HOE
 }
