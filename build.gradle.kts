@@ -82,6 +82,9 @@ dependencies {
     compileOnly("org.apache.commons:commons-compress:1.21")
     compileOnly("com.konghq:unirest-java:3.13.13")
     compileOnly("com.squareup.okhttp3:okhttp:4.9.1")
+
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation(kotlin("test"))
 }
 
 tasks {
@@ -133,6 +136,10 @@ tasks {
     }
     runServer {
         group = "mpp"
+    }
+
+    test {
+        useJUnitPlatform()
     }
     // endregion
 }
