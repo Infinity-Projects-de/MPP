@@ -54,6 +54,7 @@ object ItemRegistry {
         val itemTag = itemStack.getDataString(MPP_ITEM_TAG_KEY) ?: return null
         return "$MPP_ITEM_PREFIX:${itemTag.lowercase()}"
     }
+
     fun getItemFromItemstack(itemStack: ItemStack): Item? {
         try {
             val id = getIdFromItemstack(itemStack) ?: return null
@@ -63,11 +64,7 @@ object ItemRegistry {
         }
     }
 
-    private fun getModelID(id: String): Int {
-        return getItemByID(id).modelID
-    }
-
-    private fun getItemID(item: Item): String {
+    fun getItemID(item: Item): String {
         for (entry in items.entries) {
             if (entry.value == item) return entry.key
         }
@@ -78,11 +75,7 @@ object ItemRegistry {
         return items[id] ?: throw NoSuchElementException()
     }
 
-    // No real use tbh
-    private fun getItemByNumericID(id: Int): Item {
-        for (entry in items.entries) {
-            if (entry.key.hashCode() == id) return entry.value
-        }
-        throw NoSuchElementException()
+    fun clear() {
+        items.clear()
     }
 }
