@@ -23,6 +23,7 @@ import org.junit.jupiter.api.assertThrows
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ItemRegistryTest {
@@ -69,6 +70,21 @@ class ItemRegistryTest {
             if (!ItemRegistry.getAllItems().contains(item)) containsAll = false
         }
         assertTrue(containsAll)
+    }
+
+    @Test
+    fun `There should not be any repeated model ID`() {
+        registerItems()
+        val modelIDs = mutableListOf<Int>()
+        var repeats = false
+        for (item in ItemRegistry.getAllItems()) {
+            if (modelIDs.contains(item.modelID)) {
+                repeats = true
+                break
+            }
+            modelIDs.add(item.modelID)
+        }
+        assertFalse(repeats)
     }
 
     @Test
