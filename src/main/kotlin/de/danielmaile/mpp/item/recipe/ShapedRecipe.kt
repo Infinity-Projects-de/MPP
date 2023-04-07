@@ -167,5 +167,5 @@ class ShapedRecipe(
         return RecipeSize(lastRow - firstRow + 1, lastCol - firstCol + 1)
     }
 
-    private class RecipeSize(val width: Int, val height: Int)
+    private data class RecipeSize(val width: Int, val height: Int)
 }
