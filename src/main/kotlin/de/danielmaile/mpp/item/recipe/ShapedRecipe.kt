@@ -26,12 +26,13 @@ class ShapedRecipe(
     private val result: ItemStack,
     private val mainRecipe: Array<ItemStack?>
 ) : CraftingRecipe() {
+    @Deprecated("No reason of using this val that only uses the function")
     override val spigotRecipes: List<Recipe>
         get() = getRecipes()
 
     private val possibleIngredients = charArrayOf('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J')
 
-    private fun getRecipes(): List<Recipe> {
+    fun getRecipes(): List<Recipe> {
         val recipes: MutableList<Recipe> = mutableListOf()
 
         val ingredients = mainRecipe.distinct()
@@ -62,6 +63,7 @@ class ShapedRecipe(
     private fun getRecipeArrays(): List<Array<ItemStack?>> {
         var listOfRecipes: MutableList<Array<ItemStack?>> = mutableListOf()
         val size = getRecipeSize()
+        println("${size.width}x${size.height}")
         var reducedRowRecipe: MutableList<ItemStack?> = mutableListOf()
         var reducedRecipe: MutableList<ItemStack?> = mutableListOf()
 
@@ -85,7 +87,7 @@ class ShapedRecipe(
             for (col in 0 until 3) {
                 var emptyCol = true
                 for (row in 0 until size.height) {
-                    if (reducedRowRecipe[row * size.width + col] != null) emptyCol = false
+                    if (reducedRowRecipe[row * 3 + col] != null) emptyCol = false
                 }
 
                 if (!emptyCol) {
@@ -103,12 +105,13 @@ class ShapedRecipe(
         if (size.height != 3) {
             for (i in 0..3 - size.height) {
                 val amplifiedRecipe: MutableList<ItemStack?> = mutableListOf()
+
                 for (row in 0 until 3) {
                     for (col in 0 until size.width) {
-                        if (row - i < 0 || row > size.height - 1) {
-                            amplifiedRecipe.add(row * size.width + col, null)
+                        if (row - i < 0 || row - i >= size.height) {
+                            amplifiedRecipe.add(null)
                         } else {
-                            amplifiedRecipe.add(row * size.width + col, reducedRecipe[(row - i) * size.width + col])
+                            amplifiedRecipe.add(reducedRecipe[(row - i) * size.width + col])
                         }
                     }
                 }
@@ -124,10 +127,10 @@ class ShapedRecipe(
                     val amplifiedRecipe: MutableList<ItemStack?> = mutableListOf()
                     for (row in 0 until 3) {
                         for (col in 0 until 3) {
-                            if (col - i < 0 || col > size.width - 1) {
-                                amplifiedRecipe.add(row * size.width + col, null)
+                            if (col - i < 0 || col - i >= size.width) {
+                                amplifiedRecipe.add(null)
                             } else {
-                                amplifiedRecipe.add(row * size.width + col, recipe[row * size.width + (col - i)])
+                                amplifiedRecipe.add(recipe[row * size.width + (col - i)])
                             }
                         }
                     }
