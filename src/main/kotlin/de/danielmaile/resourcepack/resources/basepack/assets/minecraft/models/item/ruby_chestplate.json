@@ -1,7 +1,0 @@
-{
-    "parent": "minecraft:item/generated",
-    "textures": {
-      "layer0": "item/ruby_chestplate",
-      "layer1": "item/ruby_chestplate"
-    }
-  }
