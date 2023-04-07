@@ -40,10 +40,8 @@ interface Item {
         get() = inst().getLanguageManager().getComponentList("items.$name.description")
             .map { it -> it.decoration(TextDecoration.ITALIC, false) }
 
-    val ordinal: Int
-    val modelIDOffset: Int
     val modelID: Int
-        get() = ordinal + modelIDOffset
+        get() = name.hashCode() and 0xFFFFFF
 
     val itemStack: (Int) -> ItemStack
         get() = {

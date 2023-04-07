@@ -25,6 +25,4 @@ enum class Ingredients(
     AETHER_STICK(Material.STICK),
     ZANITE_STONE(Material.DIAMOND),
     GRAVITITE_PLATE(Material.NETHERITE_SCRAP);
-
-    override val modelIDOffset: Int = 1200
 }
