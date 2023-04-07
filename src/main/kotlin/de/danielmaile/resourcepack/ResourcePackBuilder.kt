@@ -134,7 +134,7 @@ class PackBuilder(
             jsonObject.add("textures", textures)
 
             val overrides = JsonArray()
-            for (item in items) {
+            for (item in items.sortedBy { it.modelID }) {
                 val entry = JsonObject()
 
                 val predicate = JsonObject()
