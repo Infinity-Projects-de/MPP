@@ -44,6 +44,9 @@ enum class Armors(
             EquipmentSlot.FEET -> Material.LEATHER_BOOTS
             else -> { throw NoSuchFieldException() }
         }
+
+    override val modelIDOffset: Int = 1000
+
     override fun modifySpecialItemMeta(itemMeta: ItemMeta) {
         itemMeta as LeatherArmorMeta
         itemMeta.setColor(armorMaterial.color)

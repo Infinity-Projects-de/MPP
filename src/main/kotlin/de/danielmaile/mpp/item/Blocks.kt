@@ -34,6 +34,8 @@ enum class Blocks(
     ZANITE_ORE(Material.STONE, BlockType.ZANITE_ORE),
     GRAVITITE_ORE(Material.STONE, BlockType.GRAVITITE_ORE);
 
+    override val modelIDOffset: Int = 1100
+
     companion object {
         fun getBlockDrop(blockType: BlockType): Item? {
             for (block in values()) {

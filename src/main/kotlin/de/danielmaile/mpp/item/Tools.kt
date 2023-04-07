@@ -40,6 +40,8 @@ enum class Tools(
     ZANITE_PICKAXE(ToolTier.ZANITE, ToolType.PICKAXE),
     ZANITE_SHOVEL(ToolTier.ZANITE, ToolType.SHOVEL);
 
+    override val modelIDOffset: Int = 1300
+
     override val material: Material
         get() = when (toolType) {
             ToolType.AXE -> Material.WOODEN_AXE
