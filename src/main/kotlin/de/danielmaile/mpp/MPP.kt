@@ -43,6 +43,7 @@ import de.danielmaile.mpp.mob.listeners.ListenerKing
 import de.danielmaile.mpp.mob.listeners.ListenerNecromancer
 import de.danielmaile.mpp.mob.listeners.ListenerPlague
 import de.danielmaile.mpp.mob.listeners.ListenerRift
+import de.danielmaile.mpp.packet.PacketListener
 import de.danielmaile.mpp.util.logError
 import de.danielmaile.mpp.world.WorldManager
 import de.danielmaile.mpp.world.aether.ListenerAether
@@ -159,6 +160,7 @@ class MPP : JavaPlugin() {
     private fun registerNewEvents() {
         server.pluginManager.registerEvents(ArmorListener(), this)
         server.pluginManager.registerEvents(ResourcePackManager(), this)
+        server.pluginManager.registerEvents(PacketListener(), this)
     }
 
     private fun registerEvents() {
