@@ -24,6 +24,7 @@ import de.danielmaile.mpp.item.ArmorMaterial
 import de.danielmaile.mpp.item.ItemRegistry
 import de.danielmaile.mpp.registerItems
 import de.danielmaile.mpp.util.toMinecraftName
+import org.bukkit.Material
 import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -130,6 +131,9 @@ class PackBuilder(
             } else {
                 jsonObject.addProperty("parent", "minecraft:item/handheld")
                 textures.addProperty("layer0", "minecraft:item/" + material.name.lowercase())
+                if (material == Material.LEATHER_HELMET || material == Material.LEATHER_CHESTPLATE || material == Material.LEATHER_LEGGINGS || material == Material.LEATHER_BOOTS) {
+                    textures.addProperty("layer1", "minecraft:item/${material.name.lowercase()}_overlay")
+                }
             }
             jsonObject.add("textures", textures)
 
