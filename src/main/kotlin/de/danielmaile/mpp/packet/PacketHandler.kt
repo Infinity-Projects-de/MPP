@@ -20,19 +20,15 @@ package de.danielmaile.mpp.packet
 import io.netty.channel.ChannelDuplexHandler
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelPromise
-import net.minecraft.network.protocol.game.ClientboundBlockDestructionPacket
-import net.minecraft.network.protocol.game.ClientboundMoveEntityPacket
-import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket
-import net.minecraft.network.protocol.game.ClientboundSetTimePacket
-import net.minecraft.network.protocol.game.ClientboundSystemChatPacket
-import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket
-import org.bukkit.Bukkit
+import net.minecraft.network.protocol.Packet
 import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
+import java.lang.reflect.Method
+import java.lang.reflect.ParameterizedType
 
 object PacketHandler : Listener {
 
@@ -46,6 +42,21 @@ object PacketHandler : Listener {
         removePlayer(event.player)
     }
 
+    val listeners: HashMap<Method, PacketListener> = hashMapOf()
+    fun registerListeners(listener: Any) {
+        listener.javaClass.declaredMethods
+            .filter { it.isAnnotationPresent(PacketListener::class.java) }
+            .filter { it.parameterCount == 1 && PacketEvent::class.java.isAssignableFrom(it.parameterTypes[0]) }
+            .forEach {
+                val packetListenerAnnotation = it.getAnnotation(PacketListener::class.java)
+                listeners[it] = packetListenerAnnotation
+            }
+    }
+
+    private fun <T> getGenericType(clazz: Class<T>): Class<*> {
+        return (clazz.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<*>
+    }
+
     private fun removePlayer(player: Player) {
         val channel = (player as CraftPlayer).handle.connection.connection.channel
         channel.eventLoop().submit {
@@ -56,23 +67,30 @@ object PacketHandler : Listener {
     private fun injectPlayer(player: Player) {
         val channelDuplexHandler: ChannelDuplexHandler = object : ChannelDuplexHandler() {
             override fun channelRead(ctx: ChannelHandlerContext, msg: Any) {
-                if (msg is ServerboundPlayerActionPacket) {
-                    Bukkit.getServer().consoleSender.sendMessage("Packet read: $msg")
-                    player.sendMessage("Action: ${msg.action.name}")
-                    player.sendMessage("Position: ${msg.pos.x} ${msg.pos.y} ${msg.pos.z}")
-                    player.sendMessage("---")
+                if (msg is Packet<*>) {
+                    val packetEvent = PacketEvent<Packet<*>>(msg)
+
+                    listeners.entries.sortedByDescending { -it.value.priority.ordinal }
+                        .filter { !it.value.ignoreCancelled || !packetEvent.cancelled }
+                        .filter { getGenericType(it.key.parameterTypes[0]).isInstance(msg) }
+                        .forEach { it.key.invoke(packetEvent) }
+
+                    if (packetEvent.cancelled) return
                 }
+
                 super.channelRead(ctx, msg)
             }
 
             override fun write(ctx: ChannelHandlerContext?, msg: Any?, promise: ChannelPromise?) {
-                if (msg !is ClientboundSetTimePacket && msg !is ClientboundSetEntityMotionPacket && msg !is ClientboundMoveEntityPacket && msg !is ClientboundSystemChatPacket) {
-                    if (msg is ClientboundBlockDestructionPacket) {
-                        player.sendMessage("Ignored clientbound destruction packet of progress ${msg.progress}")
+                if (msg is Packet<*>) {
+                    val packetEvent = PacketEvent<Packet<*>>(msg)
 
-                        return
-                    }
-                    Bukkit.getServer().consoleSender.sendMessage("Packet write: $msg")
+                    listeners.entries.sortedByDescending { -it.value.priority.ordinal }
+                        .filter { !it.value.ignoreCancelled || !packetEvent.cancelled }
+                        .filter { getGenericType(it.key.parameterTypes[0]).isInstance(msg) }
+                        .forEach { it.key.invoke(packetEvent) }
+
+                    if (packetEvent.cancelled) return
                 }
                 super.write(ctx, msg, promise)
             }
