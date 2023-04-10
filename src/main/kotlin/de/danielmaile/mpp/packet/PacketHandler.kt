@@ -29,15 +29,31 @@ import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket
 import org.bukkit.Bukkit
 import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer
 import org.bukkit.entity.Player
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.event.player.PlayerQuitEvent
 
-class PacketHandler {
-    fun removePlayer(player: Player) {
+object PacketHandler : Listener {
+
+    @EventHandler
+    fun onPlayerJoin(event: PlayerJoinEvent) {
+        injectPlayer(event.player)
+    }
+
+    @EventHandler
+    fun onPlayerQuit(event: PlayerQuitEvent) {
+        removePlayer(event.player)
+    }
+
+    private fun removePlayer(player: Player) {
         val channel = (player as CraftPlayer).handle.connection.connection.channel
         channel.eventLoop().submit {
             channel.pipeline().remove(player.name)
         }
     }
-    fun injectPlayer(player: Player) {
+
+    private fun injectPlayer(player: Player) {
         val channelDuplexHandler: ChannelDuplexHandler = object : ChannelDuplexHandler() {
             override fun channelRead(ctx: ChannelHandlerContext, msg: Any) {
                 if (msg is ServerboundPlayerActionPacket) {
