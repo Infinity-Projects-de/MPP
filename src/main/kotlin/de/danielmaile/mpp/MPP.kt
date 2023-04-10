@@ -33,8 +33,6 @@ import de.danielmaile.mpp.item.ListenerCrafting
 import de.danielmaile.mpp.item.Tools
 import de.danielmaile.mpp.item.function.ArmorListener
 import de.danielmaile.mpp.item.function.ListenerItem
-import de.danielmaile.mpp.item.function.particle.ListenerParticle
-import de.danielmaile.mpp.item.function.particle.ParticleManager
 import de.danielmaile.mpp.mob.ListenerMPPMobs
 import de.danielmaile.mpp.mob.MPPMobSpawnManager
 import de.danielmaile.mpp.mob.listeners.ListenerHealer
@@ -43,7 +41,7 @@ import de.danielmaile.mpp.mob.listeners.ListenerKing
 import de.danielmaile.mpp.mob.listeners.ListenerNecromancer
 import de.danielmaile.mpp.mob.listeners.ListenerPlague
 import de.danielmaile.mpp.mob.listeners.ListenerRift
-import de.danielmaile.mpp.packet.PacketListener
+import de.danielmaile.mpp.packet.PacketHandler
 import de.danielmaile.mpp.util.logError
 import de.danielmaile.mpp.world.WorldManager
 import de.danielmaile.mpp.world.aether.ListenerAether
@@ -64,9 +62,6 @@ class MPP : JavaPlugin() {
     }
 
     lateinit var configManager: ConfigManager
-        private set
-
-    lateinit var particleManager: ParticleManager
         private set
 
     lateinit var worldManager: WorldManager
@@ -102,9 +97,6 @@ class MPP : JavaPlugin() {
             return
         }
 */
-
-        particleManager = ParticleManager()
-
         // cloud effects
         CloudEffects()
 
@@ -122,7 +114,7 @@ class MPP : JavaPlugin() {
         sendMessage("")
         sendMessage("")
         for (s in getLanguageManager().getStringList("messages.errors.first_time_server_shutdown")) {
-            sendMessage(ChatColor.GREEN.toString() + s)
+            sendMessage(s)
         }
         if (!message.isNullOrBlank()) {
             sendMessage(message)
@@ -160,7 +152,7 @@ class MPP : JavaPlugin() {
     private fun registerNewEvents() {
         server.pluginManager.registerEvents(ArmorListener(), this)
         server.pluginManager.registerEvents(ResourcePackManager(), this)
-        server.pluginManager.registerEvents(PacketListener(), this)
+        server.pluginManager.registerEvents(PacketHandler, this)
     }
 
     private fun registerEvents() {
@@ -168,7 +160,6 @@ class MPP : JavaPlugin() {
         server.pluginManager.registerEvents(ListenerBlock(), this)
         server.pluginManager.registerEvents(ListenerCrafting(), this)
         server.pluginManager.registerEvents(ListenerItem(), this)
-        server.pluginManager.registerEvents(ListenerParticle(), this)
         server.pluginManager.registerEvents(ListenerConverter(), this)
         server.pluginManager.registerEvents(ListenerMPPMobs(), this)
         server.pluginManager.registerEvents(MPPMobSpawnManager(), this)
