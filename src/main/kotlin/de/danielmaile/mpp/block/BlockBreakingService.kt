@@ -34,6 +34,7 @@ import com.comphenix.protocol.events.PacketEvent
 import com.comphenix.protocol.wrappers.EnumWrappers
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.item.Blocks
+import de.danielmaile.mpp.packet.PacketListener
 import de.danielmaile.mpp.util.ToolType
 import de.danielmaile.mpp.util.getPotionEffectLevel
 import de.danielmaile.mpp.util.isCustom
@@ -43,6 +44,8 @@ import de.danielmaile.mpp.util.sendPackets
 import net.minecraft.network.protocol.game.ClientboundBlockChangedAckPacket
 import net.minecraft.network.protocol.game.ClientboundRemoveMobEffectPacket
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket
+import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket
+import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket.Action
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectInstance
 import org.bukkit.Bukkit
@@ -66,6 +69,26 @@ private val MINING_FATIGUE = MobEffectInstance(MobEffect.byId(4)!!, Integer.MAX_
 
 object BlockBreakingService {
 
+    @PacketListener(ignoreCancelled = true)
+    fun onBlockDig(event: de.danielmaile.mpp.packet.PacketEvent<ServerboundPlayerActionPacket>) {
+        val sequence = event.packet.sequence
+        val blockPos = event.packet.pos
+
+        when (event.packet.action) {
+            Action.START_DESTROY_BLOCK -> {
+                val block = event.player.world.getBlockAt(blockPos.x, blockPos.y, blockPos.z)
+                if (block.isCustom()) {
+                    // damageBlock(block, event.player, sequence)
+                }
+                event.player.sendMessage("You're breaking a block!")
+            }
+            else -> {
+                return
+            }
+        }
+    }
+
+    @Deprecated("Old method")
     fun init() {
         // listen to player action packets
         ProtocolLibrary.getProtocolManager().addPacketListener(object :
