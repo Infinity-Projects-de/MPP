@@ -102,8 +102,7 @@ class MPP : JavaPlugin() {
         // cloud effects
         CloudEffects()
 
-        // init BlockBreakingService
-        BlockBreakingService.init()
+        BlockBreakingService.initializeBreakingScheduler()
 
         Metrics(this, 18055)
     }
