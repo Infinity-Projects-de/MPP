@@ -82,7 +82,7 @@ class MPP : JavaPlugin() {
         }
 
         PacketHandler.enable(this)
-
+        registerPacketListners()
 //        DataPackManager.saveOrUpdateDataPack()
 
         // register commands, events and recipes
@@ -106,6 +106,10 @@ class MPP : JavaPlugin() {
         BlockBreakingService.init()
 
         Metrics(this, 18055)
+    }
+
+    private fun registerPacketListners() {
+        PacketHandler.registerListeners(BlockBreakingService)
     }
 
     /**
@@ -158,7 +162,6 @@ class MPP : JavaPlugin() {
     private fun registerNewEvents() {
         server.pluginManager.registerEvents(ArmorListener(), this)
         server.pluginManager.registerEvents(ResourcePackManager(), this)
-        server.pluginManager.registerEvents(PacketHandler, this)
     }
 
     private fun registerEvents() {
