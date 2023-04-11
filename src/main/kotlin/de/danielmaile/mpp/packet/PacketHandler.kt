@@ -29,8 +29,13 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.plugin.Plugin
-import java.lang.reflect.Method
 import java.lang.reflect.ParameterizedType
+import kotlin.reflect.KClass
+import kotlin.reflect.KFunction
+import kotlin.reflect.full.findAnnotation
+import kotlin.reflect.full.functions
+import kotlin.reflect.full.isSubclassOf
+import kotlin.reflect.jvm.javaType
 
 object PacketHandler : Listener {
 
@@ -50,27 +55,45 @@ object PacketHandler : Listener {
 
     // Listener registration
 
-    private val listeners: HashSet<Listener<*>> = hashSetOf()
+    private val listeners: HashSet<Listener> = hashSetOf()
 
     fun registerListeners(listener: Any) {
-        listener.javaClass.declaredMethods
-            .filter { it.isAnnotationPresent(PacketListener::class.java) }
-            .filter { it.parameterCount == 1 && PacketEvent::class.java.isAssignableFrom(it.parameterTypes[0]) }
-            .forEach {
-                val packetListenerAnnotation = it.getAnnotation(PacketListener::class.java)
-                val genericType = it.parameterTypes[0].genericType
-                listeners.add(Listener(genericType, it, packetListenerAnnotation))
+        listeners.addAll(
+            listener::class.functions.mapNotNull { function ->
+                function.findAnnotation<PacketListener>()?.let { packetListener ->
+                    if (function.parameters.size != 2) {
+                        throw IllegalArgumentException("@PacketListener annotation must be applied to a function with exactly one parameter")
+                    }
+
+                    val parameter = function.parameters[1]
+                    val parameterType = parameter.type
+                    val classifier = parameterType.classifier as? KClass<*>
+
+                    if (classifier == null || !classifier.isSubclassOf(PacketEvent::class)) {
+                        throw IllegalArgumentException("@PacketListener annotation must be applied to a function with a PacketEvent<T> parameter")
+                    }
+
+                    val javaType = parameterType.javaType
+                    if (javaType is ParameterizedType) {
+                        val typeArgument = javaType.actualTypeArguments.first()
+                        if (typeArgument is Class<*>) {
+                            return@mapNotNull Listener(typeArgument.kotlin, function, listener, packetListener)
+                        } else {
+                            throw IllegalArgumentException("PacketEvent<T> parameter must have a valid T. T must implement the interface Packet<*>.")
+                        }
+                    } else {
+                        throw IllegalArgumentException("PacketEvent parameter must be a PacketEvent<T>, technically called a ParametrizedType")
+                    }
+                }
+                return@mapNotNull null
             }
+        )
     }
 
     /** Gets the type in the generic of the class
      * ----
      * For example PacketEvent&lt;SomePacket&gt; returns SomePacket
      */
-    private val <T> Class<T>.genericType: Class<*>
-        get() {
-            return (genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<*>
-        }
 
     // Packet handling
 
@@ -120,7 +143,7 @@ object PacketHandler : Listener {
                 .filter { it.listeningToPacket.isInstance(packet) }
                 .forEach {
                     if (!it.packetListener.ignoreCancelled || !packetEvent.cancelled) {
-                        it.method.invoke(packetEvent)
+                        it.method.call(it.instance, packetEvent)
                     }
                 }
 
@@ -141,9 +164,10 @@ object PacketHandler : Listener {
     }
 
     // Listener data class
-    data class Listener<T>(
-        val listeningToPacket: Class<T>,
-        val method: Method,
+    data class Listener(
+        val listeningToPacket: KClass<*>,
+        val method: KFunction<*>,
+        val instance: Any,
         val packetListener: PacketListener
     )
 }
