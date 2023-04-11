@@ -45,13 +45,14 @@ bukkit {
     load = BukkitPluginDescription.PluginLoadOrder.POSTWORLD
     main = "de.danielmaile.mpp.MPP"
     apiVersion = "1.19"
-    authors = listOf("Daniel Maile and others")
-    depend = listOf("ProtocolLib")
+    authors = listOf("Daniel Maile", "ChechuDEV", "Others")
+    // depend = listOf("ProtocolLib")
     libraries = listOf(
         "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$embeddedKotlinVersion",
         "org.apache.commons:commons-compress:1.21",
         "com.konghq:unirest-java:3.13.13",
-        "com.squareup.okhttp3:okhttp:4.9.1"
+        "com.squareup.okhttp3:okhttp:4.9.1",
+        "org.jetbrains.kotlin:kotlin-reflect:1.8.20"
     )
     commands {
         register("mpp") {
@@ -78,9 +79,9 @@ dependencies {
         exclude(group = "net.kyori", module = "adventure-text-serializer-gson")
     }
     implementation("org.bstats:bstats-bukkit:3.0.0")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.20")
 
-    compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0-SNAPSHOT")
+    compileOnly("org.jetbrains.kotlin:kotlin-reflect:1.8.20")
+    // compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0-SNAPSHOT")
     compileOnly("org.apache.commons:commons-compress:1.21")
     compileOnly("com.konghq:unirest-java:3.13.13")
     compileOnly("com.squareup.okhttp3:okhttp:4.9.1")

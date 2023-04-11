@@ -17,12 +17,11 @@
 
 package de.danielmaile.mpp.util
 
-import com.comphenix.protocol.PacketType
-import com.comphenix.protocol.ProtocolLibrary
-import com.comphenix.protocol.events.PacketContainer
-import com.comphenix.protocol.wrappers.BlockPosition
 import de.danielmaile.mpp.block.BlockType
 import de.danielmaile.mpp.inst
+import de.danielmaile.mpp.packet.PacketHandler
+import net.minecraft.core.BlockPos
+import net.minecraft.network.protocol.game.ClientboundBlockDestructionPacket
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.block.Block
@@ -46,11 +45,7 @@ fun Block.isCustom(): Boolean {
  *
  */
 fun Block.sendDestructionStagePacket(stage: Int) {
-    val packetContainer = PacketContainer(PacketType.Play.Server.BLOCK_BREAK_ANIMATION)
-    packetContainer.blockPositionModifier.write(0, BlockPosition(this.x, this.y, this.z))
-    packetContainer.integers
-        .write(0, this.getEntityID())
-        .write(1, stage)
+    val packet = ClientboundBlockDestructionPacket(getEntityID(), BlockPos(x, y, z), stage)
 
     // run at next tick to ensure it's not async
     Bukkit.getScheduler().runTask(
@@ -58,7 +53,7 @@ fun Block.sendDestructionStagePacket(stage: Int) {
         Runnable {
             this.location.getNearbyEntitiesByType(Player::class.java, 16.0)
                 .forEach {
-                    ProtocolLibrary.getProtocolManager().sendServerPacket(it, packetContainer)
+                    PacketHandler.sendPacket(it, packet)
                 }
         }
     )

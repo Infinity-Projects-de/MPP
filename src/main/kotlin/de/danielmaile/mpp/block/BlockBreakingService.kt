@@ -26,12 +26,6 @@
 
 package de.danielmaile.mpp.block
 
-import com.comphenix.protocol.PacketType
-import com.comphenix.protocol.ProtocolLibrary
-import com.comphenix.protocol.events.ListenerPriority
-import com.comphenix.protocol.events.PacketAdapter
-import com.comphenix.protocol.events.PacketEvent
-import com.comphenix.protocol.wrappers.EnumWrappers
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.item.Blocks
 import de.danielmaile.mpp.packet.PacketListener
@@ -78,9 +72,13 @@ object BlockBreakingService {
             Action.START_DESTROY_BLOCK -> {
                 val block = event.player.world.getBlockAt(blockPos.x, blockPos.y, blockPos.z)
                 if (block.isCustom()) {
-                    // damageBlock(block, event.player, sequence)
+                    damageBlock(block, event.player, sequence)
                 }
                 event.player.sendMessage("You're breaking a block!")
+            }
+            Action.STOP_DESTROY_BLOCK, Action.ABORT_DESTROY_BLOCK -> {
+                val block = event.player.world.getBlockAt(blockPos.x, blockPos.y, blockPos.z)
+                stopDamaging(block)
             }
             else -> {
                 return
@@ -88,31 +86,7 @@ object BlockBreakingService {
         }
     }
 
-    @Deprecated("Old method")
-    fun init() {
-        // listen to player action packets
-        ProtocolLibrary.getProtocolManager().addPacketListener(object :
-                PacketAdapter(inst(), ListenerPriority.NORMAL, PacketType.Play.Client.BLOCK_DIG) {
-                override fun onPacketReceiving(event: PacketEvent) {
-                    val sequence = event.packet.integers.read(0)
-                    val blockPosition = event.packet.blockPositionModifier.values[0]
-                    val digType = event.packet.playerDigTypes.values[0]
-
-                    if (digType == EnumWrappers.PlayerDigType.START_DESTROY_BLOCK) {
-                        val block = event.player.world.getBlockAt(blockPosition.x, blockPosition.y, blockPosition.z)
-                        if (block.isCustom()) {
-                            damageBlock(block, event.player, sequence)
-                        }
-                    }
-
-                    if (digType == EnumWrappers.PlayerDigType.STOP_DESTROY_BLOCK || digType == EnumWrappers.PlayerDigType.ABORT_DESTROY_BLOCK) {
-                        val block = event.player.world.getBlockAt(blockPosition.x, blockPosition.y, blockPosition.z)
-                        stopDamaging(block)
-                    }
-                }
-            })
-
-        // handle ticks
+    fun initializeBreakingScheduler() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(inst(), {
             toRemoveDamageBlocks.forEach {
                 damagedBlocks.remove(it)

@@ -17,14 +17,12 @@
 
 package de.danielmaile.mpp.world.aether
 
-import com.comphenix.protocol.PacketType
-import com.comphenix.protocol.ProtocolLibrary
-import com.comphenix.protocol.events.ListenerPriority
-import com.comphenix.protocol.events.PacketAdapter
-import com.comphenix.protocol.events.PacketEvent
 import de.danielmaile.mpp.aetherWorld
 import de.danielmaile.mpp.inst
+import de.danielmaile.mpp.packet.PacketEvent
+import de.danielmaile.mpp.packet.PacketListener
 import io.papermc.paper.event.entity.EntityMoveEvent
+import net.minecraft.network.protocol.game.ServerboundPlayerInputPacket
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Entity
@@ -42,53 +40,39 @@ import org.bukkit.util.Vector
 
 class ListenerAether : Listener {
 
-    init {
-        initLlamaListener()
-    }
+    // TODO: Not registered
+    @PacketListener
+    fun steerLlama(event: PacketEvent<ServerboundPlayerInputPacket>) {
+        val player = event.player
+        val llama = player.vehicle ?: return
+        if (llama !is Llama) return
+        if (llama.location.world != aetherWorld()) return
+        if (llama.inventory.decor == null) return
 
-    /**
-     * Makes llamas controllable by players using ProtocolLib.
-     */
-    private fun initLlamaListener() {
-        ProtocolLibrary.getProtocolManager().addPacketListener(object :
-                PacketAdapter(inst(), ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE) {
-                override fun onPacketReceiving(event: PacketEvent) {
-                    val packetContainer = event.packet
-                    val player = event.player
-                    val llama = player.vehicle ?: return
+        val jump = event.packet.isJumping
+        if (llama.isOnGround && jump) {
+            llama.velocity = llama.velocity.clone().add(Vector(0.0, inst().configManager.llamaJumpHeight, 0.0))
+        }
 
-                    if (llama !is Llama) return
-                    if (llama.location.world != aetherWorld()) return
-                    if (llama.inventory.decor == null) return
+        val leftRight = event.packet.xxa
+        val forwardBackward = event.packet.zza
 
-                    // jumping
-                    val jump = packetContainer.booleans.read(0)
-                    if (jump && llama.isOnGround()) {
-                        llama.velocity = llama.velocity.clone().add(Vector(0.0, inst().configManager.llamaJumpHeight, 0.0))
-                    }
+        val horizontal = Vector(-forwardBackward.toDouble(), 0.0, leftRight.toDouble())
+        if (horizontal.length() > 0) {
+            // turn to face of vector in direction which the player is facing
+            horizontal.rotateAroundY(Math.toRadians((-player.location.yaw + 90f).toDouble()))
 
-                    // calculate velocity
-                    val leftRight = packetContainer.float.read(0)
-                    val forwardBackward = packetContainer.float.read(1)
+            // scale vector
+            horizontal.normalize().multiply(inst().configManager.llamaSpeed)
+        }
 
-                    val horizontal = Vector(-forwardBackward.toDouble(), 0.0, leftRight.toDouble())
-                    if (horizontal.length() > 0) {
-                        // turn to face of vector in direction which the player is facing
-                        horizontal.rotateAroundY(Math.toRadians((-player.location.yaw + 90f).toDouble()))
+        val vertical = llama.getVelocity()
+        vertical.setX(0)
+        vertical.setZ(0)
+        llama.setVelocity(horizontal.add(vertical))
 
-                        // scale vector
-                        horizontal.normalize().multiply(inst().configManager.llamaSpeed)
-                    }
-
-                    val vertical = llama.getVelocity()
-                    vertical.setX(0)
-                    vertical.setZ(0)
-                    llama.setVelocity(horizontal.add(vertical))
-
-                    // rotation
-                    llama.setRotation(player.eyeLocation.yaw, player.eyeLocation.pitch)
-                }
-            })
+        // rotation
+        llama.setRotation(player.eyeLocation.yaw, player.eyeLocation.pitch)
     }
 
     /**
