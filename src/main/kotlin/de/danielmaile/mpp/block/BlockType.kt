@@ -35,6 +35,7 @@ enum class BlockType(
     // don't change order because existing items will break
     AETHER_LOG(ToolType.AXE, 2f, Sound.BLOCK_WOOD_PLACE, Sound.BLOCK_WOOD_BREAK),
     AETHER_PLANKS(ToolType.AXE, 2f, Sound.BLOCK_WOOD_PLACE, Sound.BLOCK_WOOD_BREAK),
+    AETHER_LEAVES(ToolType.AXE, 2f, Sound.BLOCK_GRASS_PLACE, Sound.BLOCK_GRASS_BREAK),
     ZANITE_ORE(ToolType.PICKAXE, 8f, Sound.BLOCK_STONE_PLACE, Sound.BLOCK_STONE_BREAK),
     GRAVITITE_ORE(ToolType.PICKAXE, 10f, Sound.BLOCK_STONE_PLACE, Sound.BLOCK_STONE_BREAK),
     AETHER_STONE(ToolType.PICKAXE, 1.5f, Sound.BLOCK_STONE_PLACE, Sound.BLOCK_STONE_BREAK),
