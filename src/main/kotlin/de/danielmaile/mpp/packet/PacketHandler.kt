@@ -50,7 +50,7 @@ object PacketHandler : Listener {
 
     // Listener registration
 
-    val listeners: HashSet<Listener<*>> = hashSetOf()
+    private val listeners: HashSet<Listener<*>> = hashSetOf()
 
     fun registerListeners(listener: Any) {
         listener.javaClass.declaredMethods
@@ -58,14 +58,19 @@ object PacketHandler : Listener {
             .filter { it.parameterCount == 1 && PacketEvent::class.java.isAssignableFrom(it.parameterTypes[0]) }
             .forEach {
                 val packetListenerAnnotation = it.getAnnotation(PacketListener::class.java)
-                val genericType = getGenericType(it.parameterTypes[0])
+                val genericType = it.parameterTypes[0].genericType
                 listeners.add(Listener(genericType, it, packetListenerAnnotation))
             }
     }
 
-    private fun <T> getGenericType(clazz: Class<T>): Class<*> {
-        return (clazz.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<*>
-    }
+    /** Gets the type in the generic of the class
+     * ----
+     * For example PacketEvent&lt;SomePacket&gt; returns SomePacket
+     */
+    private val <T> Class<T>.genericType: Class<*>
+        get() {
+            return (genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<*>
+        }
 
     // Packet handling
 
@@ -93,6 +98,7 @@ object PacketHandler : Listener {
 
     /**
      * Removes the injected packet listener from the player
+     * @param player Player to be removed from the listeners
      */
 
     private fun removePlayer(player: Player) {
