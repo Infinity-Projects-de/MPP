@@ -81,6 +81,8 @@ class MPP : JavaPlugin() {
             return
         }
 
+        PacketHandler.enable(this)
+
 //        DataPackManager.saveOrUpdateDataPack()
 
         // register commands, events and recipes
@@ -123,6 +125,10 @@ class MPP : JavaPlugin() {
         }
         sendMessage("")
         sendMessage("------------------------------")
+    }
+
+    override fun onDisable() {
+        PacketHandler.destroy()
     }
 
     private fun sendMessage(text: String) {
