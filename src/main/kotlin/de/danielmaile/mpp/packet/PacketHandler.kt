@@ -90,10 +90,11 @@ object PacketHandler : Listener {
         )
     }
 
-    /** Gets the type in the generic of the class
-     * ----
-     * For example PacketEvent&lt;SomePacket&gt; returns SomePacket
-     */
+    // Player packet sending
+
+    fun sendPacket(player: Player, packet: Packet<*>) {
+        (player as CraftPlayer).handle.connection.send(packet)
+    }
 
     // Packet handling
 
