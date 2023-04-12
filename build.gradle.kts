@@ -46,7 +46,6 @@ bukkit {
     main = "de.danielmaile.mpp.MPP"
     apiVersion = "1.19"
     authors = listOf("Daniel Maile", "ChechuDEV", "Others")
-    // depend = listOf("ProtocolLib")
     libraries = listOf(
         "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$embeddedKotlinVersion",
         "org.apache.commons:commons-compress:1.21",
@@ -81,7 +80,6 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:3.0.0")
 
     compileOnly("org.jetbrains.kotlin:kotlin-reflect:1.8.20")
-    // compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0-SNAPSHOT")
     compileOnly("org.apache.commons:commons-compress:1.21")
     compileOnly("com.konghq:unirest-java:3.13.13")
     compileOnly("com.squareup.okhttp3:okhttp:4.9.1")
@@ -115,13 +113,6 @@ tasks {
     }
 
     runServer {
-        doFirst {
-            download.run {
-                src("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/target/ProtocolLib.jar")
-                dest(buildDir)
-                overwrite(false)
-            }
-        }
         jvmArgs("-Dcom.mojang.eula.agree=true")
         pluginJars(File(buildDir, "ProtocolLib.jar"))
         minecraftVersion(minecraftVersion)
@@ -153,6 +144,7 @@ tasks.register<JavaExec>("buildResourcePack") {
     group = "mpp"
     args = listOf(getPluginVersion(), project.projectDir.absolutePath)
 }
+
 tasks.register<RunResourcePackServer>("runResourcePackServer") {
     dependsOn("buildResourcePack")
     group = "mpp"
