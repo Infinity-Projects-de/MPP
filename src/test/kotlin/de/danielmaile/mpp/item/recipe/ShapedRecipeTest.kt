@@ -19,7 +19,6 @@ package de.danielmaile.mpp.item.recipe
 
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
-import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -77,9 +76,7 @@ class ShapedRecipeTest {
     @Test
     fun `A Simple 2x2 recipe should return 4 variants of the craft`() {
         val recipe = ShapedRecipe(air, arrayOf(air, air, null, air, air, null, null, null, null))
-        val method = ShapedRecipe::class.java.getDeclaredMethod("getRecipeArrays")
-        method.isAccessible = true
-        val recipeArrays: List<Array<ItemStack?>> = method.invoke(recipe) as List<Array<ItemStack?>>
+        val recipeArrays = getRecipeArrays(recipe)
 
         val possibleCrafts: List<Array<ItemStack?>> = listOf(
             arrayOf(
@@ -110,30 +107,125 @@ class ShapedRecipeTest {
     @Test
     fun `A Complex 2x2 recipe should not be rotated and return 4 variants of the craft`() {
         val recipe = ShapedRecipe(air, arrayOf(air, air, null, dirt, dirt, null, null, null, null))
-        val method = ShapedRecipe::class.java.getDeclaredMethod("getRecipeArrays")
-        method.isAccessible = true
-        val recipeArrays: List<Array<ItemStack?>> = method.invoke(recipe) as List<Array<ItemStack?>>
+        val recipeArrays = getRecipeArrays(recipe)
 
         val possibleCrafts: List<Array<ItemStack?>> = listOf(
             arrayOf(
-                air, dirt, null,
-                air, dirt, null,
+                air, air, null,
+                dirt, dirt, null,
                 null, null, null
             ),
             arrayOf(
-                null, air, dirt,
-                null, air, dirt,
+                null, air, air,
+                null, dirt, dirt,
                 null, null, null
             ),
             arrayOf(
                 null, null, null,
-                air, dirt, null,
-                air, dirt, null
+                air, air, null,
+                dirt, dirt, null
             ),
             arrayOf(
                 null, null, null,
-                null, air, dirt,
-                null, air, dirt
+                null, air, air,
+                null, dirt, dirt
+            )
+        )
+
+        assertTrue(containsRecipes(possibleCrafts, recipeArrays))
+    }
+
+    @Test
+    fun `A Complex 1x2 recipe should not be rotated and return 6 variants of the craft`() {
+        val recipe = ShapedRecipe(air, arrayOf(air, null, null, dirt, null, null, null, null, null))
+        val recipeArrays = getRecipeArrays(recipe)
+
+        val possibleCrafts: List<Array<ItemStack?>> = listOf(
+            arrayOf(
+                air, null, null,
+                dirt, null, null,
+                null, null, null
+            ),
+            arrayOf(
+                null, air, null,
+                null, dirt, null,
+                null, null, null
+            ),
+            arrayOf(
+                null, null, air,
+                null, null, dirt,
+                null, null, null
+            ),
+            arrayOf(
+                null, null, null,
+                air, null, null,
+                dirt, null, null
+            ),
+            arrayOf(
+                null, null, null,
+                null, air, null,
+                null, dirt, null
+            ),
+            arrayOf(
+                null, null, null,
+                null, null, air,
+                null, null, dirt
+            )
+        )
+
+        assertTrue(containsRecipes(possibleCrafts, recipeArrays))
+    }
+
+    @Test
+    fun `A (Technically shapeless) 1x1 recipe should not be rotated and return 6 variants of the craft`() {
+        val recipe = ShapedRecipe(air, arrayOf(air, null, null, null, null, null, null, null, null))
+        val recipeArrays = getRecipeArrays(recipe)
+
+        val possibleCrafts: List<Array<ItemStack?>> = listOf(
+            arrayOf(
+                air, null, null,
+                null, null, null,
+                null, null, null
+            ),
+            arrayOf(
+                null, air, null,
+                null, null, null,
+                null, null, null
+            ),
+            arrayOf(
+                null, null, air,
+                null, null, null,
+                null, null, null
+            ),
+            arrayOf(
+                null, null, null,
+                air, null, null,
+                null, null, null
+            ),
+            arrayOf(
+                null, null, null,
+                null, air, null,
+                null, null, null
+            ),
+            arrayOf(
+                null, null, null,
+                null, null, air,
+                null, null, null
+            ),
+            arrayOf(
+                null, null, null,
+                null, null, null,
+                air, null, null
+            ),
+            arrayOf(
+                null, null, null,
+                null, null, null,
+                null, air, null
+            ),
+            arrayOf(
+                null, null, null,
+                null, null, null,
+                null, null, air
             )
         )
 
@@ -142,12 +234,8 @@ class ShapedRecipeTest {
 
     @Test
     fun `A simple 3x3 recipe should return the same recipe`() {
-        val air = ItemStack(Material.AIR)
-
         val recipe = ShapedRecipe(air, arrayOf(air, air, air, air, air, air, air, air, air))
-        val method = ShapedRecipe::class.java.getDeclaredMethod("getRecipeArrays")
-        method.isAccessible = true
-        val recipeArrays: List<Array<ItemStack?>> = method.invoke(recipe) as List<Array<ItemStack?>>
+        val recipeArrays = getRecipeArrays(recipe)
 
         val possibleCrafts: List<Array<ItemStack?>> = listOf(
             arrayOf(
@@ -160,12 +248,10 @@ class ShapedRecipeTest {
         assertTrue(containsRecipes(possibleCrafts, recipeArrays))
     }
 
-    @Ignore
-    fun `A Simple 2x3 recipe should return 2 variants of the craft`() {
+    @Test
+    fun `A Simple 3x2 recipe should return 2 variants of the craft`() {
         val recipe = ShapedRecipe(air, arrayOf(air, air, air, air, air, air, null, null, null))
-        val method = ShapedRecipe::class.java.getDeclaredMethod("getRecipeArrays")
-        method.isAccessible = true
-        val recipeArrays: List<Array<ItemStack?>> = method.invoke(recipe) as List<Array<ItemStack?>>
+        val recipeArrays = getRecipeArrays(recipe)
 
         val possibleCrafts: List<Array<ItemStack?>> = listOf(
             arrayOf(
@@ -177,6 +263,34 @@ class ShapedRecipeTest {
                 null, null, null,
                 air, air, air,
                 air, air, air
+            )
+        )
+
+        assertTrue(containsRecipes(possibleCrafts, recipeArrays))
+    }
+
+    @Test
+    fun `A Complex 2x3 recipe should return 2 variants of the craft`() {
+        val recipe = ShapedRecipe(
+            air,
+            arrayOf(
+                dirt, air, null,
+                dirt, dirt, null,
+                air, air, null
+            )
+        )
+        val recipeArrays = getRecipeArrays(recipe)
+
+        val possibleCrafts: List<Array<ItemStack?>> = listOf(
+            arrayOf(
+                dirt, air, null,
+                dirt, dirt, null,
+                air, air, null
+            ),
+            arrayOf(
+                null, dirt, air,
+                null, dirt, dirt,
+                null, air, air
             )
         )
 
@@ -186,9 +300,7 @@ class ShapedRecipeTest {
     @Test
     fun `A full kind of complex 3x3 recipe should not be rotated and should return the same recipe`() {
         val recipe = ShapedRecipe(air, arrayOf(air, dirt, air, dirt, air, air, air, air, dirt))
-        val method = ShapedRecipe::class.java.getDeclaredMethod("getRecipeArrays")
-        method.isAccessible = true
-        val recipeArrays: List<Array<ItemStack?>> = method.invoke(recipe) as List<Array<ItemStack?>>
+        val recipeArrays = getRecipeArrays(recipe)
 
         val possibleCrafts: List<Array<ItemStack?>> = listOf(
             arrayOf(
@@ -201,7 +313,7 @@ class ShapedRecipeTest {
         assertTrue(containsRecipes(possibleCrafts, recipeArrays))
     }
 
-    @Ignore
+    @Test
     fun `A complex 3x3 recipe should not be rotated and should return the same recipe`() {
         val recipe = ShapedRecipe(
             air,
@@ -211,9 +323,7 @@ class ShapedRecipeTest {
                 air, null, null
             )
         )
-        val method = ShapedRecipe::class.java.getDeclaredMethod("getRecipeArrays")
-        method.isAccessible = true
-        val recipeArrays: List<Array<ItemStack?>> = method.invoke(recipe) as List<Array<ItemStack?>>
+        val recipeArrays = getRecipeArrays(recipe)
 
         val possibleCrafts: List<Array<ItemStack?>> = listOf(
             arrayOf(
@@ -225,7 +335,8 @@ class ShapedRecipeTest {
 
         assertTrue(containsRecipes(possibleCrafts, recipeArrays))
     }
-    fun containsRecipes(expected: List<Array<ItemStack?>>, real: List<Array<ItemStack?>>): Boolean {
+
+    private fun containsRecipes(expected: List<Array<ItemStack?>>, real: List<Array<ItemStack?>>): Boolean {
         for (recipe in real) {
             var contains = false
             for (realRecipe in expected) {
@@ -252,5 +363,11 @@ class ShapedRecipeTest {
             }
         }
         return true
+    }
+
+    private fun getRecipeArrays(recipe: ShapedRecipe): List<Array<ItemStack?>> {
+        val method = ShapedRecipe::class.java.getDeclaredMethod("getRecipeArrays")
+        method.isAccessible = true
+        return method.invoke(recipe) as List<Array<ItemStack?>>
     }
 }
