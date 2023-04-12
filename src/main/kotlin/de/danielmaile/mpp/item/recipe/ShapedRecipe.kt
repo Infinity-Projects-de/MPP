@@ -63,9 +63,8 @@ class ShapedRecipe(
     private fun getRecipeArrays(): List<Array<ItemStack?>> {
         var listOfRecipes: MutableList<Array<ItemStack?>> = mutableListOf()
         val size = getRecipeSize()
-        println("${size.width}x${size.height}")
-        var reducedRowRecipe: MutableList<ItemStack?> = mutableListOf()
-        var reducedRecipe: MutableList<ItemStack?> = mutableListOf()
+        var reducedRowRecipe: MutableList<ItemStack?> = MutableList(size.height * 3) { null }
+        var reducedRecipe: MutableList<ItemStack?> = MutableList(size.width * size.height) { null }
 
         if (size.height != 3) {
             for (row in 0 until 3) {
@@ -75,7 +74,8 @@ class ShapedRecipe(
                 }
                 if (!emptyRow) {
                     for (col in 0 until 3) {
-                        reducedRowRecipe.add(mainRecipe[row * 3 + col])
+                        val i = row * 3 + col
+                        reducedRowRecipe[i] = mainRecipe[i]
                     }
                 }
             }
@@ -87,12 +87,14 @@ class ShapedRecipe(
             for (col in 0 until 3) {
                 var emptyCol = true
                 for (row in 0 until size.height) {
-                    if (reducedRowRecipe[row * 3 + col] != null) emptyCol = false
+                    if (reducedRowRecipe[col + (row * 3)] != null) emptyCol = false
                 }
 
                 if (!emptyCol) {
                     for (row in 0 until size.height) {
-                        reducedRecipe.add(reducedRowRecipe[row * 3 + col])
+                        val i = row * 3 + col
+                        val newI = row * size.width + col
+                        reducedRecipe[newI] = reducedRowRecipe[i]
                     }
                 }
             }
@@ -104,14 +106,13 @@ class ShapedRecipe(
 
         if (size.height != 3) {
             for (i in 0..3 - size.height) {
-                val amplifiedRecipe: MutableList<ItemStack?> = mutableListOf()
-
+                val amplifiedRecipe: MutableList<ItemStack?> = MutableList(3 * size.width) { null }
                 for (row in 0 until 3) {
                     for (col in 0 until size.width) {
-                        if (row - i < 0 || row - i >= size.height) {
-                            amplifiedRecipe.add(null)
-                        } else {
-                            amplifiedRecipe.add(reducedRecipe[(row - i) * size.width + col])
+                        if (row - i >= 0 && row - i < size.height) {
+                            val idx = (row - i) * size.width + col
+                            val newIdx = row * size.width + col
+                            amplifiedRecipe[newIdx] = reducedRecipe[idx]
                         }
                     }
                 }
@@ -123,14 +124,14 @@ class ShapedRecipe(
 
         if (size.width != 3) {
             for (recipe in rowAmpliatedRecipes) {
-                for (i in 0..3 - size.height) {
-                    val amplifiedRecipe: MutableList<ItemStack?> = mutableListOf()
+                for (i in 0..3 - size.width) {
+                    val amplifiedRecipe: MutableList<ItemStack?> = MutableList(9) { null }
                     for (row in 0 until 3) {
                         for (col in 0 until 3) {
-                            if (col - i < 0 || col - i >= size.width) {
-                                amplifiedRecipe.add(null)
-                            } else {
-                                amplifiedRecipe.add(recipe[row * size.width + (col - i)])
+                            if (col - i >= 0 && col - i < size.width) {
+                                val idx = row * size.width + (col - i)
+                                val newIdx = row * 3 + col
+                                amplifiedRecipe[newIdx] = recipe[idx]
                             }
                         }
                     }
@@ -154,12 +155,12 @@ class ShapedRecipe(
         for (i in 0 until 3) {
             for (j in 0 until 3) {
                 if (mainRecipe[i * 3 + j] != null) {
-                    if (firstRow == -1) firstRow = i
-                    lastRow = i
+                    if (firstCol == -1) firstCol = i
+                    lastCol = i
                 }
                 if (mainRecipe[j * 3 + i] != null) {
-                    if (firstCol == -1) firstCol = j
-                    lastCol = j
+                    if (firstRow == -1) firstRow = i
+                    lastRow = i
                 }
             }
         }
