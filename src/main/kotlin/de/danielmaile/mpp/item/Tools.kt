@@ -66,4 +66,11 @@ enum class Tools(
 
         return recipes
     }
+
+    enum class ToolType {
+        AXE,
+        PICKAXE,
+        SHOVEL,
+        HOE
+    }
 }
