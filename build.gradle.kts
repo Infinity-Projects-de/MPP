@@ -85,6 +85,7 @@ dependencies {
     compileOnly("com.squareup.okhttp3:okhttp:4.9.1")
 
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("io.mockk:mockk:1.13.5")
     testImplementation(kotlin("test"))
 }
 
