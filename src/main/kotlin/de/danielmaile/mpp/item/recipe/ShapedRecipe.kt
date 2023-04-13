@@ -26,39 +26,36 @@ class ShapedRecipe(
     private val result: ItemStack,
     private val mainRecipe: Array<ItemStack?>
 ) : CraftingRecipe() {
-    @Deprecated("No reason of using this val that only uses the function")
-    override val spigotRecipes: List<Recipe>
-        get() = getRecipes()
-
     private val possibleIngredients = charArrayOf('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J')
 
-    fun getRecipes(): List<Recipe> {
-        val recipes: MutableList<Recipe> = mutableListOf()
+    override val recipes: List<Recipe>
+        get() {
+            val recipes: MutableList<Recipe> = mutableListOf()
 
-        val ingredients = mainRecipe.distinct()
+            val ingredients = mainRecipe.distinct()
 
-        val ingredientsToLetter: HashMap<ItemStack?, Char> = hashMapOf()
-        for ((i, itemStack) in ingredients.withIndex()) {
-            ingredientsToLetter[itemStack] = possibleIngredients[i]
-        }
-
-        for (recipeArray in getRecipeArrays()) {
-            val shapedRecipe = ShapedRecipe(getRandomRecipeKey(), result)
-            val recipeBuilder: StringBuilder = StringBuilder()
-            for (itemStack in recipeArray) {
-                recipeBuilder.append("${ingredientsToLetter[itemStack]} ")
+            val ingredientsToLetter: HashMap<ItemStack?, Char> = hashMapOf()
+            for ((i, itemStack) in ingredients.withIndex()) {
+                ingredientsToLetter[itemStack] = possibleIngredients[i]
             }
-            val recipe = recipeBuilder.trim().toString()
-            shapedRecipe.shape(recipe.substring(0, 3), recipe.substring(3, 6), recipe.substring(6, 9))
-            for (item in ingredientsToLetter.keys) {
-                if (item != null) {
-                    ingredientsToLetter[item]?.let { shapedRecipe.setIngredient(it, ExactChoice(item)) }
+
+            for (recipeArray in getRecipeArrays()) {
+                val shapedRecipe = ShapedRecipe(getRandomRecipeKey(), result)
+                val recipeBuilder: StringBuilder = StringBuilder()
+                for (itemStack in recipeArray) {
+                    recipeBuilder.append("${ingredientsToLetter[itemStack]} ")
                 }
+                val recipe = recipeBuilder.trim().toString()
+                shapedRecipe.shape(recipe.substring(0, 3), recipe.substring(3, 6), recipe.substring(6, 9))
+                for (item in ingredientsToLetter.keys) {
+                    if (item != null) {
+                        ingredientsToLetter[item]?.let { shapedRecipe.setIngredient(it, ExactChoice(item)) }
+                    }
+                }
+                recipes.add(shapedRecipe)
             }
-            recipes.add(shapedRecipe)
+            return recipes.toList()
         }
-        return recipes.toList()
-    }
 
     private fun getRecipeArrays(): List<Array<ItemStack?>> {
         var listOfRecipes: MutableList<Array<ItemStack?>> = mutableListOf()

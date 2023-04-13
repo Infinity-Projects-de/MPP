@@ -17,7 +17,10 @@
 
 package de.danielmaile.mpp.item
 
+import de.danielmaile.mpp.item.recipe.recipes.ToolRecipe
 import org.bukkit.Material
+import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.Recipe
 
 enum class Tools(
     val toolTier: ToolTier,
@@ -47,4 +50,20 @@ enum class Tools(
             ToolType.HOE -> Material.WOODEN_HOE
             ToolType.SHOVEL -> Material.WOODEN_SHOVEL
         }
+
+    override fun getRecipes(): List<Recipe> {
+        val ingredients = toolTier.toolIngredients
+        val stick = ingredients.stickIngredient?.itemStack?.let { it(1) } ?: ItemStack(Material.STICK)
+        val material = ingredients.material.itemStack(1)
+        val itemStack = this.itemStack(1)
+
+        val recipes: List<Recipe> = when (toolType) {
+            ToolType.AXE -> ToolRecipe.AxeRecipe(itemStack, material, stick)
+            ToolType.PICKAXE -> ToolRecipe.PickaxeRecipe(itemStack, material, stick)
+            ToolType.SHOVEL -> ToolRecipe.ShovelRecipe(itemStack, material, stick)
+            ToolType.HOE -> ToolRecipe.HoeRecipe(itemStack, material, stick)
+        }.recipes
+
+        return recipes
+    }
 }

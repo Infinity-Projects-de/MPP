@@ -21,8 +21,10 @@ import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.util.setDataString
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextDecoration
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.Recipe
 import org.bukkit.inventory.meta.ItemMeta
 
 interface Item {
@@ -30,6 +32,18 @@ interface Item {
     val material: Material
     fun register() {
         ItemRegistry.registerItem(this)
+    }
+
+    fun getRecipes(): List<Recipe> {
+        return emptyList()
+    }
+
+    fun registerRecipes() {
+        if (Bukkit.getServer() == null) return
+
+        for (recipe in getRecipes()) {
+            Bukkit.addRecipe(recipe)
+        }
     }
 
     private val displayName: Component

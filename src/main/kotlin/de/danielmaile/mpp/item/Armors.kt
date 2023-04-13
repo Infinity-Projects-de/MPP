@@ -17,8 +17,10 @@
 
 package de.danielmaile.mpp.item
 
+import de.danielmaile.mpp.item.recipe.recipes.ArmorRecipe
 import org.bukkit.Material
 import org.bukkit.inventory.EquipmentSlot
+import org.bukkit.inventory.Recipe
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.inventory.meta.LeatherArmorMeta
 
@@ -48,5 +50,23 @@ enum class Armors(
     override fun modifySpecialItemMeta(itemMeta: ItemMeta) {
         itemMeta as LeatherArmorMeta
         itemMeta.setColor(armorMaterial.color)
+    }
+
+    override fun getRecipes(): List<Recipe> {
+        val material = armorMaterial.ingredient.itemStack(1)
+        val itemStack = this.itemStack(1)
+        val recipes: List<Recipe> = when (slot) {
+            EquipmentSlot.CHEST -> ArmorRecipe.ChestplateRecipe(itemStack, material)
+
+            EquipmentSlot.HEAD -> ArmorRecipe.HelmetRecipe(itemStack, material)
+
+            EquipmentSlot.LEGS -> ArmorRecipe.LeggingsRecipe(itemStack, material)
+
+            EquipmentSlot.FEET -> ArmorRecipe.BootsRecipe(itemStack, material)
+
+            else -> throw NoSuchFieldException()
+        }.recipes
+
+        return recipes
     }
 }

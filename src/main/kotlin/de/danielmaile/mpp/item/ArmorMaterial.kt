@@ -26,7 +26,7 @@ enum class ArmorMaterial(
     private val equipmentSound: Sound?,
     val knockbackResistance: Float,
     val armorToughness: Float,
-    private val ingredient: Ingredients
+    val ingredient: Ingredients
 ) {
     ZANITE(
         ArmorProtection(1, 1, 1, 1),

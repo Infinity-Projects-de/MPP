@@ -27,7 +27,7 @@ abstract class Recipe {
     /**
      * Returns a spigot recipe with the give recipe key
      */
-    abstract val spigotRecipes: List<Recipe>
+    abstract val recipes: List<Recipe>
 
     protected fun getRandomRecipeKey() = NamespacedKey(inst(), UUID.randomUUID().toString())
 }

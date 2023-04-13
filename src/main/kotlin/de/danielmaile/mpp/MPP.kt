@@ -87,7 +87,9 @@ class MPP : JavaPlugin() {
 
         // register commands, events and recipes
         Bukkit.getPluginCommand("mpp")?.setExecutor(CommandMPP())
+
         registerItems()
+
 //        registerEvents()
         registerNewEvents()
 

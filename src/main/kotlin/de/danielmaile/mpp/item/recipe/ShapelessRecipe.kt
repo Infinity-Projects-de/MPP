@@ -27,7 +27,7 @@ class ShapelessRecipe(
     private val ingredients: Array<ItemStack?>
 ) : CraftingRecipe() {
 
-    override val spigotRecipes: List<Recipe>
+    override val recipes: List<Recipe>
         get() = listOf(getSpigotRecipe())
 
     private fun getSpigotRecipe(): Recipe {

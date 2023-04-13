@@ -17,77 +17,24 @@
 
 package de.danielmaile.mpp.item.recipe
 
+import de.danielmaile.mpp.item.recipe.recipes.ToolRecipe
 import org.bukkit.inventory.ItemStack
 
 abstract class CraftingRecipe : Recipe() {
 
     class StickRecipe(
-        result: ItemStack,
-        woodMaterial: ItemStack
+        private val result: ItemStack,
+        private val woodMaterial: ItemStack
     ) : ToolRecipe() {
 
-        private val stickTopLeft = ShapedRecipe(
-            result,
-            arrayOf(
-                woodMaterial, null, null,
-                woodMaterial, null, null,
-                null, null, null
-            )
-        ).spigotRecipes
-
-        private val stickTopMiddle = ShapedRecipe(
-            result,
-            arrayOf(
-                null, woodMaterial, null,
-                null, woodMaterial, null,
-                null, null, null
-            )
-        ).spigotRecipes
-
-        private val stickTopRight = ShapedRecipe(
-            result,
-            arrayOf(
-                null, null, woodMaterial,
-                null, null, woodMaterial,
-                null, null, null
-            )
-        ).spigotRecipes
-
-        private val stickBottomLeft = ShapedRecipe(
-            result,
-            arrayOf(
-                null, null, null,
-                woodMaterial, null, null,
-                woodMaterial, null, null
-            )
-        ).spigotRecipes
-
-        private val stickBottomMiddle = ShapedRecipe(
-            result,
-            arrayOf(
-                null, null, null,
-                null, woodMaterial, null,
-                null, woodMaterial, null
-            )
-        ).spigotRecipes
-
-        private val stickBottomRight = ShapedRecipe(
-            result,
-            arrayOf(
-                null, null, null,
-                null, null, woodMaterial,
-                null, null, woodMaterial
-            )
-        ).spigotRecipes
-
-        override val spigotRecipes: List<org.bukkit.inventory.Recipe>
-            get() = arrayListOf(
-                stickTopLeft,
-                stickTopMiddle,
-                stickTopRight,
-                stickBottomLeft,
-                stickBottomMiddle,
-                stickBottomRight
-            ).flatten()
+        override val recipes: List<org.bukkit.inventory.Recipe>
+            get() = ShapedRecipe(
+                result,
+                arrayOf(
+                    woodMaterial, null, null,
+                    woodMaterial, null, null,
+                    null, null, null
+                )
+            ).recipes
     }
 }

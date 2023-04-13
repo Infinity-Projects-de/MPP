@@ -32,7 +32,6 @@ object ItemRegistry {
             item.register()
         }
     }
-
     fun getAllItems(): Array<out Item> {
         return items.values.toTypedArray()
     }
@@ -40,6 +39,7 @@ object ItemRegistry {
     fun registerItem(item: Item) {
         val id = "$MPP_ITEM_PREFIX:${item.name.lowercase()}"
         registerItem(id, item)
+        item.registerRecipes()
     }
 
     fun registerItem(id: String, item: Item) {

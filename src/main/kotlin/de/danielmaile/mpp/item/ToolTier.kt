@@ -61,6 +61,6 @@ enum class ToolTier(
 
     class ToolIngredients(
         val stickIngredient: Ingredients?, // Might not be needed, but we might have tools with normal sticks right?
-        vararg material: Item
+        val material: Item
     )
 }
