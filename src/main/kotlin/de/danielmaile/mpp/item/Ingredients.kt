@@ -19,29 +19,27 @@ package de.danielmaile.mpp.item
 
 import de.danielmaile.mpp.item.recipe.CraftingRecipe
 import de.danielmaile.mpp.item.recipe.FurnaceRecipe
-import de.danielmaile.mpp.item.recipe.Recipe
 import org.bukkit.Material
 
 enum class Ingredients(
-    override val material: Material,
-    val recipe: Recipe?
+    override val material: Material
 ) : Item {
     AETHER_STICK(
-        Material.STICK,
-        CraftingRecipe.StickRecipe(AETHER_STICK.itemStack(4), Blocks.AETHER_PLANKS.itemStack(1))
+        Material.STICK
     ),
     ZANITE_STONE(
-        Material.DIAMOND,
-        FurnaceRecipe(ZANITE_STONE.itemStack(1), Blocks.ZANITE_ORE.itemStack(1), 1f, 1)
+        Material.DIAMOND
     ),
     GRAVITITE_PLATE(
-        Material.NETHERITE_SCRAP,
-        FurnaceRecipe(GRAVITITE_PLATE.itemStack(1), Blocks.GRAVITITE_ORE.itemStack(1), 1f, 1)
+        Material.NETHERITE_SCRAP
     );
 
-    constructor(material: Material) : this(material, null)
-
     override fun getRecipes(): List<org.bukkit.inventory.Recipe> {
-        return recipe?.recipes ?: emptyList()
+        return when (this) {
+            AETHER_STICK -> CraftingRecipe.StickRecipe(AETHER_STICK.itemStack(4), Blocks.AETHER_PLANKS.itemStack(1))
+            ZANITE_STONE -> FurnaceRecipe(ZANITE_STONE.itemStack(1), Blocks.ZANITE_ORE.itemStack(1), 1f, 1)
+            GRAVITITE_PLATE -> FurnaceRecipe(GRAVITITE_PLATE.itemStack(1), Blocks.GRAVITITE_ORE.itemStack(1), 1f, 1)
+            else -> null
+        }?.recipes ?: emptyList()
     }
 }

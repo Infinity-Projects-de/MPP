@@ -18,20 +18,17 @@
 package de.danielmaile.mpp.item
 
 import de.danielmaile.mpp.block.BlockType
-import de.danielmaile.mpp.item.recipe.Recipe
 import de.danielmaile.mpp.item.recipe.ShapelessRecipe
 import org.bukkit.Material
 
 enum class Blocks(
     override val material: Material,
-    val blockType: BlockType,
-    val recipe: Recipe?
+    val blockType: BlockType
 ) : Item {
     AETHER_LOG(Material.OAK_LOG, BlockType.AETHER_LOG),
     AETHER_PLANKS(
         Material.OAK_PLANKS,
-        BlockType.AETHER_PLANKS,
-        ShapelessRecipe(AETHER_PLANKS.itemStack(4), arrayOf(AETHER_LOG.itemStack(1)))
+        BlockType.AETHER_PLANKS
     ),
     AETHER_LEAVES(Material.STONE, BlockType.AETHER_LEAVES),
     AETHER_STONE(Material.STONE, BlockType.AETHER_STONE),
@@ -41,13 +38,11 @@ enum class Blocks(
     ZANITE_ORE(Material.STONE, BlockType.ZANITE_ORE),
     GRAVITITE_ORE(Material.STONE, BlockType.GRAVITITE_ORE);
 
-    constructor(
-        material: Material,
-        blockType: BlockType
-    ) : this(material, blockType, null)
-
     override fun getRecipes(): List<org.bukkit.inventory.Recipe> {
-        return recipe?.recipes ?: emptyList()
+        return when (this) {
+            AETHER_PLANKS -> ShapelessRecipe(AETHER_PLANKS.itemStack(4), arrayOf(AETHER_LOG.itemStack(1)))
+            else -> null
+        }?.recipes ?: emptyList()
     }
 
     companion object {
