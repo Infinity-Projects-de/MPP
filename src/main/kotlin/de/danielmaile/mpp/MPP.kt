@@ -109,7 +109,7 @@ class MPP : JavaPlugin() {
         Metrics(this, 18055)
     }
 
-    private fun registerPacketListners() {
+    private fun registerPacketListeners() {
         PacketHandler.registerListeners(BlockBreakingService)
     }
 
