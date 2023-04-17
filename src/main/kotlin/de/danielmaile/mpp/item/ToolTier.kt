@@ -22,7 +22,7 @@ enum class ToolTier(
     val miningLevel: Int,
     val itemDurability: Int,
     val miningSpeed: Float,
-    val attackDamage: Float, // Minecraft uses this and another value on top, do they sum or what?
+    val attackDamage: Float,
     val enchantability: Int, // Not really sure about this
     val toolIngredients: ToolIngredients
 ) {
