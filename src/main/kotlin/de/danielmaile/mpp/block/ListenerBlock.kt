@@ -68,7 +68,10 @@ class ListenerBlock : Listener {
         }
 
         val item = ItemRegistry.getItemFromItemstack(itemStack) ?: return
-        if (item !is Blocks) return
+        if (item !is Blocks) {
+            event.isCancelled = true
+            return
+        }
         val blockType = item.blockType
 
         // place a noteblock with the correct block state
