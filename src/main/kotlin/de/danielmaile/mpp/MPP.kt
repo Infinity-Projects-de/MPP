@@ -45,6 +45,7 @@ import de.danielmaile.mpp.mob.listeners.ListenerRift
 import de.danielmaile.mpp.packet.PacketHandler
 import de.danielmaile.mpp.util.logError
 import de.danielmaile.mpp.world.WorldManager
+import de.danielmaile.mpp.world.aether.LamaListener
 import de.danielmaile.mpp.world.aether.ListenerAether
 import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
@@ -112,6 +113,7 @@ class MPP : JavaPlugin() {
 
     private fun registerPacketListeners() {
         PacketHandler.registerListeners(BlockBreakingService)
+        PacketHandler.registerListeners(LamaListener())
     }
 
     /**
