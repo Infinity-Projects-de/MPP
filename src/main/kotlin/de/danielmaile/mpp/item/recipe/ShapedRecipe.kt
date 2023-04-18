@@ -26,123 +26,15 @@ class ShapedRecipe(
     private val result: ItemStack,
     private val mainRecipe: Array<ItemStack?>
 ) : CraftingRecipe() {
-    private val possibleIngredients = charArrayOf('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J')
+    private data class RecipeSize(val width: Int, val height: Int)
 
-    override val recipes: List<Recipe>
-        get() {
-            val recipes: MutableList<Recipe> = mutableListOf()
-
-            val ingredients = mainRecipe.distinct()
-
-            val ingredientsToLetter: HashMap<ItemStack?, Char> = hashMapOf()
-            for ((i, itemStack) in ingredients.withIndex()) {
-                ingredientsToLetter[itemStack] = possibleIngredients[i]
-            }
-
-            for (recipeArray in getRecipeArrays()) {
-                val shapedRecipe = ShapedRecipe(getRandomRecipeKey(), result)
-                val recipeBuilder: StringBuilder = StringBuilder()
-                for (itemStack in recipeArray) {
-                    recipeBuilder.append("${ingredientsToLetter[itemStack]} ")
-                }
-                val recipe = recipeBuilder.trim().toString()
-                shapedRecipe.shape(recipe.substring(0, 3), recipe.substring(3, 6), recipe.substring(6, 9))
-                for (item in ingredientsToLetter.keys) {
-                    if (item != null) {
-                        ingredientsToLetter[item]?.let { shapedRecipe.setIngredient(it, ExactChoice(item)) }
-                    }
-                }
-                recipes.add(shapedRecipe)
-            }
-            return recipes.toList()
-        }
-
-    private fun getRecipeArrays(): List<Array<ItemStack?>> {
-        var listOfRecipes: MutableList<Array<ItemStack?>> = mutableListOf()
-        val size = getRecipeSize()
-        var reducedRowRecipe: MutableList<ItemStack?> = MutableList(size.height * 3) { null }
-        var reducedRecipe: MutableList<ItemStack?> = MutableList(size.width * size.height) { null }
-
-        if (size.height != 3) {
-            for (row in 0 until 3) {
-                var emptyRow = true
-                for (col in 0 until 3) {
-                    if (mainRecipe[row * 3 + col] != null) emptyRow = false
-                }
-                if (!emptyRow) {
-                    for (col in 0 until 3) {
-                        val i = row * 3 + col
-                        reducedRowRecipe[i] = mainRecipe[i]
-                    }
-                }
-            }
-        } else {
-            reducedRowRecipe = mainRecipe.toMutableList()
-        }
-
-        if (size.width != 3) {
-            for (col in 0 until 3) {
-                var emptyCol = true
-                for (row in 0 until size.height) {
-                    if (reducedRowRecipe[col + (row * 3)] != null) emptyCol = false
-                }
-
-                if (!emptyCol) {
-                    for (row in 0 until size.height) {
-                        val i = row * 3 + col
-                        val newI = row * size.width + col
-                        reducedRecipe[newI] = reducedRowRecipe[i]
-                    }
-                }
-            }
-        } else {
-            reducedRecipe = reducedRowRecipe
-        }
-
-        val rowAmpliatedRecipes: MutableList<Array<ItemStack?>> = mutableListOf()
-
-        if (size.height != 3) {
-            for (i in 0..3 - size.height) {
-                val amplifiedRecipe: MutableList<ItemStack?> = MutableList(3 * size.width) { null }
-                for (row in 0 until 3) {
-                    for (col in 0 until size.width) {
-                        if (row - i >= 0 && row - i < size.height) {
-                            val idx = (row - i) * size.width + col
-                            val newIdx = row * size.width + col
-                            amplifiedRecipe[newIdx] = reducedRecipe[idx]
-                        }
-                    }
-                }
-                rowAmpliatedRecipes.add(amplifiedRecipe.toTypedArray())
-            }
-        } else {
-            rowAmpliatedRecipes.add(reducedRecipe.toTypedArray())
-        }
-
-        if (size.width != 3) {
-            for (recipe in rowAmpliatedRecipes) {
-                for (i in 0..3 - size.width) {
-                    val amplifiedRecipe: MutableList<ItemStack?> = MutableList(9) { null }
-                    for (row in 0 until 3) {
-                        for (col in 0 until 3) {
-                            if (col - i >= 0 && col - i < size.width) {
-                                val idx = row * size.width + (col - i)
-                                val newIdx = row * 3 + col
-                                amplifiedRecipe[newIdx] = recipe[idx]
-                            }
-                        }
-                    }
-                    listOfRecipes.add(amplifiedRecipe.toTypedArray())
-                }
-            }
-        } else {
-            listOfRecipes = rowAmpliatedRecipes
-        }
-
-        return listOfRecipes.toList()
+    // Constants
+    private companion object {
+        const val POSSIBLE_INGREDIENTS = "ABCDEFGHI"
     }
 
-    private fun getRecipeSize(): RecipeSize {
+    // Properties
+    private val size: RecipeSize by lazy {
         var firstRow = -1
         var lastRow = -1
 
@@ -162,8 +54,119 @@ class ShapedRecipe(
             }
         }
 
-        return RecipeSize(lastRow - firstRow + 1, lastCol - firstCol + 1)
+        RecipeSize(lastRow - firstRow + 1, lastCol - firstCol + 1)
     }
 
-    private data class RecipeSize(val width: Int, val height: Int)
+    override val recipes: List<Recipe>
+        get() {
+            val recipes: MutableList<Recipe> = mutableListOf()
+
+            val ingredients = mainRecipe.distinct()
+
+            val ingredientsToLetter = ingredients.associateWith { POSSIBLE_INGREDIENTS[ingredients.indexOf(it)] }
+
+            for (recipeArray in getRecipeArrays()) {
+                val shapedRecipe = ShapedRecipe(getRandomRecipeKey(), result)
+                val recipe = recipeArray.joinToString(separator = " ") { "${ingredientsToLetter[it]}" }.trim()
+                shapedRecipe.shape(recipe.substring(0, 3), recipe.substring(3, 6), recipe.substring(6, 9))
+                for (item in ingredientsToLetter.keys) {
+                    if (item != null) {
+                        ingredientsToLetter[item]?.let { shapedRecipe.setIngredient(it, ExactChoice(item)) }
+                    }
+                }
+
+                recipes.add(shapedRecipe)
+            }
+            return recipes.toList()
+        }
+
+    // Recipe reduction methods
+
+    /**
+     * Reduces the main recipe by removing empty rows and columns
+     */
+    private fun reduceRecipe(): Array<ItemStack?> {
+        val reducedRecipe: MutableList<ItemStack?> = MutableList(size.width * size.height) { null }
+        var newRow = 0
+        for (row in 0 until 3) {
+            if (!isRowEmpty(row)) {
+                var newCol = 0
+                for (col in 0 until 3) {
+                    if (!isColumnEmpty(col)) {
+                        val i = row * 3 + col
+                        val newI = newRow * size.width + newCol
+                        reducedRecipe[newI] = mainRecipe[i]
+                        newCol++
+                    }
+                }
+                newRow++
+            }
+        }
+
+        return reducedRecipe.toTypedArray()
+    }
+
+    /**
+     * Checks if a row is empty in the main (provided) recipe
+     */
+    private fun isRowEmpty(row: Int): Boolean {
+        return (0 until 3).all { col -> mainRecipe[row * 3 + col] == null }
+    }
+
+    /**
+     * Checks if a column is empty in the main (provided) recipe
+     */
+    private fun isColumnEmpty(col: Int): Boolean {
+        return (0 until 3).all { row -> mainRecipe[col + row * 3] == null }
+    }
+
+    // Recipe amplification methods
+
+    /**
+     * Amplifies the recipe by calculating the different possibilities by using offsets
+     * @param reducedRecipe The reduced recipe, without empty rows or columns
+     * @return The different possible recipes
+     */
+    private fun amplifyRecipe(reducedRecipe: Array<ItemStack?>): List<Array<ItemStack?>> {
+        val listOfRecipes: MutableList<Array<ItemStack?>> = mutableListOf()
+
+        for (rowOffset in 0..3 - size.height) {
+            for (colOffset in 0..3 - size.width) {
+                listOfRecipes.add(amplifySingleRecipe(reducedRecipe, rowOffset, colOffset))
+            }
+        }
+
+        return listOfRecipes
+    }
+
+    /**
+     * Amplifies a single possibility given both row and column offsets
+     * @param reducedRecipe The reduced recipe without any row or column
+     * @return A recipe possibility with the extra rows and columns calculated by the offsets
+     */
+    private fun amplifySingleRecipe(reducedRecipe: Array<ItemStack?>, rowOffset: Int, colOffset: Int): Array<ItemStack?> {
+        val amplifiedRecipe: MutableList<ItemStack?> = MutableList(9) { null }
+        for (row in 0 until 3) {
+            for (col in 0 until 3) {
+                val doesRowFit = row - rowOffset in 0 until size.height
+                val doesColFit = col - colOffset in 0 until size.width
+
+                if (doesRowFit && doesColFit) {
+                    val idx = (row - rowOffset) * size.width + (col - colOffset)
+                    val newIdx = row * 3 + col
+                    amplifiedRecipe[newIdx] = reducedRecipe[idx]
+                }
+            }
+        }
+        return amplifiedRecipe.toTypedArray()
+    }
+
+    // Recipe generation methods
+    /**
+     * Reduces and amplifies the recipe
+     * @return All the possible recipe variations
+     */
+    private fun getRecipeArrays(): List<Array<ItemStack?>> {
+        return amplifyRecipe(reduceRecipe())
+    }
 }
