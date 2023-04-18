@@ -17,6 +17,8 @@
 
 package de.danielmaile.mpp.packet
 
+import org.bukkit.event.EventPriority
+
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class PacketListener(
@@ -35,16 +37,6 @@ annotation class PacketListener(
      *
      * @return the priority
      */
-    val priority: Priority = Priority.NORMAL,
+    val priority: EventPriority = EventPriority.NORMAL,
     val ignoreCancelled: Boolean = false
-) {
-
-    enum class Priority {
-        MONITOR,
-        HIGHEST,
-        HIGH,
-        NORMAL,
-        LOW,
-        LOWEST
-    }
-}
+)

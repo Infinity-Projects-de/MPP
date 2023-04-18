@@ -140,7 +140,7 @@ object PacketHandler : Listener {
     private fun handlePacket(packet: Any, player: Player): Boolean {
         if (packet is Packet<*>) {
             val packetEvent = PacketEvent(packet, player)
-            listeners.sortedByDescending { -it.packetListener.priority.ordinal }
+            listeners.sortedByDescending { it.packetListener.priority.ordinal }
                 .filter { it.listeningToPacket.isInstance(packet) }
                 .forEach {
                     if (!it.packetListener.ignoreCancelled || !packetEvent.cancelled) {
