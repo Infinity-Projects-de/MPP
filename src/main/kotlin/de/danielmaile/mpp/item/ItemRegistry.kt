@@ -57,7 +57,7 @@ object ItemRegistry {
 
     fun getItemFromItemstack(itemStack: ItemStack): Item? {
         try {
-            val id = getIdFromItemstack(itemStack) ?: return null
+            val id = getIdFromItemStack(itemStack) ?: return null
             return getItemByID(id)
         } catch (ignore: NoSuchElementException) {
             return null
