@@ -50,7 +50,7 @@ object ItemRegistry {
         items[id] = item
     }
 
-    fun getIdFromItemstack(itemStack: ItemStack): String? {
+    fun getIdFromItemStack(itemStack: ItemStack): String? {
         val itemTag = itemStack.getDataString(MPP_ITEM_TAG_KEY) ?: return null
         return "$MPP_ITEM_PREFIX:${itemTag.lowercase()}"
     }
