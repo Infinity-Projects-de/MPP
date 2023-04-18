@@ -49,7 +49,7 @@ class ListenerConverter : Listener {
             val item = ItemRegistry.getItemFromItemstack(inventoryItemStack) ?: continue
             val itemStack = item.itemStack(inventoryItemStack.amount)
 
-            if (inventoryItemStack == itemStack) continue // Probably not happening
+            if (inventoryItemStack == itemStack) continue
             inventory.setItem(i, itemStack)
         }
     }
