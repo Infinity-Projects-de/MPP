@@ -74,7 +74,6 @@ object BlockBreakingService {
                 if (block.isCustom()) {
                     damageBlock(block, event.player, sequence)
                 }
-                event.player.sendMessage("You're breaking a block!")
             }
             Action.STOP_DESTROY_BLOCK, Action.ABORT_DESTROY_BLOCK -> {
                 val block = event.player.world.getBlockAt(blockPos.x, blockPos.y, blockPos.z)
