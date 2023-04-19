@@ -28,10 +28,10 @@ class ShapedRecipe(
 ) : CraftingRecipe() {
 
     /**
-    * A data class that contains a size (width and height) for a specific recipe. It is meant to contain the minimum size of a recipe.
-    * @param width Width of the recipe, value must be contained between 1 and 3, both included [1,3]
-    * @param height Height of the recipe, value must be contained between 1 and 3, both included [1,3]
-    */
+     * A data class that contains a size (width and height) for a specific recipe. It is meant to contain the minimum size of a recipe.
+     * @param width Width of the recipe, value must be contained between 1 and 3, both included [1,3]
+     * @param height Height of the recipe, value must be contained between 1 and 3, both included [1,3]
+     */
     private data class RecipeSize(val width: Int, val height: Int)
 
     // Constants
@@ -40,11 +40,11 @@ class ShapedRecipe(
     }
 
     // Properties
-    
+
     /**
-    * Calculates the minimum size of the recipe (i.e. a Crafting table is a 2x2 recipe, but a diamond block is a 3x3 one)
-    * @return RecipeSize with the calculated minimum size of the recipe
-    */
+     * Calculates the minimum size of the recipe (i.e. a Crafting table is a 2x2 recipe, but a diamond block is a 3x3 one)
+     * @return RecipeSize with the calculated minimum size of the recipe
+     */
     private val size: RecipeSize by lazy {
         var firstRow = -1
         var lastRow = -1
@@ -69,9 +69,9 @@ class ShapedRecipe(
     }
 
     /**
-    * Converts the recipe (array of itemstacks) into all possible Bukkit recipes
-    * @return List of all possible Bukkit recipes from the original recipe
-    */
+     * Converts the recipe (array of itemstacks) into all possible Bukkit recipes
+     * @return List of all possible Bukkit recipes from the original recipe
+     */
     override val recipes: List<Recipe>
         get() {
             val recipes: MutableList<Recipe> = mutableListOf()
@@ -164,7 +164,11 @@ class ShapedRecipe(
      * @param reducedRecipe The reduced recipe without any row or column
      * @return A recipe possibility with the extra rows and columns calculated by the offsets
      */
-    private fun amplifySingleRecipe(reducedRecipe: Array<ItemStack?>, rowOffset: Int, colOffset: Int): Array<ItemStack?> {
+    private fun amplifySingleRecipe(
+        reducedRecipe: Array<ItemStack?>,
+        rowOffset: Int,
+        colOffset: Int
+    ): Array<ItemStack?> {
         val amplifiedRecipe: MutableList<ItemStack?> = MutableList(9) { null }
         for (row in 0 until 3) {
             for (col in 0 until 3) {
