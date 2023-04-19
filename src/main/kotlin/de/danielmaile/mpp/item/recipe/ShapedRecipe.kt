@@ -26,6 +26,12 @@ class ShapedRecipe(
     private val result: ItemStack,
     private val mainRecipe: Array<ItemStack?>
 ) : CraftingRecipe() {
+
+    /**
+    * A data class that contains a size (width and height) for a specific recipe. It is meant to contain the minimum size of a recipe.
+    * @param width Width of the recipe, value must be contained between 1 and 3, both included [1,3]
+    * @param height Height of the recipe, value must be contained between 1 and 3, both included [1,3]
+    */
     private data class RecipeSize(val width: Int, val height: Int)
 
     // Constants
@@ -34,6 +40,11 @@ class ShapedRecipe(
     }
 
     // Properties
+    
+    /**
+    * Calculates the minimum size of the recipe (i.e. a Crafting table is a 2x2 recipe, but a diamond block is a 3x3 one)
+    * @return RecipeSize with the calculated minimum size of the recipe
+    */
     private val size: RecipeSize by lazy {
         var firstRow = -1
         var lastRow = -1
@@ -57,6 +68,10 @@ class ShapedRecipe(
         RecipeSize(lastRow - firstRow + 1, lastCol - firstCol + 1)
     }
 
+    /**
+    * Converts the recipe (array of itemstacks) into all possible Bukkit recipes
+    * @return List of all possible Bukkit recipes from the original recipe
+    */
     override val recipes: List<Recipe>
         get() {
             val recipes: MutableList<Recipe> = mutableListOf()
@@ -84,6 +99,7 @@ class ShapedRecipe(
 
     /**
      * Reduces the main recipe by removing empty rows and columns
+     * @return A reduced recipe without empty rows and columns
      */
     private fun reduceRecipe(): Array<ItemStack?> {
         val reducedRecipe: MutableList<ItemStack?> = MutableList(size.width * size.height) { null }
@@ -107,14 +123,18 @@ class ShapedRecipe(
     }
 
     /**
-     * Checks if a row is empty in the main (provided) recipe
+     * Checks if a row is empty in the original (provided) recipe
+     * @param row Row to be checked [0,2]
+     * @return Whether the given row is empty or not in the main recipe
      */
     private fun isRowEmpty(row: Int): Boolean {
         return (0 until 3).all { col -> mainRecipe[row * 3 + col] == null }
     }
 
     /**
-     * Checks if a column is empty in the main (provided) recipe
+     * Checks if a column is empty in the original (provided) recipe
+     * @param col Column to be checked [0,2]
+     * @return Whether the given column is empty or not in the original recipe
      */
     private fun isColumnEmpty(col: Int): Boolean {
         return (0 until 3).all { row -> mainRecipe[col + row * 3] == null }
