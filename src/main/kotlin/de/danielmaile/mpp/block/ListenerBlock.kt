@@ -17,9 +17,9 @@
 
 package de.danielmaile.mpp.block
 
-import de.danielmaile.mpp.item.Blocks
 import de.danielmaile.mpp.item.ItemRegistry
 import de.danielmaile.mpp.item.MPP_ITEM_TAG_KEY
+import de.danielmaile.mpp.item.items.Blocks
 import de.danielmaile.mpp.util.centerLocation
 import de.danielmaile.mpp.util.doesKeyExist
 import de.danielmaile.mpp.util.isCustom

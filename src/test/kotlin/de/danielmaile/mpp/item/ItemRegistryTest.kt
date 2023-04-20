@@ -17,6 +17,10 @@
 
 package de.danielmaile.mpp.item
 
+import de.danielmaile.mpp.item.items.Armors
+import de.danielmaile.mpp.item.items.Blocks
+import de.danielmaile.mpp.item.items.Ingredients
+import de.danielmaile.mpp.item.items.Tools
 import de.danielmaile.mpp.registerItems
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows

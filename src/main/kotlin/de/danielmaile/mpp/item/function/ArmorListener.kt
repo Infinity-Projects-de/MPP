@@ -19,8 +19,8 @@ package de.danielmaile.mpp.item.function
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent
 import de.danielmaile.mpp.item.ArmorMaterial
-import de.danielmaile.mpp.item.Armors
 import de.danielmaile.mpp.item.ItemRegistry
+import de.danielmaile.mpp.item.items.Armors
 import de.danielmaile.mpp.util.getEquippedArmorSet
 import org.bukkit.attribute.Attribute
 import org.bukkit.attribute.AttributeModifier

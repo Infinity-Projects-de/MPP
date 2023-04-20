@@ -27,7 +27,7 @@
 package de.danielmaile.mpp.block
 
 import de.danielmaile.mpp.inst
-import de.danielmaile.mpp.item.Blocks
+import de.danielmaile.mpp.item.items.Blocks
 import de.danielmaile.mpp.packet.PacketListener
 import de.danielmaile.mpp.util.ToolType
 import de.danielmaile.mpp.util.getPotionEffectLevel
