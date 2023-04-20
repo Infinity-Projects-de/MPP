@@ -28,6 +28,8 @@ package de.danielmaile.mpp.block
 
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.item.Blocks
+import de.danielmaile.mpp.item.ItemRegistry
+import de.danielmaile.mpp.item.Tools
 import de.danielmaile.mpp.packet.PacketListener
 import de.danielmaile.mpp.util.ToolType
 import de.danielmaile.mpp.util.getPotionEffectLevel
@@ -48,6 +50,7 @@ import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.data.type.NoteBlock
+import org.bukkit.craftbukkit.v1_19_R3.block.CraftBlock
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -71,7 +74,20 @@ object BlockBreakingService {
         when (event.packet.action) {
             Action.START_DESTROY_BLOCK -> {
                 val block = event.player.world.getBlockAt(blockPos.x, blockPos.y, blockPos.z)
-                if (block.isCustom()) {
+
+                val itemStack = event.player.inventory.itemInMainHand
+                val item = ItemRegistry.getItemFromItemstack(itemStack)
+
+                val blockType = BlockType.fromBlockData(block.blockData as NoteBlock)
+
+                var baseDestroySpeed = if (blockType != null) {
+                    blockType.hardness
+                } else {
+                    val nmsBlock = (block as CraftBlock).nms
+                    nmsBlock.destroySpeed
+                }
+
+                if (block.isCustom() || item is Tools) {
                     damageBlock(block, event.player, sequence)
                 }
             }
@@ -85,6 +101,9 @@ object BlockBreakingService {
         }
     }
 
+    private val damagedBlocks: HashMap<Location, DamagedBlock> = HashMap()
+    private val toRemoveDamageBlocks = mutableListOf<Location>()
+
     fun initializeBreakingScheduler() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(inst(), {
             toRemoveDamageBlocks.forEach {
@@ -95,11 +114,6 @@ object BlockBreakingService {
         }, 1L, 1L)
     }
 
-    private val damagedBlocks: HashMap<Location, DamagedBlock> = HashMap()
-
-    // use second list to avoid ConcurrentModificationException
-    private val toRemoveDamageBlocks = mutableListOf<Location>()
-
     fun damageBlock(block: Block, player: Player, sequence: Int) {
         val blockType = BlockType.fromBlockData(block.blockData as NoteBlock) ?: return
 
@@ -107,11 +121,8 @@ object BlockBreakingService {
         if (player.gameMode == GameMode.CREATIVE) {
             // run at next tick to ensure it's not async
             Bukkit.getScheduler().runTask(
-                inst(),
-                Runnable {
-                    block.type = Material.AIR
-                }
-            )
+                inst()
+            ) { -> block.type = Material.AIR }
             return
         }
 
