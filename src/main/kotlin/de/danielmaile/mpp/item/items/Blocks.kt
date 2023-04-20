@@ -15,9 +15,10 @@
  * along with MPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.danielmaile.mpp.item
+package de.danielmaile.mpp.item.items
 
 import de.danielmaile.mpp.block.BlockType
+import de.danielmaile.mpp.item.Item
 import de.danielmaile.mpp.item.recipe.ShapelessRecipe
 import org.bukkit.Material
 

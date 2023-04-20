@@ -15,8 +15,10 @@
  * along with MPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.danielmaile.mpp.item
+package de.danielmaile.mpp.item.items
 
+import de.danielmaile.mpp.item.ArmorMaterial
+import de.danielmaile.mpp.item.Item
 import de.danielmaile.mpp.item.recipe.recipes.ArmorRecipe
 import org.bukkit.Material
 import org.bukkit.inventory.EquipmentSlot

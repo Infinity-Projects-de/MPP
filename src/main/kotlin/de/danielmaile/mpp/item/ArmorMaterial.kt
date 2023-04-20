@@ -17,6 +17,7 @@
 
 package de.danielmaile.mpp.item
 
+import de.danielmaile.mpp.item.items.Ingredients
 import org.bukkit.Color
 import org.bukkit.Sound
 

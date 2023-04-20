@@ -17,6 +17,9 @@
 
 package de.danielmaile.mpp.item
 
+import de.danielmaile.mpp.item.items.Blocks
+import de.danielmaile.mpp.item.items.Ingredients
+
 // Copied minecraft default Tiers.java at net.minecraft.worlds.item.Tiers
 enum class ToolTier(
     val miningLevel: Int,
