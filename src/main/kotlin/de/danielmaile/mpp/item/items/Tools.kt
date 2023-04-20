@@ -17,10 +17,17 @@
 
 package de.danielmaile.mpp.item.items
 
+import de.danielmaile.mpp.block.BlockType
+import de.danielmaile.mpp.block.utils.blocks
+import de.danielmaile.mpp.block.utils.isToolRequired
+import de.danielmaile.mpp.block.utils.nms
 import de.danielmaile.mpp.item.Item
 import de.danielmaile.mpp.item.ToolTier
 import de.danielmaile.mpp.item.recipe.recipes.ToolRecipe
+import net.minecraft.tags.BlockTags
 import org.bukkit.Material
+import org.bukkit.block.Block
+import org.bukkit.block.data.type.NoteBlock
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.Recipe
 
@@ -47,10 +54,10 @@ enum class Tools(
 
     override val material: Material
         get() = when (toolType) {
-            ToolType.AXE -> Material.WOODEN_AXE
-            ToolType.PICKAXE -> Material.WOODEN_PICKAXE
-            ToolType.HOE -> Material.WOODEN_HOE
-            ToolType.SHOVEL -> Material.WOODEN_SHOVEL
+            ToolType.AXE -> Material.NETHERITE_AXE
+            ToolType.PICKAXE -> Material.NETHERITE_PICKAXE
+            ToolType.HOE -> Material.NETHERITE_HOE
+            ToolType.SHOVEL -> Material.NETHERITE_SHOVEL
         }
 
     override fun getRecipes(): List<Recipe> {
@@ -74,5 +81,37 @@ enum class Tools(
         PICKAXE,
         SHOVEL,
         HOE
+    }
+
+    fun isToolCorrect(block: Block): Boolean {
+        val nmsBlock = block.nms
+
+        val blockType = BlockType.fromBlockData(block.blockData as NoteBlock)
+
+        val i = this.toolTier.miningLevel
+        return if (blockType == null) {
+            if (i < 3 && nmsBlock.`is`(BlockTags.NEEDS_DIAMOND_TOOL)) {
+                false
+            } else if (i < 2 && nmsBlock.`is`(BlockTags.NEEDS_IRON_TOOL)) {
+                false
+            } else if (i < 1 && nmsBlock.`is`(BlockTags.NEEDS_STONE_TOOL)) {
+                false
+            } else {
+                itemStack(1).blocks?.let { nmsBlock.`is`(it) } ?: !block.isToolRequired()
+            }
+        } else {
+            i >= blockType.tier
+        }
+    }
+
+    fun isToolTypeCorrect(block: Block): Boolean {
+        val nmsBlock = block.nms
+        val blockType = BlockType.fromBlockData(block.blockData as NoteBlock)
+
+        return if (blockType == null) {
+            itemStack(1).blocks?.let { nmsBlock.`is`(it) } ?: !block.isToolRequired()
+        } else {
+            blockType.toolType == toolType || blockType.tier == 0
+        }
     }
 }
