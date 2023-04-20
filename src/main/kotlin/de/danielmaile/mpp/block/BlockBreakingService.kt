@@ -26,6 +26,10 @@
 
 package de.danielmaile.mpp.block
 
+import de.danielmaile.mpp.block.utils.hardness
+import de.danielmaile.mpp.block.utils.isToolCorrect
+import de.danielmaile.mpp.block.utils.isToolTypeCorrect
+import de.danielmaile.mpp.block.utils.tierDestroyDamage
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.item.ItemRegistry
 import de.danielmaile.mpp.item.items.Blocks
@@ -33,7 +37,6 @@ import de.danielmaile.mpp.item.items.Tools
 import de.danielmaile.mpp.packet.PacketListener
 import de.danielmaile.mpp.util.ToolType
 import de.danielmaile.mpp.util.getPotionEffectLevel
-import de.danielmaile.mpp.util.isCustom
 import de.danielmaile.mpp.util.isGrounded
 import de.danielmaile.mpp.util.sendDestructionStagePacket
 import de.danielmaile.mpp.util.sendPackets
@@ -50,7 +53,6 @@ import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.data.type.NoteBlock
-import org.bukkit.craftbukkit.v1_19_R3.block.CraftBlock
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -71,28 +73,94 @@ object BlockBreakingService {
         val sequence = event.packet.sequence
         val blockPos = event.packet.pos
 
+        val player = event.player
+
         when (event.packet.action) {
             Action.START_DESTROY_BLOCK -> {
-                val block = event.player.world.getBlockAt(blockPos.x, blockPos.y, blockPos.z)
+                val block = player.world.getBlockAt(blockPos.x, blockPos.y, blockPos.z)
 
-                val itemStack = event.player.inventory.itemInMainHand
+                val itemStack = player.inventory.itemInMainHand
                 val item = ItemRegistry.getItemFromItemstack(itemStack)
-
                 val blockType = BlockType.fromBlockData(block.blockData as NoteBlock)
 
-                var baseDestroySpeed = if (blockType != null) {
-                    blockType.hardness
-                } else {
-                    val nmsBlock = (block as CraftBlock).nms
-                    nmsBlock.destroySpeed
+                if (blockType == null && (item == null || item !is Tools)) {
+                    return
                 }
 
-                if (block.isCustom() || item is Tools) {
-                    damageBlock(block, event.player, sequence)
+                // BEST TOOL
+                var bestTool = true
+
+                var canHarvest =
+                    when {
+                        item == null && itemStack.isToolCorrect(blockType!!) -> true
+                        item is Tools && item.isToolCorrect(block) -> true
+                        else -> {
+                            false
+                        }
+                    }
+
+                // BEST TOOL -> SPEED = TIER DAMAGE + CAN HARVEST
+                var speedMultiplier =
+                    when {
+                        item == null && itemStack.isToolTypeCorrect(blockType!!) -> itemStack.tierDestroyDamage()
+                        item is Tools && item.isToolTypeCorrect(block) -> item.toolTier.miningSpeed
+                        else -> {
+                            bestTool = false
+                            1f
+                        }
+                    }
+
+                if (canHarvest) {
+                    speedMultiplier = 1f
                 }
+
+                // + EFFICIENCY (IF BEST TOOL & EFFICIENCY)
+                val efficiencyLevel = itemStack.getEnchantmentLevel(Enchantment.DIG_SPEED)
+
+                if (bestTool) {
+                    speedMultiplier += (1 + efficiencyLevel * efficiencyLevel)
+                }
+
+                // * HASTE (IF ANY)
+                val hasteLevel = player.getPotionEffectLevel(PotionEffectType.FAST_DIGGING)
+                if (hasteLevel > 0) {
+                    speedMultiplier *= 0.2f * hasteLevel + 1
+                }
+
+                // * FATIGUE (IF ANY)
+                val fatigueLevel = player.getPotionEffectLevel(PotionEffectType.SLOW_DIGGING)
+                if (fatigueLevel > 0) {
+                    speedMultiplier *= 0.3.pow(min(fatigueLevel, 4)).toFloat()
+                }
+
+                // PLAYER IN WATER -> /5
+                if (player.isInWater) {
+                    val helmet = player.inventory.helmet
+
+                    if (helmet == null || helmet.getEnchantmentLevel(Enchantment.WATER_WORKER) < 1) {
+                        speedMultiplier /= 5
+                    }
+                }
+
+                // PLAYER NOT ON GROUND -> /5
+                if (!player.isGrounded()) {
+                    speedMultiplier /= 5
+                }
+
+                val hardness = blockType?.hardness ?: block.hardness
+
+                var damage = speedMultiplier / hardness
+
+                damage /= if (canHarvest) {
+                    30
+                } else {
+                    100
+                }
+
+                damageBlock(block, player, damage, canHarvest)
             }
             Action.STOP_DESTROY_BLOCK, Action.ABORT_DESTROY_BLOCK -> {
-                val block = event.player.world.getBlockAt(blockPos.x, blockPos.y, blockPos.z)
+                val block = player.world.getBlockAt(blockPos.x, blockPos.y, blockPos.z)
                 stopDamaging(block)
             }
             else -> {
@@ -114,9 +182,7 @@ object BlockBreakingService {
         }, 1L, 1L)
     }
 
-    fun damageBlock(block: Block, player: Player, sequence: Int) {
-        val blockType = BlockType.fromBlockData(block.blockData as NoteBlock) ?: return
-
+    fun damageBlock(block: Block, player: Player, destroySpeed: Float, canHarvest: Boolean) {
         // break block instant if player is in creative mode
         if (player.gameMode == GameMode.CREATIVE) {
             // run at next tick to ensure it's not async
@@ -156,32 +222,6 @@ object BlockBreakingService {
         private var lastDestructionStage = -1
 
         fun tick() {
-            ticksPassed++
-
-            // break block and stop
-            if (ticksPassed >= breakTime) {
-                // run at next tick to ensure it's not async
-                Bukkit.getScheduler().runTask(
-                    inst(),
-                    Runnable {
-                        block.type = Material.AIR
-                    }
-                )
-
-                playBreakSound()
-                dropItem()
-                damageTool()
-                stop()
-                return
-            }
-
-            // update block destruction stage
-            val destructionStage = getDestructionStage()
-            if (destructionStage != lastDestructionStage) {
-                block.sendDestructionStagePacket(destructionStage)
-                lastDestructionStage = destructionStage
-            }
-
             // give player slow mining effect
             val effect = player.getPotionEffect(PotionEffectType.SLOW_DIGGING)
             val packet = if (effect != null) {
@@ -297,6 +337,7 @@ object BlockBreakingService {
 
         private fun playBreakSound() {
             block.world.playSound(block.location, blockType.breakSound, 1f, 1f)
+            block.breakNaturally()
         }
 
         private fun damageTool() {
