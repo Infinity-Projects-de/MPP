@@ -17,56 +17,82 @@
 
 package de.danielmaile.mpp.block
 
+import de.danielmaile.mpp.block.utils.hardness
+import de.danielmaile.mpp.block.utils.isToolCorrect
+import de.danielmaile.mpp.inst
+import de.danielmaile.mpp.item.ItemRegistry
+import de.danielmaile.mpp.item.items.Blocks
+import de.danielmaile.mpp.item.items.Tools
 import de.danielmaile.mpp.util.sendDestructionStagePacket
+import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.block.Block
+import org.bukkit.inventory.ItemStack
 import kotlin.math.floor
+import kotlin.math.min
 
 const val damagePerPhase = 1 / 9f
+
+// ONLY block logic
 class DamagedBlock(
     val block: Block,
-    val blockType: BlockType?,
-    private val damagePerTick: Float
+    val blockType: BlockType?
 ) {
     private var totalDamage = 0f
 
-    private var phase = 0
+    private var phase = -1
     private var ticks = 0
 
-    fun tick() {
+    private val hardness = blockType?.hardness ?: block.hardness
+
+    fun tick(damage: Float) {
         ticks++
-        totalDamage += damagePerTick
-        if (totalDamage > 1) {
-            breakBlock()
-            return
-        }
-        val currentPhase = floor(totalDamage / damagePerPhase).toInt()
+        hitSound()
+        totalDamage += (damage / hardness)
+        val currentPhase = min(floor(totalDamage / damagePerPhase).toInt(), 9)
         if (phase != currentPhase) {
             phase = currentPhase
             block.sendDestructionStagePacket(phase)
         }
-        playMiningSound()
     }
 
-    private fun breakBlock() {
-        playBreakSound()
-        damageTool()
-        stop()
+    val isBroken: Boolean
+        get() = totalDamage > 1f
+
+    fun breakBlock(tool: ItemStack) {
+        var mppTool = ItemRegistry.getItemFromItemstack(tool)
+        if (mppTool !is Tools) mppTool = null
+
+        if (blockType == null) {
+            if ((mppTool as? Tools)?.isToolCorrect(block) != false) {
+                block.breakNaturally(tool, true, true)
+                return
+            }
+        } else {
+            if ((mppTool as? Tools)?.isToolCorrect(block) == true || tool.isToolCorrect(blockType)) {
+                val item = Blocks.getBlockDrop(blockType) ?: return
+                block.world.dropItemNaturally(block.location, item.itemStack(1))
+            }
+        }
+
+        Bukkit.getScheduler().runTask(inst()) { ->
+            breakSound()
+            block.type = Material.AIR
+        }
     }
 
-    fun playMiningSound() {
-        val sound = blockType?.breakSound // TODO: MUST BE HIT
-            ?: block.blockSoundGroup.hitSound
-        block.world.playSound(block.location, sound, 1f, 1f)
-    }
-
-    fun playBreakSound() {
+    private fun breakSound() {
         val sound = blockType?.breakSound ?: block.blockSoundGroup.breakSound
         block.world.playSound(block.location, sound, 1f, 1f)
     }
 
-    fun damageTool() {
+    private fun hitSound() {
+        val sound = blockType?.breakSound ?: // TODO: Should be hit sound
+            block.blockSoundGroup.hitSound
+        block.world.playSound(block.location, sound, 1f, 1f)
     }
 
     fun stop() {
+        block.sendDestructionStagePacket(-1)
     }
 }

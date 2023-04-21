@@ -26,21 +26,12 @@
 
 package de.danielmaile.mpp.block
 
-import de.danielmaile.mpp.block.utils.hardness
-import de.danielmaile.mpp.block.utils.isToolCorrect
-import de.danielmaile.mpp.block.utils.isToolTypeCorrect
-import de.danielmaile.mpp.block.utils.tierDestroyDamage
+import de.danielmaile.mpp.block.utils.calculateBlockDamage
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.item.ItemRegistry
-import de.danielmaile.mpp.item.items.Blocks
 import de.danielmaile.mpp.item.items.Tools
+import de.danielmaile.mpp.packet.PacketHandler
 import de.danielmaile.mpp.packet.PacketListener
-import de.danielmaile.mpp.util.ToolType
-import de.danielmaile.mpp.util.getPotionEffectLevel
-import de.danielmaile.mpp.util.isGrounded
-import de.danielmaile.mpp.util.sendDestructionStagePacket
-import de.danielmaile.mpp.util.sendPackets
-import net.minecraft.network.protocol.game.ClientboundBlockChangedAckPacket
 import net.minecraft.network.protocol.game.ClientboundRemoveMobEffectPacket
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket
@@ -49,28 +40,21 @@ import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectInstance
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
-import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Block
-import org.bukkit.block.data.type.NoteBlock
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.Damageable
 import org.bukkit.potion.PotionEffectType
-import kotlin.math.ceil
-import kotlin.math.min
-import kotlin.math.pow
-import kotlin.math.round
 import kotlin.random.Random
 
 private val MINING_FATIGUE = MobEffectInstance(MobEffect.byId(4)!!, Integer.MAX_VALUE, 255, false, false, false)
 
 object BlockBreakingService {
+    private val damagedBlocks: HashMap<Player, DamagedBlock> = HashMap()
 
     @PacketListener(ignoreCancelled = true)
     fun onBlockDig(event: de.danielmaile.mpp.packet.PacketEvent<ServerboundPlayerActionPacket>) {
-        val sequence = event.packet.sequence
         val blockPos = event.packet.pos
 
         val player = event.player
@@ -78,279 +62,128 @@ object BlockBreakingService {
         when (event.packet.action) {
             Action.START_DESTROY_BLOCK -> {
                 val block = player.world.getBlockAt(blockPos.x, blockPos.y, blockPos.z)
+                val blockType = BlockType.fromBlock(block)
 
                 val itemStack = player.inventory.itemInMainHand
                 val item = ItemRegistry.getItemFromItemstack(itemStack)
-                val blockType = BlockType.fromBlockData(block.blockData as NoteBlock)
 
                 if (blockType == null && (item == null || item !is Tools)) {
                     return
                 }
 
-                // BEST TOOL
-                var bestTool = true
-
-                var canHarvest =
-                    when {
-                        item == null && itemStack.isToolCorrect(blockType!!) -> true
-                        item is Tools && item.isToolCorrect(block) -> true
-                        else -> {
-                            false
-                        }
-                    }
-
-                // BEST TOOL -> SPEED = TIER DAMAGE + CAN HARVEST
-                var speedMultiplier =
-                    when {
-                        item == null && itemStack.isToolTypeCorrect(blockType!!) -> itemStack.tierDestroyDamage()
-                        item is Tools && item.isToolTypeCorrect(block) -> item.toolTier.miningSpeed
-                        else -> {
-                            bestTool = false
-                            1f
-                        }
-                    }
-
-                if (canHarvest) {
-                    speedMultiplier = 1f
-                }
-
-                // + EFFICIENCY (IF BEST TOOL & EFFICIENCY)
-                val efficiencyLevel = itemStack.getEnchantmentLevel(Enchantment.DIG_SPEED)
-
-                if (bestTool) {
-                    speedMultiplier += (1 + efficiencyLevel * efficiencyLevel)
-                }
-
-                // * HASTE (IF ANY)
-                val hasteLevel = player.getPotionEffectLevel(PotionEffectType.FAST_DIGGING)
-                if (hasteLevel > 0) {
-                    speedMultiplier *= 0.2f * hasteLevel + 1
-                }
-
-                // * FATIGUE (IF ANY)
-                val fatigueLevel = player.getPotionEffectLevel(PotionEffectType.SLOW_DIGGING)
-                if (fatigueLevel > 0) {
-                    speedMultiplier *= 0.3.pow(min(fatigueLevel, 4)).toFloat()
-                }
-
-                // PLAYER IN WATER -> /5
-                if (player.isInWater) {
-                    val helmet = player.inventory.helmet
-
-                    if (helmet == null || helmet.getEnchantmentLevel(Enchantment.WATER_WORKER) < 1) {
-                        speedMultiplier /= 5
-                    }
-                }
-
-                // PLAYER NOT ON GROUND -> /5
-                if (!player.isGrounded()) {
-                    speedMultiplier /= 5
-                }
-
-                val hardness = blockType?.hardness ?: block.hardness
-
-                var damage = speedMultiplier / hardness
-
-                damage /= if (canHarvest) {
-                    30
-                } else {
-                    100
-                }
-
-                damageBlock(block, player, damage, canHarvest)
+                damageBlock(block, blockType, player)
             }
+
             Action.STOP_DESTROY_BLOCK, Action.ABORT_DESTROY_BLOCK -> {
-                val block = player.world.getBlockAt(blockPos.x, blockPos.y, blockPos.z)
-                stopDamaging(block)
+                stopDamagingBlock(player)
             }
+
             else -> {
                 return
             }
         }
     }
 
-    private val damagedBlocks: HashMap<Location, DamagedBlock> = HashMap()
-    private val toRemoveDamageBlocks = mutableListOf<Location>()
-
     fun initializeBreakingScheduler() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(inst(), {
-            toRemoveDamageBlocks.forEach {
-                damagedBlocks.remove(it)
+            val iterator = damagedBlocks.entries.iterator()
+            while (iterator.hasNext()) {
+                val (player, block) = iterator.next()
+                block.tick(player.calculateBlockDamage(block))
+                if (block.isBroken) {
+                    block.breakBlock(player.inventory.itemInMainHand)
+                    damageTool(player)
+                    stopDamagingBlock(player)
+                }
             }
-            toRemoveDamageBlocks.clear()
-            damagedBlocks.forEach { (_, u) -> u.tick() }
         }, 1L, 1L)
     }
 
-    fun damageBlock(block: Block, player: Player, destroySpeed: Float, canHarvest: Boolean) {
-        // break block instant if player is in creative mode
+    fun damageTool(player: Player) {
+        val tool = player.inventory.itemInMainHand
+        val mppTool = ItemRegistry.getItemFromItemstack(tool)
+
+        if (tool.itemMeta !is Damageable) return
+
+        val durabilityLvl = tool.getEnchantmentLevel(Enchantment.DURABILITY)
+        if (Random.nextInt(0, durabilityLvl + 1) != 0) return
+        var damage = 1
+
+        if (mppTool is Tools) {
+            damage = mppTool.trueDamage
+        }
+
+        tool.apply {
+            itemMeta = (itemMeta as Damageable).apply {
+                this.damage += damage
+            }
+        }
+    }
+
+    fun damageBlock(block: Block, blockType: BlockType?, player: Player) {
+        // break block instantly if player is in creative mode
         if (player.gameMode == GameMode.CREATIVE) {
-            // run at next tick to ensure it's not async
             Bukkit.getScheduler().runTask(
                 inst()
             ) { -> block.type = Material.AIR }
             return
         }
 
-        damagedBlocks.getOrPut(block.location) {
+        player.disableBreakingAnimation()
+
+        damagedBlocks.getOrPut(player) {
             DamagedBlock(
                 block,
-                blockType,
-                player,
-                player.inventory.itemInMainHand,
-                sequence
+                blockType
             )
         }
     }
 
-    fun stopDamaging(block: Block) {
-        val damagedBlock = damagedBlocks[block.location] ?: return
-        damagedBlock.stop()
-        toRemoveDamageBlocks.add(block.location)
+    private fun stopDamagingBlock(player: Player) {
+        damagedBlocks.remove(player)?.stop() ?: return
+        player.enableBreakingAnimation()
     }
 
-    private class DamagedBlock(
-        private val block: Block,
-        private val blockType: BlockType,
-        private val player: Player,
-        private val itemInHand: ItemStack,
-        private val sequence: Int
-    ) {
-
-        private val breakTime = calculateBreakingTime()
-        private var ticksPassed = 0
-        private var lastDestructionStage = -1
-
-        fun tick() {
-            // give player slow mining effect
-            val effect = player.getPotionEffect(PotionEffectType.SLOW_DIGGING)
-            val packet = if (effect != null) {
-                // the player might actually have mining fatigue.
-                // in this case, it is important to copy the hasIcon value to prevent it from disappearing.
-                val effectInstance = MobEffectInstance(
-                    MobEffect.byId(4)!!,
-                    Int.MAX_VALUE,
-                    255,
-                    effect.isAmbient,
-                    effect.hasParticles(),
-                    effect.hasIcon()
-                )
-                ClientboundUpdateMobEffectPacket(player.entityId, effectInstance)
-            } else {
-                // the player does not have mining fatigue, we can use the default effect instance
-                ClientboundUpdateMobEffectPacket(player.entityId, MINING_FATIGUE)
-            }
-            player.sendPackets(packet)
+    fun Player.disableBreakingAnimation() {
+        val effect = this.getPotionEffect(PotionEffectType.SLOW_DIGGING)
+        val packet = if (effect != null) {
+            // the player might actually have mining fatigue.
+            // in this case, it is important to copy the hasIcon value to prevent it from disappearing.
+            val effectInstance = MobEffectInstance(
+                MobEffect.byId(4)!!,
+                Int.MAX_VALUE,
+                255,
+                effect.isAmbient,
+                effect.hasParticles(),
+                effect.hasIcon()
+            )
+            ClientboundUpdateMobEffectPacket(this.entityId, effectInstance)
+        } else {
+            // the player does not have mining fatigue, we can use the default effect instance
+            ClientboundUpdateMobEffectPacket(this.entityId, MINING_FATIGUE)
         }
 
-        fun stop() {
-            // remove client-predicted block states and show those sent by the server
-            block.sendDestructionStagePacket(-1)
-            player.sendPackets(ClientboundBlockChangedAckPacket(sequence))
+        PacketHandler.sendPacket(this, packet)
+    }
 
-            // remove slow mining effect from player
-            val effect = player.getPotionEffect(PotionEffectType.SLOW_DIGGING)
-
-            val packet = if (effect != null) {
-                // if the player actually has mining fatigue, send the correct effect again
-                val effectInstance = MobEffectInstance(
-                    MobEffect.byId(4)!!,
-                    effect.duration,
-                    effect.amplifier,
-                    effect.isAmbient,
-                    effect.hasParticles(),
-                    effect.hasIcon()
-                )
-                ClientboundUpdateMobEffectPacket(player.entityId, effectInstance)
-            } else {
-                // remove the effect
-                ClientboundRemoveMobEffectPacket(player.entityId, MobEffect.byId(4)!!)
-            }
-            player.sendPackets(packet)
-
-            // remove DamagedBlock instance from service
-            toRemoveDamageBlocks.add(block.location)
+    fun Player.enableBreakingAnimation() {
+        val effect = this.getPotionEffect(PotionEffectType.SLOW_DIGGING)
+        val packet = if (effect != null) {
+            // if the player actually has mining fatigue, send the correct effect again
+            val effectInstance = MobEffectInstance(
+                MobEffect.byId(4)!!,
+                effect.duration,
+                effect.amplifier,
+                effect.isAmbient,
+                effect.hasParticles(),
+                effect.hasIcon()
+            )
+            ClientboundUpdateMobEffectPacket(this.entityId, effectInstance)
+        } else {
+            // remove the effect
+            ClientboundRemoveMobEffectPacket(this.entityId, MobEffect.byId(4)!!)
         }
 
-        private fun getDestructionStage(): Int {
-            return round((ticksPassed.toFloat() / breakTime.toFloat()) * 9).toInt()
-        }
-
-        // drop item corresponding to the broken block
-        private fun dropItem() {
-            val itemType = Blocks.getBlockDrop(blockType) ?: return
-            block.world.dropItemNaturally(block.location, itemType.itemStack(1))
-        }
-
-        /**
-         * Calculates the breaking time in ticks based on the hardness of the block
-         * and the current tool
-         * Based on: https://minecraft.fandom.com/wiki/Breaking
-         */
-        private fun calculateBreakingTime(): Int {
-            var speedMultiplier = 1.0
-
-            // check if player has correct tool
-            val toolType = ToolType.fromMaterial(itemInHand.type)
-            val isCorrectTool = toolType != null && toolType == blockType.toolType
-            if (isCorrectTool) {
-                speedMultiplier = toolType!!.materialToSpeedMapping[itemInHand.type]!!.toDouble()
-                val efficiencyLevel = itemInHand.getEnchantmentLevel(Enchantment.DIG_SPEED)
-                if (efficiencyLevel > 0) {
-                    speedMultiplier += (efficiencyLevel * efficiencyLevel) + 1
-                }
-            }
-
-            // check if player has haste effect
-            val hasteLevel = player.getPotionEffectLevel(PotionEffectType.FAST_DIGGING)
-            if (hasteLevel > 0) {
-                speedMultiplier *= 0.2 * hasteLevel + 1
-            }
-
-            // check if player has haste effect
-            val miningFatigueLevel = player.getPotionEffectLevel(PotionEffectType.SLOW_DIGGING)
-            if (miningFatigueLevel > 0) {
-                speedMultiplier *= 0.3.pow(min(miningFatigueLevel, 4))
-            }
-
-            // check if player is in water and has no aqua affinity
-            if (player.isInWater) {
-                val helmet = player.inventory.helmet
-
-                if (helmet == null || helmet.getEnchantmentLevel(Enchantment.WATER_WORKER) < 1) {
-                    speedMultiplier /= 5
-                }
-            }
-
-            // check if player is in air
-            if (!player.isGrounded()) {
-                speedMultiplier /= 5
-            }
-
-            val damage = (speedMultiplier / blockType.hardness) / 30
-            return if (damage > 1) {
-                0
-            } else {
-                ceil(1 / damage).toInt()
-            }
-        }
-
-        private fun playBreakSound() {
-            block.world.playSound(block.location, blockType.breakSound, 1f, 1f)
-            block.breakNaturally()
-        }
-
-        private fun damageTool() {
-            // return if item is not damageable
-            if (itemInHand.itemMeta !is Damageable) return
-
-            // random chance to damage tool (based on vanilla behaviour)
-            val durabilityLvl = itemInHand.getEnchantmentLevel(Enchantment.DURABILITY)
-            if (Random.nextInt(0, durabilityLvl + 1) != 0) return
-
-            val itemMeta = itemInHand.itemMeta as Damageable
-            itemMeta.damage = itemMeta.damage + 1
-            itemInHand.itemMeta = itemMeta
-        }
+        PacketHandler.sendPacket(this, packet)
     }
 }

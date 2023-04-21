@@ -18,7 +18,12 @@
 package de.danielmaile.mpp.block.utils
 
 import de.danielmaile.mpp.block.BlockType
+import de.danielmaile.mpp.block.DamagedBlock
+import de.danielmaile.mpp.item.ItemRegistry
+import de.danielmaile.mpp.item.items.Tools
 import de.danielmaile.mpp.item.items.Tools.ToolType
+import de.danielmaile.mpp.util.getPotionEffectLevel
+import de.danielmaile.mpp.util.isGrounded
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.AxeItem
 import net.minecraft.world.item.DiggerItem
@@ -30,9 +35,15 @@ import net.minecraft.world.level.block.state.BlockState
 import org.bukkit.block.Block
 import org.bukkit.craftbukkit.v1_19_R3.block.CraftBlock
 import org.bukkit.craftbukkit.v1_19_R3.inventory.CraftItemStack
+import org.bukkit.enchantments.Enchantment
+import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import org.bukkit.potion.PotionEffectType
+import kotlin.math.min
+import kotlin.math.pow
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.jvm.isAccessible
+
 val Block.nms: BlockState
     get() = (this as CraftBlock).nms
 
@@ -45,7 +56,7 @@ val Block.hardness: Float
     get() = nms.destroySpeed
 
 val ItemStack.nmsItem: Item
-    get() = (this as CraftItemStack).handle.copy().item
+    get() = CraftItemStack.asNMSCopy(this).item
 
 val ItemStack.blocks: TagKey<net.minecraft.world.level.block.Block>?
     get() {
@@ -54,10 +65,10 @@ val ItemStack.blocks: TagKey<net.minecraft.world.level.block.Block>?
 
         val itemClass = nmsItem::class
         val blocks = itemClass.declaredMemberProperties.find { it.name == "a" }
-        blocks?.isAccessible = true
+        blocks?.getter?.isAccessible = true // FIXME: NOT WORKING (need to check now that am using getter#call, will have to use java reflection otherwise)
 
         return try {
-            blocks?.call(nmsItem) as? TagKey<net.minecraft.world.level.block.Block>?
+            blocks?.getter?.call(nmsItem) as? TagKey<net.minecraft.world.level.block.Block>?
         } catch (e: ClassCastException) {
             null
         }
@@ -91,4 +102,68 @@ fun ItemStack.tierDestroyDamage(): Float {
     val item = nmsItem
     if (item !is DiggerItem) return 1f
     return item.tier.speed
+}
+
+fun Player.calculateBlockDamage(damagedBlock: DamagedBlock): Float {
+    val itemStack = this.inventory.itemInMainHand
+    val item = ItemRegistry.getItemFromItemstack(itemStack)
+
+    val blockType = damagedBlock.blockType
+    val block = damagedBlock.block
+
+    if (blockType == null && (item == null || item !is Tools)) {
+        return 1f // Instant break as a damaged block was created unintentionally
+    }
+
+    // BEST TOOL: Tool affects block but tier is not necessarily enough
+    val bestTool: Boolean
+
+    // CAN HARVEST: Tool and tier are correct for breaking the block
+    val canHarvest: Boolean
+
+    var speedMultiplier = 1f
+
+    when (item) {
+        null -> {
+            canHarvest = itemStack.isToolCorrect(blockType!!)
+            bestTool = itemStack.isToolTypeCorrect(blockType)
+            if (bestTool) speedMultiplier = itemStack.tierDestroyDamage()
+        }
+
+        is Tools -> {
+            canHarvest = item.isToolCorrect(block)
+            bestTool = item.isToolTypeCorrect(block)
+            if (bestTool) speedMultiplier = item.toolTier.miningSpeed
+        }
+
+        else -> {
+            canHarvest = false
+            bestTool = false
+        }
+    }
+
+    if (!canHarvest) speedMultiplier = 1f
+
+    // + EFFICIENCY (IF BEST TOOL & EFFICIENCY)
+    val efficiencyLevel = itemStack.getEnchantmentLevel(Enchantment.DIG_SPEED)
+    if (bestTool && efficiencyLevel > 0) speedMultiplier += (1 + efficiencyLevel * efficiencyLevel)
+
+    // * HASTE (IF ANY)
+    val hasteLevel = this.getPotionEffectLevel(PotionEffectType.FAST_DIGGING)
+    if (hasteLevel > 0) speedMultiplier *= 0.2f * hasteLevel + 1
+
+    // * FATIGUE (IF ANY)
+    val fatigueLevel = this.getPotionEffectLevel(PotionEffectType.SLOW_DIGGING)
+    if (fatigueLevel > 0) speedMultiplier *= 0.3.pow(min(fatigueLevel, 4)).toFloat()
+
+    // PLAYER IN WATER -> /5
+    if (this.isInWater) {
+        val helmet = this.inventory.helmet
+        if ((helmet?.getEnchantmentLevel(Enchantment.WATER_WORKER) ?: 0) < 1) speedMultiplier /= 5
+    }
+
+    // PLAYER NOT ON GROUND -> /5
+    if (!this.isGrounded()) speedMultiplier /= 5
+
+    return speedMultiplier / (if (canHarvest) 30 else 100)
 }
