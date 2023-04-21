@@ -22,6 +22,7 @@ import org.bukkit.Instrument
 import org.bukkit.Material
 import org.bukkit.Note
 import org.bukkit.Sound
+import org.bukkit.block.Block
 import org.bukkit.block.data.BlockData
 import org.bukkit.block.data.type.NoteBlock
 
@@ -92,6 +93,14 @@ enum class BlockType(
         fun fromBlockData(noteBlockData: NoteBlock): BlockType? {
             return values().firstOrNull {
                 it.instrument == noteBlockData.instrument && it.note == noteBlockData.note && it.isPowered == noteBlockData.isPowered
+            }
+        }
+
+        fun fromBlock(block: Block): BlockType? {
+            return if (block.blockData !is NoteBlock) {
+                null
+            } else {
+                fromBlockData(block.blockData as NoteBlock)
             }
         }
     }
