@@ -25,11 +25,12 @@ import de.danielmaile.mpp.item.Item
 import de.danielmaile.mpp.item.ToolTier
 import de.danielmaile.mpp.item.recipe.recipes.ToolRecipe
 import net.minecraft.tags.BlockTags
+import net.minecraft.world.item.Tiers
 import org.bukkit.Material
 import org.bukkit.block.Block
-import org.bukkit.block.data.type.NoteBlock
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.Recipe
+import kotlin.math.ceil
 
 enum class Tools(
     val toolTier: ToolTier,
@@ -86,7 +87,7 @@ enum class Tools(
     fun isToolCorrect(block: Block): Boolean {
         val nmsBlock = block.nms
 
-        val blockType = BlockType.fromBlockData(block.blockData as NoteBlock)
+        val blockType = BlockType.fromBlock(block)
 
         val i = this.toolTier.miningLevel
         return if (blockType == null) {
@@ -106,12 +107,15 @@ enum class Tools(
 
     fun isToolTypeCorrect(block: Block): Boolean {
         val nmsBlock = block.nms
-        val blockType = BlockType.fromBlockData(block.blockData as NoteBlock)
+        val blockType = BlockType.fromBlock(block)
 
         return if (blockType == null) {
-            itemStack(1).blocks?.let { nmsBlock.`is`(it) } ?: !block.isToolRequired()
+            itemStack(1).blocks?.let { nmsBlock.`is`(it) } ?: false
         } else {
             blockType.toolType == toolType || blockType.tier == 0
         }
     }
+
+    val trueDamage: Int
+        get() = ceil(Tiers.NETHERITE.uses / toolTier.itemDurability * 1.0).toInt()
 }
