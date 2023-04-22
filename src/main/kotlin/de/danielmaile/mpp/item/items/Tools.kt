@@ -85,6 +85,9 @@ enum class Tools(
     }
 
     fun isToolCorrect(block: Block): Boolean {
+        return isToolTierCorrect(block) && isToolTypeCorrect(block)
+    }
+    fun isToolTierCorrect(block: Block): Boolean {
         val nmsBlock = block.nms
 
         val blockType = BlockType.fromBlock(block)
@@ -117,5 +120,9 @@ enum class Tools(
     }
 
     val trueDamage: Int
-        get() = ceil(Tiers.NETHERITE.uses / toolTier.itemDurability * 1.0).toInt()
+        get() {
+            println(Tiers.NETHERITE.uses)
+            println(toolTier.itemDurability)
+            return ceil(Tiers.NETHERITE.uses / toolTier.itemDurability * 1.0).toInt()
+        }
 }
