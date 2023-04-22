@@ -41,8 +41,6 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffectType
 import kotlin.math.min
 import kotlin.math.pow
-import kotlin.reflect.full.declaredMemberProperties
-import kotlin.reflect.jvm.isAccessible
 
 val Block.nms: BlockState
     get() = (this as CraftBlock).nms
@@ -63,12 +61,12 @@ val ItemStack.blocks: TagKey<net.minecraft.world.level.block.Block>?
         val nmsItem = this.nmsItem
         if (nmsItem !is DiggerItem) return null
 
-        val itemClass = nmsItem::class
-        val blocks = itemClass.declaredMemberProperties.find { it.name == "a" }
-        blocks?.getter?.isAccessible = true // FIXME: NOT WORKING (need to check now that am using getter#call, will have to use java reflection otherwise)
+        // TODO: Use kotlin reflections
+        val blocks = DiggerItem::class.java.getDeclaredField("a")
+        blocks.isAccessible = true
 
         return try {
-            blocks?.getter?.call(nmsItem) as? TagKey<net.minecraft.world.level.block.Block>?
+            blocks.get(nmsItem) as? TagKey<net.minecraft.world.level.block.Block>?
         } catch (e: ClassCastException) {
             null
         }
@@ -125,19 +123,19 @@ fun Player.calculateBlockDamage(damagedBlock: DamagedBlock): Float {
 
     when (item) {
         null -> {
-            canHarvest = itemStack.isToolCorrect(blockType!!)
+            canHarvest = itemStack.isToolCorrect(blockType!!) || !block.isToolRequired()
             bestTool = itemStack.isToolTypeCorrect(blockType)
             if (bestTool) speedMultiplier = itemStack.tierDestroyDamage()
         }
 
         is Tools -> {
-            canHarvest = item.isToolCorrect(block)
+            canHarvest = item.isToolCorrect(block) || !block.isToolRequired()
             bestTool = item.isToolTypeCorrect(block)
             if (bestTool) speedMultiplier = item.toolTier.miningSpeed
         }
 
         else -> {
-            canHarvest = false
+            canHarvest = !block.isToolRequired()
             bestTool = false
         }
     }
