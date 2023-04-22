@@ -17,9 +17,9 @@
 
 package de.danielmaile.mpp.util
 
-import de.danielmaile.mpp.item.ArmorMaterial
 import de.danielmaile.mpp.item.ItemRegistry
 import de.danielmaile.mpp.item.items.Armors
+import de.danielmaile.mpp.item.utils.ArmorMaterial
 import net.minecraft.network.protocol.Packet
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.network.ServerGamePacketListenerImpl

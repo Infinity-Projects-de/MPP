@@ -18,8 +18,8 @@
 package de.danielmaile.mpp.item.items
 
 import de.danielmaile.mpp.item.Item
-import de.danielmaile.mpp.item.ToolTier
 import de.danielmaile.mpp.item.recipe.recipes.ToolRecipe
+import de.danielmaile.mpp.item.utils.ToolTier
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.Recipe
