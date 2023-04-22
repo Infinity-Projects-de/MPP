@@ -19,6 +19,7 @@ package de.danielmaile.mpp.block
 
 import de.danielmaile.mpp.block.utils.hardness
 import de.danielmaile.mpp.block.utils.isToolCorrect
+import de.danielmaile.mpp.block.utils.isToolRequired
 import de.danielmaile.mpp.inst
 import de.danielmaile.mpp.item.ItemRegistry
 import de.danielmaile.mpp.item.items.Blocks
@@ -64,12 +65,12 @@ class DamagedBlock(
         if (mppTool !is Tools) mppTool = null
 
         if (blockType == null) {
-            if ((mppTool as? Tools)?.isToolCorrect(block) != false) {
+            if ((mppTool as? Tools)?.isToolCorrect(block) != false || !block.isToolRequired()) {
                 block.breakNaturally(tool, true, true)
                 return
             }
         } else {
-            if ((mppTool as? Tools)?.isToolCorrect(block) == true || tool.isToolCorrect(blockType)) {
+            if ((mppTool as? Tools)?.isToolCorrect(block) == true || tool.isToolCorrect(blockType) || !block.isToolRequired()) {
                 val item = Blocks.getBlockDrop(blockType) ?: return
                 block.world.dropItemNaturally(block.location, item.itemStack(1))
             }
@@ -79,6 +80,12 @@ class DamagedBlock(
             breakSound()
             block.type = Material.AIR
         }
+    }
+
+    private fun hitParticles() {
+    }
+
+    private fun breakParticles() {
     }
 
     private fun breakSound() {
