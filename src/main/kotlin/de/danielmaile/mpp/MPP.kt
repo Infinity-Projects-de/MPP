@@ -26,7 +26,6 @@ import de.danielmaile.mpp.data.ResourcePackManager
 import de.danielmaile.mpp.data.config.ConfigManager
 import de.danielmaile.mpp.data.config.LanguageManager
 import de.danielmaile.mpp.item.ItemRegistry
-import de.danielmaile.mpp.item.ListenerConverter
 import de.danielmaile.mpp.item.ListenerCrafting
 import de.danielmaile.mpp.item.function.ArmorListener
 import de.danielmaile.mpp.item.function.ListenerItem
@@ -168,7 +167,6 @@ class MPP : JavaPlugin() {
         server.pluginManager.registerEvents(ListenerBlock(), this)
         server.pluginManager.registerEvents(ListenerCrafting(), this)
         server.pluginManager.registerEvents(ListenerItem(), this)
-        server.pluginManager.registerEvents(ListenerConverter(), this)
         server.pluginManager.registerEvents(ListenerMPPMobs(), this)
         server.pluginManager.registerEvents(MPPMobSpawnManager(), this)
         server.pluginManager.registerEvents(ListenerNecromancer(), this)
