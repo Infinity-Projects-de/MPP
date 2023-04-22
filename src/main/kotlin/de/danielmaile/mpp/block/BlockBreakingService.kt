@@ -85,7 +85,7 @@ object BlockBreakingService {
         }
     }
 
-    fun initializeBreakingScheduler() {
+    fun init() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(inst(), {
             toRemoveDamageBlocks.forEach {
                 damagedBlocks.remove(it)
