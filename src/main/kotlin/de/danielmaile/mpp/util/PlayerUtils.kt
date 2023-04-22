@@ -17,8 +17,9 @@
 
 package de.danielmaile.mpp.util
 
-import de.danielmaile.mpp.item.ArmorSet
-import de.danielmaile.mpp.item.ItemType
+import de.danielmaile.mpp.item.ItemRegistry
+import de.danielmaile.mpp.item.items.Armors
+import de.danielmaile.mpp.item.utils.ArmorMaterial
 import net.minecraft.network.protocol.Packet
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.network.ServerGamePacketListenerImpl
@@ -67,15 +68,15 @@ fun Player.getNearestObjectInSight(range: Int): Any? {
     return if (entity == null && block == null) null else (if (blockRange < entityRange) block else entity)
 }
 
-fun Player.getEquippedArmorSet(): ArmorSet? {
-    val headType = ItemType.fromTag(this.equipment.helmet)
-    val chestType = ItemType.fromTag(this.equipment.chestplate)
-    val legsType = ItemType.fromTag(this.equipment.leggings)
-    val feetType = ItemType.fromTag(this.equipment.boots)
-
-    return ArmorSet.values().firstOrNull {
-        headType == it.head && chestType == it.chest && legsType == it.legs && feetType == it.feet
+fun Player.getEquippedArmorSet(): ArmorMaterial? {
+    val armorItems = this.equipment.armorContents.map { ItemRegistry.getItemFromItemstack(it) }
+    if (armorItems.all { it is Armors }) {
+        val armorMaterials = armorItems.map { (it as Armors).armorMaterial }
+        if (armorMaterials.distinct().size == 1) {
+            return armorMaterials[0]
+        }
     }
+    return null
 }
 
 /**

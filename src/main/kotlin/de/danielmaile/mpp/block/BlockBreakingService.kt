@@ -26,14 +26,9 @@
 
 package de.danielmaile.mpp.block
 
-import com.comphenix.protocol.PacketType
-import com.comphenix.protocol.ProtocolLibrary
-import com.comphenix.protocol.events.ListenerPriority
-import com.comphenix.protocol.events.PacketAdapter
-import com.comphenix.protocol.events.PacketEvent
-import com.comphenix.protocol.wrappers.EnumWrappers
 import de.danielmaile.mpp.inst
-import de.danielmaile.mpp.item.ItemType
+import de.danielmaile.mpp.item.items.Blocks
+import de.danielmaile.mpp.packet.PacketListener
 import de.danielmaile.mpp.util.ToolType
 import de.danielmaile.mpp.util.getPotionEffectLevel
 import de.danielmaile.mpp.util.isCustom
@@ -43,6 +38,8 @@ import de.danielmaile.mpp.util.sendPackets
 import net.minecraft.network.protocol.game.ClientboundBlockChangedAckPacket
 import net.minecraft.network.protocol.game.ClientboundRemoveMobEffectPacket
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket
+import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket
+import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket.Action
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectInstance
 import org.bukkit.Bukkit
@@ -66,30 +63,29 @@ private val MINING_FATIGUE = MobEffectInstance(MobEffect.byId(4)!!, Integer.MAX_
 
 object BlockBreakingService {
 
-    fun init() {
-        // listen to player action packets
-        ProtocolLibrary.getProtocolManager().addPacketListener(object :
-                PacketAdapter(inst(), ListenerPriority.NORMAL, PacketType.Play.Client.BLOCK_DIG) {
-                override fun onPacketReceiving(event: PacketEvent) {
-                    val sequence = event.packet.integers.read(0)
-                    val blockPosition = event.packet.blockPositionModifier.values[0]
-                    val digType = event.packet.playerDigTypes.values[0]
+    @PacketListener(ignoreCancelled = true)
+    fun onBlockDig(event: de.danielmaile.mpp.packet.PacketEvent<ServerboundPlayerActionPacket>) {
+        val sequence = event.packet.sequence
+        val blockPos = event.packet.pos
 
-                    if (digType == EnumWrappers.PlayerDigType.START_DESTROY_BLOCK) {
-                        val block = event.player.world.getBlockAt(blockPosition.x, blockPosition.y, blockPosition.z)
-                        if (block.isCustom()) {
-                            damageBlock(block, event.player, sequence)
-                        }
-                    }
-
-                    if (digType == EnumWrappers.PlayerDigType.STOP_DESTROY_BLOCK || digType == EnumWrappers.PlayerDigType.ABORT_DESTROY_BLOCK) {
-                        val block = event.player.world.getBlockAt(blockPosition.x, blockPosition.y, blockPosition.z)
-                        stopDamaging(block)
-                    }
+        when (event.packet.action) {
+            Action.START_DESTROY_BLOCK -> {
+                val block = event.player.world.getBlockAt(blockPos.x, blockPos.y, blockPos.z)
+                if (block.isCustom()) {
+                    damageBlock(block, event.player, sequence)
                 }
-            })
+            }
+            Action.STOP_DESTROY_BLOCK, Action.ABORT_DESTROY_BLOCK -> {
+                val block = event.player.world.getBlockAt(blockPos.x, blockPos.y, blockPos.z)
+                stopDamaging(block)
+            }
+            else -> {
+                return
+            }
+        }
+    }
 
-        // handle ticks
+    fun init() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(inst(), {
             toRemoveDamageBlocks.forEach {
                 damagedBlocks.remove(it)
@@ -231,8 +227,8 @@ object BlockBreakingService {
 
         // drop item corresponding to the broken block
         private fun dropItem() {
-            val itemType = ItemType.fromPlaceBlockType(blockType) ?: return
-            block.world.dropItemNaturally(block.location, itemType.getItemStack(1))
+            val itemType = Blocks.getBlockDrop(blockType) ?: return
+            block.world.dropItemNaturally(block.location, itemType.itemStack(1))
         }
 
         /**

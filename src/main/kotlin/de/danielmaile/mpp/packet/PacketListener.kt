@@ -1,6 +1,6 @@
 /*
  * This file is part of MPP.
- * Copyright (c) 2022 by it's authors. All rights reserved.
+ * Copyright (c) 2023 by it's authors. All rights reserved.
  * MPP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -15,19 +15,28 @@
  * along with MPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.danielmaile.mpp.item.recipe
+package de.danielmaile.mpp.packet
 
-import de.danielmaile.mpp.inst
-import org.bukkit.NamespacedKey
-import org.bukkit.inventory.Recipe
-import java.util.UUID
+import org.bukkit.event.EventPriority
 
-abstract class Recipe {
-
+@Target(AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class PacketListener(
     /**
-     * Returns a spigot recipe with the give recipe key
+     * Define the priority of the event.
+     * <p>
+     * First priority to the last priority executed:
+     * <ol>
+     * <li>LOWEST
+     * <li>LOW
+     * <li>NORMAL
+     * <li>HIGH
+     * <li>HIGHEST
+     * <li>MONITOR
+     * </ol>
+     *
+     * @return the priority
      */
-    abstract val recipes: List<Recipe>
-
-    protected fun getRandomRecipeKey() = NamespacedKey(inst(), UUID.randomUUID().toString())
-}
+    val priority: EventPriority = EventPriority.NORMAL,
+    val ignoreCancelled: Boolean = false
+)

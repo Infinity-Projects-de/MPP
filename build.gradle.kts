@@ -45,13 +45,13 @@ bukkit {
     load = BukkitPluginDescription.PluginLoadOrder.POSTWORLD
     main = "de.danielmaile.mpp.MPP"
     apiVersion = "1.19"
-    authors = listOf("Daniel Maile and others")
-    depend = listOf("ProtocolLib")
+    authors = listOf("Daniel Maile", "ChechuDEV", "Others")
     libraries = listOf(
         "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$embeddedKotlinVersion",
         "org.apache.commons:commons-compress:1.21",
         "com.konghq:unirest-java:3.13.13",
-        "com.squareup.okhttp3:okhttp:4.9.1"
+        "com.squareup.okhttp3:okhttp:4.9.1",
+        "org.jetbrains.kotlin:kotlin-reflect:1.8.20"
     )
     commands {
         register("mpp") {
@@ -78,10 +78,15 @@ dependencies {
         exclude(group = "net.kyori", module = "adventure-text-serializer-gson")
     }
     implementation("org.bstats:bstats-bukkit:3.0.0")
-    compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0-SNAPSHOT")
+
+    compileOnly("org.jetbrains.kotlin:kotlin-reflect:1.8.20")
     compileOnly("org.apache.commons:commons-compress:1.21")
     compileOnly("com.konghq:unirest-java:3.13.13")
     compileOnly("com.squareup.okhttp3:okhttp:4.9.1")
+
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("io.mockk:mockk:1.13.5")
+    testImplementation(kotlin("test"))
 }
 
 tasks {
@@ -109,13 +114,6 @@ tasks {
     }
 
     runServer {
-        doFirst {
-            download.run {
-                src("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/target/ProtocolLib.jar")
-                dest(buildDir)
-                overwrite(false)
-            }
-        }
         jvmArgs("-Dcom.mojang.eula.agree=true")
         pluginJars(File(buildDir, "ProtocolLib.jar"))
         minecraftVersion(minecraftVersion)
@@ -134,15 +132,20 @@ tasks {
     runServer {
         group = "mpp"
     }
+
+    test {
+        useJUnitPlatform()
+    }
     // endregion
 }
 
 tasks.register<JavaExec>("buildResourcePack") {
-    mainClass.set("de.danielmaile.resourcepack.PackBuilderKt")
+    mainClass.set("de.danielmaile.resourcepack.ResourcePackBuilderKt")
     classpath(sourceSets["main"].runtimeClasspath, configurations.compileClasspath)
     group = "mpp"
     args = listOf(getPluginVersion(), project.projectDir.absolutePath)
 }
+
 tasks.register<RunResourcePackServer>("runResourcePackServer") {
     dependsOn("buildResourcePack")
     group = "mpp"

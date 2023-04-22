@@ -18,7 +18,6 @@
 package de.danielmaile.mpp.item
 
 import de.danielmaile.mpp.inst
-import de.danielmaile.mpp.item.ItemType.Companion.fromTag
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryOpenEvent
@@ -46,12 +45,12 @@ class ListenerConverter : Listener {
         val content = inventory.contents
 
         for (i in content.indices) {
-            val itemStack = content[i] ?: continue
-            val type = fromTag(itemStack) ?: continue
-            val typeStack = type.getItemStack(itemStack.amount)
+            val inventoryItemStack = content[i] ?: continue
+            val item = ItemRegistry.getItemFromItemstack(inventoryItemStack) ?: continue
+            val itemStack = item.itemStack(inventoryItemStack.amount)
 
-            if (itemStack == typeStack) continue
-            inventory.setItem(i, typeStack)
+            if (inventoryItemStack == itemStack) continue
+            inventory.setItem(i, itemStack)
         }
     }
 }
