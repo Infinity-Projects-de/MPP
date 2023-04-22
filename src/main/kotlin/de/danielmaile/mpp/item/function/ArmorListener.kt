@@ -18,9 +18,10 @@
 package de.danielmaile.mpp.item.function
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent
-import de.danielmaile.mpp.item.ArmorMaterial
 import de.danielmaile.mpp.item.ItemRegistry
 import de.danielmaile.mpp.item.items.Armors
+import de.danielmaile.mpp.item.utils.ArmorMaterial
+import de.danielmaile.mpp.item.utils.ArmorSlot
 import de.danielmaile.mpp.util.getEquippedArmorSet
 import org.bukkit.attribute.Attribute
 import org.bukkit.attribute.AttributeModifier
@@ -30,7 +31,6 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.ProjectileHitEvent
-import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.meta.ItemMeta
 
 class ArmorListener : Listener {
@@ -47,10 +47,10 @@ class ArmorListener : Listener {
             val armorProtection = armorMaterial.armor
 
             val armor: Int = when (armorPieceItem.slot) {
-                EquipmentSlot.HEAD -> armorProtection.helmet
-                EquipmentSlot.CHEST -> armorProtection.chestPlate
-                EquipmentSlot.LEGS -> armorProtection.leggings
-                EquipmentSlot.FEET -> armorProtection.boots
+                ArmorSlot.HELMET -> armorProtection.helmet
+                ArmorSlot.CHESTPLATE -> armorProtection.chestPlate
+                ArmorSlot.LEGGINGS -> armorProtection.leggings
+                ArmorSlot.BOOTS -> armorProtection.boots
                 else -> return
             }
 
