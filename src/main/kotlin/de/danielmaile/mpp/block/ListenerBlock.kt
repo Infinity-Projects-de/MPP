@@ -191,7 +191,7 @@ class ListenerBlock : Listener {
     @EventHandler
     fun onEntityExplode(event: EntityExplodeEvent) {
         val customBlocks = event.blockList().filter { it.isCustom() }
-        event.blockList().removeAll(customBlocks)
+        event.blockList().removeAll(customBlocks.toSet())
         customBlocks.forEach {
             val blockType = BlockType.fromBlockData(it.blockData as NoteBlock) ?: return@forEach
             val itemType = Blocks.getBlockDrop(blockType) ?: return@forEach
