@@ -17,7 +17,7 @@
  * This file contains (modified) code from others, which is licensed
  * under the GNU Lesser General Public License version 3:
  *
- * Copyright (c) 2023 xenodevs
+ * Copyright (c) 2023 xenondevs
  * Source: https://github.com/xenondevs/Nova
  *
  * You should have received a copy of the GNU Lesser General Public License
@@ -100,7 +100,7 @@ object BlockBreakingService {
     // use second list to avoid ConcurrentModificationException
     private val toRemoveDamageBlocks = mutableListOf<Location>()
 
-    fun damageBlock(block: Block, player: Player, sequence: Int) {
+    private fun damageBlock(block: Block, player: Player, sequence: Int) {
         val blockType = BlockType.fromBlockData(block.blockData as NoteBlock) ?: return
 
         // break block instant if player is in creative mode
@@ -126,7 +126,7 @@ object BlockBreakingService {
         }
     }
 
-    fun stopDamaging(block: Block) {
+    private fun stopDamaging(block: Block) {
         val damagedBlock = damagedBlocks[block.location] ?: return
         damagedBlock.stop()
         toRemoveDamageBlocks.add(block.location)
