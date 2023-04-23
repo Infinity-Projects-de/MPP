@@ -39,8 +39,6 @@ interface Item {
     }
 
     fun registerRecipes() {
-        if (Bukkit.getServer() == null) return
-
         for (recipe in getRecipes()) {
             Bukkit.addRecipe(recipe)
         }
@@ -52,7 +50,7 @@ interface Item {
 
     private val description: List<Component>
         get() = inst().getLanguageManager().getComponentList("items.$name.description")
-            .map { it -> it.decoration(TextDecoration.ITALIC, false) }
+            .map { it.decoration(TextDecoration.ITALIC, false) }
 
     val modelID: Int
         get() = name.hashCode() and 0xFFFFFF

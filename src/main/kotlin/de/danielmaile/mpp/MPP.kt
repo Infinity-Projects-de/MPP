@@ -93,6 +93,8 @@ class MPP : JavaPlugin() {
 
         registerItems()
 
+        registerRecipes()
+
         registerEvents()
 
         try {
@@ -107,6 +109,12 @@ class MPP : JavaPlugin() {
         BlockBreakingService.init()
 
         Metrics(this, 18055)
+    }
+
+    private fun registerRecipes() {
+        for (item in ItemRegistry.getAllItems()) {
+            item.registerRecipes()
+        }
     }
 
     private fun registerPacketListeners() {
