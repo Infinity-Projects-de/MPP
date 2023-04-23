@@ -48,7 +48,7 @@ class ItemCollectionGUI {
 
         // items
         gui.addItem(
-            *ItemRegistry.getAllItems().map { it ->
+            *ItemRegistry.getAllItems().map {
                 GuiItem(it.itemStack(1)) { event ->
                     event.whoClicked.inventory.addItem(it.itemStack(1))
                 }
