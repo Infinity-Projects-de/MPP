@@ -107,7 +107,7 @@ class ItemRegistryTest {
 
     @Test
     fun `Getting an unregistered item by id should throw a NoSuchElementException`() {
-        assertThrows<NoSuchElementException>() {
+        assertThrows<NoSuchElementException> {
             ItemRegistry.getItemByID("abc:idontexist")
         }
     }
@@ -122,7 +122,7 @@ class ItemRegistryTest {
 
     @Test
     fun `Getting an unregistered item ID should throw a NoSuchElementException`() {
-        assertThrows<NoSuchElementException>() {
+        assertThrows<NoSuchElementException> {
             ItemRegistry.getItemID(Blocks.AETHER_STONE)
         }
     }
