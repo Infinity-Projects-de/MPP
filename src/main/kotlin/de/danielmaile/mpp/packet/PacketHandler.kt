@@ -39,7 +39,7 @@ import kotlin.reflect.jvm.javaType
 
 object PacketHandler : Listener {
 
-    val PACKET_PREFIX = "mpp"
+    const val PACKET_PREFIX = "mpp"
 
     // Bukkit event handlers
 
