@@ -24,10 +24,10 @@ import org.bukkit.inventory.ShapelessRecipe
 
 class ShapelessRecipe(
     private val result: ItemStack,
-    private val ingredients: List<ItemStack?>
+    private val ingredients: Array<ItemStack?>
 ) : CraftingRecipe() {
 
-    override val spigotRecipes: List<Recipe>
+    override val recipes: List<Recipe>
         get() = listOf(getSpigotRecipe())
 
     private fun getSpigotRecipe(): Recipe {

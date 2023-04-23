@@ -25,14 +25,15 @@ import de.danielmaile.mpp.data.DataPackManager
 import de.danielmaile.mpp.data.ResourcePackManager
 import de.danielmaile.mpp.data.config.ConfigManager
 import de.danielmaile.mpp.data.config.LanguageManager
+import de.danielmaile.mpp.item.ItemRegistry
 import de.danielmaile.mpp.item.ListenerConverter
 import de.danielmaile.mpp.item.ListenerCrafting
-import de.danielmaile.mpp.item.function.ListenerArmor
+import de.danielmaile.mpp.item.function.ArmorListener
 import de.danielmaile.mpp.item.function.ListenerItem
-import de.danielmaile.mpp.item.function.magicwand.ListenerMagicWand
-import de.danielmaile.mpp.item.function.particle.ListenerParticle
-import de.danielmaile.mpp.item.function.particle.ParticleManager
-import de.danielmaile.mpp.item.recipe.recipeList
+import de.danielmaile.mpp.item.items.Armors
+import de.danielmaile.mpp.item.items.Blocks
+import de.danielmaile.mpp.item.items.Ingredients
+import de.danielmaile.mpp.item.items.Tools
 import de.danielmaile.mpp.mob.ListenerMPPMobs
 import de.danielmaile.mpp.mob.MPPMobSpawnManager
 import de.danielmaile.mpp.mob.listeners.ListenerHealer
@@ -41,7 +42,9 @@ import de.danielmaile.mpp.mob.listeners.ListenerKing
 import de.danielmaile.mpp.mob.listeners.ListenerNecromancer
 import de.danielmaile.mpp.mob.listeners.ListenerPlague
 import de.danielmaile.mpp.mob.listeners.ListenerRift
+import de.danielmaile.mpp.packet.PacketHandler
 import de.danielmaile.mpp.util.logError
+import de.danielmaile.mpp.world.aether.LamaListener
 import de.danielmaile.mpp.world.aether.ListenerAether
 import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
@@ -63,9 +66,6 @@ class MPP : JavaPlugin() {
     lateinit var configManager: ConfigManager
         private set
 
-    lateinit var particleManager: ParticleManager
-        private set
-
     lateinit var aetherWorld: World
         private set
 
@@ -83,12 +83,17 @@ class MPP : JavaPlugin() {
             return
         }
 
+        PacketHandler.enable(this)
+        registerPacketListeners()
+
         DataPackManager.saveOrUpdateDataPack()
 
         // register commands, events and recipes
         Bukkit.getPluginCommand("mpp")?.setExecutor(CommandMPP())
+
+        registerItems()
+
         registerEvents()
-        registerRecipes()
 
         try {
             aetherWorld = Bukkit.getWorld("world_aether_aether") ?: throw Exception("Aether not found")
@@ -98,12 +103,15 @@ class MPP : JavaPlugin() {
             return
         }
 
-        particleManager = ParticleManager()
-
         CloudEffects()
         BlockBreakingService.init()
 
         Metrics(this, 18055)
+    }
+
+    private fun registerPacketListeners() {
+        PacketHandler.registerListeners(BlockBreakingService)
+        PacketHandler.registerListeners(LamaListener())
     }
 
     /**
@@ -114,7 +122,7 @@ class MPP : JavaPlugin() {
         sendMessage("")
         sendMessage("")
         for (s in getLanguageManager().getStringList("messages.errors.first_time_server_shutdown")) {
-            sendMessage(ChatColor.GREEN.toString() + s)
+            sendMessage(s)
         }
         if (!message.isNullOrBlank()) {
             sendMessage(message)
@@ -123,6 +131,10 @@ class MPP : JavaPlugin() {
         }
         sendMessage("")
         sendMessage("------------------------------")
+    }
+
+    override fun onDisable() {
+        PacketHandler.destroy()
     }
 
     private fun sendMessage(text: String) {
@@ -156,10 +168,8 @@ class MPP : JavaPlugin() {
         registerListener(ListenerBlock())
         registerListener(ListenerCrafting())
         registerListener(ListenerItem())
-        registerListener(ListenerArmor())
-        registerListener(ListenerParticle())
         registerListener(ListenerConverter())
-        registerListener(ListenerMagicWand())
+        registerListener(ArmorListener())
 
         registerMobListeners()
 
@@ -179,13 +189,6 @@ class MPP : JavaPlugin() {
 
     private fun registerListener(listener: Listener) {
         server.pluginManager.registerEvents(listener, this)
-    }
-    private fun registerRecipes() {
-        for (recipes in recipeList) {
-            for (recipe in recipes.spigotRecipes) {
-                Bukkit.addRecipe(recipe)
-            }
-        }
     }
 
     /**
@@ -275,4 +278,11 @@ fun inst(): MPP {
 
 fun aetherWorld(): World {
     return MPP.instance.aetherWorld
+}
+
+fun registerItems() {
+    ItemRegistry.registerItems(Armors.values())
+    ItemRegistry.registerItems(Blocks.values())
+    ItemRegistry.registerItems(Ingredients.values())
+    ItemRegistry.registerItems(Tools.values())
 }

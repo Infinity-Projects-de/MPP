@@ -17,8 +17,9 @@
 
 package de.danielmaile.mpp.block
 
-import de.danielmaile.mpp.item.ItemType
+import de.danielmaile.mpp.item.ItemRegistry
 import de.danielmaile.mpp.item.MPP_ITEM_TAG_KEY
+import de.danielmaile.mpp.item.items.Blocks
 import de.danielmaile.mpp.util.centerLocation
 import de.danielmaile.mpp.util.doesKeyExist
 import de.danielmaile.mpp.util.isCustom
@@ -66,14 +67,12 @@ class ListenerBlock : Listener {
             return
         }
 
-        val itemType = ItemType.fromTag(itemStack) ?: return
-        val blockType = itemType.placeBlockType
-
-        // if item has no corresponding block type return
-        if (blockType == null) {
+        val item = ItemRegistry.getItemFromItemstack(itemStack) ?: return
+        if (item !is Blocks) {
             event.isCancelled = true
             return
         }
+        val blockType = item.blockType
 
         // place a noteblock with the correct block state
         block.type = Material.NOTE_BLOCK
@@ -121,8 +120,8 @@ class ListenerBlock : Listener {
         }
 
         // player is not trying to place a block
-        val item = event.item ?: return
-        if (!item.type.isBlock) {
+        val itemStack = event.item ?: return
+        if (!itemStack.type.isBlock) {
             return
         }
 
@@ -139,19 +138,20 @@ class ListenerBlock : Listener {
 
         // call BlockPlaceEvent and return if it's cancelled
         val blockPlaceEvent =
-            BlockPlaceEvent(placeBlock, placeBlock.state, clickedBlock, item, event.player, true, EquipmentSlot.HAND)
+            BlockPlaceEvent(placeBlock, placeBlock.state, clickedBlock, itemStack, event.player, true, EquipmentSlot.HAND)
         Bukkit.getPluginManager().callEvent(blockPlaceEvent)
         if (blockPlaceEvent.isCancelled) {
             return
         }
 
-        val itemType = ItemType.fromTag(item)
-        if (itemType == null) {
+        val item = ItemRegistry.getItemFromItemstack(itemStack)
+        if (item == null) {
             // place block if it's a non-custom block
-            placeBlock.type = item.type
+            placeBlock.type = itemStack.type
         } else {
             // if item has no corresponding block type return
-            val blockType = itemType.placeBlockType ?: return
+            if (item !is Blocks) return
+            val blockType = item.blockType
 
             // place a noteblock with the correct block state
             placeBlock.type = Material.NOTE_BLOCK
@@ -167,7 +167,7 @@ class ListenerBlock : Listener {
 
         // remove item from inventory
         if (event.player.gameMode != GameMode.CREATIVE) {
-            item.amount--
+            itemStack.amount--
         }
     }
 
@@ -194,8 +194,8 @@ class ListenerBlock : Listener {
         event.blockList().removeAll(customBlocks)
         customBlocks.forEach {
             val blockType = BlockType.fromBlockData(it.blockData as NoteBlock) ?: return@forEach
-            val itemType = ItemType.fromPlaceBlockType(blockType) ?: return@forEach
-            it.world.dropItemNaturally(it.location, itemType.getItemStack(1))
+            val itemType = Blocks.getBlockDrop(blockType) ?: return@forEach
+            it.world.dropItemNaturally(it.location, itemType.itemStack(1))
             it.type = Material.AIR
         }
     }

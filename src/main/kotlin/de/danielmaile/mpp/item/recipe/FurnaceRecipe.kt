@@ -28,7 +28,7 @@ class FurnaceRecipe(
     time: Int
 ) : Recipe() {
 
-    override val spigotRecipes = listOf(
+    override val recipes = listOf(
         FurnaceRecipe(
             getRandomRecipeKey(),
             result,

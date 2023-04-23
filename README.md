@@ -8,7 +8,6 @@ You can download the latest development builds from [here](https://github.com/dm
 
 **Please note:**
 - Only the newest version of [Paper](https://papermc.io/) is supported. **Spigot builds will not work!**
-- [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) is required.
 - This plugin is still in early development and as such bugs can occur.
 
 ## 🐛 Report bugs or other issues
