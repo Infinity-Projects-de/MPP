@@ -51,7 +51,6 @@ class ArmorListener : Listener {
                 ArmorSlot.CHESTPLATE -> armorProtection.chestPlate
                 ArmorSlot.LEGGINGS -> armorProtection.leggings
                 ArmorSlot.BOOTS -> armorProtection.boots
-                else -> return
             }
 
             val armorToughness = armorMaterial.armorToughness
@@ -91,7 +90,7 @@ class ArmorListener : Listener {
         }
     }
 
-    fun ItemMeta.setAttributeModifier(attribute: Attribute, value: Double) {
+    private fun ItemMeta.setAttributeModifier(attribute: Attribute, value: Double) {
         removeAttributeModifier(attribute)
         addAttributeModifier(attribute, AttributeModifier(attribute.key.key, value, AttributeModifier.Operation.ADD_NUMBER))
     }
