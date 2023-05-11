@@ -107,15 +107,15 @@ object BlockBreakingService {
 
         val durabilityLvl = tool.getEnchantmentLevel(Enchantment.DURABILITY)
         if (Random.nextInt(0, durabilityLvl + 1) != 0) return
-        var damage = 1
 
         if (mppTool is Tools) {
-            damage = mppTool.trueDamage
+            mppTool.damage(tool)
+            return
         }
 
         tool.apply {
             itemMeta = (itemMeta as Damageable).apply {
-                this.damage += damage
+                this.damage += 1
             }
         }
     }

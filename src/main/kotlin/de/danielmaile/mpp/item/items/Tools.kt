@@ -21,21 +21,19 @@ import de.danielmaile.mpp.block.BlockType
 import de.danielmaile.mpp.block.utils.blocks
 import de.danielmaile.mpp.block.utils.isToolRequired
 import de.danielmaile.mpp.block.utils.nms
-import de.danielmaile.mpp.item.Item
+import de.danielmaile.mpp.item.DamageableItem
 import de.danielmaile.mpp.item.ToolTier
 import de.danielmaile.mpp.item.recipe.recipes.ToolRecipe
 import net.minecraft.tags.BlockTags
-import net.minecraft.world.item.Tiers
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.Recipe
-import kotlin.math.ceil
 
 enum class Tools(
     val toolTier: ToolTier,
     val toolType: ToolType
-) : Item {
+) : DamageableItem {
     AETHER_WOODEN_AXE(ToolTier.AETHER_WOOD, ToolType.AXE),
     AETHER_WOODEN_HOE(ToolTier.AETHER_WOOD, ToolType.HOE),
     AETHER_WOODEN_PICKAXE(ToolTier.AETHER_WOOD, ToolType.PICKAXE),
@@ -52,6 +50,9 @@ enum class Tools(
     ZANITE_HOE(ToolTier.ZANITE, ToolType.HOE),
     ZANITE_PICKAXE(ToolTier.ZANITE, ToolType.PICKAXE),
     ZANITE_SHOVEL(ToolTier.ZANITE, ToolType.SHOVEL);
+
+    override val maxDamage: Int
+        get() = toolTier.itemDurability
 
     override val material: Material
         get() = when (toolType) {
@@ -118,11 +119,4 @@ enum class Tools(
             blockType.toolType == toolType || blockType.tier == 0
         }
     }
-
-    val trueDamage: Int
-        get() {
-            println(Tiers.NETHERITE.uses)
-            println(toolTier.itemDurability)
-            return ceil(Tiers.NETHERITE.uses / toolTier.itemDurability * 1.0).toInt()
-        }
 }
