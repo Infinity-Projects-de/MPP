@@ -55,10 +55,10 @@ enum class Tools(
 
     override val material: Material
         get() = when (toolType) {
-            ToolType.AXE -> Material.NETHERITE_AXE
-            ToolType.PICKAXE -> Material.NETHERITE_PICKAXE
-            ToolType.HOE -> Material.NETHERITE_HOE
-            ToolType.SHOVEL -> Material.NETHERITE_SHOVEL
+            ToolType.AXE -> Material.WOODEN_AXE
+            ToolType.PICKAXE -> Material.WOODEN_PICKAXE
+            ToolType.HOE -> Material.WOODEN_HOE
+            ToolType.SHOVEL -> Material.WOODEN_SHOVEL
         }
 
     override fun getRecipes(): List<Recipe> {
