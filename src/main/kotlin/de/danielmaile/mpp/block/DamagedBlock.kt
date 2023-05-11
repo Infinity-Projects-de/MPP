@@ -61,16 +61,16 @@ class DamagedBlock(
         get() = totalDamage > 1f
 
     fun breakBlock(tool: ItemStack) {
-        var mppTool = ItemRegistry.getItemFromItemstack(tool)
-        if (mppTool !is Tools) mppTool = null
+        var mppItem = ItemRegistry.getItemFromItemstack(tool)
+        if (mppItem !is Tools) mppItem = null
 
         if (blockType == null) {
-            if ((mppTool as? Tools)?.isToolCorrect(block) != false || !block.isToolRequired()) {
+            if ((mppItem as? Tools)?.isToolCorrect(block) != false || !block.isToolRequired()) {
                 block.breakNaturally(tool, true, true)
                 return
             }
         } else {
-            if ((mppTool as? Tools)?.isToolCorrect(block) == true || tool.isToolCorrect(blockType) || !block.isToolRequired()) {
+            if (!block.isToolRequired() || (mppItem as? Tools)?.isToolCorrect(block) ?: tool.isToolCorrect(blockType)) {
                 val item = Blocks.getBlockDrop(blockType) ?: return
                 block.world.dropItemNaturally(block.location, item.itemStack(1))
             }
