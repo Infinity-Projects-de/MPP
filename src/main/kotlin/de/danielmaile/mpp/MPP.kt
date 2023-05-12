@@ -51,6 +51,7 @@ import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.World
 import org.bukkit.configuration.file.YamlConfiguration
+import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 
@@ -163,20 +164,24 @@ class MPP : JavaPlugin() {
     }
 
     private fun registerEvents() {
-        server.pluginManager.registerEvents(ListenerAether(), this)
-        server.pluginManager.registerEvents(ListenerBlock(), this)
-        server.pluginManager.registerEvents(ListenerCrafting(), this)
-        server.pluginManager.registerEvents(ListenerItem(), this)
-        server.pluginManager.registerEvents(ListenerMPPMobs(), this)
-        server.pluginManager.registerEvents(MPPMobSpawnManager(), this)
-        server.pluginManager.registerEvents(ListenerNecromancer(), this)
-        server.pluginManager.registerEvents(ListenerKing(), this)
-        server.pluginManager.registerEvents(ListenerPlague(), this)
-        server.pluginManager.registerEvents(ListenerRift(), this)
-        server.pluginManager.registerEvents(ListenerHealer(), this)
-        server.pluginManager.registerEvents(ListenerHitman(), this)
-        server.pluginManager.registerEvents(ArmorListener(), this)
-        server.pluginManager.registerEvents(ResourcePackManager(), this)
+        registerListener(ListenerAether())
+        registerListener(ListenerBlock())
+        registerListener(ListenerCrafting())
+        registerListener(ListenerItem())
+        registerListener(ListenerMPPMobs())
+        registerListener(MPPMobSpawnManager())
+        registerListener(ListenerNecromancer())
+        registerListener(ListenerKing())
+        registerListener(ListenerPlague())
+        registerListener(ListenerRift())
+        registerListener(ListenerHealer())
+        registerListener(ListenerHitman())
+        registerListener(ArmorListener())
+        registerListener(ResourcePackManager())
+    }
+
+    private fun registerListener(listener: Listener) {
+        server.pluginManager.registerEvents(listener, this)
     }
 
     /**
