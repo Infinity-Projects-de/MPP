@@ -65,8 +65,14 @@ class DamagedBlock(
         if (mppItem !is Tools) mppItem = null
 
         if (blockType == null) {
-            if ((mppItem as? Tools)?.isToolCorrect(block) != false || !block.isToolRequired()) {
-                block.breakNaturally(tool, true, true)
+            if (mppItem == null) throw IllegalStateException()
+            val mppTool = mppItem as? Tools
+
+            if (mppTool?.isToolCorrect(block) != false || !block.isToolRequired()) {
+                val superTool: ItemStack = mppTool?.netheriteTool ?: mppItem.itemStack(1)
+                superTool.addEnchantments(tool.enchantments)
+
+                block.breakNaturally(superTool, true, true)
                 return
             }
         } else {
@@ -78,6 +84,7 @@ class DamagedBlock(
 
         Bukkit.getScheduler().runTask(inst()) { ->
             breakSound()
+            breakParticles()
             block.type = Material.AIR
         }
     }

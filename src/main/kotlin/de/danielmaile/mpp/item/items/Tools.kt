@@ -62,6 +62,16 @@ enum class Tools(
             ToolType.SHOVEL -> Material.WOODEN_SHOVEL
         }
 
+    val netheriteTool: ItemStack
+        get() = ItemStack(
+            when (toolType) {
+                ToolType.AXE -> Material.NETHERITE_AXE
+                ToolType.PICKAXE -> Material.NETHERITE_PICKAXE
+                ToolType.HOE -> Material.NETHERITE_HOE
+                ToolType.SHOVEL -> Material.NETHERITE_SHOVEL
+            }
+        )
+
     override fun getRecipes(): List<Recipe> {
         val ingredients = toolTier.toolIngredients
         val stick = ingredients.stickIngredient?.itemStack?.let { it(1) } ?: ItemStack(Material.STICK)
