@@ -27,6 +27,7 @@ import de.danielmaile.mpp.item.items.Tools
 import de.danielmaile.mpp.util.sendDestructionStagePacket
 import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.Particle
 import org.bukkit.block.Block
 import org.bukkit.inventory.ItemStack
 import kotlin.math.floor
@@ -46,9 +47,13 @@ class DamagedBlock(
 
     private val hardness = blockType?.hardness ?: block.hardness
 
+    private val blockData = block.blockData
+
     fun tick(damage: Float) {
         ticks++
-        hitSound()
+        if (ticks % 4 == 0) {
+            hitSound()
+        }
         totalDamage += (damage / hardness)
         val currentPhase = min(floor(totalDamage / damagePerPhase).toInt(), 9)
         if (phase != currentPhase) {
@@ -89,10 +94,21 @@ class DamagedBlock(
         }
     }
 
-    private fun hitParticles() {
-    }
-
     private fun breakParticles() {
+        val x = block.location.x - 1.0
+        val y = block.location.y - 1.0
+        val z = block.location.z - 1.0
+
+        for (i in 0 until 4) {
+            for (j in 0 until 4) {
+                for (k in 0 until 4) {
+                    val xo = (i.toDouble() + 0.5) / 4
+                    val yo = (j.toDouble() + 0.5) / 4
+                    val zo = (k.toDouble() + 0.5) / 4
+                    block.world.spawnParticle(Particle.BLOCK_CRACK, x + xo + 1.0, y + yo + 1.0, z + zo + 1.0, 1, xo - 0.5, yo - 0.5, zo - 0.5, blockData)
+                }
+            }
+        }
     }
 
     private fun breakSound() {
