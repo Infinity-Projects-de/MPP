@@ -51,7 +51,7 @@ class DamagedBlock(
 
     fun tick(damage: Float) {
         ticks++
-        if (ticks % 4 == 0) {
+        if (ticks % 4 == 0 && blockType != null) {
             hitSound()
         }
         totalDamage += (damage / hardness)
@@ -117,8 +117,8 @@ class DamagedBlock(
     }
 
     private fun hitSound() {
-        val sound = blockType?.breakSound ?: // TODO: Should be hit sound
-            block.blockSoundGroup.hitSound
+        val sound = blockType?.hitSound
+            ?: block.blockSoundGroup.hitSound
         block.world.playSound(block.location, sound, 1f, 1f)
     }
 
