@@ -112,7 +112,7 @@ enum class Tools(
             } else if (i < 1 && nmsBlock.`is`(BlockTags.NEEDS_STONE_TOOL)) {
                 false
             } else {
-                itemStack(1).blocks?.let { nmsBlock.`is`(it) } ?: !block.isToolRequired()
+                netheriteTool.blocks?.let { nmsBlock.`is`(it) } ?: !block.isToolRequired()
             }
         } else {
             i >= blockType.tier
@@ -124,7 +124,7 @@ enum class Tools(
         val blockType = BlockType.fromBlock(block)
 
         return if (blockType == null) {
-            itemStack(1).blocks?.let { nmsBlock.`is`(it) } ?: false
+            netheriteTool.blocks?.let { nmsBlock.`is`(it) } ?: false
         } else {
             blockType.toolType == toolType || blockType.tier == 0
         }
