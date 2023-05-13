@@ -41,6 +41,8 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffectType
 import kotlin.math.min
 import kotlin.math.pow
+import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.jvm.isAccessible
 
 val Block.nms: BlockState
     get() = (this as CraftBlock).nms
@@ -61,12 +63,11 @@ val ItemStack.blocks: TagKey<net.minecraft.world.level.block.Block>?
         val nmsItem = this.nmsItem
         if (nmsItem !is DiggerItem) return null
 
-        // TODO: Use kotlin reflections
-        val blocks = DiggerItem::class.java.getDeclaredField("a")
+        val blocks = DiggerItem::class.declaredMemberProperties.firstOrNull { it.name == "a" } ?: return null
         blocks.isAccessible = true
 
         return try {
-            blocks.get(nmsItem) as? TagKey<net.minecraft.world.level.block.Block>?
+            blocks.getter.call(nmsItem) as? TagKey<net.minecraft.world.level.block.Block>?
         } catch (e: ClassCastException) {
             null
         }
