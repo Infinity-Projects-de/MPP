@@ -90,10 +90,12 @@ class ShapedRecipe(
                         try {
                             shapedRecipe.setIngredient(ch, ExactChoice(item))
                         } catch (e: IllegalArgumentException) {
-                            println(recipe)
+                            /*println(recipe)
                             for ((item, ch) in ingredientsToLetter) {
                                 println("${item?.type?.name ?: "NULL" } $ch")
-                            }
+                            }*/
+
+                            // FIXME: NEED HELP (ignoring for now)
                         }
                     }
                 }
