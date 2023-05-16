@@ -11,7 +11,35 @@ You can download the latest development builds from [here](https://github.com/dm
 - This plugin is still in early development and as such bugs can occur.
 
 ## 🐛 Report bugs or other issues
-If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://github.com/dm432/MPP/issues). When doing so, make sure to use one of the provided templates and fill out all the requested information. Make sure to keep your issue's description clear and concise. Your issue's title should also be easy to digest, giving our developers and reporters a good idea of what's wrong without including too many details.
+If you're running into bugs or other problems, feel free to open an 
+issue on our [issue tracker](https://github.com/dm432/MPP/issues). 
+When doing so, make sure to use one of the provided templates and fill 
+out all the requested information. Make sure to keep your issue's 
+description clear and concise. Your issue's title should also be easy 
+to digest, giving our developers and reporters a good idea of what's 
+wrong without including too many details.
+
+## 🔨How to build
+If you're a user, we advise you not to build the plugin on your own due to a possible 
+misconfiguration of the resource pack.
+
+We use Gradle as our toolchain, so building the plugin is very easy.
+
+`./gradlew build` is used to build both the plugin and the resource pack
+
+`./gradlew buildResourcepack` is used to only build the resource pack
+
+The plugin is built in `./build/libs` and the resource pack in `./build/resourcepack`. 
+
+**Notice:**
+You usually won't need the resource pack to be built and installed as a 
+user, however, if you're a developer and/or an artist that made a change
+on the resource pack or made a commit (local or remote) you will have to
+run `./gradlew runResourcepackServer` so the plugin detects there's a 
+local resource pack. The reason behind is that this plugin usually uses 
+GitHub's releases to download the resource pack, that means the commit
+version must match and that not hosted (locally) changes to the resource
+pack will have no effect.
 
 ## 🔧 Contribute
 If you want to contribute please take a look at our [Contribution Guide](https://github.com/dm432/MPP/blob/master/CONTRIBUTING.md).
