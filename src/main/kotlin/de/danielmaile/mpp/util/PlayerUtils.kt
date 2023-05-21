@@ -17,14 +17,13 @@
 
 package de.danielmaile.mpp.util
 
+import de.danielmaile.mpp.item.ArmorMaterial
 import de.danielmaile.mpp.item.ItemRegistry
 import de.danielmaile.mpp.item.items.Armors
-import de.danielmaile.mpp.item.utils.ArmorMaterial
 import net.minecraft.network.protocol.Packet
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.network.ServerGamePacketListenerImpl
 import org.bukkit.FluidCollisionMode
-import org.bukkit.Material
 import org.bukkit.attribute.Attribute
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
@@ -40,7 +39,7 @@ val Player.connection: ServerGamePacketListenerImpl
     get() = serverPlayer.connection
 
 fun Player.isGrounded(): Boolean {
-    return this.getBlockBelow().type != Material.AIR
+    return !this.isFlying && this.velocity.y == 0.0
 }
 
 fun Player.getBlockBelow(): Block {

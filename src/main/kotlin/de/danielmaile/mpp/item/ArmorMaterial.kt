@@ -15,7 +15,7 @@
  * along with MPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.danielmaile.mpp.item.utils
+package de.danielmaile.mpp.item
 
 import de.danielmaile.mpp.item.items.Ingredients
 import org.bukkit.Color

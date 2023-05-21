@@ -17,39 +17,42 @@
 
 package de.danielmaile.mpp.block
 
-import de.danielmaile.mpp.util.ToolType
+import de.danielmaile.mpp.item.items.Tools.ToolType
 import org.bukkit.Instrument
 import org.bukkit.Material
 import org.bukkit.Note
 import org.bukkit.Sound
+import org.bukkit.block.Block
 import org.bukkit.block.data.BlockData
 import org.bukkit.block.data.type.NoteBlock
 
 enum class BlockType(
     val toolType: ToolType,
+    var tier: Int,
     val hardness: Float,
     val placeSound: Sound,
-    val breakSound: Sound
+    val breakSound: Sound,
+    val hitSound: Sound
 ) {
 
     // don't change order because existing items will break
-    AETHER_LOG(ToolType.AXE, 2f, Sound.BLOCK_WOOD_PLACE, Sound.BLOCK_WOOD_BREAK),
-    AETHER_PLANKS(ToolType.AXE, 2f, Sound.BLOCK_WOOD_PLACE, Sound.BLOCK_WOOD_BREAK),
-    AETHER_LEAVES(ToolType.AXE, 2f, Sound.BLOCK_GRASS_PLACE, Sound.BLOCK_GRASS_BREAK),
-    ZANITE_ORE(ToolType.PICKAXE, 8f, Sound.BLOCK_STONE_PLACE, Sound.BLOCK_STONE_BREAK),
-    GRAVITITE_ORE(ToolType.PICKAXE, 10f, Sound.BLOCK_STONE_PLACE, Sound.BLOCK_STONE_BREAK),
-    AETHER_STONE(ToolType.PICKAXE, 1.5f, Sound.BLOCK_STONE_PLACE, Sound.BLOCK_STONE_BREAK),
-    CLOUD_HEAL(ToolType.SHOVEL, 0.2f, Sound.BLOCK_WOOL_PLACE, Sound.BLOCK_WOOL_BREAK),
-    CLOUD_SLOW_FALLING(ToolType.SHOVEL, 0.2f, Sound.BLOCK_WOOL_PLACE, Sound.BLOCK_WOOL_BREAK),
-    CLOUD_SPEED(ToolType.SHOVEL, 0.2f, Sound.BLOCK_WOOL_PLACE, Sound.BLOCK_WOOL_BREAK),
-    CLOUD_JUMP(ToolType.SHOVEL, 0.2f, Sound.BLOCK_WOOL_PLACE, Sound.BLOCK_WOOL_BREAK),
-    CLOUD_HEAL2(ToolType.SHOVEL, 0.2f, Sound.BLOCK_WOOL_PLACE, Sound.BLOCK_WOOL_BREAK),
-    CLOUD_SPEED2(ToolType.SHOVEL, 0.2f, Sound.BLOCK_WOOL_PLACE, Sound.BLOCK_WOOL_BREAK),
-    CLOUD_JUMP2(ToolType.SHOVEL, 0.2f, Sound.BLOCK_WOOL_PLACE, Sound.BLOCK_WOOL_BREAK),
-    AETHER_GRASS_BLOCK(ToolType.SHOVEL, 0.6f, Sound.BLOCK_GRASS_PLACE, Sound.BLOCK_GRASS_BREAK),
-    AETHER_DIRT(ToolType.SHOVEL, 0.6f, Sound.BLOCK_ROOTED_DIRT_PLACE, Sound.BLOCK_ROOTED_DIRT_BREAK),
-    ZANITE_BLOCK(ToolType.PICKAXE, 10f, Sound.BLOCK_STONE_PLACE, Sound.BLOCK_STONE_BREAK),
-    GRAVITITE_BLOCK(ToolType.PICKAXE, 10f, Sound.BLOCK_STONE_PLACE, Sound.BLOCK_STONE_BREAK);
+    AETHER_LOG(ToolType.AXE, 0, 2f, Sound.BLOCK_WOOD_PLACE, Sound.BLOCK_WOOD_BREAK, Sound.BLOCK_WOOD_HIT),
+    AETHER_PLANKS(ToolType.AXE, 0, 2f, Sound.BLOCK_WOOD_PLACE, Sound.BLOCK_WOOD_BREAK, Sound.BLOCK_WOOD_HIT),
+    AETHER_LEAVES(ToolType.AXE, 0, 2f, Sound.BLOCK_GRASS_PLACE, Sound.BLOCK_GRASS_BREAK, Sound.BLOCK_GRASS_HIT),
+    ZANITE_ORE(ToolType.PICKAXE, 1, 8f, Sound.BLOCK_STONE_PLACE, Sound.BLOCK_STONE_BREAK, Sound.BLOCK_STONE_HIT),
+    GRAVITITE_ORE(ToolType.PICKAXE, 2, 10f, Sound.BLOCK_STONE_PLACE, Sound.BLOCK_STONE_BREAK, Sound.BLOCK_STONE_HIT),
+    AETHER_STONE(ToolType.PICKAXE, 1, 1.5f, Sound.BLOCK_STONE_PLACE, Sound.BLOCK_STONE_BREAK, Sound.BLOCK_STONE_HIT),
+    CLOUD_HEAL(ToolType.SHOVEL, 0, 0.2f, Sound.BLOCK_WOOL_PLACE, Sound.BLOCK_WOOL_BREAK, Sound.BLOCK_WOOL_HIT),
+    CLOUD_SLOW_FALLING(ToolType.SHOVEL, 0, 0.2f, Sound.BLOCK_WOOL_PLACE, Sound.BLOCK_WOOL_BREAK, Sound.BLOCK_WOOL_HIT),
+    CLOUD_SPEED(ToolType.SHOVEL, 0, 0.2f, Sound.BLOCK_WOOL_PLACE, Sound.BLOCK_WOOL_BREAK, Sound.BLOCK_WOOL_HIT),
+    CLOUD_JUMP(ToolType.SHOVEL, 0, 0.2f, Sound.BLOCK_WOOL_PLACE, Sound.BLOCK_WOOL_BREAK, Sound.BLOCK_WOOL_HIT),
+    CLOUD_HEAL2(ToolType.SHOVEL, 0, 0.2f, Sound.BLOCK_WOOL_PLACE, Sound.BLOCK_WOOL_BREAK, Sound.BLOCK_WOOL_HIT),
+    CLOUD_SPEED2(ToolType.SHOVEL, 0, 0.2f, Sound.BLOCK_WOOL_PLACE, Sound.BLOCK_WOOL_BREAK, Sound.BLOCK_WOOL_HIT),
+    CLOUD_JUMP2(ToolType.SHOVEL, 0, 0.2f, Sound.BLOCK_WOOL_PLACE, Sound.BLOCK_WOOL_BREAK, Sound.BLOCK_WOOL_HIT),
+    AETHER_GRASS_BLOCK(ToolType.SHOVEL, 0, 0.6f, Sound.BLOCK_GRASS_PLACE, Sound.BLOCK_GRASS_BREAK, Sound.BLOCK_WOOD_BREAK),
+    AETHER_DIRT(ToolType.SHOVEL, 0, 0.6f, Sound.BLOCK_ROOTED_DIRT_PLACE, Sound.BLOCK_ROOTED_DIRT_BREAK, Sound.BLOCK_ROOTED_DIRT_HIT),
+    ZANITE_BLOCK(ToolType.PICKAXE, 1, 10f, Sound.BLOCK_STONE_PLACE, Sound.BLOCK_STONE_BREAK, Sound.BLOCK_STONE_HIT),
+    GRAVITITE_BLOCK(ToolType.PICKAXE, 2, 10f, Sound.BLOCK_STONE_PLACE, Sound.BLOCK_STONE_BREAK, Sound.BLOCK_STONE_HIT);
 
     val instrument: Instrument
     val note: Note
@@ -91,6 +94,14 @@ enum class BlockType(
         fun fromBlockData(noteBlockData: NoteBlock): BlockType? {
             return values().firstOrNull {
                 it.instrument == noteBlockData.instrument && it.note == noteBlockData.note && it.isPowered == noteBlockData.isPowered
+            }
+        }
+
+        fun fromBlock(block: Block): BlockType? {
+            return if (block.blockData !is NoteBlock) {
+                null
+            } else {
+                fromBlockData(block.blockData as NoteBlock)
             }
         }
     }

@@ -17,17 +17,23 @@
 
 package de.danielmaile.mpp.item.items
 
-import de.danielmaile.mpp.item.Item
+import de.danielmaile.mpp.block.BlockType
+import de.danielmaile.mpp.block.utils.blocks
+import de.danielmaile.mpp.block.utils.isToolRequired
+import de.danielmaile.mpp.block.utils.nms
+import de.danielmaile.mpp.item.DamageableItem
+import de.danielmaile.mpp.item.ToolTier
 import de.danielmaile.mpp.item.recipe.recipes.ToolRecipe
-import de.danielmaile.mpp.item.utils.ToolTier
+import net.minecraft.tags.BlockTags
 import org.bukkit.Material
+import org.bukkit.block.Block
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.Recipe
 
 enum class Tools(
     val toolTier: ToolTier,
     val toolType: ToolType
-) : Item {
+) : DamageableItem {
     AETHER_WOODEN_AXE(ToolTier.AETHER_WOOD, ToolType.AXE),
     AETHER_WOODEN_HOE(ToolTier.AETHER_WOOD, ToolType.HOE),
     AETHER_WOODEN_PICKAXE(ToolTier.AETHER_WOOD, ToolType.PICKAXE),
@@ -45,6 +51,9 @@ enum class Tools(
     ZANITE_PICKAXE(ToolTier.ZANITE, ToolType.PICKAXE),
     ZANITE_SHOVEL(ToolTier.ZANITE, ToolType.SHOVEL);
 
+    override val maxDamage: Int
+        get() = toolTier.itemDurability
+
     override val material: Material
         get() = when (toolType) {
             ToolType.AXE -> Material.WOODEN_AXE
@@ -52,6 +61,16 @@ enum class Tools(
             ToolType.HOE -> Material.WOODEN_HOE
             ToolType.SHOVEL -> Material.WOODEN_SHOVEL
         }
+
+    val netheriteTool: ItemStack
+        get() = ItemStack(
+            when (toolType) {
+                ToolType.AXE -> Material.NETHERITE_AXE
+                ToolType.PICKAXE -> Material.NETHERITE_PICKAXE
+                ToolType.HOE -> Material.NETHERITE_HOE
+                ToolType.SHOVEL -> Material.NETHERITE_SHOVEL
+            }
+        )
 
     override fun getRecipes(): List<Recipe> {
         val ingredients = toolTier.toolIngredients
@@ -74,5 +93,40 @@ enum class Tools(
         PICKAXE,
         SHOVEL,
         HOE
+    }
+
+    fun isToolCorrect(block: Block): Boolean {
+        return isToolTierCorrect(block) && isToolTypeCorrect(block)
+    }
+    fun isToolTierCorrect(block: Block): Boolean {
+        val nmsBlock = block.nms
+
+        val blockType = BlockType.fromBlock(block)
+
+        val i = this.toolTier.miningLevel
+        return if (blockType == null) {
+            if (i < 3 && nmsBlock.`is`(BlockTags.NEEDS_DIAMOND_TOOL)) {
+                false
+            } else if (i < 2 && nmsBlock.`is`(BlockTags.NEEDS_IRON_TOOL)) {
+                false
+            } else if (i < 1 && nmsBlock.`is`(BlockTags.NEEDS_STONE_TOOL)) {
+                false
+            } else {
+                netheriteTool.blocks?.let { nmsBlock.`is`(it) } ?: !block.isToolRequired()
+            }
+        } else {
+            i >= blockType.tier
+        }
+    }
+
+    fun isToolTypeCorrect(block: Block): Boolean {
+        val nmsBlock = block.nms
+        val blockType = BlockType.fromBlock(block)
+
+        return if (blockType == null) {
+            netheriteTool.blocks?.let { nmsBlock.`is`(it) } ?: false
+        } else {
+            blockType.toolType == toolType || blockType.tier == 0
+        }
     }
 }

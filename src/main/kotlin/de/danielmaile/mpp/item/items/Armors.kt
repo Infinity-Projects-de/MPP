@@ -17,35 +17,36 @@
 
 package de.danielmaile.mpp.item.items
 
+import de.danielmaile.mpp.item.ArmorMaterial
 import de.danielmaile.mpp.item.Item
 import de.danielmaile.mpp.item.recipe.recipes.ArmorRecipe
-import de.danielmaile.mpp.item.utils.ArmorMaterial
-import de.danielmaile.mpp.item.utils.ArmorSlot
 import org.bukkit.Material
+import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.Recipe
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.inventory.meta.LeatherArmorMeta
 
 enum class Armors(
     val armorMaterial: ArmorMaterial,
-    val slot: ArmorSlot // Should we use this or create an enum like before
+    val slot: EquipmentSlot // Should we use this or create an enum like before
 
 ) : Item {
-    ZANITE_HELMET(ArmorMaterial.ZANITE, ArmorSlot.HELMET),
-    ZANITE_CHESTPLATE(ArmorMaterial.ZANITE, ArmorSlot.CHESTPLATE),
-    ZANITE_LEGGINGS(ArmorMaterial.ZANITE, ArmorSlot.LEGGINGS),
-    ZANITE_BOOTS(ArmorMaterial.ZANITE, ArmorSlot.BOOTS),
-    GRAVITITE_HELMET(ArmorMaterial.GRAVITITE, ArmorSlot.HELMET),
-    GRAVITITE_CHESTPLATE(ArmorMaterial.GRAVITITE, ArmorSlot.CHESTPLATE),
-    GRAVITITE_LEGGINGS(ArmorMaterial.GRAVITITE, ArmorSlot.LEGGINGS),
-    GRAVITITE_BOOTS(ArmorMaterial.GRAVITITE, ArmorSlot.BOOTS);
+    ZANITE_CHESTPLATE(ArmorMaterial.ZANITE, EquipmentSlot.CHEST),
+    ZANITE_LEGGINGS(ArmorMaterial.ZANITE, EquipmentSlot.LEGS),
+    ZANITE_HELMET(ArmorMaterial.ZANITE, EquipmentSlot.HEAD),
+    ZANITE_BOOTS(ArmorMaterial.ZANITE, EquipmentSlot.FEET),
+    GRAVITITE_CHESTPLATE(ArmorMaterial.GRAVITITE, EquipmentSlot.CHEST),
+    GRAVITITE_LEGGINGS(ArmorMaterial.GRAVITITE, EquipmentSlot.LEGS),
+    GRAVITITE_HELMET(ArmorMaterial.GRAVITITE, EquipmentSlot.HEAD),
+    GRAVITITE_BOOTS(ArmorMaterial.GRAVITITE, EquipmentSlot.FEET);
 
     override val material: Material
         get() = when (slot) {
-            ArmorSlot.HELMET -> Material.LEATHER_HELMET
-            ArmorSlot.CHESTPLATE -> Material.LEATHER_CHESTPLATE
-            ArmorSlot.LEGGINGS -> Material.LEATHER_LEGGINGS
-            ArmorSlot.BOOTS -> Material.LEATHER_BOOTS
+            EquipmentSlot.CHEST -> Material.LEATHER_CHESTPLATE
+            EquipmentSlot.HEAD -> Material.LEATHER_HELMET
+            EquipmentSlot.LEGS -> Material.LEATHER_LEGGINGS
+            EquipmentSlot.FEET -> Material.LEATHER_BOOTS
+            else -> { throw NoSuchFieldException() }
         }
 
     override fun modifySpecialItemMeta(itemMeta: ItemMeta) {
@@ -57,13 +58,15 @@ enum class Armors(
         val material = armorMaterial.ingredient.itemStack(1)
         val itemStack = this.itemStack(1)
         val recipes: List<Recipe> = when (slot) {
-            ArmorSlot.HELMET -> ArmorRecipe.HelmetRecipe(itemStack, material)
+            EquipmentSlot.CHEST -> ArmorRecipe.ChestplateRecipe(itemStack, material)
 
-            ArmorSlot.CHESTPLATE -> ArmorRecipe.ChestplateRecipe(itemStack, material)
+            EquipmentSlot.HEAD -> ArmorRecipe.HelmetRecipe(itemStack, material)
 
-            ArmorSlot.LEGGINGS -> ArmorRecipe.LeggingsRecipe(itemStack, material)
+            EquipmentSlot.LEGS -> ArmorRecipe.LeggingsRecipe(itemStack, material)
 
-            ArmorSlot.BOOTS -> ArmorRecipe.BootsRecipe(itemStack, material)
+            EquipmentSlot.FEET -> ArmorRecipe.BootsRecipe(itemStack, material)
+
+            else -> throw NoSuchFieldException()
         }.recipes
 
         return recipes

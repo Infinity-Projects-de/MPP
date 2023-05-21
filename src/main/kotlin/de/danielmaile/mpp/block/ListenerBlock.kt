@@ -193,7 +193,7 @@ class ListenerBlock : Listener {
         val customBlocks = event.blockList().filter { it.isCustom() }
         event.blockList().removeAll(customBlocks)
         customBlocks.forEach {
-            val blockType = BlockType.fromBlockData(it.blockData as NoteBlock) ?: return@forEach
+            val blockType = BlockType.fromBlock(it) ?: return@forEach
             val itemType = Blocks.getBlockDrop(blockType) ?: return@forEach
             it.world.dropItemNaturally(it.location, itemType.itemStack(1))
             it.type = Material.AIR

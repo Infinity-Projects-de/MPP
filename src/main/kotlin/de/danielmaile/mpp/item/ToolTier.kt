@@ -15,9 +15,8 @@
  * along with MPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.danielmaile.mpp.item.utils
+package de.danielmaile.mpp.item
 
-import de.danielmaile.mpp.item.Item
 import de.danielmaile.mpp.item.items.Blocks
 import de.danielmaile.mpp.item.items.Ingredients
 
@@ -33,7 +32,7 @@ enum class ToolTier(
     AETHER_WOOD(
         0,
         59,
-        2.0F,
+        1.5F,
         0.0F,
         15,
         ToolIngredients(Ingredients.AETHER_STICK, Blocks.AETHER_PLANKS)
@@ -41,7 +40,7 @@ enum class ToolTier(
     AETHER_STONE(
         1,
         131,
-        4.0F,
+        2.0F,
         1.0F,
         5,
         ToolIngredients(Ingredients.AETHER_STICK, Blocks.AETHER_STONE)
@@ -49,7 +48,7 @@ enum class ToolTier(
     ZANITE(
         3,
         1561,
-        8.0F,
+        3.0F,
         3.0F,
         10,
         ToolIngredients(Ingredients.AETHER_STICK, Ingredients.ZANITE_STONE)
@@ -57,7 +56,7 @@ enum class ToolTier(
     GRAVITITE(
         4,
         2031,
-        9.0F,
+        4.0F,
         4.0F,
         15,
         ToolIngredients(Ingredients.AETHER_STICK, Ingredients.GRAVITITE_PLATE)

@@ -20,8 +20,8 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import de.danielmaile.mpp.block.BlockType
+import de.danielmaile.mpp.item.ArmorMaterial
 import de.danielmaile.mpp.item.ItemRegistry
-import de.danielmaile.mpp.item.utils.ArmorMaterial
 import de.danielmaile.mpp.registerItems
 import de.danielmaile.mpp.util.toMinecraftName
 import org.bukkit.Material

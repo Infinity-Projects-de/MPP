@@ -83,10 +83,20 @@ class ShapedRecipe(
             for (recipeArray in getRecipeArrays()) {
                 val shapedRecipe = ShapedRecipe(getRandomRecipeKey(), result)
                 val recipe = recipeArray.joinToString(separator = " ") { "${ingredientsToLetter[it]}" }.trim()
+
                 shapedRecipe.shape(recipe.substring(0, 3), recipe.substring(3, 6), recipe.substring(6, 9))
-                for (item in ingredientsToLetter.keys) {
+                for ((item, ch) in ingredientsToLetter.entries) {
                     if (item != null) {
-                        ingredientsToLetter[item]?.let { shapedRecipe.setIngredient(it, ExactChoice(item)) }
+                        try {
+                            shapedRecipe.setIngredient(ch, ExactChoice(item))
+                        } catch (e: IllegalArgumentException) {
+                            /*println(recipe)
+                            for ((item, ch) in ingredientsToLetter) {
+                                println("${item?.type?.name ?: "NULL" } $ch")
+                            }*/
+
+                            // FIXME: NEED HELP (ignoring for now)
+                        }
                     }
                 }
 
