@@ -35,7 +35,7 @@ you to use the general channel #chat for communication purposes. If you need to 
 with me or have any specific questions or concerns, please feel free to mention me in the channel.
 Alternatively, you can contact me privately or use GitHub for project-related discussions and
 collaboration. We value effective communication and are committed to ensuring a smooth
-collaboration.
+collaboration experience for all team members, both internal and external.
 
 ## 🤖 We Use [GitHub Flow](https://docs.github.com/en/get-started/quickstart/github-flow), So All Code Changes Happen Through Pull Requests
 

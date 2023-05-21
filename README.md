@@ -64,8 +64,6 @@ includes Charly, the owner of Infinity Projects and, therefore, the leader/boss 
 Additionally, there is Chechu (myself), serving as the Project and Code Manager as well as a Senior
 Developer. Lastly, Kabo, a Senior Developer and former Project Manager, is also part of the team.
 
-experience for all team members, both internal and external.
-
 ## 📜 License information
 
 [![Asset license (Unlicensed)](https://img.shields.io/badge/assets%20license-All%20Rights%20Reserved-red.svg?style=flat-square)](https://en.wikipedia.org/wiki/All_rights_reserved)
