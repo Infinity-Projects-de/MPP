@@ -16,7 +16,7 @@ dependencyResolutionManagement {
             library("mockk", "io.mockk:mockk:1.13.5")
             library("kotlin-test", "org.jetbrains.kotlin:kotlin-test:$embeddedKotlinVersion")
 
-            bundle("plugin", listOf("kotlin-stdlib", "apache-commons-compress", "okhttp", "kotlin-reflect"))
+            bundle("plugin", listOf("kotlin-stdlib", "apache-commons-compress", "unirest-java", "okhttp", "kotlin-reflect"))
             bundle("implementation", listOf("triumph-gui", "bstats"))
             bundle("compile", listOf("kotlin-reflect", "apache-commons-compress", "unirest-java", "okhttp"))
             bundle("test", listOf("junit", "mockk", "kotlin-test"))
