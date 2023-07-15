@@ -46,13 +46,7 @@ bukkit {
     main = "de.danielmaile.mpp.MPP"
     apiVersion = "1.19"
     authors = listOf("Daniel Maile", "ChechuDEV", "Others")
-    libraries = listOf(
-        "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$embeddedKotlinVersion",
-        "org.apache.commons:commons-compress:1.21",
-        "com.konghq:unirest-java:3.13.13",
-        "com.squareup.okhttp3:okhttp:4.9.1",
-        "org.jetbrains.kotlin:kotlin-reflect:1.8.20"
-    )
+    libraries = libs.bundles.plugin.get().map { "${it.group}:${it.name}:${it.version}" }
     commands {
         register("mpp") {
             permission = "mpp.mpp"
@@ -72,21 +66,14 @@ repositories {
 
 dependencies {
     paperweight.paperDevBundle("$minecraftVersion-R0.1-SNAPSHOT")
-    implementation("dev.triumphteam:triumph-gui:3.1.2") {
+    implementation(libs.bundles.implementation) {
         exclude(group = "net.kyori", module = "adventure-api")
         exclude(group = "net.kyori", module = "adventure-text-serializer-legacy")
         exclude(group = "net.kyori", module = "adventure-text-serializer-gson")
     }
-    implementation("org.bstats:bstats-bukkit:3.0.0")
 
-    compileOnly("org.jetbrains.kotlin:kotlin-reflect:1.8.20")
-    compileOnly("org.apache.commons:commons-compress:1.21")
-    compileOnly("com.konghq:unirest-java:3.13.13")
-    compileOnly("com.squareup.okhttp3:okhttp:4.9.1")
-
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("io.mockk:mockk:1.13.5")
-    testImplementation(kotlin("test"))
+    compileOnly(libs.bundles.compile)
+    testImplementation(libs.bundles.test)
 }
 
 tasks {
