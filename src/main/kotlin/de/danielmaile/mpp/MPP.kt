@@ -94,6 +94,7 @@ class MPP : JavaPlugin() {
         registerItems()
 
         registerEvents()
+        de.danielmaile.mpp.gui.registerEvents()
 
         try {
             worldManager = WorldManager()
@@ -108,7 +109,7 @@ class MPP : JavaPlugin() {
 
         BlockBreakingService.initializeBreakingScheduler()
 
-        Metrics(this, 18055)
+        Metrics(this, de.danielmaile.mpp.util.Constants.BSTATS_PLUGIN_ID)
     }
 
     private fun registerPacketListeners() {
@@ -140,8 +141,7 @@ class MPP : JavaPlugin() {
     }
 
     private fun sendMessage(text: String) {
-        val color = ChatColor.GREEN
-        server.consoleSender.sendMessage(color.toString() + text)
+        server.consoleSender.sendMessage(net.kyori.adventure.text.minimessage.MiniMessage.miniMessage().deserialize("<green>$text</green>"))
     }
 
     private fun saveDefaultFiles() {
@@ -189,19 +189,19 @@ class MPP : JavaPlugin() {
      * If not disable the plugin.
      */
     private fun checkSpigotYML(): Boolean {
-        val maxValue = 1E100
         val spigotSettingsFile = File(dataFolder.parentFile.parentFile, "spigot.yml")
+        val spigotSettings = configManager.loadConfig(spigotSettingsFile.path)
+        val maxValue = 1E100
 
-        setupSpigotConfig(spigotSettingsFile)
+        if (spigotSettings.getDouble("settings.attribute.maxHealth.max") != maxValue ||
+            spigotSettings.getDouble("settings.attribute.movementSpeed.max") != maxValue ||
+            spigotSettings.getDouble("settings.attribute.attackDamage.max") != maxValue
+        ) {
+            spigotSettings.set("settings.attribute.maxHealth.max", maxValue)
+            spigotSettings.set("settings.attribute.movementSpeed.max", maxValue)
+            spigotSettings.set("settings.attribute.attackDamage.max", maxValue)
+            spigotSettings.save(spigotSettingsFile)
 
-        val spigotSettings = YamlConfiguration.loadConfiguration(spigotSettingsFile)
-
-        val maxHealthSetting = spigotSettings.get("settings.attribute.maxHealth.max") as Double
-        val movementSpeed = spigotSettings.get("settings.attribute.movementSpeed.max") as Double
-        val attackDamage = spigotSettings.get("settings.attribute.attackDamage.max") as Double
-
-        // send error message when values are not correct
-        if (maxHealthSetting != maxValue || movementSpeed != maxValue || attackDamage != maxValue) {
             for (string in getLanguageManager().getStringList("messages.errors.wrong_spigot_yml_settings")) {
                 logError(string)
             }
@@ -210,53 +210,21 @@ class MPP : JavaPlugin() {
         return true
     }
 
-    /**
-     * Sets health, speed and damage from spigot settings to their desired values of 1.0E100
-     */
-    private fun setupSpigotConfig(file: File) {
-        val spigotSettings = YamlConfiguration.loadConfiguration(file)
-
-        spigotSettings.set("settings.attribute.maxHealth.max", 1.0E100)
-        spigotSettings.set("settings.attribute.movementSpeed.max", 1.0E100)
-        spigotSettings.set("settings.attribute.attackDamage.max", 1.0E100)
-
-        spigotSettings.save(file)
-    }
-
-    /**
-     * Checks if settings in paper-world-defaults.yml are correct.
-     * If not disable the plugin.
-     */
     private fun checkPaperYML(): Boolean {
         val paperWorldDefaultsSettingsFile =
             File(dataFolder.parentFile.parentFile, "config" + File.separator + "paper-world-defaults.yml")
+        val paperWorldDefaultsSettings = configManager.loadConfig(paperWorldDefaultsSettingsFile.path)
 
-        setupPaperConfig(paperWorldDefaultsSettingsFile)
+        if (!paperWorldDefaultsSettings.getBoolean("entities.spawning.count-all-mobs-for-spawning")) {
+            paperWorldDefaultsSettings.set("entities.spawning.count-all-mobs-for-spawning", true)
+            paperWorldDefaultsSettings.save(paperWorldDefaultsSettingsFile)
 
-        val paperWorldDefaultsSettings = YamlConfiguration.loadConfiguration(paperWorldDefaultsSettingsFile)
-
-        val countAllMobsForSpawning =
-            paperWorldDefaultsSettings.get("entities.spawning.count-all-mobs-for-spawning") as Boolean
-
-        // send error message when value is not correct
-        if (!countAllMobsForSpawning) {
             for (string in getLanguageManager().getStringList("messages.errors.wrong_paper_world_defaults_yml_settings")) {
                 logError(string)
             }
             return false
         }
         return true
-    }
-
-    /**
-     * Sets count all mobs for spawning from paper settings to their desired value of true
-     */
-    private fun setupPaperConfig(file: File) {
-        val paperSettings = YamlConfiguration.loadConfiguration(file)
-
-        paperSettings.set("entities.spawning.count-all-mobs-for-spawning", true)
-
-        paperSettings.save(file)
     }
 
     override fun reloadConfig() {
