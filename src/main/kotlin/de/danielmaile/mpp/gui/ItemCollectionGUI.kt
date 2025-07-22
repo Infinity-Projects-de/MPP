@@ -22,41 +22,54 @@ import de.danielmaile.mpp.item.ItemRegistry
 import de.danielmaile.mpp.util.getArrowLeftItem
 import de.danielmaile.mpp.util.getArrowRightItem
 import de.danielmaile.mpp.util.getFillerItem
-import dev.triumphteam.gui.guis.Gui
-import dev.triumphteam.gui.guis.GuiItem
 import org.bukkit.entity.Player
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
+import org.bukkit.event.inventory.InventoryClickEvent
 
-class ItemCollectionGUI {
+class ItemCollectionGUI : Listener {
 
-    val gui = Gui
-        .paginated()
-        .title(inst().getLanguageManager().getComponent("gui.title.item_collection"))
-        .rows(6)
-        .pageSize(45)
-        .disableAllInteractions()
-        .create()
+    private val gui: PaginatedGui
+    private val playerGuis = mutableMapOf<Player, Int>()
 
     init {
-        // filler items
-        for (i in 1..9) {
-            gui.setItem(6, i, GuiItem(getFillerItem()))
-        }
-
-        // pagination
-        gui.setItem(6, 2, GuiItem(getArrowLeftItem()) { gui.previous() })
-        gui.setItem(6, 8, GuiItem(getArrowRightItem()) { gui.next() })
-
-        // items
-        gui.addItem(
-            *ItemRegistry.getAllItems().map { it ->
-                GuiItem(it.itemStack(1)) { event ->
-                    event.whoClicked.inventory.addItem(it.itemStack(1))
-                }
-            }.toTypedArray()
-        )
+        gui = PaginatedGui(inst().getLanguageManager().getComponent("gui.title.item_collection"), 6, 45)
+        ItemRegistry.getAllItems().forEach { gui.addItem(it.itemStack(1)) }
+        gui.build()
     }
 
     fun open(player: Player) {
-        gui.open(player)
+        gui.open(player, 0)
+        playerGuis[player] = 0
     }
+
+    @EventHandler
+    fun onInventoryClick(event: InventoryClickEvent) {
+        val player = event.whoClicked as? Player ?: return
+        if (playerGuis.containsKey(player)) {
+            event.isCancelled = true
+            val currentPage = playerGuis[player]!!
+            when (event.currentItem) {
+                getArrowLeftItem() -> {
+                    if (currentPage > 0) {
+                        gui.open(player, currentPage - 1)
+                        playerGuis[player] = currentPage - 1
+                    }
+                }
+                getArrowRightItem() -> {
+                    if (currentPage < gui.totalPages - 1) {
+                        gui.open(player, currentPage + 1)
+                        playerGuis[player] = currentPage + 1
+                    }
+                }
+                else -> {
+                    event.whoClicked.inventory.addItem(event.currentItem ?: return)
+                }
+            }
+        }
+    }
+}
+
+fun registerEvents() {
+    Bukkit.getPluginManager().registerEvents(ItemCollectionGUI(), inst())
 }

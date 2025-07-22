@@ -64,4 +64,9 @@ class ConfigManager {
 
         resourcePackForce = inst().config.getBoolean("resource_pack.force")
     }
+
+    fun loadConfig(filePath: String): YamlConfiguration {
+        val file = File(filePath)
+        return YamlConfiguration.loadConfiguration(file)
+    }
 }
